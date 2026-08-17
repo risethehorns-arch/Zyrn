@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>ZYRN — Organizations, Engineered</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E0F12;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(110,86,248,0.25)}
+a{color:#F2F3F5;text-decoration:none}
+a:hover{color:#FFFFFF}
+@keyframes seatpulse{0%,100%{opacity:1}50%{opacity:0.35}}
+@media (max-width:767px){[data-hide="md"]{display:none !important}}
+@media (max-width:1023px){[data-hide="lg"]{display:none !important}}
+@media (max-width:1279px){[data-hide="xl"]{display:none !important}}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="position:relative;background:#0E0F12;color:#F2F3F5;font-family:'Space Grotesk',system-ui,sans-serif;min-height:100vh">
+  <div style="position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none">
+    <div style="position:absolute;inset:0;filter:saturate(0.65) contrast(1.05)">
+      <video ref="{{ videoRef }}" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260729_102822_0e6c87e8-c141-4744-bf32-ad30db296371.mp4" muted="{{ true }}" playsInline="{{ true }}" preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
+      <canvas ref="{{ canvasRef }}" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity 500ms"></canvas>
+    </div>
+    <div style="position:absolute;inset:0;background:rgba(14,15,18,0.35)"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,#0E0F12 0%,rgba(14,15,18,0) 30%,rgba(14,15,18,0) 70%,#0E0F12 100%);opacity:0.6"></div>
+  </div>
+  <sc-if value="{{ showGrid }}" hint-placeholder-val="{{ true }}">
+    <div data-hide="md" style="position:fixed;inset:0;z-index:1;pointer-events:none">
+      <div style="position:absolute;top:0;bottom:0;left:33.333%;width:1px;background:rgba(242,243,245,0.04)"></div>
+      <div style="position:absolute;top:0;bottom:0;left:66.666%;width:1px;background:rgba(242,243,245,0.04)"></div>
+    </div>
+  </sc-if>
+  <div data-hide="lg" style="position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;align-items:center;gap:14px;pointer-events:none">
+    <span style="writing-mode:vertical-rl;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#767E8C">ZYRN / SYS.01 — <span ref="{{ pctRef }}">000</span>%</span>
+    <span style="position:relative;width:1px;height:96px;background:rgba(242,243,245,0.08);display:block">
+      <span ref="{{ railFillRef }}" style="position:absolute;left:0;top:0;width:1px;height:100%;background:#6E56F8;transform:scaleY(0);transform-origin:top;opacity:0;transition:opacity 300ms;display:block"></span>
+    </span>
+  </div>
+  <div style="position:relative;z-index:10">
+    <nav style="position:fixed;top:0;left:0;right:0;z-index:50;border-bottom:1px solid rgba(242,243,245,0.08);background:rgba(14,15,18,0.7);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:16px clamp(20px,4vw,48px)">
+        <div data-reveal="1" data-rdelay="0">
+          <div style="position:relative;display:inline-block;font-weight:500;font-size:20px;letter-spacing:0.06em;line-height:1;color:#F2F3F5">
+            <span ref="{{ navTopRef }}" style="display:block;clip-path:inset(0 0 50% 0);transition:transform 650ms cubic-bezier(0.83,0,0.17,1)">ZYRN</span>
+            <span ref="{{ navBotRef }}" style="display:block;clip-path:inset(50% 0 0 0);margin-top:-1em;transition:transform 650ms cubic-bezier(0.83,0,0.17,1)">ZYRN</span>
+            <span ref="{{ navSeamRef }}" style="position:absolute;left:-12px;right:-12px;top:50%;margin-top:-1px;height:2px;background:#6E56F8;transform:scaleX(0);opacity:0;display:block;transition:transform 650ms cubic-bezier(0.83,0,0.17,1),opacity 650ms cubic-bezier(0.83,0,0.17,1)"></span>
+          </div>
+        </div>
+        <div data-hide="md" style="display:flex;align-items:center;gap:40px">
+          <a href="#" data-reveal="1" data-rdelay="100" style="font-size:14px;color:rgba(242,243,245,0.85);transition:color 300ms" style-hover="color:#F2F3F5">Work<sup style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#767E8C;margin-left:3px">06</sup></a>
+          <a href="#" data-reveal="1" data-rdelay="200" style="font-size:14px;color:rgba(242,243,245,0.85);transition:color 300ms" style-hover="color:#F2F3F5">System</a>
+          <a href="#" data-reveal="1" data-rdelay="300" style="font-size:14px;color:rgba(242,243,245,0.85);transition:color 300ms" style-hover="color:#F2F3F5">Journal</a>
+          <a href="#" data-reveal="1" data-rdelay="400" style="font-size:14px;color:rgba(242,243,245,0.85);transition:color 300ms" style-hover="color:#F2F3F5">Contact</a>
+        </div>
+        <div data-reveal="1" data-rdelay="500" style="display:flex;align-items:center;gap:24px">
+          <span data-hide="xl" style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.16em;color:#767E8C">AMM 31.95°N / 35.93°E</span>
+          <button style="border-radius:4px;border:1px solid rgba(242,243,245,0.15);background:transparent;color:#F2F3F5;padding:8px 20px;font-size:13px;font-family:'Space Grotesk',system-ui,sans-serif;cursor:pointer;transition:background 300ms" style-hover="background:rgba(242,243,245,0.05)">Request access</button>
+        </div>
+      </div>
+    </nav>
+    <main>
+      <section data-screen-label="Hero" style="min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;padding:110px clamp(20px,4vw,48px) 56px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:32px;flex-wrap:wrap">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span data-reveal="1" data-rdelay="150" style="font-family:'IBM Plex Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.16em;color:rgba(242,243,245,0.9);text-shadow:0 1px 12px rgba(14,15,18,0.6)">01 / HUMAN CAPITAL</span>
+            <span data-reveal="1" data-rdelay="270" style="font-family:'IBM Plex Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.16em;color:rgba(242,243,245,0.9);text-shadow:0 1px 12px rgba(14,15,18,0.6)">02 / BUSINESS STRUCTURING</span>
+            <span data-reveal="1" data-rdelay="390" style="font-family:'IBM Plex Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.16em;color:rgba(242,243,245,0.9);text-shadow:0 1px 12px rgba(14,15,18,0.6)">03 / AI TRANSFORMATION</span>
+            <span data-reveal="1" data-rdelay="510" style="font-family:'IBM Plex Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.16em;color:rgba(242,243,245,0.9);text-shadow:0 1px 12px rgba(14,15,18,0.6)">04 / WEB &amp; STRATEGY</span>
+          </div>
+          <p data-reveal="1" data-rdelay="300" style="max-width:320px;text-align:right;font-size:clamp(18px,1.4vw,20px);line-height:1.65;color:#F2F3F5;margin:0;text-shadow:0 1px 12px rgba(14,15,18,0.6)">Zyrn builds the operating core of modern firms — people, structure, and intelligence as one system.</p>
+        </div>
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:48px;flex-wrap:wrap">
+          <div>
+            <div data-reveal="1" data-rdelay="150" style="display:inline-block;border-left:2px solid #F2F3F5;padding:6px 0 6px 12px;font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.16em;color:rgba(242,243,245,0.8);text-shadow:0 1px 12px rgba(14,15,18,0.6)">BY REFERRAL — 04 SEATS / Q3</div>
+            <div data-reveal="1" data-rdelay="280" style="margin-top:24px">
+              <div style="position:relative;display:inline-block;font-weight:500;font-size:clamp(48px,6.5vw,72px);letter-spacing:0.06em;line-height:1;color:#F2F3F5;text-shadow:0 1px 12px rgba(14,15,18,0.6)">
+                <span ref="{{ heroTopRef }}" style="display:block;clip-path:inset(0 0 50% 0)">ZYRN</span>
+                <span ref="{{ heroBotRef }}" style="display:block;clip-path:inset(50% 0 0 0);margin-top:-1em">ZYRN</span>
+                <span ref="{{ heroSeamRef }}" style="position:absolute;left:-12px;right:-12px;top:50%;margin-top:-1px;height:2px;background:#6E56F8;transform:scaleX(0);transform-origin:left;opacity:0;display:block"></span>
+              </div>
+              <div style="font-weight:400;font-size:clamp(20px,1.8vw,24px);color:rgba(242,243,245,0.85);margin-top:20px;letter-spacing:-0.01em;text-shadow:0 1px 12px rgba(14,15,18,0.6)">Organizations, engineered.</div>
+            </div>
+          </div>
+          <div data-reveal="1" data-rdelay="420" onMouseEnter="{{ cardEnter }}" onMouseLeave="{{ cardLeave }}" style="width:100%;max-width:320px;border-radius:8px;border:1px solid rgba(242,243,245,0.08);background:rgba(14,15,18,0.6);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);padding:20px">
+            <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.16em;text-transform:uppercase">
+              <span style="color:#767E8C">NEXT INTAKE</span>
+              <span style="color:#F2F3F5">Q3 — 2026</span>
+            </div>
+            <div style="height:1px;background:rgba(242,243,245,0.08);margin:16px 0"></div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="display:flex;gap:4px">
+                <span style="width:6px;height:6px;border-radius:1px;background:{{ seatColor }};animation:seatpulse 2s infinite;display:block"></span>
+                <span style="width:6px;height:6px;border-radius:1px;background:rgba(242,243,245,0.25);display:block"></span>
+                <span style="width:6px;height:6px;border-radius:1px;background:rgba(242,243,245,0.25);display:block"></span>
+                <span style="width:6px;height:6px;border-radius:1px;background:rgba(242,243,245,0.25);display:block"></span>
+              </span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.16em;color:#767E8C">01 OF 04 SEATS OPEN</span>
+            </div>
+            <button style="margin-top:16px;width:100%;display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:4px;border:none;background:#F2F3F5;color:#0E0F12;padding:10px 16px;font-size:12px;font-weight:500;font-family:'Space Grotesk',system-ui,sans-serif;cursor:pointer;transition:background 300ms" style-hover="background:rgba(242,243,245,0.85)">Request access <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M7 17L17 7M8 7h9v9"></path></svg></button>
+          </div>
+        </div>
+      </section>
+      <div aria-hidden="true" style="height:80vh"></div>
+      <section data-screen-label="Capability" style="min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;padding:110px clamp(20px,4vw,48px) 64px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:32px;flex-wrap:wrap">
+          <div data-reveal="1" data-rdelay="120" style="display:inline-block;align-self:flex-start;border-left:2px solid #F2F3F5;padding:6px 0 6px 12px;font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.16em;color:rgba(242,243,245,0.8);text-shadow:0 1px 12px rgba(14,15,18,0.6)">SYS.02 — INTELLIGENCE LAYER</div>
+          <p data-reveal="1" data-rdelay="220" style="max-width:384px;text-align:right;font-size:clamp(18px,1.4vw,20px);line-height:1.65;color:#F2F3F5;margin:0;text-shadow:0 1px 12px rgba(14,15,18,0.6)">Zyrn doesn’t advise from the outside. It installs the system and stays until it runs.</p>
+        </div>
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:clamp(48px,4vw,64px);flex-wrap:wrap;margin-top:48px">
+          <div style="max-width:576px">
+            <h2 data-reveal="1" data-rdelay="180" style="font-size:clamp(48px,6.5vw,72px);font-weight:400;line-height:1.05;letter-spacing:-0.01em;color:#F2F3F5;margin:0;text-shadow:0 1px 12px rgba(14,15,18,0.6)">Built once.<br>Runs itself.</h2>
+            <p data-reveal="1" data-rdelay="320" style="margin:24px 0 0;max-width:448px;font-size:15px;line-height:1.65;color:rgba(242,243,245,0.7);text-shadow:0 1px 12px rgba(14,15,18,0.6)">From org chart to inference layer, Zyrn turns how a firm works into something engineered — measured, versioned, and improving on its own.</p>
+            <div data-reveal="1" data-rdelay="420" style="margin-top:32px;display:flex;flex-wrap:wrap;gap:12px">
+              <button style="display:inline-flex;align-items:center;gap:6px;border-radius:4px;border:none;background:#6E56F8;color:#FFFFFF;padding:10px 20px;font-size:13px;font-weight:500;font-family:'Space Grotesk',system-ui,sans-serif;cursor:pointer;transition:background 300ms" style-hover="background:#7d67f9">Request access <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M7 17L17 7M8 7h9v9"></path></svg></button>
+              <button style="display:inline-flex;align-items:center;border-radius:4px;border:1px solid rgba(242,243,245,0.15);background:transparent;color:#F2F3F5;padding:10px 20px;font-size:13px;font-family:'Space Grotesk',system-ui,sans-serif;cursor:pointer;transition:background 300ms" style-hover="background:rgba(242,243,245,0.05)">Read the system doc</button>
+            </div>
+          </div>
+          <div style="width:100%;max-width:448px;border-radius:8px;border:1px solid rgba(242,243,245,0.08);background:rgba(14,15,18,0.6);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);padding:0 24px">
+            <div data-reveal="1" data-rdelay="300" style="display:flex;gap:20px;padding:20px 0;border-bottom:1px solid rgba(242,243,245,0.08)">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.16em;color:#767E8C;min-width:56px;padding-top:4px">SYS.02a</span>
+              <div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;color:#F2F3F5">Diagnostic core <span style="color:rgba(242,243,245,0.4);transition:transform 300ms,color 300ms;display:inline-flex" style-hover="transform:translate(2px,-2px);color:#F2F3F5"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M7 17L17 7M8 7h9v9"></path></svg></span></div>
+                <p style="margin:6px 0 0;font-size:14px;line-height:1.6;color:rgba(242,243,245,0.6)">Reads how the organization actually runs — roles, flows, and friction — before touching anything.</p>
+              </div>
+            </div>
+            <div data-reveal="1" data-rdelay="410" style="display:flex;gap:20px;padding:20px 0;border-bottom:1px solid rgba(242,243,245,0.08)">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.16em;color:#767E8C;min-width:56px;padding-top:4px">SYS.02b</span>
+              <div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;color:#F2F3F5">Structural rebuild <span style="color:rgba(242,243,245,0.4);transition:transform 300ms,color 300ms;display:inline-flex" style-hover="transform:translate(2px,-2px);color:#F2F3F5"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M7 17L17 7M8 7h9v9"></path></svg></span></div>
+                <p style="margin:6px 0 0;font-size:14px;line-height:1.6;color:rgba(242,243,245,0.6)">Redesigns the operating model so people, process, and AI hold load in the right places.</p>
+              </div>
+            </div>
+            <div data-reveal="1" data-rdelay="520" style="display:flex;gap:20px;padding:20px 0">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.16em;color:#767E8C;min-width:56px;padding-top:4px">SYS.02c</span>
+              <div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:17px;font-weight:500;color:#F2F3F5">Live calibration <span style="color:rgba(242,243,245,0.4);transition:transform 300ms,color 300ms;display:inline-flex" style-hover="transform:translate(2px,-2px);color:#F2F3F5"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M7 17L17 7M8 7h9v9"></path></svg></span></div>
+                <p style="margin:6px 0 0;font-size:14px;line-height:1.6;color:rgba(242,243,245,0.6)">Instruments the new system and tunes it against real output, quarter over quarter.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer data-screen-label="Footer" style="border-top:1px solid rgba(242,243,245,0.08);display:flex;justify-content:space-between;align-items:center;padding:20px clamp(20px,4vw,48px);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#767E8C">
+        <span style="display:inline-flex;align-items:center;gap:10px">
+          <span style="position:relative;display:inline-block;width:14px;height:14px">
+            <svg width="14" height="14" viewBox="0 0 20 20" style="position:absolute;left:0;top:0;clip-path:inset(0 0 50% 0);transform:translateX(-1px)"><path d="M4 5h12L4 15h12" fill="none" stroke="#F2F3F5" stroke-width="2" stroke-linecap="square"></path></svg>
+            <svg width="14" height="14" viewBox="0 0 20 20" style="position:absolute;left:0;top:0;clip-path:inset(50% 0 0 0);transform:translateX(1px)"><path d="M4 5h12L4 15h12" fill="none" stroke="#F2F3F5" stroke-width="2" stroke-linecap="square"></path></svg>
+            <span style="position:absolute;left:-3px;right:-3px;top:50%;height:1px;background:#6E56F8;display:block"></span>
+          </span>
+          ZYRN — EST. 2026
+        </span>
+        <span data-hide="md">AMM 31.95°N / 35.93°E</span>
+        <span>V.1.0 / EN — AR</span>
+      </footer>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;showGrid&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Layout&quot;},
+  &quot;scrubLerp&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 0.08, &quot;min&quot;: 0.02, &quot;max&quot;: 0.2, &quot;step&quot;: 0.01, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Motion&quot;},
+  &quot;latchShear&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Motion&quot;}
+}">
+class Component extends DCLogic {
+  state = { cardHover: false };
+  rootRef = React.createRef(); videoRef = React.createRef(); canvasRef = React.createRef();
+  navTopRef = React.createRef(); navBotRef = React.createRef(); navSeamRef = React.createRef();
+  heroTopRef = React.createRef(); heroBotRef = React.createRef(); heroSeamRef = React.createRef();
+  pctRef = React.createRef(); railFillRef = React.createRef();
+
+  renderVals() {
+    return {
+      showGrid: this.props.showGrid ?? true,
+      seatColor: this.state.cardHover ? '#6E56F8' : '#F2F3F5',
+      cardEnter: () => this.setState({ cardHover: true }),
+      cardLeave: () => this.setState({ cardHover: false }),
+      rootRef: this.rootRef, videoRef: this.videoRef, canvasRef: this.canvasRef,
+      navTopRef: this.navTopRef, navBotRef: this.navBotRef, navSeamRef: this.navSeamRef,
+      heroTopRef: this.heroTopRef, heroBotRef: this.heroBotRef, heroSeamRef: this.heroSeamRef,
+      pctRef: this.pctRef, railFillRef: this.railFillRef,
+    };
+  }
+
+  componentDidMount() {
+    this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.running = true; this.smoothed = 0; this.shear = 0; this.latched = false;
+    this.frames = null; this.framesReady = false;
+    this.setupReveals();
+    this.setupNavShear();
+    this.setupVideo();
+    this.onResize = () => this.sizeCanvas();
+    window.addEventListener('resize', this.onResize);
+    this.sizeCanvas();
+    this.tick = this.tick.bind(this);
+    requestAnimationFrame(this.tick);
+  }
+
+  componentWillUnmount() {
+    this.running = false;
+    window.removeEventListener('resize', this.onResize);
+    if (this.io) this.io.disconnect();
+  }
+
+  setupReveals() {
+    const els = Array.from(document.querySelectorAll('[data-reveal]'));
+    if (this.reduced || !els.length) return;
+    els.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.style.clipPath = 'inset(0 0 18% 0)';
+      el.style.willChange = 'transform';
+      el.style.transition = 'transform 700ms cubic-bezier(0.22,1,0.36,1), opacity 700ms cubic-bezier(0.22,1,0.36,1), clip-path 700ms cubic-bezier(0.22,1,0.36,1)';
+      el.style.transitionDelay = (el.dataset.rdelay || 0) + 'ms';
+    });
+    this.pendingReveals = new Set(els);
+    this.revealEl = el => {
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+      el.style.clipPath = 'inset(0 0 0% 0)';
+      this.io.unobserve(el);
+      this.pendingReveals.delete(el);
+    };
+    this.io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting || e.boundingClientRect.bottom < 0) this.revealEl(e.target);
+      });
+    }, { threshold: 0.15 });
+    els.forEach(el => this.io.observe(el));
+  }
+
+  setupNavShear() {
+    const go = () => {
+      const t = this.navTopRef.current, b = this.navBotRef.current, s = this.navSeamRef.current;
+      if (!t) return;
+      t.style.transform = 'translateX(-2px)'; // 10% of 20px
+      b.style.transform = 'translateX(2px)';
+      s.style.transform = 'scaleX(1)'; s.style.opacity = '1';
+    };
+    if (this.reduced) {
+      [this.navTopRef, this.navBotRef, this.navSeamRef].forEach(r => { if (r.current) r.current.style.transition = 'none'; });
+      go();
+    } else setTimeout(go, 300);
+  }
+
+  sizeCanvas() {
+    const c = this.canvasRef.current; if (!c) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    c.width = window.innerWidth * dpr; c.height = window.innerHeight * dpr;
+  }
+
+  setupVideo() {
+    const v = this.videoRef.current; if (!v) return;
+    v.muted = true;
+    const start = () => setTimeout(() => this.extractFrames(), 300);
+    if (v.readyState >= 2) start();
+    else v.addEventListener('loadeddata', start, { once: true });
+  }
+
+  async extractFrames() {
+    const v = this.videoRef.current; if (!v || !this.running) return;
+    const dur = v.duration;
+    if (!dur || !isFinite(dur)) return;
+    const N = Math.max(30, Math.min(120, Math.round(dur * 14)));
+    const off = document.createElement('video');
+    off.src = v.currentSrc || v.src; off.muted = true; off.preload = 'auto';
+    try {
+      await new Promise((res, rej) => {
+        off.addEventListener('loadeddata', res, { once: true });
+        off.addEventListener('error', rej, { once: true });
+      });
+      const vw = off.videoWidth || 1024, vh = off.videoHeight || 576;
+      const w = Math.min(1024, vw), h = Math.round(w * (vh / vw));
+      const frames = [];
+      for (let i = 0; i < N; i++) {
+        if (!this.running) return;
+        const t = (i / (N - 1)) * Math.max(0, dur - 0.05);
+        await new Promise(res => {
+          const on = () => { off.removeEventListener('seeked', on); res(); };
+          off.addEventListener('seeked', on);
+          off.currentTime = t;
+        });
+        frames.push(await createImageBitmap(off, { resizeWidth: w, resizeHeight: h }));
+      }
+      this.frames = frames; this.framesReady = true;
+    } catch (e) { /* fall back to live-video seeking */ }
+  }
+
+  tick() {
+    if (!this.running) return;
+    const doc = document.documentElement;
+    const max = Math.max(1, doc.scrollHeight - window.innerHeight);
+    const target = Math.min(1, Math.max(0, window.scrollY / max));
+    const lerp = this.props.scrubLerp ?? 0.08;
+    this.smoothed += (target - this.smoothed) * lerp;
+    if (Math.abs(target - this.smoothed) < 0.0005) this.smoothed = target;
+    // hero shear — latches one-way
+    const latch = this.props.latchShear ?? true;
+    let st = Math.min(1, window.scrollY / 220);
+    if (this.latched && latch) st = 1;
+    this.shear += (st - this.shear) * 0.08;
+    if (this.shear > 0.995) { this.shear = 1; if (latch) this.latched = true; }
+    if (this.reduced) { this.shear = 1; this.latched = true; }
+    const p = this.shear;
+    const ht = this.heroTopRef.current;
+    if (ht) {
+      ht.style.transform = `translateX(${(-0.1 * p).toFixed(4)}em)`;
+      this.heroBotRef.current.style.transform = `translateX(${(0.1 * p).toFixed(4)}em)`;
+      this.heroSeamRef.current.style.transform = `scaleX(${p.toFixed(4)})`;
+      this.heroSeamRef.current.style.opacity = p.toFixed(3);
+    }
+    if (this.pctRef.current) this.pctRef.current.textContent = String(Math.round(this.smoothed * 100)).padStart(3, '0');
+    if (this.railFillRef.current) {
+      this.railFillRef.current.style.transform = `scaleY(${this.smoothed.toFixed(4)})`;
+      this.railFillRef.current.style.opacity = this.smoothed > 0.15 ? '1' : '0';
+    }
+    if (this.pendingReveals && this.pendingReveals.size) {
+      this.pendingReveals.forEach(el => { if (el.getBoundingClientRect().bottom < 0) this.revealEl(el); });
+    }
+    this.drawFrame();
+    requestAnimationFrame(this.tick);
+  }
+
+  drawFrame() {
+    const c = this.canvasRef.current, v = this.videoRef.current;
+    if (!c || !v) return;
+    if (this.framesReady && this.frames && this.frames.length) {
+      const fs = this.frames;
+      const idx = Math.min(fs.length - 1, Math.round(this.smoothed * (fs.length - 1)));
+      const b = fs[idx];
+      if (b) {
+        const ctx = c.getContext('2d');
+        const scale = this.reduced ? 1 : 1 + this.smoothed * 0.04; // micro-parallax push-in
+        const s = Math.max(c.width / b.width, c.height / b.height) * scale;
+        const dw = b.width * s, dh = b.height * s;
+        ctx.drawImage(b, (c.width - dw) / 2, (c.height - dh) / 2, dw, dh);
+        c.style.opacity = '1';
+        return;
+      }
+    }
+    const dur = v.duration;
+    if (dur && isFinite(dur)) {
+      const want = this.smoothed * Math.max(0, dur - 0.05);
+      if (Math.abs(v.currentTime - want) > 0.04) { try { v.currentTime = want; } catch (e) {} }
+    }
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+/* ══════════════════════════════════════════════════════════════════════
+   ZYRN — service page layer
+
+   Each service is a dedicated surface sharing the landing page's ground:
+   same fixed video bed, same grid rules, same tokens. Only the content
+   channel changes — which is what makes moving between them feel like
+   one instrument switching modes rather than four separate pages.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── service hero ───────────────────────────────────────────────────── */
+
+.svc-hero{
+  min-height:88vh;min-height:88svh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:calc(var(--pad-top) + 24px) var(--gutter) 48px;
+}
+.svc-hero__idx{
+  display:block;
+  font-size:clamp(56px,9vw,120px);font-weight:400;line-height:1;
+  letter-spacing:-0.02em;
+  color:rgba(242,243,245,0.14);
+}
+.svc-hero__title{
+  margin:8px 0 0;
+  font-size:clamp(40px,6vw,76px);font-weight:400;
+  line-height:1.03;letter-spacing:-0.015em;color:var(--vapor);
+}
+.svc-hero__lede{
+  margin:28px 0 0;max-width:60ch;
+  font-size:clamp(18px,1.5vw,21px);line-height:1.6;
+  color:rgba(242,243,245,0.82);
+}
+.svc-hero__meta{
+  margin-top:40px;display:flex;flex-wrap:wrap;gap:10px 28px;
+  color:rgba(242,243,245,0.62);line-height:1.8;
+}
+
+/* ── generic service section ────────────────────────────────────────── */
+
+.svc-sec{
+  padding:clamp(64px,9vw,120px) var(--gutter);
+}
+.svc-sec__head{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  gap:32px;flex-wrap:wrap;
+}
+.svc-sec__title{
+  margin:0;max-width:20ch;
+  font-size:clamp(30px,3.6vw,46px);font-weight:400;
+  line-height:1.1;letter-spacing:-0.01em;color:var(--vapor);
+}
+.svc-sec__note{
+  margin:0;max-width:40ch;text-align:right;
+  font-size:15px;line-height:1.7;color:rgba(242,243,245,0.68);
+}
+
+/* ── module cards (glass) ───────────────────────────────────────────── */
+
+.mods{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;margin-top:48px;
+}
+.mod{
+  position:relative;
+  border-radius:10px;
+  border:1px solid var(--glass-edge);
+  background:var(--glass-tint),rgba(14,15,18,0.5);
+  backdrop-filter:var(--glass-blur);
+  -webkit-backdrop-filter:var(--glass-blur);
+  box-shadow:var(--glass-lift),var(--glass-inner);
+  padding:26px 24px 28px;
+  transition:transform 600ms var(--ease-reveal),
+             border-color 400ms var(--ease-reveal),
+             box-shadow 600ms var(--ease-reveal);
+}
+.mod::before{
+  content:'';position:absolute;left:14px;right:14px;top:-1px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--glass-spec) 24%,var(--glass-spec) 76%,transparent);
+  opacity:0.5;pointer-events:none;
+}
+.mod:hover{
+  transform:translateY(-6px);
+  border-color:rgba(242,243,245,0.2);
+  box-shadow:0 40px 80px -28px rgba(0,0,0,0.9),0 6px 18px -6px rgba(0,0,0,0.6),var(--glass-inner);
+}
+.mod__idx{display:block;color:rgba(242,243,245,0.55)}
+.mod__title{
+  margin:14px 0 0;
+  font-size:18px;font-weight:500;color:var(--vapor);
+}
+.mod__body{
+  margin:10px 0 0;
+  font-size:14px;line-height:1.65;color:rgba(242,243,245,0.66);
+}
+
+/* ── phase track ────────────────────────────────────────────────────── */
+
+.phases{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(20px,3vw,40px);margin-top:48px;
+  position:relative;
+}
+.phases::before{
+  content:'';position:absolute;left:0;right:0;top:0;height:1px;
+  background:rgba(242,243,245,0.14);
+}
+.phase{position:relative;padding-top:26px}
+.phase::before{
+  content:'';position:absolute;left:0;top:0;width:1px;height:14px;
+  background:rgba(242,243,245,0.5);
+}
+.phase__k{display:block;color:rgba(242,243,245,0.9)}
+.phase__title{margin:12px 0 0;font-size:19px;font-weight:500;color:var(--vapor)}
+.phase__body{margin:8px 0 0;font-size:14px;line-height:1.65;color:rgba(242,243,245,0.66)}
+
+/* ── signals list ───────────────────────────────────────────────────── */
+
+.signals{margin:40px 0 0;padding:0;list-style:none;border-top:1px solid rgba(242,243,245,0.14)}
+.signal{
+  display:grid;grid-template-columns:80px minmax(0,1fr);
+  gap:clamp(16px,3vw,40px);align-items:baseline;
+  padding:20px 0;border-bottom:1px solid rgba(242,243,245,0.14);
+}
+.signal__k{color:rgba(242,243,245,0.85)}
+.signal__v{font-size:16px;line-height:1.6;color:rgba(242,243,245,0.78)}
+
+/* ── closing CTA ────────────────────────────────────────────────────── */
+
+.svc-end{
+  padding:clamp(64px,9vw,120px) var(--gutter) clamp(48px,6vw,80px);
+  text-align:left;
+}
+.svc-end__title{
+  margin:0;max-width:16ch;
+  font-size:clamp(34px,5vw,62px);font-weight:400;
+  line-height:1.05;letter-spacing:-0.01em;color:var(--vapor);
+}
+
+/* text sitting on the open video bed needs the veil everywhere here */
+.svc-hero,.svc-sec,.svc-end{text-shadow:0 1px 12px rgba(14,15,18,0.6)}
+.mod,.tabs{text-shadow:none}
+
+/* ── responsive ─────────────────────────────────────────────────────── */
+
+@media (max-width:1023px){
+  .mods{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .phases{grid-template-columns:minmax(0,1fr);gap:28px}
+  .phases::before{display:none}
+  .phase{padding-top:0;padding-left:16px}
+  .phase::before{height:100%}
+  .tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tab{border-right:none;border-bottom:1px solid rgba(242,243,245,0.07)}
+  .tabs .tab.is-active::before{width:50%}
+  .tabs[data-active="2"] .tab.is-active::before{transform:translateX(0)}
+  .tabs[data-active="3"] .tab.is-active::before{transform:translateX(100%)}
+}
+
+@media (max-width:767px){
+  .mods{grid-template-columns:minmax(0,1fr)}
+  .svc-sec__note{text-align:left;max-width:none}
+  .signal{grid-template-columns:minmax(0,1fr);gap:6px}
+  .tabs{grid-template-columns:minmax(0,1fr)}
+  .tabs .tab.is-active::before{width:100%;transform:none !important}
+}

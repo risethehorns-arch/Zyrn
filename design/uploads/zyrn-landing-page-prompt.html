@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZYRN — Landing page build prompt</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--obsidian:#0E0F12;--vapor:#F2F3F5;--pulse:#6E56F8;--steel:#767E8C;--hair:rgba(242,243,245,0.1)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--obsidian);color:var(--vapor);font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.7;font-size:15px}
+.wrap{max-width:860px;margin:0 auto;padding:56px 28px 96px}
+.masthead{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--hair);padding-bottom:22px;margin-bottom:48px}
+.mark{position:relative;font-weight:500;font-size:22px;letter-spacing:.08em}
+.mark .t,.mark .b{display:block}
+.mark .t{clip-path:inset(0 0 50% 0);transform:translateX(-2px)}
+.mark .b{clip-path:inset(50% 0 0 0);transform:translateX(2px);margin-top:-1.7em}
+.mark .seam{position:absolute;left:-10px;right:-10px;top:50%;height:2px;background:var(--pulse)}
+.meta{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:var(--steel);text-transform:uppercase}
+h1{font-size:30px;font-weight:500;letter-spacing:-.01em;line-height:1.25;margin:0 0 8px}
+h2{font-size:19px;font-weight:500;margin:56px 0 14px;padding-top:26px;border-top:1px solid var(--hair)}
+h3{font-size:15px;font-weight:500;margin:28px 0 10px;color:var(--vapor)}
+p,li{color:rgba(242,243,245,.82)}
+strong{color:var(--vapor);font-weight:500}
+a{color:var(--pulse);text-decoration:none}
+code{font-family:'IBM Plex Mono',monospace;font-size:12.5px;background:rgba(242,243,245,.06);border:1px solid var(--hair);border-radius:3px;padding:1px 5px;color:var(--vapor)}
+pre{background:rgba(242,243,245,.04);border:1px solid var(--hair);border-radius:6px;padding:16px 18px;overflow-x:auto}
+pre code{background:none;border:none;padding:0;font-size:12px;color:rgba(242,243,245,.85)}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px}
+th{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--steel);text-align:left;font-weight:500}
+th,td{border-bottom:1px solid var(--hair);padding:9px 14px 9px 0;vertical-align:top}
+hr{border:none;border-top:1px solid var(--hair);margin:44px 0}
+ul,ol{padding-left:22px}
+li{margin:5px 0}
+blockquote{margin:14px 0;padding:2px 0 2px 16px;border-left:2px solid var(--pulse);color:rgba(242,243,245,.75)}
+.footer{margin-top:72px;border-top:1px solid var(--hair);padding-top:20px;display:flex;justify-content:space-between}
+.swatches{display:flex;gap:10px;margin:22px 0 4px}
+.sw{flex:1;border:1px solid var(--hair);border-radius:6px;padding:12px 12px 10px}
+.sw i{display:block;height:34px;border-radius:4px;margin-bottom:9px;font-style:normal}
+.sw span{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--steel);text-transform:uppercase;display:block}
+@media print{body{background:#fff;color:#111}.sw i{-webkit-print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="masthead">
+<div class="mark"><span class="t">ZYRN</span><span class="b">ZYRN</span><span class="seam"></span></div>
+<span class="meta">SYS.01 — Build spec / V.1.0</span>
+</div>
+<h1>Landing page — exact build prompt</h1>
+<p class="meta" style="margin-bottom:10px">AMM 31.95°N / 35.93°E — EST. 2026</p>
+<div class="swatches">
+<div class="sw"><i style="background:#0E0F12;border:1px solid var(--hair)"></i><span>Obsidian</span><span>#0E0F12</span></div>
+<div class="sw"><i style="background:#F2F3F5"></i><span>Vapor</span><span>#F2F3F5</span></div>
+<div class="sw"><i style="background:#6E56F8"></i><span>Pulse</span><span>#6E56F8</span></div>
+<div class="sw"><i style="background:#767E8C"></i><span>Steel</span><span>#767E8C</span></div>
+</div>
+<h1 id="exact-build-prompt-zyrn-landing-page">Exact build prompt — ZYRN
+landing page</h1>
+<p>Build this page <strong>pixel-faithfully</strong>. Stack: React +
+TypeScript + Vite + Tailwind CSS + lucide-react. Do not invent alternate
+copy, layout, fonts, colors, or effects. Where this document is silent,
+choose the quieter option — Zyrn’s design doctrine is instrument-grade
+restraint.</p>
+<hr />
+<h2 id="page-identity">Page identity</h2>
+<ul>
+<li><strong>Title:</strong>
+<code>ZYRN — Organizations, Engineered</code></li>
+<li><strong>Brand:</strong> uppercase sheared <code>ZYRN</code> wordmark
+(custom component, spec below). No icon fonts, no hexagon.</li>
+<li><strong>Overall feel:</strong> dark instrument-grade precision site;
+full-viewport scroll-scrubbed video background; Vapor typography with
+subtle shadows; hairline-bordered panels (NOT frosted-glass blobs); mono
+metadata everywhere; one Pulse accent per viewport; the shear as the
+single signature device.</li>
+<li><strong>Doctrine (governs every ambiguous decision):</strong>
+<ol type="1">
+<li>Silence is the luxury — 80%+ of any viewport is empty or video.</li>
+<li>Metadata as ornament — the only decoration is real information
+(coordinates, indices, timestamps, version tags) set in mono.</li>
+<li>One Pulse per surface — <code>#6E56F8</code> appears exactly once
+per viewport.</li>
+<li>The shear belongs to the logo only — never shear photos, headlines,
+or cards.</li>
+</ol></li>
+</ul>
+<hr />
+<h2 id="design-tokens-exact">Design tokens (exact)</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Token</th>
+<th>Value</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Obsidian</td>
+<td><code>#0E0F12</code></td>
+<td>Page bg, dark panels</td>
+</tr>
+<tr class="even">
+<td>Vapor</td>
+<td><code>#F2F3F5</code></td>
+<td>Primary text on dark</td>
+</tr>
+<tr class="odd">
+<td>Pulse</td>
+<td><code>#6E56F8</code></td>
+<td>THE accent. Shear seam, one CTA, live indicators. Once per
+viewport.</td>
+</tr>
+<tr class="even">
+<td>Steel</td>
+<td><code>#767E8C</code></td>
+<td>Secondary text, mono metadata, hairlines at 35% opacity</td>
+</tr>
+<tr class="odd">
+<td>Hairline</td>
+<td><code>rgba(242,243,245,0.08)</code></td>
+<td>All borders and dividers, 1px</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Page bg <code>#0E0F12</code>; default text <code>#F2F3F5</code>;
+selection <code>rgba(110,86,248,0.25)</code>.</li>
+<li><strong>No frosted glass.</strong> Panels are
+<code>bg-[#0E0F12]/60 backdrop-blur-[2px] border border-[rgba(242,243,245,0.08)]</code>
+— a dark veil with a hairline, not a white glass chip. This is the
+single biggest material difference from the NovaAI source.</li>
+<li><strong>No white/15 chips, no drop-shadow-lg walls.</strong> Text
+over video gets <code>text-shadow: 0 1px 12px rgba(14,15,18,0.6)</code>
+via a utility class, nothing heavier.</li>
+</ul>
+<hr />
+<h2 id="fonts">Fonts</h2>
+<ul>
+<li>Google Fonts: <strong>Space Grotesk</strong> weights 400, 500
+(display + UI) and <strong>IBM Plex Mono</strong> weights 400, 500 (all
+metadata, labels, indices).</li>
+<li>Tailwind: <code>font-sans</code> →
+<code>'Space Grotesk', system-ui, sans-serif</code>;
+<code>font-mono</code> → <code>'IBM Plex Mono', monospace</code>.</li>
+<li>Antialiased. Headline tracking <code>-0.01em</code>. Mono labels
+always
+<code>text-[11px] uppercase tracking-[0.16em] text-[#767E8C]</code>.</li>
+<li><strong>The wordmark is never typed as plain text</strong> — it is
+always the ZyrnShear component (below).</li>
+</ul>
+<hr />
+<h2 id="assets">Assets</h2>
+<p><strong>Hero scroll video (CloudFront — keep this exact URL as
+placeholder):</strong></p>
+<pre><code>https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260729_102822_0e6c87e8-c141-4744-bf32-ad30db296371.mp4</code></pre>
+<ul>
+<li>Wrap the video layer in a treatment div:
+<code>filter: saturate(0.65) contrast(1.05)</code> plus an Obsidian
+overlay <code>bg-[#0E0F12]/35</code> so the footage’s warm golds cool
+toward the Zyrn palette. A second overlay at the top and bottom:
+<code>bg-gradient-to-b from-[#0E0F12] via-transparent to-[#0E0F12]</code>
+at 60% opacity — the video emerges from darkness and returns to it.</li>
+<li><code>TODO(asset)</code>: regenerate a native Zyrn video later —
+abstract dark machined forms, indigo light, cold mist. Same duration
+class (~8–12s), 1920×1080. Until then the treated placeholder
+ships.</li>
+<li>Optional local mirrors: <code>/hero.mp4</code>,
+<code>/hero-poster.jpg</code>. Poster must receive the same filter
+treatment.</li>
+</ul>
+<p><strong>No portrait photo.</strong> The Mitha card is replaced by the
+Access Card (spec in Section One). Zyrn does not show faces on the
+landing page — the brand is the instrument, not the operator.</p>
+<hr />
+<h2 id="the-zyrnshear-wordmark-component-signature-build-first">The
+ZyrnShear wordmark component (signature — build first)</h2>
+<p>A reusable <code>&lt;ZyrnShear /&gt;</code> React component. This is
+the identity; get it exact.</p>
+<p><strong>Structure:</strong> - Two absolutely-stacked copies of the
+text <code>ZYRN</code> (Space Grotesk 500, tracking
+<code>0.06em</code>), each clipped to one half: - Top copy:
+<code>clip-path: inset(0 0 50% 0)</code> - Bottom copy:
+<code>clip-path: inset(50% 0 0 0)</code> - A seam line: absolutely
+positioned <code>2px</code> tall div in Pulse <code>#6E56F8</code>,
+vertically centered, width <code>calc(100% + 24px)</code> (12px overhang
+each side), <code>transform-origin: center</code>.</p>
+<p><strong>Props:</strong> <code>size</code> (font-size px),
+<code>progress</code> (0–1, drives the shear externally),
+<code>auto</code> (boolean — self-animates on mount when no scroll
+binding).</p>
+<p><strong>Shear math (fixed law):</strong> - Max offset =
+<code>10%</code> of font-size (e.g. 6px at 60px). Never more. - Top
+half: <code>translateX(-offset * progress)</code>. Bottom half:
+<code>translateX(+offset * progress)</code>. Always this direction. -
+Seam: <code>scaleX(progress)</code>, opacity <code>progress</code>. -
+Transition when <code>auto</code>:
+<code>650ms cubic-bezier(0.83, 0, 0.17, 1)</code>, fires 300ms after
+mount, shears to <code>progress = 1</code> and <strong>stays
+sheared</strong> (aligned = before, sheared = after; it never snaps
+back). - <code>prefers-reduced-motion</code>: render statically at
+<code>progress = 1</code>.</p>
+<p><strong>Monogram variant <code>&lt;ZyrnMark /&gt;</code>:</strong>
+same two-half clip technique applied to a single <code>Z</code> glyph
+(SVG, stroke <code>#F2F3F5</code>, square caps) with the Pulse seam.
+Used as favicon, nav mark at mobile widths, and footer stamp.</p>
+<hr />
+<h2 id="global-structure">Global structure</h2>
+<pre><code>relative root (bg #0E0F12)
+  ScrollVideo        fixed inset-0 z-0, pointer-events-none (treated video + overlays)
+  HairlineGrid       fixed inset-0 z-[1], pointer-events-none
+  ScrollReadout      fixed right edge z-40 (desktop only)
+  relative z-10 wrapper
+    Navbar           fixed top, z-50
+    main
+      SectionOne     min-h-screen / 100svh   — hero
+      spacer         h-[80vh] aria-hidden     — scrub room (do not remove)
+      SectionTwo     min-h-screen / 100svh   — capability
+      Footer         hairline-top strip</code></pre>
+<ul>
+<li>Horizontal rhythm: <code>px-5 sm:px-8 md:px-12</code>. Section top
+pad <code>pt-24 sm:pt-28</code>, bottom
+<code>pb-12 md:pb-16</code>.</li>
+<li><strong>HairlineGrid:</strong> two vertical 1px lines at
+<code>left: 33.333%</code> and <code>left: 66.666%</code> in
+<code>rgba(242,243,245,0.04)</code>, hidden below <code>md</code>. The
+page reads as laid on an engineer’s grid. Cheap, decisive,
+instrument-grade.</li>
+</ul>
+<hr />
+<h2 id="scroll-system-elevated-this-is-where-the-immersion-lives">Scroll
+system (elevated — this is where the immersion lives)</h2>
+<h3 id="scroll-scrubbed-video-keep-tighten">1. Scroll-scrubbed video
+(keep, tighten)</h3>
+<p>Fixed full-bleed <code>z-0</code>, <code>overflow-hidden</code>,
+<code>pointer-events-none</code>. Layers bottom→top: treated poster
+<code>&lt;img&gt;</code> → <code>&lt;video&gt;</code> (muted,
+playsInline, preload=auto, object-cover) → <code>&lt;canvas&gt;</code>
+drawing cached frames. Crossfades <code>duration-500</code> exactly as
+the source prompt.</p>
+<ul>
+<li><code>progress = scrollY / (scrollHeight - innerHeight)</code>
+clamped 0–1.</li>
+<li><strong>Lerp factor <code>0.08</code></strong> (was 0.12) — slower
+settle reads as mass and machinery rather than UI. Each rAF:
+<code>smoothed += (target - smoothed) * 0.08</code>.</li>
+<li>Frame cache: offscreen video, up to <strong>120 frames</strong> (or
+<code>duration * 14</code>, min 30), max width <strong>1024px</strong>,
+extraction starts after visible video <code>loadeddata</code> + 300ms
+yield. Canvas draws <code>ImageBitmap</code> by smoothed index with
+object-cover math. DPR <code>min(devicePixelRatio, 2)</code>.</li>
+<li>Fallback: seek visible video to
+<code>smoothed * (duration - 0.05)</code> when delta &gt; 0.04s.</li>
+<li><strong>Micro-parallax:</strong> canvas draw scale
+<code>1.0 + smoothed * 0.04</code> — an almost-subliminal push-in across
+the full scroll. Center-anchored.</li>
+<li>No autoplay looping. Motion is scroll-driven only.</li>
+</ul>
+<h3 id="the-shear-is-scroll-bound-in-the-hero-signature-moment">2. The
+shear is scroll-bound in the hero (signature moment)</h3>
+<p>The hero H1 lockup is
+<code>&lt;ZyrnShear size={heroSize} progress={shearProgress} /&gt;</code>
+where <code>shearProgress = clamp(scrollY / 220, 0, 1)</code>, lerped
+with the same 0.08 factor.</p>
+<ul>
+<li>At page top the wordmark sits <strong>aligned and whole</strong>. As
+the user makes their first scroll gesture, the halves shear apart and
+the Pulse seam draws itself left-to-right (<code>scaleX</code>
+origin-left for this instance).</li>
+<li>Once <code>progress</code> reaches 1 it latches — scrolling back up
+does NOT un-shear (one-way <code>hasSheared</code> ref). The
+transformation happened; it does not undo. This is the brand narrative
+executed in scroll physics.</li>
+<li>The nav logo <code>&lt;ZyrnShear size={20} auto /&gt;</code>
+self-shears on load, independently.</li>
+</ul>
+<h3 id="scrollreadout-new-metadata-as-ornament-made-live">3.
+ScrollReadout (new — metadata as ornament, made live)</h3>
+<p>Fixed vertical rail, <code>right-5</code>, vertically centered,
+desktop only (<code>hidden lg:flex</code>), <code>z-40</code>, mono
+<code>text-[10px] tracking-[0.16em] text-[#767E8C]</code>,
+<code>writing-mode: vertical-rl</code>.</p>
+<p>Content: <code>ZYRN / SYS.01 — {pct}%</code> where <code>{pct}</code>
+= <code>Math.round(smoothed * 100)</code> padded to 3 digits
+(<code>007</code>, <code>042</code>, <code>100</code>). Beside it a 1px
+track <code>h-24</code> in Hairline with a Pulse-colored fill scaling
+with progress — <strong>this counts as the Pulse instance for mid-scroll
+viewports</strong> (the hero’s Pulse is the seam; when the hero leaves
+view, the rail’s fill is the only Pulse on screen — enforce by giving
+the rail fill <code>opacity: 0</code> until
+<code>smoothed &gt; 0.15</code>).</p>
+<p>The page tells you where you are the way an instrument does: with a
+number.</p>
+<h3 id="reveal-animation-sharpened">4. Reveal animation (sharpened)</h3>
+<p>IntersectionObserver, threshold <code>0.15</code>,
+<code>will-change: transform</code>.</p>
+<ul>
+<li>Hidden:
+<code>translate-y-6 opacity-0 clip-path: inset(0 0 18% 0)</code></li>
+<li>Visible:
+<code>translate-y-0 opacity-100 clip-path: inset(0 0 0% 0)</code></li>
+<li>Transition <code>700ms cubic-bezier(0.22, 1, 0.36, 1)</code>,
+per-element delay as specified per section.</li>
+<li>The clip component makes text feel machined into place rather than
+floated in. Apply to text blocks and panels only — never
+images/video.</li>
+<li><code>prefers-reduced-motion</code>: all reveals render visible
+statically; scrub still functions (it is position, not animation) but
+micro-parallax scale locks at 1.0.</li>
+</ul>
+<hr />
+<h2 id="navbar-fixed-z-50">Navbar (fixed, z-50)</h2>
+<ul>
+<li>Full width, <code>border-b border-[rgba(242,243,245,0.08)]</code>,
+<code>bg-[#0E0F12]/70 backdrop-blur-[6px]</code>.</li>
+<li>Row: <code>&lt;ZyrnShear size={20} auto /&gt;</code> left | center
+links (md+) | right cluster.</li>
+<li>Links: <code>Work</code>, <code>System</code>, <code>Journal</code>,
+<code>Contact</code> —
+<code>text-sm text-[#F2F3F5]/85 hover:text-[#F2F3F5] transition-colors duration-300</code>,
+gap <code>gap-8 lg:gap-10</code>. <code>Work</code> carries superscript
+<code>06</code> in mono <code>text-[10px] text-[#767E8C]</code>.</li>
+<li>Right cluster: mono label <code>AMM 31.95°N / 35.93°E</code>
+(<code>hidden xl:block</code>, Steel) + CTA <code>Request access</code>
+—
+<code>rounded-[4px] border border-[rgba(242,243,245,0.15)] px-4 py-2 text-xs sm:px-5 sm:text-sm hover:bg-[#F2F3F5]/5 transition-colors duration-300</code>.
+The nav CTA is hairline, NOT Pulse — the hero owns the viewport’s
+Pulse.</li>
+<li>Reveal delays: logo 0; links <code>100 + i*100</code>; right cluster
+<code>500</code>.</li>
+</ul>
+<hr />
+<h2 id="section-one-hero">Section One — Hero</h2>
+<p>Full viewport flex column <code>justify-between</code>.</p>
+<p><strong>Top row</strong> (<code>flex-col gap-8</code> →
+<code>sm:flex-row justify-between</code>):</p>
+<p>Left — service index (gap-2), each delay <code>150 + i*120</code>,
+mono
+<code>text-xs uppercase tracking-[0.16em] text-[#F2F3F5]/90</code>:</p>
+<pre><code>01 / HUMAN CAPITAL
+02 / BUSINESS STRUCTURING
+03 / AI TRANSFORMATION
+04 / WEB &amp; STRATEGY</code></pre>
+<p>(The numbering is real — these are the four service lines, indexed as
+a system.)</p>
+<p>Right — intro (<code>max-w-xs sm:text-right</code>, delay 300),
+<code>text-lg sm:text-xl leading-relaxed text-[#F2F3F5]</code>: &gt;
+Zyrn builds the operating core of modern firms — people, structure, and
+intelligence as one system.</p>
+<p><strong>Bottom row</strong> (<code>flex-col gap-8</code> →
+<code>md:flex-row items-end justify-between</code>):</p>
+<p>Left: 1. Badge, delay 150:
+<code>border-l-2 border-[#F2F3F5] pl-3 py-1.5</code> (no background
+fill), mono
+<code>text-[11px] uppercase tracking-[0.16em] text-[#F2F3F5]/80</code>:
+<code>BY REFERRAL — 04 SEATS / Q3</code> 2. H1 lockup, delay 280:
+<code>&lt;ZyrnShear progress={shearProgress} /&gt;</code> at
+<code>text-5xl sm:text-6xl lg:text-7xl</code> equivalent size, followed
+on the next line by static text <code>Organizations, engineered.</code>
+in Space Grotesk 400
+<code>text-xl sm:text-2xl text-[#F2F3F5]/85 mt-5 tracking-[-0.01em]</code>.</p>
+<p>Right — <strong>Access Card</strong> (replaces the portrait card),
+delay 420: - Container:
+<code>w-full max-w-xs rounded-lg border border-[rgba(242,243,245,0.08)] bg-[#0E0F12]/60 backdrop-blur-[2px] p-5</code>
+- Row 1: mono label <code>NEXT INTAKE</code> (Steel) + right-aligned
+mono <code>Q3 — 2026</code> (Vapor) - Hairline divider <code>my-4</code>
+- Row 2: four small squares in a row
+(<code>h-1.5 w-1.5 rounded-[1px]</code>) — three in
+<code>#F2F3F5/25</code>, one in Pulse with <code>animate-pulse</code> —
+beside mono text <code>01 OF 04 SEATS OPEN</code> (Steel). <em>(This
+pulsing square + the H1 seam are the same viewport — the seam is the
+accent; make the seat square <code>#F2F3F5</code> at rest and Pulse only
+on card hover to respect one-Pulse.)</em> - Button <code>mt-4</code>:
+<code>Request access</code> + lucide <code>ArrowUpRight</code> size 14 —
+<code>w-full justify-center rounded-[4px] bg-[#F2F3F5] px-4 py-2.5 text-xs font-medium text-[#0E0F12] hover:bg-[#F2F3F5]/85 transition-colors duration-300 inline-flex items-center gap-1.5</code></p>
+<hr />
+<h2 id="mid-spacer">Mid spacer</h2>
+<p><code>div h-[80vh]</code> aria-hidden. Do not remove — it is the
+scrub runway between sections.</p>
+<hr />
+<h2 id="section-two-capability">Section Two — Capability</h2>
+<p>Same full-viewport flex <code>justify-between</code> shell.</p>
+<p><strong>Top row:</strong> - Left badge, delay 120: left-accent style
+as hero badge: <code>SYS.02 — INTELLIGENCE LAYER</code> - Right copy,
+delay 220 (<code>max-w-sm sm:text-right</code>,
+<code>text-lg sm:text-xl leading-relaxed text-[#F2F3F5]</code>): &gt;
+Zyrn doesn’t advise from the outside. It installs the system and stays
+until it runs.</p>
+<p><strong>Bottom area</strong> (<code>flex-1 justify-end</code>,
+<code>flex-col gap-12</code> →
+<code>md:flex-row items-end justify-between gap-16</code>):</p>
+<p>Left column (<code>max-w-xl</code>): 1. H2, delay 180,
+<code>text-5xl sm:text-6xl lg:text-7xl font-normal leading-[1.05] tracking-[-0.01em] text-[#F2F3F5]</code>:</p>
+<pre><code>Built once.
+Runs itself.</code></pre>
+<ol start="2" type="1">
+<li>Body, delay 320
+(<code>mt-6 max-w-md text-sm sm:text-base text-[#F2F3F5]/70</code>):
+&gt; From org chart to inference layer, Zyrn turns how a firm works into
+something engineered — measured, versioned, and improving on its
+own.</li>
+<li>CTAs, delay 420 (<code>mt-8 flex flex-wrap gap-3</code>):
+<ul>
+<li>Primary: <code>Request access</code> + ArrowUpRight 14 —
+<code>rounded-[4px] bg-[#6E56F8] px-5 py-2.5 text-xs sm:text-sm font-medium text-white hover:bg-[#7d67f9] transition-colors duration-300</code>
+<em>(this is Section Two’s single Pulse)</em></li>
+<li>Secondary: <code>Read the system doc</code> —
+<code>rounded-[4px] border border-[rgba(242,243,245,0.15)] px-5 py-2.5 text-xs sm:text-sm text-[#F2F3F5] hover:bg-[#F2F3F5]/5 transition-colors duration-300</code></li>
+</ul></li>
+</ol>
+<p>Right — capability panel:
+<code>w-full max-w-md rounded-lg border border-[rgba(242,243,245,0.08)] bg-[#0E0F12]/60 backdrop-blur-[2px] px-5 sm:px-6</code></p>
+<p>Three rows, dividers
+<code>border-b border-[rgba(242,243,245,0.08)]</code> except last, each
+<code>flex gap-5 py-5</code>, delay <code>300 + i*110</code>:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Index</th>
+<th>Title</th>
+<th>Body</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SYS.02a</td>
+<td>Diagnostic core</td>
+<td>Reads how the organization actually runs — roles, flows, and
+friction — before touching anything.</td>
+</tr>
+<tr class="even">
+<td>SYS.02b</td>
+<td>Structural rebuild</td>
+<td>Redesigns the operating model so people, process, and AI hold load
+in the right places.</td>
+</tr>
+<tr class="odd">
+<td>SYS.02c</td>
+<td>Live calibration</td>
+<td>Instruments the new system and tunes it against real output, quarter
+over quarter.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Index: mono
+<code>text-[11px] tracking-[0.16em] text-[#767E8C]</code></li>
+<li>Title: <code>text-base sm:text-lg font-medium text-[#F2F3F5]</code>
++ lucide <code>ArrowUpRight</code> 16 (<code>text-[#F2F3F5]/40</code>,
+group-hover:
+<code>translate-x-0.5 -translate-y-0.5 text-[#F2F3F5]</code>, transition
+300ms)</li>
+<li>Body:
+<code>mt-1.5 text-sm leading-relaxed text-[#F2F3F5]/60</code></li>
+</ul>
+<hr />
+<h2 id="footer">Footer</h2>
+<p>Hairline-top strip,
+<code>flex justify-between items-center py-5</code>, same horizontal
+rhythm, mono <code>text-[10px] tracking-[0.16em] text-[#767E8C]</code>:
+- Left: <code>&lt;ZyrnMark size={14} /&gt;</code> +
+<code>ZYRN — EST. 2026</code> - Center (<code>hidden md:block</code>):
+<code>AMM 31.95°N / 35.93°E</code> - Right:
+<code>V.1.0 / EN — AR</code></p>
+<hr />
+<h2 id="interactions-motion-checklist">Interactions / motion
+checklist</h2>
+<ol type="1">
+<li>Scroll scrub maps page scroll → video timeline, lerp 0.08, with 4%
+push-in parallax</li>
+<li>Hero wordmark shears with first 220px of scroll and latches sheared
+(one-way)</li>
+<li>Nav logo self-shears 300ms after mount</li>
+<li>ScrollReadout rail: live 3-digit percentage + Pulse progress fill
+(desktop)</li>
+<li>Clip-reveal fade-ups on viewport entry, 700ms, per-element
+delays</li>
+<li>Button/link transitions <code>duration-300</code>; capability arrows
+nudge diagonally on hover</li>
+<li>Poster → video → canvas crossfades <code>duration-500</code></li>
+<li><code>prefers-reduced-motion</code>: shear static at 1, reveals
+static, parallax off, scrub position-only</li>
+<li>No looping autoplay anywhere</li>
+</ol>
+<hr />
+<h2 id="responsive-rules">Responsive rules</h2>
+<ul>
+<li>Nav links hidden below <code>md</code>; ScrollReadout hidden below
+<code>lg</code>; HairlineGrid hidden below <code>md</code>; coordinates
+label hidden below <code>xl</code></li>
+<li>Hero and Section Two stack vertically on mobile, side-by-side from
+<code>sm</code>/<code>md</code> as specified</li>
+<li><code>min-h-screen</code> plus
+<code>supports-[height:100svh]:min-h-[100svh]</code></li>
+<li>Touch: video <code>playsInline</code> + muted</li>
+<li>Mobile nav shows <code>&lt;ZyrnMark /&gt;</code> instead of full
+wordmark below <code>sm</code></li>
+</ul>
+<hr />
+<h2 id="do-not">Do not</h2>
+<ul>
+<li>Do not use white frosted-glass chips
+(<code>bg-white/15 backdrop-blur-md</code>) anywhere — Obsidian veils
+with hairlines only</li>
+<li>Do not let Pulse <code>#6E56F8</code> appear more than once per
+viewport</li>
+<li>Do not shear anything except the ZyrnShear / ZyrnMark
+components</li>
+<li>Do not replace Space Grotesk / IBM Plex Mono</li>
+<li>Do not add gradients (except the two Obsidian video-edge fades),
+glows, or noise overlays</li>
+<li>Do not use exclamation marks or superlatives anywhere in copy</li>
+<li>Do not show faces or stock portraits</li>
+<li>Do not remove the <code>80vh</code> spacer</li>
+<li>Do not type ZYRN as plain text in nav, hero, or footer</li>
+</ul>
+<hr />
+<h2 id="acceptance">Acceptance</h2>
+<p>Top of page: hairline nav with self-shearing logo + indexed service
+list + intro + aligned ZYRN wordmark over the treated scroll video,
+referral badge and Access Card in place. First scroll gesture: the
+wordmark shears apart, Pulse seam draws, and latches — while the video
+begins scrubbing and the right-rail readout counts. After the spacer:
+<code>SYS.02</code> badge, “Built once. Runs itself.”, dual CTAs with a
+single Pulse button, three-row capability panel. Footer stamp with
+coordinates and version. Every viewport shows exactly one Pulse element.
+Visual match to this spec at <code>localhost:5199</code>.</p>
+<div class="footer"><span class="meta">ZYRN — EST. 2026</span><span class="meta">V.1.0 / EN — AR</span></div>
+</div>
+</body>
+</html>

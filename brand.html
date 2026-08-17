@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZYRN — Brand system</title>
+<meta name="description" content="The Zyrn brand system: doctrine, palette, type, the shear, motion law, and voice.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<link rel="stylesheet" href="assets/css/brand.css">
+<link rel="stylesheet" href="assets/css/field.css">
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/",
+    "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.mjs",
+    "lil-gui": "https://cdn.jsdelivr.net/npm/lil-gui@0.19.2/dist/lil-gui.esm.js"
+  }
+}
+</script>
+
+<style>
+  /* This page is a DOCUMENT. Its job is legibility, not atmosphere
+     (CLAUDE.md), so it carries the field at roughly a third of the site's
+     intensity, on one held formation, with no scroll morphing. Delete the
+     canvas and the module at the foot of this file to return it to a flat
+     ground without touching anything else. */
+  #field{opacity:0.38}
+  .ramp{
+    display:flex;height:64px;border:1px solid var(--hair);border-radius:6px;
+    overflow:hidden;margin:18px 0 10px;
+  }
+  .ramp__stop{flex:1;display:flex;align-items:flex-end;padding:8px}
+  .ramp__stop span{
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;
+    text-transform:uppercase;color:rgba(14,15,18,0.75);
+  }
+  .ramp__stop:first-child span,.ramp__stop:nth-child(2) span{color:rgba(242,243,245,0.9)}
+  .doc__sub{color:var(--vapor);margin-top:26px;font-size:15px}
+</style>
+</head>
+<body class="doc">
+
+<canvas id="field" aria-hidden="true"></canvas>
+
+
+<nav class="nav">
+  <div class="nav__row">
+    <a href="index.html" aria-label="ZYRN — home">
+      <span class="glitch">
+      <span class="shear shear--auto is-sheared" style="--shear-size:20px">
+        <span class="shear__half shear__half--top">ZYRN</span>
+        <span class="shear__half shear__half--bot">ZYRN</span>
+        <span class="shear__seam"></span>
+      </span>
+      </span>
+    </a>
+    <div class="nav__end">
+      <span class="mono nav__coords">SYS.06 — BRAND SYSTEM</span>
+      <a class="btn btn--hairline" href="index.html">Back to site</a>
+    </div>
+  </div>
+</nav>
+
+<main class="doc__wrap">
+
+  <header class="doc__head">
+    <div class="badge mono">SYS.06 — BRAND SYSTEM / V.2.0</div>
+    <h1 class="doc__title">The instrument,<br>documented.</h1>
+    <p class="doc__lede">
+      Every value on this page is load-bearing. Where a decision is not covered here,
+      take the quieter option — that is the rule, not a fallback.
+    </p>
+  </header>
+
+  <!-- ── doctrine ─────────────────────────────────────────────────── -->
+  <section class="doc__sec">
+    <h2 class="doc__h2"><span class="mono doc__num">01</span> Doctrine</h2>
+    <p class="doc__note">Four rules. They govern every ambiguous decision, and they outrank taste.</p>
+    <ol class="rules">
+      <li class="rule-item">
+        <h3 class="rule-item__t">Silence is the luxury</h3>
+        <p class="rule-item__b">80%+ of any viewport is empty or field. Density is what everyone else does.</p>
+      </li>
+      <li class="rule-item">
+        <h3 class="rule-item__t">Metadata as ornament</h3>
+        <p class="rule-item__b">The only decoration permitted is real information — coordinates, indices, versions — set in mono.</p>
+      </li>
+      <li class="rule-item">
+        <h3 class="rule-item__t">One Pulse per surface</h3>
+        <p class="rule-item__b">The accent appears exactly once per viewport. A second instance is a bug. On field surfaces it is emitted by the simulation and printed only on the mark &mdash; see 08.</p>
+      </li>
+      <li class="rule-item">
+        <h3 class="rule-item__t">The shear belongs to the logo</h3>
+        <p class="rule-item__b">Never shear photography, headlines, or panels. One signature device, used once.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ── palette ──────────────────────────────────────────────────── -->
+  <section class="doc__sec">
+    <h2 class="doc__h2"><span class="mono doc__num">02</span> Palette</h2>
+    <p class="doc__note">Four values and a hairline. There is no secondary palette, and no tints beyond the opacities listed.</p>
+    <div class="swatches">
+      <div class="sw">
+        <span class="sw__chip" style="background:#0E0F12;border:1px solid var(--hair)"></span>
+        <span class="mono sw__n">Obsidian</span><span class="mono sw__v">#0E0F12</span>
+        <span class="sw__u">Page ground, panel fill at 60%</span>
+      </div>
+      <div class="sw">
+        <span class="sw__chip" style="background:#F2F3F5"></span>
+        <span class="mono sw__n">Vapor</span><span class="mono sw__v">#F2F3F5</span>
+        <span class="sw__u">Primary text, rules, the wordmark</span>
+      </div>
+      <div class="sw">
+        <span class="sw__chip" style="background:#6E56F8"></span>
+        <span class="mono sw__n">Pulse</span><span class="mono sw__v">#6E56F8</span>
+        <span class="sw__u">Emitted by the field; printed only on the mark. See 08</span>
+      </div>
+      <div class="sw">
+        <span class="sw__chip" style="background:#767E8C"></span>
+        <span class="mono sw__n">Steel</span><span class="mono sw__v">#767E8C</span>
+        <span class="sw__u">Mono metadata, secondary text</span>
+      </div>
+    </div>
+    <table class="spec-table">
+      <thead><tr><th>Token</th><th>Value</th><th>Applied to</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">--hair</td><td class="mono">rgba(242,243,245,0.08)</td><td>Every border and divider, 1px</td></tr>
+        <tr><td class="mono">--hair-strong</td><td class="mono">rgba(242,243,245,0.15)</td><td>Hairline buttons only</td></tr>
+        <tr><td class="mono">--grid-line</td><td class="mono">rgba(242,243,245,0.04)</td><td>The two vertical grid rules</td></tr>
+        <tr><td class="mono">selection</td><td class="mono">rgba(110,86,248,0.25)</td><td>Text selection</td></tr>
+        <tr><td class="mono">veil</td><td class="mono">0 1px 12px rgba(14,15,18,0.6)</td><td>Text over the field. Nothing heavier</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── the mark ─────────────────────────────────────────────────── -->
+  <section class="doc__sec">
+    <h2 class="doc__h2"><span class="mono doc__num">03</span> The mark</h2>
+    <p class="doc__note">
+      Two copies of the wordmark, each clipped to one half, offset in opposite directions
+      with a Pulse seam on the join. Aligned is <em>before</em>; sheared is <em>after</em>.
+      It never snaps back — that is the whole argument of the brand, executed in geometry.
+    </p>
+
+    <div class="mark-demo">
+      <div class="mark-demo__cell">
+        <span class="mono mark-demo__cap">PROGRESS 0 — ALIGNED</span>
+        <span class="shear" style="--shear-size:56px">
+          <span class="shear__half shear__half--top">ZYRN</span>
+          <span class="shear__half shear__half--bot">ZYRN</span>
+          <span class="shear__seam"></span>
+        </span>
+      </div>
+      <div class="mark-demo__cell">
+        <span class="mono mark-demo__cap">PROGRESS 1 — SHEARED</span>
+        <span class="shear shear--auto is-sheared" style="--shear-size:56px">
+          <span class="shear__half shear__half--top">ZYRN</span>
+          <span class="shear__half shear__half--bot">ZYRN</span>
+          <span class="shear__seam"></span>
+        </span>
+      </div>
+      <div class="mark-demo__cell">
+        <span class="mono mark-demo__cap">MONOGRAM</span>
+        <span class="mark mark--lg" aria-hidden="true">
+          <svg class="mark__half mark__half--top" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+          <svg class="mark__half mark__half--bot" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+          <span class="mark__seam"></span>
+        </span>
+      </div>
+    </div>
+
+    <table class="spec-table">
+      <thead><tr><th>Property</th><th>Law</th></tr></thead>
+      <tbody>
+        <tr><td>Offset</td><td>Exactly 10% of font-size (<span class="mono">0.1em</span>). Never more.</td></tr>
+        <tr><td>Direction</td><td>Top half moves left, bottom half moves right. Always.</td></tr>
+        <tr><td>Seam</td><td><span class="mono">scaleX(progress)</span>, 2px, Pulse, 12px overhang each side.</td></tr>
+        <tr><td>Tracking</td><td><span class="mono">0.06em</span>, weight 500, uppercase.</td></tr>
+        <tr><td>Trigger</td><td>Both marks shear together, 300ms after load. One beat, one component &mdash; the nav mark and the hero mark are never in different states.</td></tr>
+        <tr><td>Latch</td><td>One-way. Reaching progress 1 is permanent for the session.</td></tr>
+        <tr><td>Reduced motion</td><td>Render statically at progress 1.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── type ─────────────────────────────────────────────────────── -->
+  <section class="doc__sec">
+    <h2 class="doc__h2"><span class="mono doc__num">04</span> Type</h2>
+    <p class="doc__note">Two families, four weights total. No third typeface, ever.</p>
+
+    <div class="type-row">
+      <span class="mono type-row__cap">DISPLAY — SPACE GROTESK 400 / clamp(48px, 6.5vw, 72px) / -0.01em</span>
+      <p class="type-row__spec" style="font-size:clamp(40px,5vw,64px);font-weight:400;line-height:1.05;letter-spacing:-0.01em">Built once. Runs itself.</p>
+    </div>
+    <div class="type-row">
+      <span class="mono type-row__cap">LEDE — SPACE GROTESK 400 / clamp(18px, 1.4vw, 20px) / 1.65</span>
+      <p class="type-row__spec" style="font-size:20px;line-height:1.65">Zyrn builds the operating core of modern firms.</p>
+    </div>
+    <div class="type-row">
+      <span class="mono type-row__cap">BODY — SPACE GROTESK 400 / 15px / 1.65 / 70% Vapor</span>
+      <p class="type-row__spec" style="font-size:15px;line-height:1.65;color:rgba(242,243,245,.7)">From org chart to inference layer, measured and versioned.</p>
+    </div>
+    <div class="type-row">
+      <span class="mono type-row__cap">METADATA — IBM PLEX MONO 400 / 11px / 0.16em / UPPER / STEEL</span>
+      <p class="type-row__spec mono" style="font-size:11px">SYS.02 — INTELLIGENCE LAYER / AMM 31.95°N / 35.93°E</p>
+    </div>
+  </section>
+
+  <!-- ── motion ───────────────────────────────────────────────────── -->
+  <section class="doc__sec">
+    <h2 class="doc__h2"><span class="mono doc__num">05</span> Motion law</h2>
+    <p class="doc__note">
+      Motion is scroll-driven. Nothing loops, nothing autoplays, and nothing moves
+      that the reader did not move themselves.
+    </p>
+    <table class="spec-table">
+      <thead><tr><th>System</th><th>Value</th><th>Reads as</th></tr></thead>
+      <tbody>
+        <tr><td>Scrub smoothing</td><td class="mono">1 − e^(−5·dt)</td><td>Mass and machinery, not UI</td></tr>
+        <tr><td>Reveal</td><td class="mono">700ms cubic-bezier(.22,1,.36,1)</td><td>Machined into place</td></tr>
+        <tr><td>Reveal clip</td><td class="mono">inset(0 0 18% 0) → 0</td><td>Cut, not floated</td></tr>
+        <tr><td>Shear</td><td class="mono">650ms cubic-bezier(.83,0,.17,1)</td><td>A mechanism throwing</td></tr>
+        <tr><td>UI transitions</td><td class="mono">300ms</td><td>Responsive, unremarkable</td></tr>
+        <tr><td>Parallax</td><td class="mono">scale 1 → 1.04</td><td>Subliminal push-in</td></tr>
+        <tr><td>Shear range</td><td class="mono">first 220px of scroll</td><td>The opening gesture</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── the glitch ──────────────────────────────────────────────── -->
+  <section class="doc__sec">
+    <h2 class="doc__h2"><span class="mono doc__num">05b</span> The glitch</h2>
+    <p class="doc__note">
+      A transmission artefact on a signal that is already sheared. It never
+      un-shears anything: every layer is applied to a wrapper or to a throwaway
+      clone, so the latched halves underneath are untouched by definition.
+    </p>
+    <table class="spec-table">
+      <thead><tr><th>Layer</th><th>Behaviour</th></tr></thead>
+      <tbody>
+        <tr><td>Jolt</td><td class="mono">translate &plusmn;6px, skew &plusmn;1.6&deg;, steps(1)</td></tr>
+        <tr><td>Chroma</td><td class="mono">text-shadow split, Pulse / #33C9DE, up to 5px</td></tr>
+        <tr><td>Slices</td><td class="mono">2 cloned ghosts, clip-path bands, &plusmn;11px</td></tr>
+        <tr><td>Scan</td><td class="mono">2px Pulse line + 1px cyan line, opposed</td></tr>
+        <tr><td>Burst</td><td class="mono">300ms full / 130ms micro (42% of fires)</td></tr>
+        <tr><td>Schedule</td><td class="mono">1.8&ndash;5.2s gaps; 62% double, 22% triple</td></tr>
+        <tr><td>Reduced motion</td><td class="mono">no glitch at all</td></tr>
+      </tbody>
+    </table>
+    <p class="doc__note">
+      A fixed interval reads as a metronome, which is the opposite of a glitch.
+      Real artefacts cluster: mostly quiet, then two or three in quick
+      succession. Each mark keeps its own randomised schedule, and marks that
+      are off screen never fire.
+    </p>
+  </section>
+
+  <!-- ── voice ────────────────────────────────────────────────────── -->
+  <section class="doc__sec">
+    <h2 class="doc__h2"><span class="mono doc__num">06</span> Voice</h2>
+    <p class="doc__note">Declarative, specific, and short. The brand does not sell; it states terms.</p>
+    <div class="voice">
+      <div class="voice__col voice__col--yes">
+        <span class="mono voice__cap">WRITE</span>
+        <ul class="voice__list">
+          <li>“It installs the system and stays until it runs.”</li>
+          <li>“Every engagement opens on a number.”</li>
+          <li>“Four engagements a quarter. The constraint is deliberate.”</li>
+          <li>Real figures, indices, and dates as ornament.</li>
+        </ul>
+      </div>
+      <div class="voice__col voice__col--no">
+        <span class="mono voice__cap">NEVER</span>
+        <ul class="voice__list">
+          <li>Exclamation marks, or any superlative.</li>
+          <li>“Cutting-edge”, “revolutionary”, “seamless”, “unlock”.</li>
+          <li>Claims of outcomes the index cannot show.</li>
+          <li>Faces, stock portraits, or team photography.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── layout ───────────────────────────────────────────────────── -->
+  <section class="doc__sec">
+    <h2 class="doc__h2"><span class="mono doc__num">07</span> Layout</h2>
+    <table class="spec-table">
+      <thead><tr><th>Rule</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Horizontal gutter</td><td class="mono">clamp(20px, 4vw, 48px)</td></tr>
+        <tr><td>Section padding</td><td class="mono">110px top / 56–64px bottom</td></tr>
+        <tr><td>Section height</td><td class="mono">min 100svh</td></tr>
+        <tr><td>Grid rules</td><td class="mono">33.333% and 66.666%, hidden below md</td></tr>
+        <tr><td>Panel</td><td class="mono">radius 8px, 1px hairline, obsidian 60%, blur 2px</td></tr>
+        <tr><td>Button radius</td><td class="mono">4px</td></tr>
+        <tr><td>Scene beat</td><td class="mono">30vh after the hero, 18vh thereafter</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- the field -->
+  <section class="doc__sec">
+    <h2 class="doc__h2"><span class="mono doc__num">08</span> The field</h2>
+    <p class="doc__note">
+      SYS.07. A 90,000-point GPU simulation is the bed on every surface of the
+      site. It is not footage, and there is no asset behind it &mdash; the page
+      renders its own subject. Full spec in
+      <span class="mono">docs/spec-presence-field.md</span>.
+    </p>
+
+    <h3 class="doc__sub">Ramp</h3>
+    <p class="doc__note">
+      Four stops, exposed as shader uniforms. The shipped ramp is
+      <span class="mono">vivid</span>: it puts a green-teal at the cold end so
+      the field travels through hue, not only through luminance. Pulse remains
+      the anchor and the dominant stop. If the field reads flat, move the
+      breakpoints, never the hues.
+    </p>
+    <div class="ramp" aria-hidden="true">
+      <div class="ramp__stop" style="background:#5FE3B0"><span>0.00 Teal</span></div>
+      <div class="ramp__stop" style="background:#33C9DE"><span>0.36 Cyan</span></div>
+      <div class="ramp__stop" style="background:#6E56F8"><span>0.72 Pulse</span></div>
+      <div class="ramp__stop" style="background:#F2F3F5"><span>1.00 Vapor</span></div>
+    </div>
+    <p class="doc__note mono" style="font-size:11px">
+      EMITTED, NEVER PRINTED. THE TWO COLD STOPS EXIST ONLY AS LIGHT IN THE
+      SIMULATION &mdash; NO DOM ELEMENT, ON ANY PAGE, MAY USE THEM AS INK.
+    </p>
+    <p class="doc__note">
+      The strict in-palette ramp &mdash; Steel <span class="mono">#767E8C</span>
+      &rarr; Pulse &rarr; Pulse-lifted <span class="mono">#A99BFF</span> &rarr;
+      Vapor &mdash; is still available and is one word per page:
+      <span class="mono">initField({ ramp: 'strict' })</span>. It reads as a
+      luminance ramp rather than a hue ramp: quieter, and closer to the
+      original doctrine.
+    </p>
+
+    <h3 class="doc__sub">States</h3>
+    <table class="spec-table">
+      <thead><tr><th>State</th><th>Shape</th><th>What it says</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">S1 FIELD</td><td>Tilted 4-arm log spiral</td>
+            <td>The organization as found. Structure exists, but it is emergent.</td></tr>
+        <tr><td class="mono">S2 DISPERSE</td><td>Scattered box, dimmed</td>
+            <td>Entropy. The same parts, no system.</td></tr>
+        <tr><td class="mono">S3 CORE</td><td>Rippling torus</td>
+            <td>The engineered operating loop. Closed, continuous, breathing.</td></tr>
+        <tr><td class="mono">S4 RELEASE</td><td>Sparse drifting slab</td>
+            <td>Self-calibrating. It holds without the field driving it.</td></tr>
+      </tbody>
+    </table>
+    <p class="doc__note">
+      Each surface runs its own program over these four states, and its own tilt
+      and spin, so moving between pages reads as one instrument changing
+      channels. The landing page runs all four across SYS.01&ndash;05; each
+      service page runs two.
+    </p>
+
+    <h3 class="doc__sub">Departures</h3>
+    <p class="doc__note">
+      The field required three amendments to the rules above. They are in force
+      on every surface except this one.
+    </p>
+    <ul class="rules">
+      <li class="rule-item">
+        <h3 class="mono rule-item__t">03 &mdash; Additive light is permitted</h3>
+        <p class="rule-item__b">
+          &ldquo;No glows, no noise&rdquo; exists to stop decorative glow being
+          sprinkled on a flat page. Where emitted light is the entire medium,
+          there is no flat page to protect.
+        </p>
+      </li>
+      <li class="rule-item">
+        <h3 class="mono rule-item__t">04 &mdash; The field is the Pulse</h3>
+        <p class="rule-item__b">
+          Because the simulation carries Pulse continuously, no button, rule or
+          hover state prints the accent &mdash; on a field surface it is light,
+          not ink. <strong>The mark is the exception.</strong> The seam is
+          specified in 03 as 2px Pulse with a 12px overhang, and it stays
+          exactly that: the signature is the one place the accent is still
+          printed. It draws on <span class="mono">--pulse-mark</span>, a token
+          that exists only for the wordmark, the monogram and the glitch slice,
+          because <span class="mono">--pulse</span> itself is remapped to Vapor
+          everywhere else.
+        </p>
+      </li>
+      <li class="rule-item">
+        <h3 class="mono rule-item__t">05 &mdash; The count is read, not typed</h3>
+        <p class="rule-item__b">
+          The hero states its particle count as live metadata. If the performance
+          governor steps the field down, the number changes with it. Doctrine
+          rule two &mdash; the only decoration is real information &mdash; taken
+          to its conclusion.
+        </p>
+      </li>
+    </ul>
+  </section>
+
+  <footer class="footer mono doc__foot">
+    <span class="footer__stamp">
+      <span class="mark" aria-hidden="true">
+        <svg class="mark__half mark__half--top" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+        <svg class="mark__half mark__half--bot" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+        <span class="mark__seam"></span>
+      </span>
+      ZYRN — EST. 2026
+    </span>
+    <span class="footer__coords">AMM 31.95&deg;N / 35.93&deg;E</span>
+    <span>V.2.0 / EN — AR</span>
+  </footer>
+
+</main>
+<script src="assets/js/ui.js"></script>
+
+<script type="module">
+/* One held formation, no morph, no stats. The document stays readable first;
+   the field is here so the brand system is shown in the medium it is made of. */
+import { initField } from './assets/js/field.js';
+initField({
+  program: [{ at: 0, form: 'S3' }, { at: 1, form: 'S3' }],
+  channel: { tilt: { S3: 30 }, spin: { S3: 220 } },
+  alpha: 0.38,
+  turbulence: 0.10,
+  // a document must stay readable first: attenuate the field behind whole
+  // sections, not just headlines, so no body copy ever sits under bloom
+  keepout: '.doc__head, .doc__sec',
+});
+</script>
+</body>
+</html>

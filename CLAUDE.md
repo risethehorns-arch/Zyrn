@@ -1,0 +1,279 @@
+# ZYRN
+
+Brand site for Zyrn — an org-engineering firm (human capital, business structuring,
+AI transformation, web & strategy). Amman, JO. Positioning: *Organizations, engineered.*
+
+The full authored brief lives in `docs/build-spec.md`. **Read it before any visual
+change.** This file is the short operative version.
+
+## Layout
+
+```
+index.html              live landing page — plain HTML/CSS/JS, no build step
+                        five scenes: SYS.01 hero · SYS.02 capability · SYS.03 service
+                        lines · SYS.04 readiness index · SYS.05 access. Capped at five
+                        deliberately — see docs/strategy.md §4. It OPENS on the
+                        torus (S3 CORE) because the hero lede is "Zyrn builds the
+                        operating core" — then S3 → S1 (the core opens into four
+                        arms, one per line, as SYS.03 arrives) → S3 (SYS.04's
+                        ladder climbs from emergent back to engineered) → S4.
+                        Also carries the section index rail and the stats strip.
+assets/js/field.js      SYS.07 — THE BED, on every page. A 90k-point GPGPU particle
+                        simulation; there is no asset behind it. One shared engine,
+                        per-page `program` (which formations, at which scroll
+                        positions) and `channel` (tilt + spin), so moving between
+                        pages reads as one instrument changing channels.
+                        Spec: docs/spec-presence-field.md.
+                        Capture flags — headless verification only works with these,
+                        because a real-time sim is still mid-flight when a headless
+                        screenshot lands: ?freeze=S1|S2|S3|S4 · ?p=0.28 · ?probe=1 ·
+                        ?nogl=1 · ?particles=N · ?coarse=1 · ?debug
+assets/css/field.css    the page layer for the field: mounts the canvas, enforces
+                        Departure 4 site-wide, adds the stats strip and flat fallback.
+brand.html              SYS.06 brand system — a reference document, deliberately NOT
+                        immersive (its job is legibility, not atmosphere)
+services/*.html         four dedicated service pages, one per line. Generated from a
+                        single template — keep them in sync; edit all four or none.
+                        Each carries the same field + grid, so moving between them
+                        reads as one instrument switching channels — a different
+                        formation program and tilt/spin per line.
+assets/css/styles.css   all styling, tokens at :root (incl. the glass + glitch systems)
+assets/css/brand.css    brand-page-only document layout
+assets/css/service.css  service-page layer (hero, module cards, phases, signals)
+assets/js/ui.js         shared on every page: irregular glitch scheduling + page
+                        transition veil
+assets/js/main.js       DOM runtime (hero shear · readout rail · reveals)
+                        — dt-based smoothing (k=5/s ≡ spec's 0.08@60Hz). The video
+                        scrub, frame cache and decoder handling that used to live
+                        here are GONE with the bed; this file no longer touches a
+                        canvas or a video element.
+                        NEVER pass desynchronized:true to getContext anywhere in
+                        this project — it hard-froze the renderer on this machine.
+assets/media/           empty. Kept for future stills only — the site has no video.
+design/                 source of record from Claude Design (.dc.html) — reference only, never served
+docs/build-spec.md      the authored brief (v1.0 — written for the video bed)
+docs/spec-presence-field.md
+                        the field's spec: formations, physics, the three departures,
+                        performance budget, acceptance list
+docs/strategy.md        positioning research, where each finding landed, and the
+                        sourced third-party stats awaiting sign-off before going public
+```
+
+**Steel is a panel colour.** `#767E8C` disappears against the open field — mono
+metadata sitting directly on it takes Vapor at 0.6–0.9 alpha plus the veil shadow
+instead. Steel is correct inside panels, where the obsidian veil backs it. This
+still bites: `.lockup__live` and `.stats__l` are Vapor for exactly this reason.
+
+**Do not nest a `[data-reveal]` inside another one.** The parent's reveal
+clip-path is `inset(0 0 18% 0)`, which hides the bottom band of its own box — a
+nested observer target sitting in that band never registers as visible and never
+reveals. Let children inherit the parent's reveal instead.
+
+`design/*.dc.html` is Claude Design's own format (`<x-dc>`, `DCLogic`) and does not
+run standalone. `index.html` is the faithful vanilla port and is the thing we build on.
+
+## Preview
+
+```
+python3 -m http.server 8000       # run from the project root
+```
+
+Then `http://localhost:8000/index.html`. For phone testing use this PC's LAN IP or a
+Cloudflare quick tunnel — see the note in memory about which link to send.
+
+## Port notes — where `index.html` deliberately differs from the `.dc.html`
+
+Checked against `support.js`, the Claude Design runtime the `.dc.html` imports.
+
+- **`style-hover="…"`** is not a plain attribute. The runtime's `collectProps` strips
+  the `style-` prefix and calls `pseudoClass(name, css)`, which mints a `.scpN:hover{…}`
+  rule with `!important` forced onto every declaration — it has to, because the base
+  styles are inline and inline beats a class selector. Our port keeps base styles in
+  real classes, so ordinary `:hover` rules achieve the same thing without `!important`.
+  All five hover states from the source are implemented.
+- **Box model.** The runtime injects no reset (`BASE_CSS` is only editor chrome —
+  placeholders, streaming shimmer, error badges), so the `.dc.html` renders under
+  content-box, where the access card's `width:100%` button spills 16px into the card's
+  padding on each side. The spec's declared stack is Tailwind, whose preflight sets
+  `border-box` globally and whose `max-w-xs` means 320px total. We use border-box; the
+  `.dc.html`'s spill is a missing-preflight artifact, not the intent.
+- **Capability arrows nudge on row hover, not arrow hover.** The source attaches
+  `style-hover` to the arrow `<span>` itself; the spec says `group-hover`. We followed
+  the spec. The rows are also `<a>` elements here, since the arrow implies a link.
+  Related: the source's helmet carries `a:hover{color:#FFFFFF}`, which is inert there
+  (its only anchors are the nav links, whose `!important` pseudo-class wins). It is
+  deliberately not carried over — it would push whole capability rows to pure white,
+  which is neither in the palette nor in the spec.
+
+## Three further departures — now SITE-WIDE
+
+Adopted 2026-08-17 when the field replaced the video bed on every page. They are
+in force everywhere except `brand.html`, which is exempt from Departure 4 because
+it has to be able to print the accent. Full reasoning in
+`docs/spec-presence-field.md` §0, and they are documented for the reader in
+`brand.html` §08.
+
+3. **Additive light is permitted there.** "No glows, no noise" exists to stop
+   decorative glow on a flat page; on a surface whose entire medium is emitted
+   light there is no flat page to protect.
+4. **The field is the Pulse — with one exception: THE MARK.** Implemented in
+   `field.css` by remapping `--pulse` to Vapor, plus explicit fixes for the
+   v1.0 rules that wrote Pulse as a raw `rgba()` (`::selection`, the glass
+   tint's 2% stop). No button, rule or hover state prints the accent.
+   **The wordmark does.** The brand kit is explicit — *"Seam: scaleX(progress),
+   2px, Pulse, 12px overhang each side"* (`brand.html` §03) — and the owner
+   asked for it back in the kit colour (2026-08-17). The seam, the monogram
+   seam and the glitch's scan slice use `--pulse-mark: #6E56F8`, a token that
+   exists **only** for the mark because `--pulse` itself is remapped. Nothing
+   else may use it. To revert the whole departure, delete that one block.
+6. **The ramp may leave the four tokens — as light only.** The shipped ramp is
+   `vivid`: green-teal `#5FE3B0` → cyan `#33C9DE` → **Pulse `#6E56F8`** → Vapor.
+   The two cold stops are not brand ink and must never appear in the DOM; they
+   exist so the field travels through hue rather than only through luminance.
+   Pulse stays the anchor and the dominant stop. The original in-palette ramp is
+   one word away: `initField({ ramp: 'strict' })` — Steel → Pulse → Pulse+ →
+   Vapor. Requested directly by the owner (2026-08-17) against a reference
+   image; it supersedes the spec's "no teal, no second accent."
+   Consequence: the bloom ceiling of 0.35 went with it. Vivid runs 0.46, because
+   a ramp carrying real chroma needs the lift to actually glow.
+5. **The hero's count is read, not typed.** SYS.01 states the live particle count
+   as mono metadata under the lockup (`.lockup__live`), and the stats strip reports
+   frame budget, cold start and fps off the running sim. If the perf governor steps
+   the field down, both change with it. Any value that cannot be measured shows an
+   em dash — never a plausible constant. Doctrine rule 2 taken to its conclusion.
+
+## Two owner-authorised departures from the original spec
+
+Both were requested directly. They override `docs/build-spec.md`, which still carries
+the original prohibitions — read that file knowing these two lines are superseded.
+
+1. **Glass is now permitted** (spec said "no frosted glass"). The implementation is
+   deliberately not generic glassmorphism: obsidian-tinted fill, a specular hairline
+   top edge, a float shadow, and idle drift on coprime durations. No white chips.
+   Tokens: `--glass-tint` / `--glass-blur` / `--glass-edge` / `--glass-spec` /
+   `--glass-lift`. If you add a panel, use them rather than inventing a new surface.
+2. **The wordmark glitches** (spec said the shear latches and never snaps back). The
+   latch is intact — the glitch is applied to a `.glitch` *wrapper*, never to the
+   halves, so the sheared state underneath is untouched. It is a transmission artefact
+   on an already-sheared signal, not a reversal of it.
+
+`ui.js` schedules the glitch at randomised intervals with occasional double-taps; a
+fixed CSS interval reads as a metronome. Both effects opt out under reduced motion.
+
+**Verifying animations headlessly:** `--virtual-time-budget` races through short
+animations before any screenshot lands, so a running glitch can never be captured.
+Pin the keyframe values statically with `!important` and screenshot that instead.
+
+## Design doctrine — governs every ambiguous decision
+
+1. **Silence is the luxury.** 80%+ of any viewport is empty or field.
+2. **Metadata as ornament.** The only decoration is real information — coordinates,
+   indices, timestamps, version tags — set in IBM Plex Mono.
+3. **One Pulse per surface.** `#6E56F8` appears exactly once per viewport. Hero = the
+   wordmark seam. Mid-scroll = the readout rail fill. Section two = the primary CTA.
+4. **The shear belongs to the logo only.** Never shear photos, headlines, or cards.
+
+When the spec is silent, choose the quieter option.
+
+## Tokens
+
+| Token    | Value                    |
+|----------|--------------------------|
+| Obsidian | `#0E0F12`                |
+| Vapor    | `#F2F3F5`                |
+| Pulse    | `#6E56F8`                |
+| Steel    | `#767E8C`                |
+| Hairline | `rgba(242,243,245,0.08)` |
+
+Type: Space Grotesk 400/500 (display + UI), IBM Plex Mono 400/500 (all metadata).
+Mono labels are always `11px / uppercase / tracking 0.16em / Steel`.
+
+## Hard rules
+
+- No frosted glass. Panels are `rgba(14,15,18,0.6)` + `blur(2px)` + a 1px hairline.
+- No gradients beyond the two Obsidian edge fades. No glows, no noise. — SUPERSEDED
+  by Departure 3 for the field itself; still binding on every DOM element.
+- Never type ZYRN as plain text in nav, hero, or footer — always the shear component.
+- Never replace the two typefaces.
+- No exclamation marks or superlatives in copy.
+- No faces, no stock portraits.
+- Do not remove the `.runway` spacers — they are the beat between scenes, where
+  only the field is on screen. Do not inflate them either: at the spec's
+  `80vh + 3x55vh` they were 1973px of a 6204px page, so a third of the site was
+  blank scrolling and it read as a broken page. Now `30vh` / `18vh` (671px,
+  13.7%). If you change them, re-measure the section centres and re-anchor the
+  field program in `index.html` — the two are coupled.
+- The hero shear latches: once sheared it never un-shears.
+- **Both marks are the same component.** The hero mark used to be scroll-bound
+  (`.shear--hero`, inline transforms written by `main.js` every frame), so at
+  scroll 0 it sat aligned while the nav mark was already sheared — the two read
+  as two different logos. Both are now `.shear--auto` + `.is-sheared`, applied
+  on one 300ms beat by `shearMarks()`. Owner-requested 2026-08-17. This
+  supersedes `docs/build-spec.md`'s scroll-bound hero shear; the shear law
+  itself is unchanged, and `.shear--hero` in `styles.css` is now unused.
+
+## The glitch (rebuilt 2026-08-17)
+
+Four layers, all applied to the WRAPPER or to clones — the shear halves
+underneath are never touched, so the latch survives every burst:
+
+1. **jolt** — the wrapper kicks and skews, harder than v1.0's single nudge
+2. **chroma** — a Pulse/cyan text-shadow split, flickering through the burst
+3. **slices** — two cloned ghosts, clipped into bands and thrown sideways,
+   tinted `--pulse-mark` and `#33C9DE` (the two hues the field already emits)
+4. **scan** — the v1.0 Pulse line plus a cyan one running the opposite way
+
+`ui.js` clones the ghosts **at fire time**, not at init, so they snapshot the
+mark's current shear state — the hero's halves carry inline transforms from
+`main.js`, and a stale clone would glitch an un-sheared wordmark over a sheared
+one. It strips `id`s off the clone (`#navMark`/`#heroMark` must not duplicate)
+and positions each ghost with `src.offsetLeft/offsetTop`: an absolutely
+positioned clone does not land where an inline-block original sits on the
+baseline, and assuming `top:0` gives every slice a vertical offset the
+keyframes never asked for.
+
+Scheduling: quiet gaps of 1.8–5.2s, 62% chance of a double and 22% of a
+triple, and 42% of fires are a 130ms `micro` (chroma + small kick, no slices)
+rather than a full 300ms burst. Off-screen marks never fire.
+
+**Verifying it headlessly:** `--virtual-time-budget` races through a 300ms
+animation before any screenshot lands, and `main.js`'s endless rAF chain
+starves `setTimeout` so a delayed probe never runs either. Use
+`_probe_mark.html`-style isolation instead: no `main.js`, build the ghosts
+synchronously, and freeze each copy with
+`animation-play-state:paused; animation-delay:-Nms !important`.
+
+## Scroll layer (added 2026-08-17)
+
+- **Section index rail** (`.sysnav`, landing only) — the five SYS numerals down
+  the left edge, the one owning the middle of the viewport lit. Numerals only:
+  labels widened it into the content column, and the section names live on
+  `aria-label`. It has its own lane — `.section`/`.footer` get `padding-left:92px`
+  above 1180px. Hidden below that.
+- **Kinetic headlines** — `data-kinetic` on an element makes `main.js` split it
+  into per-word spans with a 55ms cascade. It walks child nodes rather than
+  touching innerHTML, so `<br>` survives. The CSS keys off `.is-in` OR `.is-kin`,
+  because the flat fallback and the reduced-motion path each set only one — key
+  it off `.is-kin` alone and every kinetic headline stays invisible with `?nogl=1`.
+- **Camera choreography** — the dolly is driven by `transit = sin(π · mix)`, which
+  peaks mid-morph and is exactly zero on a settled formation, so the camera pulls
+  back to take in a change and closes on the result.
+- **Scroll velocity moves the ramp** — fast scrolling pulls the breakpoints down,
+  so more of the field sits on the hot stops. The colour reacts, not just the shape.
+
+## Open
+
+- ~~`TODO(asset)` — hero video~~ **CLOSED 2026-08-17.** There is no video anywhere
+  on the site. The field renders its own subject, so there is nothing to source.
+- No favicon yet — should be the Z monogram (two-half clip + Pulse seam).
+- Nav below `sm` should swap the full wordmark for the Z monogram.
+- `Journal` is the last unrouted nav link. Per docs/strategy.md it is the credibility
+  engine for a referral-only firm — strongest candidate after the readiness assessment.
+- `access@zyrn.co` is a placeholder address — no domain is registered yet.
+- SYS.03's four lines now link to `services/*.html`.
+- Service pages have no per-service proof either — same gap as the landing page.
+- No proof anywhere on the site: no case study, metric, or named engagement. Expected
+  at launch, but it is the first thing a CIO will look for. See docs/strategy.md §5.
+- Real 60fps at 90k has NOT been measured on hardware. Headless renders this page
+  at roughly one frame per second of virtual time, so it cannot judge frame rate.
+  Open any page with `?probe=1` in a real browser and read the console.

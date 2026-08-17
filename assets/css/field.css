@@ -1,0 +1,310 @@
+/* ══════════════════════════════════════════════════════════════════════
+   ZYRN — SYS.07 · PRESENCE FIELD (page layer)
+
+   Loaded AFTER styles.css on every page that carries the field. Does three
+   things and nothing else:
+
+     1. mounts the fixed canvas behind the content
+     2. enforces Departure 4 site-wide
+     3. adds the hero stats strip and the flat fallback
+
+   ── DEPARTURE 4 ────────────────────────────────────────────────────────
+   The field emits Pulse continuously, so the doctrine's "one Pulse per
+   viewport" rule inverts rather than breaks:
+
+       NO DOM ELEMENT ON A FIELD PAGE MAY USE PULSE.
+
+   Not the seam, not a button, not a rule, not a hover state. This is
+   stricter than the original rule, not looser — one Pulse source per
+   viewport, and it is the simulation. The accent has moved from ink to
+   light. `--pulse` is remapped to Vapor below, which retints every v1.0
+   rule that referenced it in one place; the few that then needed a
+   contrast fix are corrected underneath.
+
+   brand.html deliberately does NOT load this file: it documents the
+   palette, so it must be able to print real Pulse ink.
+
+   To revert the whole departure, delete the "Departure 4" block. Nothing
+   else in the site depends on it.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. the canvas ──────────────────────────────────────────────────── */
+#field{
+  position:fixed;inset:0;width:100%;height:100%;
+  z-index:0;display:block;
+  background:var(--obsidian);
+  pointer-events:none;
+}
+body.is-flat #field{display:none}
+
+/* the v1.0 video bed is gone; anything left referencing it stays hidden */
+.bed{display:none !important}
+
+/* No-WebGL ground. The page is progressive enhancement, not a canvas app:
+   all copy ships in the HTML, so this reads as a clean typographic site. */
+body.is-flat{
+  background:
+    radial-gradient(120% 90% at 50% 26%, #101216 0%, var(--obsidian) 46%, #08090B 100%);
+}
+body.is-flat .stats{display:none}
+
+
+/* ── 2. Departure 4 ─────────────────────────────────────────────────── */
+:root{
+  --pulse:#F2F3F5;
+  --pulse-hi:#FFFFFF;
+}
+/* .btn--pulse was indigo-on-white; as a Vapor fill it needs dark ink */
+.btn--pulse{color:var(--obsidian);font-weight:500}
+.btn--pulse:hover{background:#FFFFFF}
+/* ── DEPARTURE 4, EXCEPTION: THE MARK ───────────────────────────────
+   The brand kit is explicit about the seam — "scaleX(progress), 2px, Pulse,
+   12px overhang each side" (brand.html §03) — and the owner asked for it
+   back in the kit colour. So the wordmark, the monogram and the glitch slice
+   print real Pulse; everything else on a field page stays remapped to Vapor.
+
+   `--pulse-mark` exists because `--pulse` itself is remapped above. Anything
+   belonging to the mark uses this token; nothing else may. */
+:root{ --pulse-mark:#6E56F8; }
+
+.shear__seam{background:var(--pulse-mark)}
+.mark__seam{background:var(--pulse-mark)}
+.readout__fill{background:var(--vapor);opacity:0.85}
+
+/* Three v1.0 rules wrote Pulse as a raw rgba() rather than through the token,
+   so the remap above does not reach them. Closed here so the rule holds
+   literally and `grep 6E56F8 / 110,86,248` over a field page stays clean. */
+::selection{background:rgba(242,243,245,0.22);color:var(--obsidian)}
+:root{
+  /* the glass tint carried a 2% Pulse stop; Steel at the same alpha keeps the
+     cold cast without printing the accent */
+  --glass-tint:linear-gradient(157deg,
+      rgba(242,243,245,0.055) 0%,
+      rgba(242,243,245,0.018) 38%,
+      rgba(118,126,140,0.020) 72%,
+      rgba(14,15,18,0.060) 100%);
+}
+
+
+/* ── 3. hero stats strip ────────────────────────────────────────────
+   All four numbers are measured. Where a value cannot be measured the
+   cell shows an em dash — never a plausible constant. */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  /* 56px flat pushed the labels below the fold on a 900px-tall viewport */
+  margin:clamp(22px,3.5vh,56px) 0 0;padding:0;
+  border-top:1px solid var(--hair);
+  padding-top:clamp(14px,2vh,22px);
+}
+.stats__cell{
+  /* dt before dd is the correct source order; column-reverse keeps the
+     number on top visually without lying to a screen reader */
+  display:flex;flex-direction:column-reverse;justify-content:flex-end;
+  align-items:flex-start;gap:6px;
+  padding:0 20px;
+  border-left:1px solid var(--hair);
+}
+.stats__cell:first-child{border-left:0;padding-left:0}
+.stats__n,.stats__l{margin:0}
+/* on the open field, not in a panel — Vapor, not Steel */
+.stats__l{color:rgba(242,243,245,0.6)}
+.stats__n{
+  font-family:var(--font-mono);
+  font-size:34px;font-weight:400;line-height:1;letter-spacing:-0.01em;
+  color:var(--vapor);font-variant-numeric:tabular-nums;
+}
+@media (max-width:820px){
+  .stats{grid-template-columns:repeat(2,1fr);row-gap:22px}
+  .stats__cell:nth-child(3){border-left:0;padding-left:0}
+  .stats__n{font-size:26px}
+}
+
+/* the live count line (Departure 5) crossfades when the governor steps */
+#hCount{transition:opacity 300ms linear}
+
+/* the hero's live count, set as mono metadata beside the lockup rather
+   than as a competing headline — doctrine rule 2, not a second display line.
+   NOT Steel: "Steel is a panel colour" (CLAUDE.md) — #767E8C disappears
+   against the open bed, so mono sitting directly on the field takes Vapor
+   at 0.6-0.9 plus the veil shadow. Same reason .stats__l is lifted below. */
+.lockup__live{
+  margin-top:14px;
+  color:rgba(242,243,245,0.75);
+}
+
+
+/* ── 4. section index rail ──────────────────────────────────────────
+   Metadata as navigation. Numerals only: the label would widen the rail
+   into the content column, and SYS numbering is already the site's idiom.
+   The section name lives on aria-label for anyone who needs it. Mono,
+   Vapor, no Pulse (Departure 4). */
+.sysnav{
+  position:fixed;left:18px;top:50%;transform:translateY(-50%);
+  z-index:40;
+  display:flex;flex-direction:column;gap:16px;
+  font-family:var(--font-mono);font-size:10px;letter-spacing:0.16em;
+}
+.sysnav__i{
+  display:flex;align-items:center;gap:8px;
+  color:rgba(242,243,245,0.3);
+  transition:color 320ms cubic-bezier(.16,1,.3,1);
+  text-shadow:0 1px 12px rgba(14,15,18,0.6);
+}
+.sysnav__i:hover{color:rgba(242,243,245,0.72)}
+.sysnav__t{
+  display:block;width:10px;height:1px;background:currentColor;
+  transition:width 320ms cubic-bezier(.16,1,.3,1);
+  flex:0 0 auto;
+}
+.sysnav__i.is-on{color:var(--vapor)}
+.sysnav__i.is-on .sysnav__t{width:24px}
+
+/* the rail needs its own lane — inset the content so the two never meet */
+@media (min-width:1180px){
+  .shell .section{padding-left:92px}
+  .footer{padding-left:92px}
+}
+@media (max-width:1179px){ .sysnav{display:none} }
+
+/* ── 5. kinetic headlines ───────────────────────────────────────────
+   Per-word arrival. The delay is written per span by main.js; only three
+   compositor properties move, and each word runs once. */
+.kin{
+  display:inline-block;
+  opacity:0;transform:translateY(0.34em);filter:blur(7px);
+  transition:opacity 720ms var(--ease-out,cubic-bezier(.16,1,.3,1)),
+             transform 720ms var(--ease-out,cubic-bezier(.16,1,.3,1)),
+             filter 720ms var(--ease-out,cubic-bezier(.16,1,.3,1));
+}
+/* keyed off EITHER class: main.js's reveal path sets both, but the flat
+   fallback and the reduced-motion path each set only one. Requiring .is-kin
+   alone left every kinetic headline invisible with ?nogl=1. */
+.is-in .kin,.is-kin .kin{opacity:1;transform:none;filter:blur(0)}
+@media (prefers-reduced-motion:reduce){
+  .kin{transition-duration:1ms;transition-delay:0ms !important;filter:none}
+}
+
+
+/* ── 6. THE GLITCH ──────────────────────────────────────────────────
+   Harder and more frequent than v1.0's single 260ms jolt. Four layers,
+   all on the WRAPPER or on clones — the shear halves underneath are never
+   touched, so the latch survives every burst untouched:
+
+     1. jolt      — the wrapper kicks and skews
+     2. chroma    — a Pulse/cyan split on the type, flickering
+     3. slices    — two cloned ghosts, clipped to bands and thrown sideways
+     4. scan      — two coloured scan lines cutting across
+
+   ui.js supplies the clones at fire time (so they snapshot the CURRENT
+   shear state) and removes them when the burst ends. `--gd` is the burst
+   duration; the micro variant runs the same keyframes short and small. */
+
+.glitch{ --gd:300ms; }
+.glitch.is-glitching--micro{ --gd:130ms; }
+
+/* 1 · jolt */
+.glitch.is-glitching,
+.glitch.is-glitching--micro{
+  animation:g-jolt var(--gd) steps(1,end) both;
+}
+@keyframes g-jolt{
+  0%  {transform:translate3d(0,0,0) skewX(0deg)}
+  8%  {transform:translate3d(-5px,1px,0) skewX(-1.4deg)}
+  18% {transform:translate3d(4px,-1px,0) skewX(1deg) scaleX(1.02)}
+  27% {transform:translate3d(-2px,0,0) skewX(0deg)}
+  38% {transform:translate3d(6px,1px,0) skewX(1.6deg)}
+  49% {transform:translate3d(-3px,-1px,0) skewX(-0.8deg) scaleX(0.99)}
+  61% {transform:translate3d(2px,0,0) skewX(0deg)}
+  73% {transform:translate3d(-6px,1px,0) skewX(-1.2deg)}
+  86% {transform:translate3d(1px,0,0) skewX(0.4deg)}
+  100%{transform:translate3d(0,0,0) skewX(0deg)}
+}
+
+/* 2 · chromatic split, in the two colours the field already emits */
+.glitch.is-glitching .shear,
+.glitch.is-glitching--micro .shear{
+  animation:g-chroma var(--gd) steps(1,end) both;
+}
+@keyframes g-chroma{
+  0%,100%{text-shadow:none}
+  9%  {text-shadow:3px 0 var(--pulse-mark),-3px 0 #33C9DE}
+  22% {text-shadow:-2px 0 var(--pulse-mark),2px 0 #33C9DE}
+  35% {text-shadow:none}
+  52% {text-shadow:5px 0 var(--pulse-mark),-3px 0 #33C9DE}
+  64% {text-shadow:none}
+  79% {text-shadow:-4px 0 var(--pulse-mark),3px 0 #33C9DE}
+  92% {text-shadow:none}
+}
+
+/* 3 · slice displacement — cloned bands thrown sideways */
+.glitch__ghost{
+  position:absolute;left:0;top:0;
+  pointer-events:none;opacity:0;
+  will-change:transform,clip-path;
+}
+.glitch__ghost .shear__seam{opacity:1;transform:scaleX(1)}
+.glitch__ghost--a .shear{color:var(--pulse-mark)}
+.glitch__ghost--b .shear{color:#33C9DE}
+.glitch.is-glitching .glitch__ghost--a{animation:g-slice-a var(--gd) steps(1,end) both}
+.glitch.is-glitching .glitch__ghost--b{animation:g-slice-b var(--gd) steps(1,end) both}
+@keyframes g-slice-a{
+  0%,100%{opacity:0}
+  10%{opacity:1;clip-path:inset(4% 0 72% 0);transform:translate3d(-11px,-1px,0)}
+  24%{opacity:1;clip-path:inset(34% 0 48% 0);transform:translate3d(8px,0,0)}
+  33%{opacity:0}
+  58%{opacity:1;clip-path:inset(66% 0 14% 0);transform:translate3d(-7px,1px,0)}
+  70%{opacity:0}
+  88%{opacity:1;clip-path:inset(18% 0 62% 0);transform:translate3d(5px,0,0)}
+  96%{opacity:0}
+}
+@keyframes g-slice-b{
+  0%,100%{opacity:0}
+  14%{opacity:1;clip-path:inset(52% 0 30% 0);transform:translate3d(9px,1px,0)}
+  27%{opacity:0}
+  46%{opacity:1;clip-path:inset(10% 0 76% 0);transform:translate3d(-9px,0,0)}
+  56%{opacity:0}
+  76%{opacity:1;clip-path:inset(72% 0 8% 0);transform:translate3d(6px,-1px,0)}
+  85%{opacity:0}
+}
+
+/* 4 · scan lines — the v1.0 Pulse slice, plus a cyan one running opposite */
+.glitch::after{
+  background:var(--pulse-mark);
+  box-shadow:0 0 10px rgba(110,86,248,0.95),0 0 3px rgba(110,86,248,1);
+}
+.glitch::before{
+  content:'';position:absolute;left:-14px;right:-14px;
+  top:56%;height:1px;
+  background:#33C9DE;
+  box-shadow:0 0 8px rgba(51,201,222,0.8);
+  opacity:0;pointer-events:none;
+}
+.glitch.is-glitching::after{animation:glitch-scan var(--gd) steps(1,end) both}
+.glitch.is-glitching::before{animation:g-scan-b var(--gd) steps(1,end) both}
+@keyframes g-scan-b{
+  0%,100%{opacity:0;top:56%}
+  14%{opacity:0.9;top:72%}
+  28%{opacity:0;top:72%}
+  58%{opacity:0.75;top:30%}
+  70%{opacity:0;top:30%}
+  90%{opacity:0.55;top:60%}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .glitch.is-glitching,.glitch.is-glitching--micro,
+  .glitch.is-glitching::after,.glitch.is-glitching::before,
+  .glitch.is-glitching .shear,
+  .glitch__ghost{animation:none !important;opacity:0}
+}
+
+
+/* ── 7. Lenis ───────────────────────────────────────────────────────
+   Lenis ships these and they are not optional. Without the `lenis-smooth`
+   rule the browser re-eases every frame Lenis writes, and the wheel goes
+   dead for stretches. `data-lenis-prevent` marks any inner scroller that
+   should keep its own wheel. */
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto !important}
+.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+.lenis.lenis-stopped{overflow:hidden}
+.lenis.lenis-scrolling iframe{pointer-events:none}

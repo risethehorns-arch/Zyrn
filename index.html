@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZYRN — Organizations, Engineered</title>
+<meta name="description" content="Zyrn builds the operating core of modern firms — people, structure, and intelligence as one system.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<link rel="stylesheet" href="assets/css/field.css">
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/",
+    "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.mjs",
+    "lil-gui": "https://cdn.jsdelivr.net/npm/lil-gui@0.19.2/dist/lil-gui.esm.js"
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- ── SYS.07 · the presence field ─────────────────────────────────
+     The bed. A GPGPU particle simulation, not footage — see
+     assets/js/field.js and docs/spec-presence-field.md. This replaces the
+     v1.0 scroll-scrubbed video entirely, which is why TODO(asset) is gone. -->
+<canvas id="field" aria-hidden="true"></canvas>
+
+<!-- ── hairline grid ────────────────────────────────────────────────── -->
+<div class="grid" aria-hidden="true">
+  <span class="grid__line grid__line--a"></span>
+  <span class="grid__line grid__line--b"></span>
+</div>
+
+<!-- ── section index rail ───────────────────────────────────────────
+     Metadata as navigation: the five scenes, with the one that owns the
+     middle of the viewport lit. Doctrine rule 2 — the only decoration is
+     real information. -->
+<nav class="sysnav" aria-label="Sections">
+  <a class="sysnav__i is-on" data-sys="01" href="#top"    aria-label="SYS.01 — Hero"><span class="sysnav__t"></span>01</a>
+  <a class="sysnav__i"       data-sys="02" href="#sys-02" aria-label="SYS.02 — Capability"><span class="sysnav__t"></span>02</a>
+  <a class="sysnav__i"       data-sys="03" href="#sys-03" aria-label="SYS.03 — Service lines"><span class="sysnav__t"></span>03</a>
+  <a class="sysnav__i"       data-sys="04" href="#sys-04" aria-label="SYS.04 — Readiness index"><span class="sysnav__t"></span>04</a>
+  <a class="sysnav__i"       data-sys="05" href="#sys-05" aria-label="SYS.05 — Access"><span class="sysnav__t"></span>05</a>
+</nav>
+
+<!-- ── scroll readout ───────────────────────────────────────────────── -->
+<div class="readout" aria-hidden="true">
+  <span class="readout__label">ZYRN / <span id="readoutState">S1 FIELD</span> — <span id="readoutPct">000</span>%</span>
+  <span class="readout__track"><span class="readout__fill" id="readoutFill"></span></span>
+</div>
+
+<div class="shell">
+
+  <!-- ── nav ────────────────────────────────────────────────────────── -->
+  <nav class="nav">
+    <div class="nav__row">
+      <div data-reveal data-rdelay="0">
+        <a href="#top" aria-label="ZYRN — home">
+          <span class="glitch">
+          <span class="shear shear--auto" id="navMark" style="--shear-size:20px">
+            <span class="shear__half shear__half--top">ZYRN</span>
+            <span class="shear__half shear__half--bot">ZYRN</span>
+            <span class="shear__seam"></span>
+          </span>
+          </span>
+        </a>
+      </div>
+
+      <div class="nav__links">
+        <a href="#sys-03" class="nav__link" data-reveal data-rdelay="100">Work<sup class="nav__sup">06</sup></a>
+        <a href="#sys-04" class="nav__link" data-reveal data-rdelay="200">System</a>
+        <a href="#" class="nav__link" data-reveal data-rdelay="300">Journal</a>
+        <a href="#sys-05" class="nav__link" data-reveal data-rdelay="400">Contact</a>
+      </div>
+
+      <div class="nav__end" data-reveal data-rdelay="500">
+        <span class="mono nav__coords">AMM 31.95&deg;N / 35.93&deg;E</span>
+        <button type="button" class="btn btn--hairline">Request access</button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+
+    <!-- ── SYS.01 · hero ────────────────────────────────────────────── -->
+    <section class="section" data-screen-label="Hero" data-sys-section="01">
+      <div class="row row--top">
+        <div class="index">
+          <span class="mono index__item veil" data-reveal data-rdelay="150">01 / HUMAN CAPITAL</span>
+          <span class="mono index__item veil" data-reveal data-rdelay="270">02 / BUSINESS STRUCTURING</span>
+          <span class="mono index__item veil" data-reveal data-rdelay="390">03 / AI TRANSFORMATION</span>
+          <span class="mono index__item veil" data-reveal data-rdelay="510">04 / WEB &amp; STRATEGY</span>
+        </div>
+        <p class="lede veil" data-reveal data-rdelay="300" data-keepout>
+          Zyrn builds the operating core of modern firms — people, structure, and intelligence as one system.
+        </p>
+      </div>
+
+      <div class="row row--bottom">
+        <div>
+          <div class="badge mono veil" data-reveal data-rdelay="150">BY REFERRAL — 04 SEATS / Q3</div>
+
+          <div class="lockup" data-reveal data-rdelay="280" data-keepout>
+            <span class="glitch">
+            <span class="shear shear--auto veil" id="heroMark" style="--shear-size:clamp(48px,6.5vw,72px)">
+              <span class="shear__half shear__half--top">ZYRN</span>
+              <span class="shear__half shear__half--bot">ZYRN</span>
+              <span class="shear__seam"></span>
+            </span>
+            </span>
+            <div class="lockup__sub veil">Organizations, engineered.</div>
+            <!-- no data-reveal here: the parent .lockup is one, and its reveal
+                 clip-path (inset 0 0 18% 0) hides exactly this bottom band, so a
+                 nested observer target never registers as visible. It inherits
+                 the parent's reveal instead. -->
+            <div class="lockup__live mono veil">
+              <span id="hCount">090,000</span> PARTS / ONE SYSTEM
+            </div>
+          </div>
+        </div>
+
+        <!-- Access card -->
+        <div class="panel card" id="accessCard" data-reveal data-rdelay="420" data-keepout>
+          <div class="card__head">
+            <span class="mono">NEXT INTAKE</span>
+            <span class="mono card__value">Q3 — 2026</span>
+          </div>
+          <div class="rule"></div>
+          <div class="card__seats">
+            <span class="seats">
+              <span class="seats__dot seats__dot--live"></span>
+              <span class="seats__dot"></span>
+              <span class="seats__dot"></span>
+              <span class="seats__dot"></span>
+            </span>
+            <span class="mono">01 OF 04 SEATS OPEN</span>
+          </div>
+          <button type="button" class="btn btn--vapor card__cta">
+            Request access
+            <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- All four numbers are measured off the running simulation. Where a
+           value cannot be measured the cell shows an em dash, never a
+           plausible constant. -->
+      <dl class="stats" aria-live="off" data-keepout>
+        <div class="stats__cell" data-reveal data-rdelay="600">
+          <dt class="stats__l mono">Particles live</dt>
+          <dd class="stats__n" id="sCount">000,000</dd>
+        </div>
+        <div class="stats__cell" data-reveal data-rdelay="660">
+          <dt class="stats__l mono">Frame budget ms</dt>
+          <dd class="stats__n" id="sMs">&mdash;</dd>
+        </div>
+        <div class="stats__cell" data-reveal data-rdelay="720">
+          <dt class="stats__l mono">Cold start s</dt>
+          <dd class="stats__n" id="sCold">&mdash;</dd>
+        </div>
+        <div class="stats__cell" data-reveal data-rdelay="780">
+          <dt class="stats__l mono">Frames per sec</dt>
+          <dd class="stats__n" id="sFps">00</dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- scrub runway — do not remove -->
+    <div class="runway" aria-hidden="true"></div>
+
+    <!-- ── SYS.02 · capability ──────────────────────────────────────── -->
+    <section class="section section--cap" id="sys-02" data-screen-label="Capability" data-sys-section="02">
+      <div class="row row--top">
+        <div class="badge mono veil" data-reveal data-rdelay="120">SYS.02 — INTELLIGENCE LAYER</div>
+        <p class="lede lede--wide veil" data-reveal data-rdelay="220" data-keepout>
+          Zyrn doesn’t advise from the outside. It installs the system and stays until it runs.
+        </p>
+      </div>
+
+      <div class="row row--bottom row--cap">
+        <div class="cap__copy" data-keepout>
+          <h2 class="display veil" data-reveal data-rdelay="180" data-kinetic>Built once.<br>Runs itself.</h2>
+          <p class="body veil" data-reveal data-rdelay="320">
+            From org chart to inference layer, Zyrn turns how a firm works into something engineered — measured, versioned, and improving on its own.
+          </p>
+          <div class="cta-row" data-reveal data-rdelay="420">
+            <button type="button" class="btn btn--pulse">
+              Request access
+              <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+            </button>
+            <button type="button" class="btn btn--hairline">Read the system doc</button>
+          </div>
+        </div>
+
+        <div class="panel cap" data-keepout>
+          <a class="cap__row" href="#" data-reveal data-rdelay="300">
+            <span class="mono cap__idx">SYS.02a</span>
+            <span>
+              <span class="cap__title">Diagnostic core
+                <span class="cap__arrow"><svg class="arrow arrow--16" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+              </span>
+              <span class="cap__body">Reads how the organization actually runs — roles, flows, and friction — before touching anything.</span>
+            </span>
+          </a>
+          <a class="cap__row" href="#" data-reveal data-rdelay="410">
+            <span class="mono cap__idx">SYS.02b</span>
+            <span>
+              <span class="cap__title">Structural rebuild
+                <span class="cap__arrow"><svg class="arrow arrow--16" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+              </span>
+              <span class="cap__body">Redesigns the operating model so people, process, and AI hold load in the right places.</span>
+            </span>
+          </a>
+          <a class="cap__row" href="#" data-reveal data-rdelay="520">
+            <span class="mono cap__idx">SYS.02c</span>
+            <span>
+              <span class="cap__title">Live calibration
+                <span class="cap__arrow"><svg class="arrow arrow--16" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+              </span>
+              <span class="cap__body">Instruments the new system and tunes it against real output, quarter over quarter.</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <div class="runway runway--short" aria-hidden="true"></div>
+
+    <!-- ── SYS.03 · service lines ───────────────────────────────────── -->
+    <section class="section" id="sys-03" data-screen-label="Service lines" data-sys-section="03">
+      <div class="row row--top">
+        <div class="badge mono veil" data-reveal data-rdelay="120">SYS.03 — SERVICE LINES</div>
+        <p class="lede lede--wide veil" data-reveal data-rdelay="220" data-keepout>
+          Four lines, one system. Run separately they are advice. Run together they are an operating core.
+        </p>
+      </div>
+
+      <div class="lines" data-keepout>
+        <a class="line" href="services/human-capital.html" data-reveal data-rdelay="280">
+          <span class="mono line__idx">01</span>
+          <div class="line__body">
+            <h3 class="line__title">Human capital</h3>
+            <p class="line__lede">Skills treated as infrastructure. Roles redesigned around outcomes, and mobility that moves faster than the job descriptions.</p>
+          </div>
+          <span class="mono line__meta">ROLE DESIGN / SKILLS TAXONOMY / MOBILITY</span>
+        </a>
+
+        <a class="line" href="services/business-structuring.html" data-reveal data-rdelay="360">
+          <span class="mono line__idx">02</span>
+          <div class="line__body">
+            <h3 class="line__title">Business structuring</h3>
+            <p class="line__lede">Decision rights before org charts. Where authority sits, what it owns, and which incentives are quietly working against it.</p>
+          </div>
+          <span class="mono line__meta">DECISION RIGHTS / INCENTIVES / OPERATING MODEL</span>
+        </a>
+
+        <a class="line" href="services/ai-transformation.html" data-reveal data-rdelay="440">
+          <span class="mono line__idx">03</span>
+          <div class="line__body">
+            <h3 class="line__title">AI transformation</h3>
+            <p class="line__lede">Adoption is an operating-model problem wearing a technology costume. The model gets rebuilt first; the tooling follows it.</p>
+          </div>
+          <span class="mono line__meta">ADOPTION / WORKFLOW REBUILD / GOVERNANCE</span>
+        </a>
+
+        <a class="line" href="services/web-strategy.html" data-reveal data-rdelay="520">
+          <span class="mono line__idx">04</span>
+          <div class="line__body">
+            <h3 class="line__title">Web &amp; strategy</h3>
+            <p class="line__lede">The surface a firm presents is the instrument it is judged by. Positioning, brand system, and the digital surface as one build.</p>
+          </div>
+          <span class="mono line__meta">POSITIONING / BRAND SYSTEM / DIGITAL SURFACE</span>
+        </a>
+      </div>
+    </section>
+
+    <div class="runway runway--short" aria-hidden="true"></div>
+
+    <!-- ── SYS.04 · readiness index ─────────────────────────────────── -->
+    <section class="section" id="sys-04" data-screen-label="Readiness index" data-sys-section="04">
+      <div class="row row--top">
+        <div class="badge mono veil" data-reveal data-rdelay="120">SYS.04 — READINESS INDEX</div>
+        <p class="lede lede--wide veil" data-reveal data-rdelay="220" data-keepout>
+          Every engagement opens on a number and closes on a higher one. The index is the contract.
+        </p>
+      </div>
+
+      <div class="ladder" data-reveal data-rdelay="300" data-keepout>
+        <div class="ladder__rule" aria-hidden="true"></div>
+        <ol class="ladder__steps">
+          <li class="step">
+            <span class="mono step__idx">00</span>
+            <h3 class="step__title">Exploratory</h3>
+            <p class="step__body">Tools in use, nothing measured. Value is anecdotal.</p>
+          </li>
+          <li class="step">
+            <span class="mono step__idx">01</span>
+            <h3 class="step__title">Implemented</h3>
+            <p class="step__body">Pilots run and hold. Benefit is visible but local.</p>
+          </li>
+          <li class="step">
+            <span class="mono step__idx">02</span>
+            <h3 class="step__title">Aligned</h3>
+            <p class="step__body">Ownership and incentives agree. Return can be traced.</p>
+          </li>
+          <li class="step">
+            <span class="mono step__idx">03</span>
+            <h3 class="step__title">Scaled</h3>
+            <p class="step__body">The system runs across the firm, predictably and repeatably.</p>
+          </li>
+          <li class="step">
+            <span class="mono step__idx">04</span>
+            <h3 class="step__title">Self-calibrating</h3>
+            <p class="step__body">The organization tunes itself. Zyrn is no longer required.</p>
+          </li>
+        </ol>
+      </div>
+
+      <p class="ladder__note mono veil" data-reveal data-rdelay="420">
+        MEASURED ACROSS STRATEGY / WORKFORCE / WORKFLOW / GOVERNANCE / DATA — QUARTERLY
+      </p>
+    </section>
+
+    <div class="runway runway--short" aria-hidden="true"></div>
+
+    <!-- ── SYS.05 · access ──────────────────────────────────────────── -->
+    <section class="section" id="sys-05" data-screen-label="Access" data-sys-section="05">
+      <div class="row row--top">
+        <div class="badge mono veil" data-reveal data-rdelay="120">SYS.05 — ACCESS</div>
+        <p class="lede lede--wide veil" data-reveal data-rdelay="220" data-keepout>
+          Zyrn takes four engagements a quarter. The constraint is deliberate — the work requires staying.
+        </p>
+      </div>
+
+      <div class="row row--bottom row--cap">
+        <div class="cap__copy" data-keepout>
+          <h2 class="display veil" data-reveal data-rdelay="180" data-kinetic>Installed,<br>not advised.</h2>
+          <p class="body veil" data-reveal data-rdelay="300">
+            Engagements open with a diagnostic and a readiness number. If the number does not move, the engagement has not worked — a shared position, not a disclaimer.
+          </p>
+          <div class="cta-row" data-reveal data-rdelay="400">
+            <a class="btn btn--pulse" href="mailto:access@zyrn.co?subject=Request%20access%20%E2%80%94%20Q3%202026">
+              Request access
+              <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+            </a>
+            <a class="btn btn--hairline" href="brand.html">Brand system</a>
+          </div>
+        </div>
+
+        <dl class="panel specs" data-reveal data-rdelay="460" data-keepout>
+          <div class="spec">
+            <dt class="mono">INTAKE</dt>
+            <dd class="mono spec__v">Q3 — 2026</dd>
+          </div>
+          <div class="spec">
+            <dt class="mono">SEATS</dt>
+            <dd class="mono spec__v">01 OF 04 OPEN</dd>
+          </div>
+          <div class="spec">
+            <dt class="mono">ENGAGEMENT</dt>
+            <dd class="mono spec__v">TWO QUARTERS MIN.</dd>
+          </div>
+          <div class="spec">
+            <dt class="mono">ENTRY</dt>
+            <dd class="mono spec__v">BY REFERRAL</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ── footer ───────────────────────────────────────────────────── -->
+    <footer class="footer mono">
+      <span class="footer__stamp">
+        <span class="mark" aria-hidden="true">
+          <svg class="mark__half mark__half--top" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+          <svg class="mark__half mark__half--bot" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+          <span class="mark__seam"></span>
+        </span>
+        ZYRN — EST. 2026
+      </span>
+      <span class="footer__coords">AMM 31.95&deg;N / 35.93&deg;E</span>
+      <span>V.2.0 / EN — AR</span>
+    </footer>
+
+  </main>
+</div>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/ui.js"></script>
+
+<script type="module">
+/* SYS.01 → SYS.05 mapped onto the field's states. The page now OPENS on the
+   core — the hero lede says "Zyrn builds the operating core of modern firms",
+   so the operating core is what you land on. From there the motion argues the
+   thesis: the core opens into the four lines, the readiness index climbs from
+   emergent structure back to an engineered loop, and access releases it. */
+import { initField } from './assets/js/field.js';
+
+const roState = document.getElementById('readoutState');
+const hCount  = document.getElementById('hCount');
+const sCount  = document.getElementById('sCount');
+const pad = n => { const s = String(n).padStart(6, '0'); return s.slice(0, -3) + ',' + s.slice(-3); };
+
+initField({
+  // Anchored to where the scenes actually sit. Measured section centres, as
+  // scroll progress: SYS.01 0.00 · SYS.02 0.26 · SYS.03 0.51 · SYS.04 0.76 ·
+  // SYS.05 dominant from 0.90. Consistent within ~0.02 between a 1440x900
+  // desktop and a 430x880 phone, so one set of stops serves both.
+  program: [
+    { at: 0.00, form: 'S3' },   // SYS.01 hero — the operating core, at rest
+    { at: 0.30, form: 'S3' },   // SYS.02 "Built once. Runs itself." — it holds
+    { at: 0.48, form: 'S1' },   // SYS.03 — the core opens into four arms,
+    { at: 0.60, form: 'S1' },   //          one per line, settled as it centres
+    { at: 0.78, form: 'S3' },   // SYS.04 readiness — the ladder climbs back
+    { at: 1.00, form: 'S4' },   // SYS.05 access — released
+  ],
+  onState: (p, name) => { if (roState) roState.textContent = name; },
+  onCount: (n, animate) => {
+    // Departure 5: this number is read from the sim, not typed. If the
+    // governor steps the field down it changes with it.
+    if (sCount) sCount.textContent = pad(n);
+    if (!hCount) return;
+    if (!animate) { hCount.textContent = pad(n); return; }
+    hCount.style.opacity = '0';
+    setTimeout(() => { hCount.textContent = pad(n); hCount.style.opacity = '1'; }, 300);
+  },
+});
+</script>
+</body>
+</html>

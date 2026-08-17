@@ -1,0 +1,163 @@
+/* ══════════════════════════════════════════════════════════════════════
+   ZYRN — SYS.06 brand system (document layout)
+
+   Deliberately NOT immersive. Metabole's rule for immersive work is that
+   immersion serves strategy — and a reference document's strategy is
+   legibility. Same tokens, same voice, none of the scroll machinery.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.doc{background:var(--obsidian)}
+
+.doc__wrap{
+  max-width:1040px;
+  margin:0 auto;
+  padding:calc(var(--pad-top) + 8px) var(--gutter) 0;
+}
+
+/* ── head ───────────────────────────────────────────────────────────── */
+
+.doc__head{padding-bottom:clamp(48px,6vw,80px)}
+.doc__title{
+  margin:28px 0 0;
+  font-size:clamp(40px,5.5vw,64px);font-weight:400;
+  line-height:1.05;letter-spacing:-0.01em;color:var(--vapor);
+}
+.doc__lede{
+  margin:24px 0 0;max-width:56ch;
+  font-size:clamp(17px,1.3vw,19px);line-height:1.65;
+  color:rgba(242,243,245,0.75);
+}
+
+/* ── sections ───────────────────────────────────────────────────────── */
+
+.doc__sec{
+  padding:clamp(40px,5vw,64px) 0;
+  border-top:1px solid var(--hair);
+}
+.doc__h2{
+  display:flex;align-items:baseline;gap:16px;
+  margin:0;
+  font-size:clamp(24px,2.6vw,32px);font-weight:400;
+  letter-spacing:-0.01em;color:var(--vapor);
+}
+.doc__num{color:var(--steel);font-size:12px}
+.doc__note{
+  margin:16px 0 0;max-width:64ch;
+  font-size:15px;line-height:1.7;color:rgba(242,243,245,0.7);
+}
+.doc__note em{color:var(--vapor);font-style:normal}
+
+/* ── doctrine ───────────────────────────────────────────────────────── */
+
+.rules{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:1px;margin:32px 0 0;padding:0;list-style:none;
+  background:var(--hair);border:1px solid var(--hair);
+}
+.rule-item{background:var(--obsidian);padding:24px}
+.rule-item__t{margin:0;font-size:17px;font-weight:500;color:var(--vapor)}
+.rule-item__b{margin:8px 0 0;font-size:14px;line-height:1.6;color:rgba(242,243,245,0.6)}
+
+/* ── palette ────────────────────────────────────────────────────────── */
+
+.swatches{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:16px;margin:32px 0 0;
+}
+.sw{display:flex;flex-direction:column;gap:6px}
+.sw__chip{display:block;height:72px;border-radius:6px}
+.sw__n{color:var(--vapor);margin-top:4px}
+.sw__v{color:var(--steel)}
+.sw__u{font-size:13px;line-height:1.5;color:rgba(242,243,245,0.55)}
+
+/* ── spec tables ────────────────────────────────────────────────────── */
+
+.spec-table{
+  width:100%;margin:28px 0 0;
+  border-collapse:collapse;
+  font-size:14px;
+}
+.spec-table th{
+  font-family:var(--font-mono);font-size:10px;font-weight:500;
+  letter-spacing:0.16em;text-transform:uppercase;color:var(--steel);
+  text-align:left;padding:0 20px 10px 0;
+  border-bottom:1px solid var(--hair);
+}
+.spec-table td{
+  padding:13px 20px 13px 0;
+  border-bottom:1px solid var(--hair);
+  color:rgba(242,243,245,0.75);line-height:1.5;
+  vertical-align:top;
+}
+.spec-table td.mono,.spec-table td .mono{
+  font-size:12px;text-transform:none;letter-spacing:0.04em;color:var(--vapor);
+}
+.spec-table tr:last-child td{border-bottom:none}
+
+/* ── mark demo ──────────────────────────────────────────────────────── */
+
+.mark-demo{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:1px;margin:32px 0 0;
+  background:var(--hair);border:1px solid var(--hair);
+}
+.mark-demo__cell{
+  display:flex;flex-direction:column;align-items:flex-start;gap:28px;
+  background:var(--obsidian);
+  padding:28px 24px 36px;
+  min-height:180px;
+}
+.mark-demo__cap{color:var(--steel)}
+.mark--lg{width:56px;height:56px}
+.mark--lg .mark__half{width:56px;height:56px}
+.mark--lg .mark__half--top{transform:translateX(-4px)}
+.mark--lg .mark__half--bot{transform:translateX(4px)}
+.mark--lg .mark__seam{left:-8px;right:-8px;height:2px}
+
+/* ── type specimens ─────────────────────────────────────────────────── */
+
+.type-row{
+  padding:24px 0;
+  border-bottom:1px solid var(--hair);
+}
+.type-row:last-of-type{border-bottom:none}
+.type-row__cap{display:block;color:var(--steel);text-transform:none}
+.type-row__spec{margin:14px 0 0;color:var(--vapor)}
+
+/* ── voice ──────────────────────────────────────────────────────────── */
+
+.voice{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:1px;margin:32px 0 0;
+  background:var(--hair);border:1px solid var(--hair);
+}
+.voice__col{background:var(--obsidian);padding:24px}
+.voice__cap{display:block;margin-bottom:14px}
+.voice__col--yes .voice__cap{color:var(--vapor)}
+.voice__col--no .voice__cap{color:var(--steel)}
+.voice__list{margin:0;padding-left:18px}
+.voice__list li{
+  margin:8px 0;font-size:14px;line-height:1.6;
+  color:rgba(242,243,245,0.7);
+}
+.voice__col--no .voice__list li{color:rgba(242,243,245,0.5)}
+
+/* ── foot ───────────────────────────────────────────────────────────── */
+
+.doc__foot{
+  margin-top:clamp(40px,5vw,64px);
+  padding-left:0;padding-right:0;
+}
+
+/* ── responsive ─────────────────────────────────────────────────────── */
+
+@media (max-width:900px){
+  .swatches{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mark-demo{grid-template-columns:minmax(0,1fr)}
+}
+
+@media (max-width:767px){
+  .rules,.voice{grid-template-columns:minmax(0,1fr)}
+  .spec-table{font-size:13px}
+  .spec-table th:last-child,.spec-table td:last-child{padding-right:0}
+}

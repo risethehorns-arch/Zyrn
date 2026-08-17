@@ -1,0 +1,12 @@
+# Local version archive — v1.0 zip, the standalone presence page, the old
+# build-state report. Backups of this machine's work, not site source, and
+# 1.8MB of it. Kept on disk, out of the repo.
+_archive/
+
+# OS noise
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Local probe/scratch files (regenerated on demand, never shipped)
+_probe_*.html

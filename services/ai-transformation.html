@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZYRN — AI transformation</title>
+<meta name="description" content="Adoption is an operating-model problem wearing a technology costume. Zyrn rebuilds the model first and lets the tooling follow it — which is the reaso">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/styles.css">
+<link rel="stylesheet" href="../assets/css/service.css">
+<link rel="stylesheet" href="../assets/css/field.css">
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/",
+    "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.mjs",
+    "lil-gui": "https://cdn.jsdelivr.net/npm/lil-gui@0.19.2/dist/lil-gui.esm.js"
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- shared ground: the same field, the same grid, so moving between the
+     four lines reads as one instrument changing channels. Each page runs a
+     different formation program and a different tilt/spin. -->
+<canvas id="field" aria-hidden="true"></canvas>
+
+<div class="grid" aria-hidden="true">
+  <span class="grid__line grid__line--a"></span>
+  <span class="grid__line grid__line--b"></span>
+</div>
+
+<div class="readout" aria-hidden="true">
+  <span class="readout__label">ZYRN / SYS.03 &middot; <span id="readoutState">FIELD</span> — <span id="readoutPct">000</span>%</span>
+  <span class="readout__track"><span class="readout__fill" id="readoutFill"></span></span>
+</div>
+
+<div class="shell">
+
+  <nav class="nav">
+    <div class="nav__row">
+      <a href="../index.html" aria-label="ZYRN — home">
+        <span class="glitch">
+          <span class="shear shear--auto is-sheared" style="--shear-size:20px">
+            <span class="shear__half shear__half--top">ZYRN</span>
+            <span class="shear__half shear__half--bot">ZYRN</span>
+            <span class="shear__seam"></span>
+          </span>
+        </span>
+      </a>
+      <div class="nav__links">
+        <a href="../index.html#sys-03" class="nav__link">Work<sup class="nav__sup">06</sup></a>
+        <a href="../index.html#sys-04" class="nav__link">System</a>
+        <a href="../brand.html" class="nav__link">Brand</a>
+        <a href="../index.html#sys-05" class="nav__link">Contact</a>
+      </div>
+      <div class="nav__end">
+        <span class="mono nav__coords">AMM 31.95&deg;N / 35.93&deg;E</span>
+        <a class="btn btn--hairline" href="../index.html#sys-05">Request access</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page-in">
+
+    <header class="svc-hero">
+      <span class="mono svc-hero__idx" aria-hidden="true">03</span>
+      <h1 class="svc-hero__title" data-keepout data-reveal data-kinetic>AI<br>transformation.</h1>
+      <p class="svc-hero__lede" data-keepout>Adoption is an operating-model problem wearing a technology costume. Zyrn rebuilds the model first and lets the tooling follow it — which is the reason the work survives contact with the pilot.</p>
+      <div class="mono svc-hero__meta" data-keepout>READINESS &nbsp;/&nbsp; WORKFLOW REBUILD &nbsp;/&nbsp; GOVERNANCE &nbsp;/&nbsp; ADOPTION</div>
+    </header>
+
+    <div class="svc-sec" style="padding-top:0">
+    <nav class="tabs" data-active="2" aria-label="Service lines">
+      <a class="tab" href="human-capital.html">
+        <span class="mono tab__idx">01</span>
+        <span class="tab__name">Human capital</span>
+      </a>
+      <a class="tab" href="business-structuring.html">
+        <span class="mono tab__idx">02</span>
+        <span class="tab__name">Business structuring</span>
+      </a>
+      <a class="tab is-active" href="ai-transformation.html">
+        <span class="mono tab__idx">03</span>
+        <span class="tab__name">AI transformation</span>
+      </a>
+      <a class="tab" href="web-strategy.html">
+        <span class="mono tab__idx">04</span>
+        <span class="tab__name">Web &amp; strategy</span>
+      </a>
+    </nav>
+    </div>
+
+    <section class="svc-sec">
+      <div class="svc-sec__head" data-keepout>
+        <h2 class="svc-sec__title">What it covers</h2>
+        <p class="svc-sec__note" data-keepout>Six modules, opening on the index. Nothing is deployed before it is scored.</p>
+      </div>
+      <div class="mods" data-keepout>
+        <article class="mod" data-reveal data-rdelay="120">
+          <span class="mono mod__idx">03a</span>
+          <h3 class="mod__title">Readiness assessment</h3>
+          <p class="mod__body">The index scored across strategy, workforce, workflow, governance, and data.</p>
+        </article>
+        <article class="mod" data-reveal data-rdelay="190">
+          <span class="mono mod__idx">03b</span>
+          <h3 class="mod__title">Workflow re-engineering</h3>
+          <p class="mod__body">Processes rebuilt around what the system does well, not retrofitted around what it cannot.</p>
+        </article>
+        <article class="mod" data-reveal data-rdelay="260">
+          <span class="mono mod__idx">03c</span>
+          <h3 class="mod__title">Governance and risk</h3>
+          <p class="mod__body">Thresholds, review, and the decisions that stay human by design.</p>
+        </article>
+        <article class="mod" data-reveal data-rdelay="330">
+          <span class="mono mod__idx">03d</span>
+          <h3 class="mod__title">Data readiness</h3>
+          <p class="mod__body">The inputs the system depends on, and the ones quietly unfit for it.</p>
+        </article>
+        <article class="mod" data-reveal data-rdelay="400">
+          <span class="mono mod__idx">03e</span>
+          <h3 class="mod__title">Adoption program</h3>
+          <p class="mod__body">Behavioural change sequenced by function and measured per cohort.</p>
+        </article>
+        <article class="mod" data-reveal data-rdelay="470">
+          <span class="mono mod__idx">03f</span>
+          <h3 class="mod__title">Measurement</h3>
+          <p class="mod__body">Value traced back to the workflow it came from, quarter over quarter.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="svc-sec">
+      <div class="svc-sec__head" data-keepout>
+        <h2 class="svc-sec__title">How it runs</h2>
+        <p class="svc-sec__note" data-keepout>Three phases, the same three every line runs. The engagement is measured at each one.</p>
+      </div>
+      <div class="phases" data-keepout>
+        <div class="phase" data-reveal data-rdelay="120">
+          <span class="mono phase__k">P.01</span>
+          <h3 class="phase__title">Diagnose</h3>
+          <p class="phase__body">Six to eight weeks. The readiness index is scored and the gap to the next level is made explicit.</p>
+        </div>
+        <div class="phase" data-reveal data-rdelay="210">
+          <span class="mono phase__k">P.02</span>
+          <h3 class="phase__title">Rebuild</h3>
+          <p class="phase__body">One to two quarters. Workflows, governance, and the adoption program installed together.</p>
+        </div>
+        <div class="phase" data-reveal data-rdelay="300">
+          <span class="mono phase__k">P.03</span>
+          <h3 class="phase__title">Calibrate</h3>
+          <p class="phase__body">Ongoing. The index is re-scored quarterly. If it does not move, the engagement has not worked.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="svc-sec">
+      <div class="svc-sec__head" data-keepout>
+        <h2 class="svc-sec__title">What changes</h2>
+        <p class="svc-sec__note" data-keepout>Signals the diagnostic watches, and the direction they are expected to move.</p>
+      </div>
+      <ul class="signals" data-keepout>
+        <li class="signal" data-reveal data-rdelay="120">
+          <span class="mono signal__k">INDEX</span>
+          <span class="signal__v">The readiness score moves at least one level inside two quarters.</span>
+        </li>
+        <li class="signal" data-reveal data-rdelay="190">
+          <span class="mono signal__k">PILOT SURVIVAL</span>
+          <span class="signal__v">Pilots reach production instead of quietly lapsing.</span>
+        </li>
+        <li class="signal" data-reveal data-rdelay="260">
+          <span class="mono signal__k">COVERAGE</span>
+          <span class="signal__v">The share of core workflows the system genuinely carries.</span>
+        </li>
+        <li class="signal" data-reveal data-rdelay="330">
+          <span class="mono signal__k">SHADOW USE</span>
+          <span class="signal__v">Unsanctioned tooling falls as the sanctioned path becomes the faster one.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="svc-end">
+      <h2 class="svc-end__title" data-keepout>Adoption,<br>not acquisition.</h2>
+      <p class="body veil" style="margin-top:24px">The engagement closes when the index is still climbing without Zyrn scoring it.</p>
+      <div class="cta-row" style="margin-top:32px">
+        <a class="btn btn--pulse" href="../index.html#sys-05">
+          Request access
+          <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+        </a>
+        <a class="btn btn--hairline" href="../index.html#sys-04">See the readiness index</a>
+      </div>
+    </section>
+
+    <footer class="footer mono">
+      <span class="footer__stamp">
+        <span class="mark" aria-hidden="true">
+          <svg class="mark__half mark__half--top" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+          <svg class="mark__half mark__half--bot" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+          <span class="mark__seam"></span>
+        </span>
+        ZYRN — EST. 2026
+      </span>
+      <span class="footer__coords">SYS.03 — AI TRANSFORMATION</span>
+      <span>V.1.0 / EN — AR</span>
+    </footer>
+
+  </main>
+</div>
+
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/ui.js"></script>
+
+<script type="module">
+import { initField } from '../assets/js/field.js';
+const roState = document.getElementById('readoutState');
+initField({
+  program: [
+    { at: 0.00, form: 'S1' },   // the organization as found
+    { at: 0.16, form: 'S1' },
+    { at: 0.46, form: 'S2' },   // adoption meets it as entropy, not as tooling
+    { at: 1.00, form: 'S3' },   // and is engineered into the operating loop
+  ],
+  // opening on S2 was truer to the argument but read as static rather than as a
+  // designed field, so the page states the whole arc instead. Its S1 sits at 40
+  // degrees — between the landing's 55 and web-strategy's 24 — so the four line
+  // pages never open on the same image.
+  channel: { tilt: { S1: 40, S3: 12 }, spin: { S1: 100, S3: 160 } },
+  onState: (p, n) => { if (roState) roState.textContent = n; },
+});
+</script>
+</body>
+</html>
