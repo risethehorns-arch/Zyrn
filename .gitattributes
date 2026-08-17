@@ -1,0 +1,12 @@
+# Normalise text to LF in the repository. Windows working copies still get
+# CRLF; what matters is that the committed blobs are clean, because GitHub
+# Pages reads CNAME straight out of the repo.
+* text=auto
+CNAME text eol=lf
+robots.txt text eol=lf
+sitemap.xml text eol=lf
+
+*.jpg  binary
+*.png  binary
+*.pdf  binary
+*.docx binary
