@@ -269,7 +269,12 @@ synchronously, and freeze each copy with
 - Nav below `sm` should swap the full wordmark for the Z monogram.
 - `Journal` is the last unrouted nav link. Per docs/strategy.md it is the credibility
   engine for a referral-only firm — strongest candidate after the readiness assessment.
-- `access@zyrn.co` is a placeholder address — no domain is registered yet.
+- Domain is **zyrn.org**, registered at Spaceship. `CNAME` in the repo root binds
+  GitHub Pages to the apex; canonicals, `og:url` and `sitemap.xml` all point at
+  `https://zyrn.org`. If the host ever changes, those three plus `robots.txt`
+  and the `mailto:access@zyrn.org` in SYS.05 all need updating together.
+- Verify a deploy against `https://risethehorns-arch.github.io/Zyrn/`, not the
+  custom domain — Pages serves a push immediately, DNS lags.
 - SYS.03's four lines now link to `services/*.html`.
 - Service pages have no per-service proof either — same gap as the landing page.
 - No proof anywhere on the site: no case study, metric, or named engagement. Expected

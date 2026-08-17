@@ -747,7 +747,7 @@ Unchanged by this spec and still outstanding:
   claims, and this would be a seventh surface making a claim about capability with
   nothing behind it. Still the first thing a CIO looks for.
 - Four sourced third-party statistics await sign-off (`docs/strategy.md`).
-- `Journal` unrouted; `access@zyrn.co` is a placeholder with no registered domain.
+- `Journal` unrouted. Domain is now zyrn.org; `access@zyrn.org` is live in SYS.05.
 - No favicon — the Z monogram (two-half clip, seam) is the obvious answer, and
   under Departure 4 its seam is Vapor on this surface but stays Pulse elsewhere.
 
