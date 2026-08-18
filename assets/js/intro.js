@@ -48,7 +48,17 @@ export function initIntro(opts = {}) {
   const arriving = !!sessionStorage.getItem('zyrn:handoff');
   const repeat = sessionStorage.getItem(SEEN_KEY) === '1';
 
-  if (reduced || arriving || repeat) { intro.remove(); return; }
+  /* ?intro=1 — replay it on demand.
+     The entrance plays ONCE PER TAB SESSION, which is right for a visitor and
+     wrong for anyone reviewing the site: open the landing page, watch it, hit
+     reload, and it is gone for the rest of that tab's life. That reads as a
+     regression when nothing has regressed. This forces a replay.
+     It overrides the repeat and handoff gates ONLY. `prefers-reduced-motion`
+     is a stated accessibility preference and a URL parameter does not get to
+     overrule it. */
+  const force = /(?:^|[?&])intro=1(?:&|$)/.test(location.search);
+
+  if (reduced || (!force && (arriving || repeat))) { intro.remove(); return; }
   try { sessionStorage.setItem(SEEN_KEY, '1'); } catch (e) {}
 
   document.body.classList.add('is-intro');

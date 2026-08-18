@@ -2,14 +2,25 @@
    ZYRN — mobile navigation
 
    Below 900px the nav link row is hidden, which left Work, Foundation,
-   System, Brand and Contact reachable only from the footer. On a phone
+   System, Services and Contact reachable only from the footer. On a phone
    that is most of the site behind a scroll to the bottom.
 
-   The menu is built by CLONING the existing .nav__links anchors rather
-   than by duplicating markup on seven pages. Their hrefs already differ
-   by directory depth (`#sys-03` at the root, `../index.html#sys-03`
-   inside services/), and a clone inherits whatever each page had — so
-   there is no second copy of the routing to drift out of sync.
+   Nothing here is authored twice. Both lists are CLONED out of markup that
+   already exists on every page:
+
+     the top level  ← .nav__links
+     the four lines ← the footer's "Lines" column
+
+   Their hrefs already differ by directory depth (`#sys-03` at the root,
+   `../index.html#sys-03` inside services/), and a clone inherits whatever
+   the page it is on had. So there is no second copy of the routing to
+   drift out of sync — which is the whole reason this file does not simply
+   hard-code a menu.
+
+   The Services row is a DISCLOSURE: the label navigates to the index, the
+   chevron beside it expands the four lines in place. Two separate targets,
+   both over 44px, because a row that either navigates or expands depending
+   on where your thumb lands is a coin toss on touch.
    ══════════════════════════════════════════════════════════════════════ */
 
 (function () {
@@ -21,6 +32,24 @@
 
   var links = Array.prototype.slice.call(row.querySelectorAll('a'));
   if (!links.length) return;
+
+  /* the four service lines, taken from the footer column that already
+     carries them with this page's own relative paths */
+  var lines = (function () {
+    var cols = document.querySelectorAll('.sitefoot__cols .fcol');
+    for (var i = 0; i < cols.length; i++) {
+      var h = cols[i].querySelector('.fcol__h');
+      if (h && /lines/i.test(h.textContent || '')) {
+        return Array.prototype.slice.call(cols[i].querySelectorAll('a'));
+      }
+    }
+    return [];
+  })();
+
+  // strip the superscript counter; it is nav chrome, not a label
+  var clean = function (el) {
+    return (el.textContent || '').replace(/\s*\d+\s*$/, '').trim();
+  };
 
   /* ── the trigger ─────────────────────────────────────────────────── */
   var btn = document.createElement('button');
@@ -39,15 +68,75 @@
   list.className = 'navsheet__list';
   list.setAttribute('aria-label', 'Menu');
 
+  /* A phone has no ⌘K. cmdk.js listens for [data-cmdk] on document, so the
+     sheet can offer the index without either file importing the other. */
+  var find = document.createElement('a');
+  find.href = '#';
+  find.setAttribute('data-cmdk', '');
+  find.className = 'navsheet__find';
+  find.innerHTML = '<span class="mono navsheet__i">/</span>Search the site';
+  list.appendChild(find);
+
+  var group = null;          // the Services disclosure, if this page has one
+
   links.forEach(function (a, i) {
     var c = document.createElement('a');
     c.href = a.getAttribute('href');
-    // strip the superscript counter; it is nav chrome, not a label
     c.innerHTML = '<span class="mono navsheet__i">' +
-      String(i + 1).padStart(2, '0') + '</span>' +
-      (a.textContent || '').replace(/\s*\d+\s*$/, '').trim();
+      String(i + 1).padStart(2, '0') + '</span>' + clean(a);
     if (a.hasAttribute('aria-current')) c.setAttribute('aria-current', 'page');
-    list.appendChild(c);
+
+    var isServices = /services\.html(?:[?#]|$)/.test(a.getAttribute('href') || '');
+    if (!isServices || !lines.length) { list.appendChild(c); return; }
+
+    /* ── the disclosure ──────────────────────────────────────────── */
+    group = document.createElement('div');
+    group.className = 'navsheet__group';
+    group.setAttribute('data-open', 'false');
+
+    var head = document.createElement('div');
+    head.className = 'navsheet__row';
+
+    var more = document.createElement('button');
+    more.type = 'button';
+    more.className = 'navsheet__more';
+    more.setAttribute('aria-expanded', 'false');
+    more.setAttribute('aria-controls', 'navsheet-lines');
+    more.setAttribute('aria-label', 'Show the four service lines');
+    more.innerHTML =
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+
+    head.appendChild(c);
+    head.appendChild(more);
+
+    var sub = document.createElement('div');
+    sub.className = 'navsheet__sub';
+    sub.id = 'navsheet-lines';
+
+    lines.forEach(function (l) {
+      var s = document.createElement('a');
+      s.href = l.getAttribute('href');
+      var idx = l.querySelector('.mono');
+      s.innerHTML = '<span class="mono navsheet__i">' +
+        (idx ? idx.textContent.trim() : '') + '</span>' +
+        (l.textContent || '').replace(/^\s*\d+\s*/, '').trim();
+      if (l.hasAttribute('aria-current')) s.setAttribute('aria-current', 'page');
+      sub.appendChild(s);
+    });
+
+    group.appendChild(head);
+    group.appendChild(sub);
+    list.appendChild(group);
+
+    more.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();          // the list closes the sheet on any <a>
+      var next = group.getAttribute('data-open') !== 'true';
+      group.setAttribute('data-open', String(next));
+      more.setAttribute('aria-expanded', String(next));
+      more.setAttribute('aria-label',
+        next ? 'Hide the four service lines' : 'Show the four service lines');
+    });
   });
 
   var foot = document.createElement('div');
@@ -64,6 +153,7 @@
 
   /* ── open / close ────────────────────────────────────────────────── */
   var open = false;
+  var main = document.querySelector('main');
 
   function set(next) {
     if (next === open) return;
@@ -72,13 +162,33 @@
     btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     btn.classList.toggle('is-open', open);
     document.body.classList.toggle('is-navopen', open);
+
+    /* The sheet covers the page, so the page behind it should not still be
+       tabbable. `main`, not `.shell`: the toggle lives outside main, and
+       making its own ancestor inert would leave no way to close this. */
+    if (main) {
+      if (open) main.setAttribute('inert', '');
+      else main.removeAttribute('inert');
+    }
+
     if (open) {
       sheet.hidden = false;
       // next frame so the transition has a start state
-      requestAnimationFrame(function () { sheet.classList.add('is-on'); });
+      requestAnimationFrame(function () {
+        sheet.classList.add('is-on');
+        var first = list.querySelector('a');
+        if (first) first.focus({ preventScroll: true });
+      });
     } else {
       sheet.classList.remove('is-on');
+      // collapse the disclosure, so reopening starts from the same state
+      if (group) {
+        group.setAttribute('data-open', 'false');
+        var m = group.querySelector('.navsheet__more');
+        if (m) m.setAttribute('aria-expanded', 'false');
+      }
       setTimeout(function () { if (!open) sheet.hidden = true; }, 320);
+      btn.focus({ preventScroll: true });
     }
   }
 

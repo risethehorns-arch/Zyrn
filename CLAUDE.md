@@ -39,8 +39,21 @@ foundation.html         SYS.00 — what the firm is, the mission, who it is for,
                         component — both .shear__half spans must carry identical
                         text or the clip-and-offset breaks. Carries JSON-LD
                         Organization + founder.
+services.html           SYS.03 — the index for the four lines, and the nav slot
+                        `Brand` used to hold. It has to belong to both
+                        neighbours: the landing page's scene rhythm above it,
+                        the service pages' hero/tabs/footer below it. Carries
+                        its own signature instrument (THE CORE), the four
+                        lines as full rows, and the combination matrix.
+                        Field program S3 → S1 → S1 → S3: one system, opened
+                        into four, recombined. It lives at the ROOT, not at
+                        services/index.html, because `routeFor()` keys on the
+                        last path segment and a directory URL yields '' —
+                        which is already the landing page's key.
 brand.html              SYS.06 brand system — a reference document, deliberately NOT
-                        immersive (its job is legibility, not atmosphere)
+                        immersive (its job is legibility, not atmosphere).
+                        Reachable from the footer's "The firm" column; it gave
+                        up its nav slot to services.html on 2026-08-18.
 services/*.html         four service pages, one per line, in this order:
                         01 website-design · 02 brand-kit · 03 business-structuring
                         · 04 ai-transformation ("AI adoption & transformation").
@@ -57,11 +70,17 @@ assets/js/modules/      the signature instruments, one per service page:
                         specimen.js  02 — the brand kit, operable
                         graph.js     03 — decision rights, rewired on scroll
                         readiness.js 04 — the index climbing 00 to 04
+                    core.js      services.html — the set's own instrument
+                    matrix.js    services.html — the combination matrix
 assets/css/svc-modules.css
                         styling for all four instruments.
 assets/css/styles.css   all styling, tokens at :root (incl. the glass + glitch systems)
 assets/css/brand.css    brand-page-only document layout
 assets/css/service.css  service-page layer (hero, module cards, phases, signals)
+assets/css/services.css services.html only — the core diagram, the line rows
+                        and their four glyphs, the matrix
+assets/js/cmdk.js       THE INDEX (⌘K) — on every page. See below.
+assets/css/cmdk.css     its housing
 assets/js/ui.js         shared on every page: irregular glitch scheduling + page
                         transition veil
 assets/js/main.js       DOM runtime (hero shear · readout rail · reveals)
@@ -225,6 +244,25 @@ Mono labels are always `11px / uppercase / tracking 0.16em / Steel`.
   blank scrolling and it read as a broken page. Now `30vh` / `18vh` (671px,
   13.7%). If you change them, re-measure the section centres and re-anchor the
   field program in `index.html` — the two are coupled.
+- **SYS.00, THE ENTRANCE, IS NOT NEGOTIABLE.** Owner-locked 2026-08-18:
+  "i want it and that should not be changed again at all." The mark assembles
+  in the centre of the viewport — top half in from the RIGHT, bottom half in
+  from the LEFT, the Pulse line then arriving from the right to slice it, then
+  the glitch, then a FLIP into the hero lockup. `assets/js/intro.js` +
+  `assets/css/intro.css` + the `#intro` block in `index.html`. Do not remove
+  it, do not restyle it, do not "simplify" it, and do not move it to another
+  page. If a change would touch it, stop and ask.
+  Three things about it that read as breakage when nothing is broken:
+    1. It is on `index.html` ONLY. It is the entrance to the site, not a
+       per-page animation, and `field.js`'s continuity handoff deliberately
+       suppresses it when you arrive from another page.
+    2. It plays ONCE PER TAB SESSION (`zyrn:seen-intro`). A reload in the same
+       tab will not replay it.
+    3. `?intro=1` forces a replay — use that when reviewing. It overrides the
+       repeat and handoff gates only; `prefers-reduced-motion` still wins.
+  Gating is covered by `introtest.py` (plays / suppresses / replays). If you
+  verify it by screenshot, sample at ~1s: it removes itself 240ms after it
+  finishes, so a completed run and a suppressed one look identical later.
 - The hero shear latches: once sheared it never un-shears.
 - **Both marks are the same component.** The hero mark used to be scroll-bound
   (`.shear--hero`, inline transforms written by `main.js` every frame), so at
@@ -350,11 +388,116 @@ things in it are worth not breaking:
 - **Scroll velocity moves the ramp** — fast scrolling pulls the breakpoints down,
   so more of the field sits on the hot stops. The colour reacts, not just the shape.
 
+## The phone menu (rebuilt 2026-08-18)
+
+`assets/js/nav.js` + the `.navsheet` block in `field.css`. Below 900px the nav
+link row is hidden, so this is the whole navigation.
+
+**Nothing in it is authored twice.** Both levels are cloned out of markup the
+page already has — the top level from `.nav__links`, the four lines from the
+footer column headed "Lines". Those hrefs already carry the right relative
+depth for whichever page they are on (`../services/…` inside `services/`), so
+a clone inherits correct routing and there is no second copy to drift. If you
+are tempted to hard-code the menu, this is why it is not.
+
+- **Services is a disclosure.** The label navigates to `services.html`; the
+  chevron beside it expands the four lines in place. Two separate 44px
+  targets — a single row that either navigates or expands depending on where
+  the thumb lands is a coin toss on touch.
+- The submenu animates on `max-height`, not `grid-template-rows: 0fr→1fr`.
+  Four rows is a knowable ceiling and max-height animates everywhere.
+- Scoped selectors matter here: a bare `.navsheet__list a` also matches the
+  four links inside the disclosure and sets them at 34px. Top-level rows are
+  `.navsheet__list > a` and `.navsheet__row > a`.
+- The sheet is `overflow-y:auto` with the list centred by `margin-top:auto`,
+  NOT by `justify-content:center` — centring a flex child that overflows
+  clips its top and it can never be scrolled back to.
+- `main` gets `inert` while the sheet is open. `main`, not `.shell`: the
+  toggle lives outside `main`, and making its own ancestor inert would leave
+  no way to close the menu.
+
+## The index — ⌘K (added 2026-08-18)
+
+`assets/js/cmdk.js` + `cmdk.css`, on all eight pages. Twelve destinations:
+the pages, the four landing scenes, and the mailto.
+
+- **Every result is a real `<a>` in the document.** `field.js` owns internal
+  links — it morphs the bed to the destination's opening formation before
+  navigating — and it listens on `document`. Enter calls `row.click()` so the
+  event bubbles into that handler. Assigning `location.href` would make the
+  palette the one place on the site where navigation blinks.
+- Opens on ⌘K / Ctrl-K, on bare `/`, from the `⌘K` chip in `.nav__end`, and
+  from the first row of the phone menu sheet (`[data-cmdk]`, injected by
+  `nav.js` — the two files talk through the DOM, not through an import).
+- Scoring is prefix > substring > keyword bag > subsequence. Twelve items do
+  not justify a fuzzy-match dependency.
+
+## Two ordering bugs fixed 2026-08-18 — do not reintroduce
+
+1. **The import map must precede every `<link rel="modulepreload">`.** A
+   modulepreload IS a module load: Chrome resolves the preloaded module's own
+   imports at preload time. With the map below the preloads,
+   `GPUComputationRenderer`'s bare `import ... from 'three'` had nothing to
+   resolve against and all eight pages logged
+   `Failed to resolve module specifier "three"`. The field still ran (the
+   real import later found the map) so nothing looked broken — the preload
+   was simply wasted. If you add a page, put the map first.
+2. **`[hidden]` loses to any class that sets `display`.** `.mx__go` is
+   `display:inline-flex`, so `el.hidden = true` did nothing and the
+   single-line shortcut stayed on screen for every selection. Pair any
+   `display`-setting class with an explicit `[hidden]{display:none}`.
+
+**Every CTA on the landing page was dead** until 2026-08-18. All four
+"Request access" controls on `index.html` — nav, hero access card, SYS.02, and
+the removed "Read the system doc" — were ported from the Claude Design source
+as `<button type="button">` with no `href` and no handler, so the entire
+conversion path on the home page did nothing. They are `<a href="#sys-05">`
+now, matching the seven instances on the other pages; SYS.05 itself keeps the
+mailto. **`index.html` should contain no `<button>` at all** — if one appears,
+it is almost certainly a control that does nothing.
+"Read the system doc" was removed outright at the owner's direction
+(2026-08-18) — there is no system doc, so the button could not be wired.
+
+Still open: the three `.cap__row` links in SYS.02 (Diagnostic core, Structural
+rebuild, Live calibration) are `href="#"`. They carry an arrow, so they read
+as links and currently jump to the top of the page. They need a destination
+decided rather than invented.
+
+Also fixed the same day, both shipped-and-live: the Lumina mark in the footer
+of all four `services/*.html` pointed at `assets/media/lumina-logo.png`, which
+resolves to `/services/assets/...` and 404'd; and `.sig__stage` had no
+horizontal gutter, so every instrument's step readout and note sat flush
+against the viewport edge.
+
+## The share card
+
+`assets/media/og.jpg`, 1200×630, built by `docs/og-card-source.html`
+(a standalone page rendered headless at 2× and downsampled to 1200×630). It is NOT a screenshot of the
+site — the old one was, and a whole landing page reduced to preview size is an
+unreadable smudge.
+
+- It renders the **same** torus the site does: `buildTargets`'s S3 branch and
+  the vivid ramp are ported verbatim, including the S1/S2/S4 draws that are
+  discarded, so the RNG stream lands on the numbers the site gets.
+- The lockup is nudged down so the mark's Pulse seam sits on the torus's
+  horizontal axis. The cut in the wordmark and the equator of the core are
+  the same line.
+- Text keeps its contrast the way the shader does it: one keep-out rect per
+  LINE, alpha pulled to 0.20 inside them. One rect big enough for the whole
+  lockup also covered the bottom third of the ring.
+- The whole lockup sits inside the centred 630×630 square, because some
+  clients crop a link preview to a square thumbnail.
+- **`og:image` carries `?v=2`.** Scrapers cache by image URL; WhatsApp and
+  LinkedIn will both keep serving the old bytes without it. Bump it again if
+  the card is ever recomposed. WhatsApp also caches the whole preview per
+  page URL — sharing `zyrn.org/?v=2` once forces a fresh scrape.
+
 ## Open
 
 - ~~`TODO(asset)` — hero video~~ **CLOSED 2026-08-17.** There is no video anywhere
   on the site. The field renders its own subject, so there is nothing to source.
-- No favicon yet — should be the Z monogram (two-half clip + Pulse seam).
+- ~~No favicon yet~~ CLOSED 2026-08-18 — `assets/media/icons/`, built by
+  `icons.py` from the same `M4 5h12L4 15h12` path, seam dropped at 16px.
 - Nav below `sm` should swap the full wordmark for the Z monogram.
 - ~~`Journal` unrouted~~ RESOLVED 2026-08-18: the nav slot now goes to
   `foundation.html`. Journal is no longer in the nav at all. Per docs/strategy.md it is the credibility
@@ -365,7 +508,8 @@ things in it are worth not breaking:
   and the `mailto:access@zyrn.org` in SYS.05 all need updating together.
 - Verify a deploy against `https://risethehorns-arch.github.io/Zyrn/`, not the
   custom domain — Pages serves a push immediately, DNS lags.
-- SYS.03's four lines now link to `services/*.html`.
+- SYS.03's four lines now link to `services/*.html`, and `services.html`
+  indexes them. The nav is Work / Foundation / System / Services / Contact.
 - Service pages have no per-service proof either — same gap as the landing page.
 - No proof anywhere on the site: no case study, metric, or named engagement. Expected
   at launch, but it is the first thing a CIO will look for. See docs/strategy.md §5.

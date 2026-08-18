@@ -372,34 +372,117 @@ body.is-leaving .sysnav{opacity:0;transition:opacity 260ms linear}
   position:fixed;inset:0;z-index:55;
   background:rgba(8,9,11,0.94);
   -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
-  display:flex;flex-direction:column;justify-content:center;
+  display:flex;flex-direction:column;
   gap:34px;padding:96px var(--gutter,24px) 40px;
+  /* With the Services disclosure open the sheet can outgrow a short phone.
+     `justify-content:center` + overflow clips the TOP of an overflowing flex
+     child and you can never scroll back to it; auto margins centre the same
+     way and stay scrollable. */
+  overflow-y:auto;overscroll-behavior:contain;
   opacity:0;transition:opacity 320ms cubic-bezier(.16,1,.3,1);
 }
 .navsheet.is-on{opacity:1}
-.navsheet__list{display:flex;flex-direction:column;gap:6px}
-.navsheet__list a{
+.navsheet__list{display:flex;flex-direction:column;gap:6px;margin-top:auto}
+
+/* ── rows ─────────────────────────────────────────────────────────────
+   Selectors are scoped with > on purpose: a bare `.navsheet__list a` also
+   matched the four links inside the disclosure and set them at 34px. */
+.navsheet__list > a,
+.navsheet__row > a{
   display:flex;align-items:baseline;gap:14px;
   padding:12px 0;                        /* 44px+ rows */
   font-size:clamp(26px,7.5vw,34px);line-height:1.1;
   letter-spacing:-0.02em;color:rgba(242,243,245,0.72);
+  transition:color 200ms ease;
+}
+.navsheet__list > a{border-bottom:1px solid var(--hair)}
+.navsheet__row{
+  display:flex;align-items:center;gap:12px;
   border-bottom:1px solid var(--hair);
+}
+.navsheet__row > a{flex:1 1 auto;min-width:0}
+
+/* the entrance cascade runs on the top-level children, disclosure included */
+.navsheet__list > a,
+.navsheet__list > .navsheet__group{
   opacity:0;transform:translateY(12px);
   transition:opacity 420ms cubic-bezier(.16,1,.3,1),
-             transform 420ms cubic-bezier(.16,1,.3,1),
-             color 200ms ease;
+             transform 420ms cubic-bezier(.16,1,.3,1);
 }
-.navsheet.is-on .navsheet__list a{opacity:1;transform:none}
-.navsheet.is-on .navsheet__list a:nth-child(1){transition-delay:60ms}
-.navsheet.is-on .navsheet__list a:nth-child(2){transition-delay:110ms}
-.navsheet.is-on .navsheet__list a:nth-child(3){transition-delay:160ms}
-.navsheet.is-on .navsheet__list a:nth-child(4){transition-delay:210ms}
-.navsheet.is-on .navsheet__list a:nth-child(5){transition-delay:260ms}
+.navsheet.is-on .navsheet__list > a,
+.navsheet.is-on .navsheet__list > .navsheet__group{opacity:1;transform:none}
+.navsheet.is-on .navsheet__list > :nth-child(1){transition-delay:60ms}
+.navsheet.is-on .navsheet__list > :nth-child(2){transition-delay:110ms}
+.navsheet.is-on .navsheet__list > :nth-child(3){transition-delay:160ms}
+.navsheet.is-on .navsheet__list > :nth-child(4){transition-delay:210ms}
+.navsheet.is-on .navsheet__list > :nth-child(5){transition-delay:260ms}
+.navsheet.is-on .navsheet__list > :nth-child(6){transition-delay:310ms}
+.navsheet.is-on .navsheet__list > :nth-child(7){transition-delay:360ms}
+
+/* the index row, prepended by nav.js — a phone has no ⌘K, so this is the
+   only way in. Set quieter than the destinations: it is a tool, not a place. */
+.navsheet__find{
+  font-size:clamp(15px,4vw,17px)!important;letter-spacing:0!important;
+  color:rgba(242,243,245,0.5)!important;
+  padding:10px 0!important;
+}
+.navsheet__find:hover{color:var(--vapor)!important}
 .navsheet__list a[aria-current]{color:var(--vapor)}
 .navsheet__i{color:var(--steel);font-size:10px;flex:0 0 auto}
+
+/* ── the Services disclosure ──────────────────────────────────────────
+   The chevron is its own 44px target next to the label, not the whole row:
+   a row that either navigates or expands depending on where the thumb lands
+   is a coin toss. */
+.navsheet__more{
+  flex:0 0 auto;
+  width:44px;height:44px;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--hair);border-radius:6px;
+  background:transparent;color:rgba(242,243,245,0.6);
+  transition:color 200ms ease,border-color 200ms ease,background-color 200ms ease;
+}
+.navsheet__more svg{
+  width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;
+  transition:transform 320ms cubic-bezier(.16,1,.3,1);
+}
+.navsheet__more:hover{color:var(--vapor);border-color:var(--hair-strong)}
+.navsheet__group[data-open="true"] .navsheet__more{
+  color:var(--vapor);border-color:var(--hair-strong);
+  background:rgba(242,243,245,0.05);
+}
+.navsheet__group[data-open="true"] .navsheet__more svg{transform:rotate(180deg)}
+
+.navsheet__sub{
+  display:flex;flex-direction:column;
+  max-height:0;overflow:hidden;
+  /* max-height rather than a grid 0fr→1fr: four rows is a knowable ceiling,
+     and this animates on every browser the site targets */
+  transition:max-height 380ms cubic-bezier(.16,1,.3,1);
+}
+.navsheet__group[data-open="true"] .navsheet__sub{max-height:340px}
+.navsheet__sub a{
+  display:flex;align-items:center;gap:14px;
+  padding:11px 0 11px 22px;
+  font-size:clamp(14px,4.2vw,17px);line-height:1.2;
+  color:rgba(242,243,245,0.62);
+  border-bottom:1px solid var(--hair);
+  opacity:0;transform:translateY(-6px);
+  transition:opacity 300ms ease,transform 300ms cubic-bezier(.16,1,.3,1),
+             color 200ms ease;
+}
+.navsheet__sub a:last-child{border-bottom:none}
+.navsheet__group[data-open="true"] .navsheet__sub a{opacity:1;transform:none}
+.navsheet__group[data-open="true"] .navsheet__sub a:nth-child(1){transition-delay:70ms}
+.navsheet__group[data-open="true"] .navsheet__sub a:nth-child(2){transition-delay:120ms}
+.navsheet__group[data-open="true"] .navsheet__sub a:nth-child(3){transition-delay:170ms}
+.navsheet__group[data-open="true"] .navsheet__sub a:nth-child(4){transition-delay:220ms}
+.navsheet__sub a:hover{color:var(--vapor)}
+
 .navsheet__foot{
   display:flex;flex-direction:column;gap:8px;
   color:var(--steel);border-top:1px solid var(--hair);padding-top:18px;
+  margin-top:auto;
 }
 body.is-navopen{overflow:hidden}
 
@@ -410,6 +493,9 @@ body.is-navopen{overflow:hidden}
 }
 @media (min-width:900px){ .navsheet{display:none} }
 @media (prefers-reduced-motion:reduce){
-  .navsheet,.navsheet__list a,.navtoggle__b{transition:none}
-  .navsheet.is-on .navsheet__list a{transform:none}
+  .navsheet,.navsheet__list a,.navtoggle__b,
+  .navsheet__sub,.navsheet__sub a,.navsheet__more svg{transition:none}
+  .navsheet.is-on .navsheet__list > a,
+  .navsheet.is-on .navsheet__list > .navsheet__group,
+  .navsheet__sub a{transform:none}
 }

@@ -18,7 +18,11 @@
   min-height:100svh;
   display:flex;flex-direction:column;justify-content:center;
   gap:clamp(14px,2.2vh,26px);
-  padding:clamp(72px,10vh,110px) 0 clamp(40px,6vh,64px);
+  /* The gutter was missing here: `.sig` is a direct child of <main>, and
+     <main> has no padding — every other section brings its own. So the step
+     readout, the percentage and the note all sat flush against the viewport
+     edge on all four service pages. Shipped that way; fixed 2026-08-18. */
+  padding:clamp(72px,10vh,110px) var(--gutter) clamp(40px,6vh,64px);
 }
 .sig__head{
   display:flex;justify-content:space-between;align-items:baseline;gap:16px;
@@ -33,6 +37,9 @@
   transition:opacity 240ms;
 }
 .sig__note.is-swap{opacity:0}
+/* the readout and the note sit directly on the field with no panel behind
+   them — the same veil every other body copy on a service page gets */
+.sig__step,.sig__pct,.sig__note{text-shadow:0 1px 12px rgba(14,15,18,0.75)}
 @media (max-width:720px){
   .sig__track{height:300vh}
   .sig__note{min-height:7em;font-size:13px}

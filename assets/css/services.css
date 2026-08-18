@@ -1,0 +1,412 @@
+/* ══════════════════════════════════════════════════════════════════════
+   ZYRN — SERVICE LINES  (services.html)
+
+   The index for the four lines. It sits between the landing page and the
+   four service pages and has to belong to both: the landing page's scene
+   rhythm and section rail, the service pages' hero, tab bar and footer.
+
+   Three things live here and nowhere else:
+
+     .core     the signature instrument — a core that partitions into four
+               lines and pulls them back onto a shared rim
+     .lcard    the four lines as full rows, each carrying a small glyph
+               that quotes its own page's instrument
+     .mx       the combination matrix — the one genuinely operable thing
+               on the site
+
+   Same constraint as svc-modules.css: this runs on top of a 90k-particle
+   simulation. Transforms and opacity only. Nothing here reads layout in a
+   frame loop and nothing here paints to a canvas.
+   ══════════════════════════════════════════════════════════════════════ */
+
+
+/* ══ SIGNATURE · THE CORE ═══════════════════════════════════════════ */
+
+.sig--core .sig__stage{gap:clamp(10px,1.8vh,20px)}
+
+.core{
+  --dim:min(66vh,620px);
+  --span:calc(var(--dim) * 0.50);
+  --open:0; --ring:1; --spin:0deg; --load:0; --hold:0; --hub:1;
+  position:relative;
+  width:var(--dim);height:var(--dim);
+  margin:0 auto;
+  transform:rotate(var(--spin));
+  will-change:transform;
+}
+
+/* the ring, as two stacked SVGs cross-faded by --open: one closed circle
+   (the core as one system) and one cut into four arcs with the gaps sitting
+   exactly where the four lines will run */
+.core__ring{
+  position:absolute;inset:0;
+  transform:scale(var(--ring));
+  transition:none;
+  will-change:transform;
+}
+.core__ring svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.core__ring circle{fill:none;stroke-linecap:butt}
+.core__whole{stroke:rgba(242,243,245,0.38);stroke-width:1.2;opacity:calc(1 - var(--open))}
+.core__split{stroke:rgba(242,243,245,0.48);stroke-width:1.6;opacity:var(--open)}
+/* a second, wider arc set that only comes up under load — the lines being
+   carried, rather than merely drawn */
+.core__laden{
+  stroke:rgba(242,243,245,0.72);stroke-width:3;
+  opacity:calc(var(--load) * 0.5 + var(--hold) * 0.5);
+}
+
+/* the hub: the monogram, at the centre of everything */
+.core__hub{
+  position:absolute;left:50%;top:50%;
+  width:60px;height:60px;margin:-30px 0 0 -30px;
+  display:grid;place-items:center;
+  transform:scale(var(--hub)) rotate(calc(-1 * var(--spin)));
+  border:1px solid var(--hair-strong);border-radius:50%;
+  background:rgba(14,15,18,0.72);
+  will-change:transform;
+}
+.core__hub .mark{transform:scale(1.15)}
+
+/* the four lines. A bar anchored at the centre, rotated to its own angle
+   and scaled out along itself — transform only, so it never touches layout */
+.corearm{
+  --r:0;
+  position:absolute;left:50%;top:50%;
+  width:var(--span);height:1px;margin-top:-0.5px;
+  transform-origin:0 50%;
+  transform:rotate(var(--a)) scaleX(var(--r));
+  background:rgba(242,243,245,0.38);
+  will-change:transform;
+}
+
+/* the node cards ride the end of each line and counter-rotate twice: once
+   against the arm's angle, once against the rig's slow spin, so the labels
+   stay upright through the whole move */
+.corenode{
+  --r:0; --o:0;
+  position:absolute;left:50%;top:50%;
+  width:clamp(126px,15vw,168px);
+  margin:0;padding:10px 12px 11px;
+  display:block;
+  /* these are Vapor labels sitting directly on emitted light — they need
+     the obsidian veil from the moment they appear, not only once the lines
+     are held. Without it the field reads straight through the type. */
+  border:1px solid var(--hair);border-radius:8px;
+  background:rgba(14,15,18,calc(0.62 + 0.24 * var(--hold)));
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
+  opacity:var(--o);
+  transform:
+    translate(-50%,-50%)
+    rotate(var(--a)) translateX(calc(var(--r) * var(--span))) rotate(calc(-1 * var(--a)))
+    rotate(calc(-1 * var(--spin)));
+  transition:border-color 300ms,background-color 300ms;
+  will-change:transform,opacity;
+}
+.corenode:hover,.corenode:focus-visible{
+  border-color:var(--hair-strong);
+  background:rgba(14,15,18,0.78);
+}
+.corenode__idx{display:block;color:rgba(242,243,245,0.55);font-size:10px}
+.corenode__name{
+  display:block;margin-top:4px;
+  font-size:14px;line-height:1.25;color:var(--vapor);
+}
+.corenode__meta{
+  display:block;
+  margin-top:calc(var(--load) * 7px);
+  font-size:9.5px;letter-spacing:0.14em;
+  color:rgba(242,243,245,0.5);
+  max-height:calc(var(--load) * 3em);
+  opacity:var(--load);
+  overflow:hidden;
+}
+
+@media (max-width:860px){
+  .core{--dim:min(78vw,380px);--span:calc(var(--dim) * 0.60)}
+  .core__hub{width:44px;height:44px;margin:-22px 0 0 -22px}
+  .corenode{width:clamp(96px,27vw,126px);padding:7px 9px 8px}
+  .corenode__idx{font-size:9px}
+  .corenode__name{font-size:12px;line-height:1.2}
+  /* the meta strip is three words clipped to one line at this width, which
+     reads as a rendering fault rather than as metadata. The service pages
+     carry it in full; here the label is enough. */
+  .corenode__meta{display:none}
+}
+
+
+/* ══ THE LINES ═════════════════════════════════════════════════════ */
+
+.lcards{
+  margin-top:56px;
+  border-top:1px solid var(--hair);
+}
+.lcard{
+  position:relative;
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center;
+  gap:clamp(20px,3vw,48px);
+  padding:clamp(24px,3.4vw,40px) 0;
+  border-bottom:1px solid var(--hair);
+  overflow:hidden;
+}
+/* the hairline that draws itself across the row on hover — the site's one
+   recurring hover idiom, borrowed from .line on the landing page */
+.lcard::after{
+  content:'';position:absolute;left:0;right:0;bottom:-1px;height:1px;
+  background:rgba(242,243,245,0.42);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform 600ms var(--ease-reveal);
+}
+.lcard:hover::after,.lcard:focus-visible::after{transform:scaleX(1)}
+
+.lcard__idx{
+  font-size:clamp(30px,4vw,52px);font-weight:400;line-height:1;
+  color:rgba(242,243,245,0.16);
+  transition:color 400ms var(--ease-reveal);
+}
+.lcard:hover .lcard__idx{color:rgba(242,243,245,0.44)}
+
+.lcard__name{
+  margin:0;font-size:clamp(22px,2.6vw,34px);font-weight:400;
+  line-height:1.1;letter-spacing:-0.01em;color:var(--vapor);
+}
+.lcard__lede{
+  margin:10px 0 0;max-width:52ch;
+  font-size:15px;line-height:1.7;color:rgba(242,243,245,0.7);
+}
+.lcard__meta{
+  display:block;margin-top:14px;
+  color:rgba(242,243,245,0.45);
+}
+
+/* ── the glyphs ───────────────────────────────────────────────────
+   One per line, each quoting the signature instrument on that line's own
+   page: a surface assembling, a set of swatches, a graph rewiring, an
+   index climbing. They idle, and they run on hover. Four small CSS
+   machines — no JS, no canvas. */
+.glyph{
+  position:relative;
+  width:clamp(64px,7vw,92px);height:clamp(64px,7vw,92px);
+  flex:none;
+  border:1px solid var(--hair);border-radius:8px;
+  background:rgba(14,15,18,0.42);
+  overflow:hidden;
+}
+.glyph i{position:absolute;background:rgba(242,243,245,0.55);display:block}
+
+/* 01 — a surface stacking itself */
+.glyph--build i{left:16%;right:16%;height:3px;border-radius:1px;
+  transform:scaleX(0.35);transform-origin:left;
+  transition:transform 520ms var(--ease-reveal)}
+.glyph--build i:nth-child(1){top:24%}
+.glyph--build i:nth-child(2){top:44%;transform:scaleX(0.62)}
+.glyph--build i:nth-child(3){top:64%;transform:scaleX(0.20)}
+.lcard:hover .glyph--build i{transform:scaleX(1)}
+.lcard:hover .glyph--build i:nth-child(2){transition-delay:70ms}
+.lcard:hover .glyph--build i:nth-child(3){transition-delay:140ms}
+
+/* 02 — four swatches resolving to one column */
+.glyph--kit i{width:22%;height:22%;border-radius:2px;
+  transition:transform 520ms var(--ease-reveal),opacity 520ms}
+.glyph--kit i:nth-child(1){left:22%;top:22%;opacity:0.9}
+.glyph--kit i:nth-child(2){left:56%;top:22%;opacity:0.55}
+.glyph--kit i:nth-child(3){left:22%;top:56%;opacity:0.35}
+.glyph--kit i:nth-child(4){left:56%;top:56%;opacity:0.7}
+.lcard:hover .glyph--kit i:nth-child(1){transform:translate(17%,17%)}
+.lcard:hover .glyph--kit i:nth-child(2){transform:translate(-17%,17%)}
+.lcard:hover .glyph--kit i:nth-child(3){transform:translate(17%,-17%)}
+.lcard:hover .glyph--kit i:nth-child(4){transform:translate(-17%,-17%)}
+.lcard:hover .glyph--kit i{opacity:0.85}
+
+/* 03 — three nodes rewiring */
+.glyph--graph i{width:9px;height:9px;border-radius:50%;
+  transition:transform 560ms var(--ease-reveal)}
+.glyph--graph i:nth-child(1){left:18%;top:22%}
+.glyph--graph i:nth-child(2){left:62%;top:44%}
+.glyph--graph i:nth-child(3){left:26%;top:68%}
+.glyph--graph i:nth-child(4){left:12%;right:12%;top:50%;width:auto;height:1px;
+  border-radius:0;background:rgba(242,243,245,0.22);
+  transform:scaleX(0.4);transform-origin:left}
+.lcard:hover .glyph--graph i:nth-child(1){transform:translate(180%,120%)}
+.lcard:hover .glyph--graph i:nth-child(2){transform:translate(-150%,-40%)}
+.lcard:hover .glyph--graph i:nth-child(3){transform:translate(120%,-150%)}
+.lcard:hover .glyph--graph i:nth-child(4){transform:scaleX(1)}
+
+/* 04 — an index climbing */
+.glyph--index i{bottom:22%;width:9%;border-radius:1px;transform-origin:bottom;
+  transition:transform 560ms var(--ease-reveal)}
+.glyph--index i:nth-child(1){left:20%;height:18%;transform:scaleY(0.5)}
+.glyph--index i:nth-child(2){left:36%;height:32%;transform:scaleY(0.4)}
+.glyph--index i:nth-child(3){left:52%;height:46%;transform:scaleY(0.3)}
+.glyph--index i:nth-child(4){left:68%;height:60%;transform:scaleY(0.2)}
+.lcard:hover .glyph--index i{transform:scaleY(1)}
+.lcard:hover .glyph--index i:nth-child(2){transition-delay:60ms}
+.lcard:hover .glyph--index i:nth-child(3){transition-delay:120ms}
+.lcard:hover .glyph--index i:nth-child(4){transition-delay:180ms}
+
+/* On a touch device there is no hover, so all four glyphs would sit frozen
+   in their idle state forever — the one thing on the row that is supposed to
+   move. Run them off the reveal instead: `.is-in` is written by main.js's
+   IntersectionObserver, so each glyph plays once as its row arrives. */
+@media (hover:none){
+  .lcard.is-in .glyph--build i{transform:scaleX(1)}
+  .lcard.is-in .glyph--build i:nth-child(2){transition-delay:70ms}
+  .lcard.is-in .glyph--build i:nth-child(3){transition-delay:140ms}
+  .lcard.is-in .glyph--kit i{opacity:0.85}
+  .lcard.is-in .glyph--kit i:nth-child(1){transform:translate(17%,17%)}
+  .lcard.is-in .glyph--kit i:nth-child(2){transform:translate(-17%,17%)}
+  .lcard.is-in .glyph--kit i:nth-child(3){transform:translate(17%,-17%)}
+  .lcard.is-in .glyph--kit i:nth-child(4){transform:translate(-17%,-17%)}
+  .lcard.is-in .glyph--graph i:nth-child(1){transform:translate(180%,120%)}
+  .lcard.is-in .glyph--graph i:nth-child(2){transform:translate(-150%,-40%)}
+  .lcard.is-in .glyph--graph i:nth-child(3){transform:translate(120%,-150%)}
+  .lcard.is-in .glyph--graph i:nth-child(4){transform:scaleX(1)}
+  .lcard.is-in .glyph--index i{transform:scaleY(1)}
+  .lcard.is-in .glyph--index i:nth-child(2){transition-delay:60ms}
+  .lcard.is-in .glyph--index i:nth-child(3){transition-delay:120ms}
+  .lcard.is-in .glyph--index i:nth-child(4){transition-delay:180ms}
+  .lcard.is-in::after{transform:scaleX(1)}
+}
+
+.lcard__go{
+  display:flex;align-items:center;gap:14px;
+}
+.lcard__arrow{
+  width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5;
+  color:rgba(242,243,245,0.5);
+  transition:transform 400ms var(--ease-reveal),color 400ms;
+}
+.lcard:hover .lcard__arrow{transform:translate(4px,-4px);color:var(--vapor)}
+
+@media (max-width:860px){
+  .lcard{grid-template-columns:auto minmax(0,1fr);gap:16px 20px}
+  .lcard__go{grid-column:1 / -1;justify-content:space-between;margin-top:4px}
+  .lcard__lede{font-size:14px}
+}
+
+
+/* ══ THE COMBINATION MATRIX ════════════════════════════════════════ */
+
+.mx{
+  margin-top:48px;
+  display:grid;grid-template-columns:minmax(0,0.9fr) minmax(0,1.1fr);
+  gap:1px;
+  border:1px solid var(--glass-edge);border-radius:12px;
+  background:var(--glass-tint),rgba(14,15,18,0.55);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+  box-shadow:var(--glass-lift),var(--glass-inner);
+  overflow:hidden;
+}
+.mx__side{padding:clamp(20px,2.4vw,30px);border-right:1px solid var(--hair)}
+.mx__main{padding:clamp(20px,2.4vw,30px)}
+.mx__h{
+  display:block;margin-bottom:16px;
+  color:rgba(242,243,245,0.5);
+}
+
+/* the four toggles */
+.mx__line{
+  display:flex;align-items:center;gap:14px;width:100%;
+  padding:13px 14px;margin-bottom:8px;
+  border:1px solid var(--hair);border-radius:8px;
+  background:transparent;color:inherit;
+  font-family:var(--font-sans);font-size:15px;text-align:left;
+  cursor:pointer;
+  transition:border-color 300ms,background-color 300ms,color 300ms;
+}
+.mx__line:last-of-type{margin-bottom:0}
+.mx__line:hover{border-color:var(--hair-strong);background:rgba(242,243,245,0.03)}
+.mx__line .mono{color:rgba(242,243,245,0.45);transition:color 300ms}
+.mx__line span:last-child{color:rgba(242,243,245,0.68);transition:color 300ms}
+/* the switch */
+.mx__sw{
+  margin-left:auto;flex:none;
+  width:30px;height:16px;border-radius:9px;
+  border:1px solid var(--hair-strong);
+  position:relative;transition:border-color 300ms,background-color 300ms;
+}
+.mx__sw::after{
+  content:'';position:absolute;top:50%;left:2px;
+  width:10px;height:10px;margin-top:-5px;border-radius:50%;
+  background:rgba(242,243,245,0.4);
+  transition:transform 320ms var(--ease-reveal),background-color 320ms;
+}
+.mx__line.is-on{border-color:rgba(242,243,245,0.34);background:rgba(242,243,245,0.05)}
+.mx__line.is-on .mono,
+.mx__line.is-on span:last-child{color:var(--vapor)}
+.mx__line.is-on .mx__sw{background:rgba(242,243,245,0.14)}
+.mx__line.is-on .mx__sw::after{transform:translateX(14px);background:var(--vapor)}
+
+/* the five dimensions */
+.mx__dim{
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center;gap:14px;
+  padding:11px 0;border-bottom:1px solid var(--hair);
+}
+.mx__dim:last-of-type{border-bottom:none}
+.mx__k{color:rgba(242,243,245,0.72);min-width:11ch}
+.mx__bar{
+  --v:0;
+  position:relative;height:2px;border-radius:1px;
+  background:rgba(242,243,245,0.09);
+}
+.mx__bar::after{
+  content:'';position:absolute;inset:0;border-radius:1px;
+  background:var(--vapor);
+  transform:scaleX(var(--v));transform-origin:left;
+  transition:transform 620ms var(--ease-reveal);
+}
+/* a dimension a combination only half-covers is the interesting one — it
+   gets called out rather than left to be read off a bar */
+.mx__dim.is-thin .mx__bar::after{background:rgba(242,243,245,0.42)}
+.mx__val{color:rgba(242,243,245,0.5);font-variant-numeric:tabular-nums}
+
+.mx__out{
+  margin-top:22px;padding-top:20px;
+  border-top:1px solid var(--hair-strong);
+}
+.mx__idxrow{display:flex;align-items:baseline;gap:16px}
+.mx__idx{
+  font-family:var(--font-mono);font-weight:500;
+  font-size:clamp(34px,4.4vw,52px);line-height:1;
+  color:var(--vapor);font-variant-numeric:tabular-nums;
+}
+.mx__idx sup{font-size:0.36em;vertical-align:super;color:rgba(242,243,245,0.45);
+  margin-left:2px;letter-spacing:0.1em}
+.mx__lvl{color:rgba(242,243,245,0.55)}
+.mx__name{
+  display:block;margin-top:18px;
+  color:var(--vapor);
+}
+.mx__read{
+  margin:10px 0 0;max-width:54ch;
+  font-size:15px;line-height:1.7;color:rgba(242,243,245,0.7);
+  min-height:5.1em;
+}
+.mx__go{
+  display:inline-flex;align-items:center;gap:8px;margin-top:6px;
+  font-size:14px;color:var(--vapor);
+  border-bottom:1px solid var(--hair-strong);padding-bottom:2px;
+}
+.mx__go:hover{border-bottom-color:var(--vapor)}
+/* display in a class beats the UA sheet's [hidden]{display:none}, so without
+   this the single-line shortcut stayed on screen for every selection */
+.mx__go[hidden]{display:none}
+.mx.is-empty .mx__idx,.mx.is-empty .mx__lvl{color:rgba(242,243,245,0.28)}
+
+@media (max-width:860px){
+  .mx{grid-template-columns:minmax(0,1fr)}
+  .mx__side{border-right:none;border-bottom:1px solid var(--hair)}
+  .mx__k{min-width:9ch;font-size:10px}
+  .mx__read{min-height:7em;font-size:14px}
+}
+
+/* the whole page sits on the field — same shadow the service pages use */
+.lcard,.mx__read,.mx__name{text-shadow:0 1px 12px rgba(14,15,18,0.6)}
+.mx{text-shadow:none}
+
+@media (prefers-reduced-motion:reduce){
+  .core,.core__ring,.core__hub,.corearm,.corenode{transition:none!important}
+  .lcard::after,.glyph i,.mx__bar::after,.mx__sw::after{transition:none!important}
+}

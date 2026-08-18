@@ -89,6 +89,7 @@ const ORDER = ['S1', 'S2', 'S3', 'S4'];
 const ROUTES = {
   '': 'S3', 'index.html': 'S3', 'brand.html': 'S3',
   'foundation.html': 'S1',
+  'services.html': 'S3',
   'website-design.html': 'S1',
   'brand-kit.html': 'S3',
   'business-structuring.html': 'S3',

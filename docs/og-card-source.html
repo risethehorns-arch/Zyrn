@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ZYRN — share card source</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet">
+<style>
+  :root{
+    --ob:#0E0F12; --vapor:#F2F3F5; --pulse:#6E56F8; --steel:#767E8C;
+    --hair:rgba(242,243,245,.08);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1200px;height:630px;overflow:hidden;background:var(--ob)}
+  body{position:relative;font-family:'Space Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  #c{position:absolute;inset:0;width:1200px;height:630px;display:block}
+
+  /* hairline frame — the site's grid language, inset */
+  .frame{position:absolute;inset:26px;border:1px solid var(--hair);pointer-events:none}
+
+  .mono{font-family:'IBM Plex Mono',ui-monospace,monospace;font-weight:400;
+        font-size:11px;letter-spacing:.20em;text-transform:uppercase}
+
+  .cnr{position:absolute;color:rgba(242,243,245,.44)}
+  .cnr--tl{top:46px;left:48px}
+  .cnr--tr{top:46px;right:48px}
+  .cnr--bl{bottom:46px;left:48px}
+  .cnr--br{bottom:46px;right:48px}
+
+  /* ── the lockup ─────────────────────────────────────────────── */
+  /* The lockup is nudged down so the mark's Pulse seam lands on the exact
+     horizontal axis of the torus. The cut in the wordmark and the equator of
+     the core become the same line — which is the whole argument of the mark. */
+  .stage{position:absolute;inset:0;display:flex;flex-direction:column;
+         align-items:center;justify-content:center;transform:translateY(47px)}
+
+  /* the shear: two clipped halves offset in opposite directions, seam between */
+  /* the component, verbatim from assets/css/styles.css: letter-spacing .06em,
+     the halves offset 0.1em apart, the bottom half pulled back with -1em
+     rather than absolutely positioned. The one departure is seam weight —
+     the kit's 2px is specified at nav scale and a share card is viewed at
+     roughly a third of its rendered size, where 2px vanishes. 4px here is
+     ~1.3px as seen, which is the hairline the kit is actually describing. */
+  .shear{position:relative;display:inline-block;line-height:1;
+         font-size:128px;font-weight:500;letter-spacing:.06em;color:var(--vapor)}
+  .shear__half{display:block}
+  .shear__half--top{clip-path:inset(0 0 50% 0);transform:translateX(-.1em)}
+  .shear__half--bot{clip-path:inset(50% 0 0 0);margin-top:-1em;transform:translateX(.1em)}
+  .shear__seam{position:absolute;left:-16px;right:-16px;top:50%;margin-top:-2px;
+               display:block;height:4px;background:var(--pulse)}
+
+  .tag{margin-top:30px;font-size:23px;font-weight:400;letter-spacing:.004em;
+       color:rgba(242,243,245,.86)}
+  .meta{margin-top:20px;display:flex;align-items:center;gap:14px;
+        color:rgba(242,243,245,.52)}
+  .meta i{display:block;width:4px;height:4px;background:var(--pulse);
+          transform:rotate(45deg);opacity:.9}
+</style>
+</head>
+<body>
+<canvas id="c" width="2400" height="1260"></canvas>
+<div class="frame"></div>
+
+<span class="mono cnr cnr--tl">SYS.03 &mdash; CORE</span>
+<span class="mono cnr cnr--tr">EST. 2026</span>
+<span class="mono cnr cnr--bl">AMM 31.95&deg;N / 35.93&deg;E</span>
+<span class="mono cnr cnr--br">BY REFERRAL</span>
+
+<div class="stage">
+  <span class="shear">
+    <span class="shear__half shear__half--top">ZYRN</span>
+    <span class="shear__half shear__half--bot">ZYRN</span>
+    <span class="shear__seam"></span>
+  </span>
+  <p class="tag">Organizations, engineered.</p>
+  <p class="mono meta"><span>ZYRN.ORG</span><i></i><span>AMMAN</span></p>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════
+   The share card renders the SAME torus the site renders — same seed,
+   same S3 formation, same vivid ramp, same additive gaussian points.
+   Ported from assets/js/field.js so the card cannot drift from the bed.
+   ══════════════════════════════════════════════════════════════════ */
+const TAU = Math.PI * 2, SEED = 0x5A79524E;
+
+function mulberry32(a){
+  return function(){
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+/* the S3 branch of buildTargets(), with the S1/S2/S4 draws kept in place
+   so the RNG stream lands on exactly the numbers the site gets */
+function buildS3(N){
+  const rnd = mulberry32(SEED);
+  const gauss = () => { let u = 0; while (u === 0) u = rnd();
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(TAU * rnd()); };
+  const S3 = new Float32Array(N * 4);
+  const ARMS = 4;
+
+  for (let i = 0; i < N; i++){
+    const o = i * 4;
+    // S1 — consumed, not kept
+    if (rnd() < 0.08){ Math.pow(rnd(),1.5); rnd(); Math.acos(2*rnd()-1); rnd(); }
+    else { Math.pow(rnd(),1.3); (rnd()*ARMS)|0; gauss(); gauss(); }
+    // S2 — consumed
+    rnd(); rnd(); rnd(); rnd();
+    // S3 — kept
+    const u = rnd() * TAU, v = rnd() * TAU, Rr = 1.36;
+    const fill = Math.sqrt(rnd());
+    const rr = 0.68 * (fill + (rnd() < 0.14 ? rnd() * 0.30 : 0));
+    const cv = Math.cos(v), sv = Math.sin(v);
+    S3[o]     = (Rr + rr * cv) * Math.cos(u);
+    S3[o + 1] = (Rr + rr * cv) * Math.sin(u);
+    S3[o + 2] = rr * sv;
+    const yN = (S3[o + 1] / (Rr + 0.68) + 1) * 0.5;
+    const facing = Math.max(0, sv);
+    S3[o + 3] = Math.min(0.97, 0.04 + 0.82 * (1 - yN) + 0.14 * Math.pow(facing, 6));
+    // S4 — consumed
+    rnd(); rnd(); rnd(); rnd();
+  }
+  return S3;
+}
+
+/* vivid ramp, evaluated exactly as the vertex shader does */
+const STOPS = [0x5FE3B0, 0x33C9DE, 0x6E56F8, 0xF2F3F5].map(h =>
+  [(h >> 16 & 255) / 255, (h >> 8 & 255) / 255, (h & 255) / 255]);
+const POS = [0.36, 0.72, 1.0], INTENSITY = 1.34;
+const smoothstep = (e0, e1, x) => {
+  const t = Math.max(0, Math.min(1, (x - e0) / Math.max(1e-5, e1 - e0)));
+  return t * t * (3 - 2 * t);
+};
+const mix3 = (a, b, t) => [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t];
+function ramp(t){
+  let c = mix3(STOPS[0], STOPS[1], smoothstep(0, POS[0], t));
+  c = mix3(c, STOPS[2], smoothstep(POS[0], POS[1], t));
+  c = mix3(c, STOPS[3], smoothstep(POS[1], POS[2], t));
+  return c;
+}
+
+/* the shader's keep-out: additive light is pulled down inside the rects the
+   text occupies, so the lockup keeps its contrast without a dark plate */
+function boxFalloff(px, py, r){
+  const hx = (r[2] - r[0]) * 0.5, hy = (r[3] - r[1]) * 0.5;
+  if (hx <= 0 || hy <= 0) return 0;
+  const cx = (r[0] + r[2]) * 0.5, cy = (r[1] + r[3]) * 0.5;
+  const dx = Math.abs(px - cx) / Math.max(hx, 1e-4);
+  const dy = Math.abs(py - cy) / Math.max(hy, 1e-4);
+  // The shader starts its falloff at 0.82 because a moving field hides a hard
+  // edge. A still does not: at 0.82 the keep-out reads as a visible dark box
+  // behind the mark. 0.34 spreads the same protection over a soft shoulder.
+  return 1 - smoothstep(0.34, 1.0, Math.max(dx, dy));
+}
+
+const CFG = {
+  N: 90000,
+  fov: 42,
+  dolly: 8.35,        // how much of the frame the ring owns
+  tilt: 18 * Math.PI / 180,
+  spin: 0.62,         // radians — which face of the tube is turned to camera
+  size: 1.24,
+  attenuation: 11.0,
+  alpha: 0.60,
+  falloff: 6.5,
+  keepFloor: 0.20,
+  /* One rect per LINE, not one block — the shader takes six for the same
+     reason. A single box big enough to cover the whole lockup also covered
+     the bottom third of the torus, and the ring stopped reading as a ring. */
+  rects: [
+    [-0.40, -0.25, 0.40,  0.26],   // the mark
+    [-0.34, -0.46, 0.34, -0.24],   // the tagline
+    [-0.24, -0.57, 0.24, -0.39],   // the mono line
+  ],
+  bloom: 0.48,
+  bloomBlur: 22,
+};
+
+const cv = document.getElementById('c');
+const W = cv.width, H = cv.height, DPR = 2;
+const ctx = cv.getContext('2d');
+
+/* one gaussian sprite, pre-tinted into 96 ramp steps. Drawing 90k radial
+   gradients would take minutes; drawImage of a cached sprite is instant. */
+const STEPS = 96, SPR = 64;
+const sprites = [];
+{
+  const g = document.createElement('canvas'); g.width = g.height = SPR;
+  const gc = g.getContext('2d');
+  const img = gc.createImageData(SPR, SPR);
+  const edge = Math.exp(-0.25 * CFG.falloff);
+  for (let y = 0; y < SPR; y++) for (let x = 0; x < SPR; x++){
+    const dx = (x + 0.5) / SPR - 0.5, dy = (y + 0.5) / SPR - 0.5;
+    const r2 = dx * dx + dy * dy;
+    let a = 0;
+    if (r2 <= 0.25) a = Math.max(0, (Math.exp(-r2 * CFG.falloff) - edge) / (1 - edge));
+    const i = (y * SPR + x) * 4;
+    img.data[i] = img.data[i+1] = img.data[i+2] = 255;
+    img.data[i+3] = Math.round(a * 255);
+  }
+  gc.putImageData(img, 0, 0);
+
+  for (let s = 0; s < STEPS; s++){
+    const t = s / (STEPS - 1);
+    const c = ramp(t).map(v => Math.min(255, Math.round(v * INTENSITY * 255)));
+    const k = document.createElement('canvas'); k.width = k.height = SPR;
+    const kc = k.getContext('2d');
+    kc.drawImage(g, 0, 0);
+    kc.globalCompositeOperation = 'source-in';
+    kc.fillStyle = 'rgb(' + c[0] + ',' + c[1] + ',' + c[2] + ')';
+    kc.fillRect(0, 0, SPR, SPR);
+    sprites.push(k);
+  }
+}
+
+function render(){
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.fillStyle = '#0E0F12';
+  ctx.fillRect(0, 0, W, H);
+
+  const S3 = buildS3(CFG.N);
+  const ct = Math.cos(CFG.tilt), st = Math.sin(CFG.tilt);
+  const cs = Math.cos(CFG.spin), ss = Math.sin(CFG.spin);
+  const tanHalf = Math.tan(CFG.fov * Math.PI / 360);
+  const aspect = W / H;
+  const camZ = CFG.dolly;
+
+  ctx.globalCompositeOperation = 'lighter';
+
+  for (let i = 0; i < CFG.N; i++){
+    const o = i * 4;
+    // Rz(spin) then Rx(tilt) — the order formMatrix() uses
+    const x0 = S3[o], y0 = S3[o+1], z0 = S3[o+2];
+    const xs = x0 * cs - y0 * ss, ys = x0 * ss + y0 * cs;
+    const x = xs, y = ys * ct - z0 * st, z = ys * st + z0 * ct;
+
+    const dist = camZ - z;
+    if (dist < 0.05) continue;
+
+    const ndcX = x / (dist * tanHalf * aspect);
+    const ndcY = y / (dist * tanHalf);
+    if (ndcX < -1.4 || ndcX > 1.4 || ndcY < -1.5 || ndcY > 1.5) continue;
+
+    const px = (ndcX * 0.5 + 0.5) * W;
+    const py = (1 - (ndcY * 0.5 + 0.5)) * H;
+
+    const seed = ((i * 2654435761) >>> 0) / 4294967296;
+    const jitter  = 0.72 + seed * 0.66;
+    const twinkle = 0.86 + 0.14 * Math.sin(S3[o+3] * TAU + seed * 20);
+    let psize = CFG.size * jitter * twinkle * (CFG.attenuation / dist) * DPR;
+    psize = Math.min(psize, 48 * DPR);
+    if (psize < 0.4) continue;
+
+    let a = CFG.alpha;
+    let k = 0;
+    for (const r of CFG.rects) k = Math.max(k, boxFalloff(ndcX, ndcY, r));
+    a *= 1 + (CFG.keepFloor - 1) * k;
+    if (a <= 0.004) continue;
+
+    const s = Math.min(STEPS - 1, Math.max(0, Math.round(S3[o+3] * (STEPS - 1))));
+    ctx.globalAlpha = a;
+    ctx.drawImage(sprites[s], px - psize * 0.5, py - psize * 0.5, psize, psize);
+  }
+  ctx.globalAlpha = 1;
+
+  /* bloom — a blurred copy added back. The ground is near-black, so only the
+     bright ring contributes; this stands in for UnrealBloomPass. */
+  const b = document.createElement('canvas');
+  b.width = W >> 1; b.height = H >> 1;
+  const bc = b.getContext('2d');
+  bc.filter = 'blur(' + CFG.bloomBlur + 'px)';
+  bc.drawImage(cv, 0, 0, b.width, b.height);
+  ctx.globalCompositeOperation = 'lighter';
+  ctx.globalAlpha = CFG.bloom;
+  ctx.drawImage(b, 0, 0, W, H);
+  ctx.globalAlpha = 1;
+  ctx.globalCompositeOperation = 'source-over';
+
+  document.documentElement.setAttribute('data-drawn', '1');
+}
+render();
+</script>
+</body>
+</html>

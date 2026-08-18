@@ -12,11 +12,11 @@
 <meta property="og:title" content="ZYRN &mdash; Brand kit">
 <meta property="og:description" content="A brand is a set of decisions, written down. Palette, type, motion, and voice — documented to the value rather than to the mood.">
 <meta property="og:url" content="https://zyrn.org/services/brand-kit.html">
-<meta property="og:image" content="https://zyrn.org/assets/media/og.jpg">
+<meta property="og:image" content="https://zyrn.org/assets/media/og.jpg?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="The Zyrn presence field — a particle torus rendered live in the browser.">
-<meta property="og:image:secure_url" content="https://zyrn.org/assets/media/og.jpg">
+<meta property="og:image:alt" content="ZYRN — the wordmark cut by its Pulse seam, inside the particle core.">
+<meta property="og:image:secure_url" content="https://zyrn.org/assets/media/og.jpg?v=2">
 <meta property="og:image:type" content="image/jpeg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="../favicon.ico" sizes="any">
@@ -25,18 +25,14 @@
 <link rel="apple-touch-icon" sizes="180x180" href="../assets/media/icons/apple-touch-icon.png">
 <link rel="manifest" href="../site.webmanifest">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js">
-<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/misc/GPUComputationRenderer.js">
-<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/postprocessing/EffectComposer.js">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/styles.css">
-<link rel="stylesheet" href="../assets/css/service.css">
-<link rel="stylesheet" href="../assets/css/field.css">
-<link rel="stylesheet" href="../assets/css/footer.css">
-<link rel="stylesheet" href="../assets/css/svc-modules.css">
-
+<!-- The import map MUST precede every module load on the page, and a
+     <link rel="modulepreload"> IS a module load: Chrome resolves the
+     preloaded module's own imports at preload time. With the map below the
+     preloads, GPUComputationRenderer's bare `import ... from 'three'` had
+     nothing to resolve against and every page logged
+     `Failed to resolve module specifier "three"`. The field still ran —
+     the real import later found the map — but the preload was wasted and
+     the console was dirty on all eight pages. Fixed 2026-08-18. -->
 <script type="importmap">
 {
   "imports": {
@@ -47,6 +43,20 @@
   }
 }
 </script>
+
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/misc/GPUComputationRenderer.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/postprocessing/EffectComposer.js">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/styles.css">
+<link rel="stylesheet" href="../assets/css/service.css">
+<link rel="stylesheet" href="../assets/css/field.css">
+<link rel="stylesheet" href="../assets/css/footer.css">
+<link rel="stylesheet" href="../assets/css/cmdk.css">
+<link rel="stylesheet" href="../assets/css/svc-modules.css">
+
 </head>
 <body>
 
@@ -82,7 +92,7 @@
         <a href="../index.html#sys-03" class="nav__link">Work<sup class="nav__sup">04</sup></a>
         <a href="../foundation.html" class="nav__link">Foundation</a>
         <a href="../index.html#sys-04" class="nav__link">System</a>
-        <a href="../brand.html" class="nav__link">Brand</a>
+        <a href="../services.html" class="nav__link">Services</a>
         <a href="../index.html#sys-05" class="nav__link">Contact</a>
       </div>
       <div class="nav__end">
@@ -95,6 +105,7 @@
   <main>
 
     <header class="svc-hero">
+      <a class="mono svc-hero__up" href="../services.html"><span aria-hidden="true">&larr;</span> SYS.03 &mdash; SERVICE LINES</a>
       <span class="mono svc-hero__idx" aria-hidden="true">02</span>
       <h1 class="svc-hero__title" data-keepout data-reveal data-kinetic>Brand<br>kit.</h1>
       <p class="svc-hero__lede" data-keepout>A brand is a set of decisions, written down. Zyrn documents them to the value rather than to the mood &mdash; a palette with hex codes and rules, a type scale with numbers, a motion law, and a voice with things it will not say.</p>
@@ -335,7 +346,7 @@
           <span class="sitefoot__clock">AMM <b id="footClock">--:--:--</b></span>
           <a class="lum" href="https://www.lumina-jo.com/" target="_blank" rel="noopener noreferrer"
              aria-label="Lumina — opens in a new tab">
-            <img src="assets/media/lumina-logo.png" alt="Lumina" width="222" height="60" loading="lazy" decoding="async">
+            <img src="../assets/media/lumina-logo.png" alt="Lumina" width="222" height="60" loading="lazy" decoding="async">
           </a>
           <span class="sitefoot__spacer"></span>
           <span>SYS.02 &mdash; BRAND KIT</span>
@@ -351,6 +362,7 @@
 <script src="../assets/js/main.js"></script>
 <script src="../assets/js/ui.js"></script>
 <script src="../assets/js/nav.js"></script>
+<script src="../assets/js/cmdk.js"></script>
 <script src="../assets/js/footer.js"></script>
 
 <script type="module">

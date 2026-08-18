@@ -1,0 +1,112 @@
+/* ══════════════════════════════════════════════════════════════════════
+   ZYRN — THE INDEX (⌘K)
+
+   An instrument housing, not a modal. Same glass tokens as the tab bar and
+   the matrix, same mono metadata, same hairlines. Nothing here prints the
+   accent — Departure 4 holds; the field is the Pulse.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.cmdk{position:fixed;inset:0;z-index:200}
+.cmdk[hidden]{display:none}
+
+.cmdk__scrim{
+  position:absolute;inset:0;
+  background:rgba(6,7,9,0.62);
+  opacity:0;transition:opacity 240ms var(--ease-reveal);
+}
+.cmdk.is-on .cmdk__scrim{opacity:1}
+
+.cmdk__panel{
+  position:relative;
+  width:min(620px,calc(100vw - 32px));
+  margin:clamp(64px,14vh,150px) auto 0;
+  border:1px solid var(--glass-edge);border-radius:14px;
+  background:var(--glass-tint),rgba(14,15,18,0.86);
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+  box-shadow:var(--glass-lift),var(--glass-inner);
+  overflow:hidden;
+  opacity:0;transform:translateY(-10px) scale(0.985);
+  transition:opacity 260ms var(--ease-reveal),transform 260ms var(--ease-reveal);
+}
+.cmdk.is-on .cmdk__panel{opacity:1;transform:none}
+
+.cmdk__bar{
+  display:flex;align-items:center;gap:12px;
+  padding:0 16px;height:56px;
+  border-bottom:1px solid var(--hair);
+}
+.cmdk__sig{color:rgba(242,243,245,0.42);flex:none}
+.cmdk__in{
+  flex:1;min-width:0;
+  background:none;border:none;outline:none;
+  font-family:var(--font-sans);font-size:17px;color:var(--vapor);
+  letter-spacing:-0.005em;
+}
+.cmdk__in::placeholder{color:rgba(242,243,245,0.34)}
+.cmdk__esc{
+  flex:none;color:rgba(242,243,245,0.38);
+  border:1px solid var(--hair);border-radius:5px;padding:3px 7px;
+}
+
+.cmdk__list{max-height:min(52vh,420px);overflow-y:auto;padding:8px}
+
+.cmdk__row{
+  display:grid;grid-template-columns:56px minmax(0,1fr) auto;
+  align-items:center;gap:14px;
+  padding:11px 12px;border-radius:8px;
+  border:1px solid transparent;
+}
+.cmdk__k{color:rgba(242,243,245,0.42);font-size:10px}
+.cmdk__l{font-size:15px;color:rgba(242,243,245,0.82);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cmdk__t{color:rgba(242,243,245,0.34);font-size:10px}
+
+.cmdk__row.is-sel{
+  background:rgba(242,243,245,0.06);
+  border-color:rgba(242,243,245,0.14);
+}
+.cmdk__row.is-sel .cmdk__l{color:var(--vapor)}
+.cmdk__row.is-sel .cmdk__k{color:rgba(242,243,245,0.72)}
+
+.cmdk__foot{
+  display:flex;align-items:center;gap:20px;
+  padding:0 16px;height:42px;
+  border-top:1px solid var(--hair);
+  color:rgba(242,243,245,0.36);
+}
+.cmdk__foot b{color:rgba(242,243,245,0.6);font-weight:400}
+.cmdk__count{margin-left:auto}
+
+/* the page behind it stops scrolling while it is open */
+body.is-cmdk{overflow:hidden}
+
+/* ── the visible trigger in the nav ────────────────────────────────── */
+.cmdkbtn{
+  display:inline-flex;align-items:center;gap:3px;
+  padding:5px 9px;
+  border:1px solid var(--hair);border-radius:6px;
+  background:none;color:rgba(242,243,245,0.5);
+  font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;
+  cursor:pointer;
+  transition:border-color var(--t-ui),color var(--t-ui),background-color var(--t-ui);
+}
+.cmdkbtn:hover{
+  border-color:var(--hair-strong);color:var(--vapor);
+  background:rgba(242,243,245,0.04);
+}
+.cmdkbtn span{opacity:0.72}
+
+/* the nav is already carrying coordinates and a CTA — the chip is the first
+   thing to go when the row gets tight, since ⌘K still works without it */
+@media (max-width:1180px){.cmdkbtn{display:none}}
+
+@media (max-width:560px){
+  .cmdk__panel{margin-top:64px;border-radius:12px}
+  .cmdk__row{grid-template-columns:44px minmax(0,1fr);gap:10px}
+  .cmdk__t{display:none}
+  .cmdk__list{max-height:56vh}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .cmdk__scrim,.cmdk__panel{transition:none}
+}
