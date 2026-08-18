@@ -724,8 +724,13 @@ async function boot(canvas, cfg) {
         uTargetA:{value:targetTex.S1}, uTargetB:{value:targetTex.S1},
         uMix:{value:0}, uStaggerW:{value:0.45},
         uSize:{value:1.0}, uMaxSize:{value:48.0},
-        uAlpha:{value:cfg.alpha ?? 0.55},
-        uAttenuation:{value:11.0}, uPixelRatio:{value:1},
+        /* A phone runs 14,400 particles against a desktop's 90,000 — the same
+           formations, roughly a sixth of the density. Left alone the torus
+           stops reading as a torus and becomes dust, which loses the one image
+           the brand is built on. Bigger, slightly brighter points cover the
+           gaps: the shape survives the count. */
+        uAlpha:{value:(cfg.alpha ?? 0.55) * (COARSE ? 1.18 : 1)},
+        uAttenuation:{value:COARSE ? 16.5 : 11.0}, uPixelRatio:{value:1},
         uFocal:{value:6.3}, uDofSpread:{value:0.16}, uDofFade:{value:0.10},
         uRamp0:{value:new THREE.Color(RAMP.stops[0])},
         uRamp1:{value:new THREE.Color(RAMP.stops[1])},
@@ -1157,7 +1162,6 @@ async function boot(canvas, cfg) {
     uSim.uGravity.value    = grav;
     uSim.uOvershoot.value  = REDUCED ? 0 : 0.06;
     uPts.uGlobalAlpha.value = gAlpha;
-    uPts.uSize.value = size;
     // moving fast pulls the ramp breakpoints down, so more of the field sits
     // on the hot stops — the colour itself reacts to scroll, not just the shape
     if (!REDUCED) {
@@ -1201,7 +1205,26 @@ async function boot(canvas, cfg) {
     // transit peaks mid-morph and is exactly 0 on a settled formation, so the
     // camera pulls back to take in a change and closes on the result
     const transit = st.a === st.b ? 0 : Math.sin(Math.PI * st.m);
-    const dolly = 6.55 + 1.45 * transit + 0.40 * p;
+    let dolly = 6.55 + 1.45 * transit + 0.40 * p;
+
+    /* Fit the formation to the NARROW axis of the viewport.
+       The framing was tuned on a landscape window, where height is the
+       constraint. On a portrait phone (390x844, aspect 0.46) the visible
+       half-width collapses to about 1.2 world units while the torus is 2.0
+       across — so the ring extended past both edges and the visitor was
+       looking at the inside of it, which reads as featureless dust rather
+       than as the mark of the brand. Pulling back until the narrow axis
+       contains FIT puts the whole shape on screen at any aspect, and is a
+       no-op on desktop where the base dolly is already further than this. */
+    const tanHalf = Math.tan(camera.fov * Math.PI / 360);
+    const narrow = Math.min(1, camera.aspect);
+    const base = dolly;
+    dolly = Math.min(24, Math.max(dolly, 2.35 / (tanHalf * Math.max(0.28, narrow))));
+    // Point size falls off as 1/distance, so the pull-back above would halve
+    // the particles and make the field dustier — the exact problem it is
+    // meant to solve. Compensate for the ASPECT term only; the transit dolly
+    // still reads as depth, and desktop is untouched (fitComp === 1 there).
+    const fitComp = dolly / base;
     camera.position.set(
       paraX * 0.23,
       -0.10 + 0.48 * p + paraY * 0.16,
@@ -1211,6 +1234,7 @@ async function boot(canvas, cfg) {
     camera.lookAt(camTarget);
     if (!REDUCED) camera.rotateZ(scrollVelSm * 0.0105);        // +-0.6 degrees
     uPts.uFocal.value = camera.position.distanceTo(camTarget) - 0.3;
+    uPts.uSize.value = size * fitComp;
 
     bgMat.uniforms.uTime.value = simTime;
     uSim.uTime.value = simTime;
@@ -1344,6 +1368,9 @@ async function boot(canvas, cfg) {
   // a definitive "the bed is live" signal — CSS can key off it, and it is the
   // only reliable thing to wait on when testing, since boot() is async
   document.body.classList.add('is-field-ready');
+  // a read-only handle for verification; only under ?debug so the default
+  // path exposes nothing
+  if (FLAGS.debug) window.__zyrn = { camera, uPts, uSim, get count() { return COUNT; } };
   console.info('[ZYRN] SYS.07 field —', COUNT, 'particles, dpr', dpr().toFixed(2),
                HANDOFF ? '(entered on ' + ENTER_FORM + ')' : '');
 

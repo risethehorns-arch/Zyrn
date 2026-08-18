@@ -55,13 +55,18 @@ body.is-intro .sysnav{opacity:0}
   animation:zin-left 460ms cubic-bezier(.16,1,.3,1) both,
             zshear-bot 260ms cubic-bezier(.22,1,.36,1) 820ms forwards;
 }
+/* The throw is `50vw + 50%` plus a margin — half the viewport puts the
+   element's centre at the edge, half its OWN width clears the rest of it.
+   A flat 64vw was tuned on a desktop: on a 390px phone the mark is a much
+   larger share of the screen, so 64vw started it ON screen and the halves
+   appeared to pop rather than fly in. This is correct at every width. */
 @keyframes zin-right{
-  0%  {transform:translate3d(64vw,0,0);opacity:0;filter:blur(12px)}
+  0%  {transform:translate3d(calc(52vw + 60%),0,0);opacity:0;filter:blur(12px)}
   55% {opacity:1}
   100%{transform:translate3d(0,0,0);opacity:1;filter:blur(0)}
 }
 @keyframes zin-left{
-  0%  {transform:translate3d(-64vw,0,0);opacity:0;filter:blur(12px)}
+  0%  {transform:translate3d(calc(-52vw - 60%),0,0);opacity:0;filter:blur(12px)}
   55% {opacity:1}
   100%{transform:translate3d(0,0,0);opacity:1;filter:blur(0)}
 }

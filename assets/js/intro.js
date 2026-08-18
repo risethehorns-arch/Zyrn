@@ -31,6 +31,7 @@ const T = {
   glitch: 1120,
   hold:   1500,   // when the FLIP to the hero begins
   flip:    760,   // its duration, matching intro.css
+  bedWait: 1800,  // longest we will wait for the field before starting anyway
 };
 
 const SEEN_KEY = 'zyrn:seen-intro';
@@ -100,16 +101,35 @@ export function initIntro(opts = {}) {
   ['pointerdown', 'wheel', 'touchstart', 'keydown'].forEach(ev =>
     addEventListener(ev, skip, { once: true, passive: true }));
 
-  /* ── run ── */
-  requestAnimationFrame(() => intro.classList.add('is-run'));
+  /* ── run ──────────────────────────────────────────────────────────
+     Wait for the bed before starting. The field boots behind three dynamic
+     imports, which on a phone is a second or more — starting immediately
+     meant the mark assembled into a black screen instead of into the ring
+     it is supposed to land inside. Capped, because a field that never
+     arrives must not hold the entrance hostage. */
+  function run() {
+    if (finished || intro.classList.contains('is-run')) return;
+    requestAnimationFrame(() => intro.classList.add('is-run'));
+    at(T.glitch, () => {
+      const g = document.getElementById('introGlitch');
+      if (!g) return;
+      g.classList.add('is-glitching');
+      at(320, () => g.classList.remove('is-glitching'));
+    });
+    at(T.hold, flip);
+    at(4000, done);                      // failsafe
+  }
 
-  at(T.glitch, () => {
-    const g = document.getElementById('introGlitch');
-    if (!g) return;
-    g.classList.add('is-glitching');
-    at(320, () => g.classList.remove('is-glitching'));
-  });
+  if (document.body.classList.contains('is-field-ready')) {
+    run();
+  } else {
+    const mo = new MutationObserver(() => {
+      if (!document.body.classList.contains('is-field-ready')) return;
+      mo.disconnect();
+      run();
+    });
+    mo.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    setTimeout(() => { mo.disconnect(); run(); }, T.bedWait);
+  }
 
-  at(T.hold, flip);
-  at(4000, done);            // failsafe
 }

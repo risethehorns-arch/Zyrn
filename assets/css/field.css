@@ -346,3 +346,70 @@ body.is-leaving .sysnav{opacity:0;transition:opacity 260ms linear}
   body.is-leaving .shell,body.is-leaving > main{opacity:1;transform:none;filter:none}
   body.is-entering .shell,body.is-entering > main{animation:none}
 }
+
+/* ── 9. mobile navigation ───────────────────────────────────────────
+   The link row is hidden below 900px; this is what replaces it. Built
+   by nav.js from the existing anchors, so there is no duplicated routing
+   to drift. Doctrine holds: obsidian, hairlines, mono, no Pulse. */
+
+.navtoggle{
+  display:none;
+  width:44px;height:44px;                /* a real tap target */
+  align-items:center;justify-content:center;
+  flex-direction:column;gap:5px;
+  border:1px solid var(--hair);border-radius:6px;
+  background:rgba(14,15,18,0.5);
+  flex:0 0 auto;margin-left:auto;
+}
+.navtoggle__b{
+  display:block;width:16px;height:1px;background:var(--vapor);
+  transition:transform 300ms cubic-bezier(.16,1,.3,1),opacity 200ms linear;
+}
+.navtoggle.is-open .navtoggle__b:first-child{transform:translateY(3px) rotate(45deg)}
+.navtoggle.is-open .navtoggle__b:last-child{transform:translateY(-3px) rotate(-45deg)}
+
+.navsheet{
+  position:fixed;inset:0;z-index:55;
+  background:rgba(8,9,11,0.94);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  display:flex;flex-direction:column;justify-content:center;
+  gap:34px;padding:96px var(--gutter,24px) 40px;
+  opacity:0;transition:opacity 320ms cubic-bezier(.16,1,.3,1);
+}
+.navsheet.is-on{opacity:1}
+.navsheet__list{display:flex;flex-direction:column;gap:6px}
+.navsheet__list a{
+  display:flex;align-items:baseline;gap:14px;
+  padding:12px 0;                        /* 44px+ rows */
+  font-size:clamp(26px,7.5vw,34px);line-height:1.1;
+  letter-spacing:-0.02em;color:rgba(242,243,245,0.72);
+  border-bottom:1px solid var(--hair);
+  opacity:0;transform:translateY(12px);
+  transition:opacity 420ms cubic-bezier(.16,1,.3,1),
+             transform 420ms cubic-bezier(.16,1,.3,1),
+             color 200ms ease;
+}
+.navsheet.is-on .navsheet__list a{opacity:1;transform:none}
+.navsheet.is-on .navsheet__list a:nth-child(1){transition-delay:60ms}
+.navsheet.is-on .navsheet__list a:nth-child(2){transition-delay:110ms}
+.navsheet.is-on .navsheet__list a:nth-child(3){transition-delay:160ms}
+.navsheet.is-on .navsheet__list a:nth-child(4){transition-delay:210ms}
+.navsheet.is-on .navsheet__list a:nth-child(5){transition-delay:260ms}
+.navsheet__list a[aria-current]{color:var(--vapor)}
+.navsheet__i{color:var(--steel);font-size:10px;flex:0 0 auto}
+.navsheet__foot{
+  display:flex;flex-direction:column;gap:8px;
+  color:var(--steel);border-top:1px solid var(--hair);padding-top:18px;
+}
+body.is-navopen{overflow:hidden}
+
+@media (max-width:899px){
+  .navtoggle{display:flex}
+  /* the pill would otherwise wrap once a third control joins it */
+  .nav__end .btn{padding:9px 13px;font-size:12px}
+}
+@media (min-width:900px){ .navsheet{display:none} }
+@media (prefers-reduced-motion:reduce){
+  .navsheet,.navsheet__list a,.navtoggle__b{transition:none}
+  .navsheet.is-on .navsheet__list a{transform:none}
+}
