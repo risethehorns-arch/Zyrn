@@ -43,6 +43,7 @@
     { k: '04',     l: 'AI adoption',          h: UP + 'services/ai-transformation.html',   t: 'Line',     q: 'ai artificial intelligence transformation workflow governance' },
     { k: 'SYS.06', l: 'The brand kit',        h: UP + 'brand.html',                        t: 'Method',   q: 'brand kit tokens colours type spec documentation how we present deliverable handover' },
     { k: 'SYS.07', l: 'Lumina — a case',      h: UP + 'lumina.html',                       t: 'Work',     q: 'lumina case study proof work client real estate amman example portfolio rebase' },
+    { k: 'SYS.08', l: 'Duk — the agent',       h: UP + 'duk.html',                          t: 'Product',  q: 'duk ai agent open source artificial intelligence assistant brainstorm build in production' },
     { k: 'SYS.02', l: 'Capability',           h: UP + 'index.html#sys-02',                 t: 'Scene',    q: 'capability what zyrn does' },
     { k: 'SYS.04', l: 'Readiness index',      h: UP + 'index.html#sys-04',                 t: 'Scene',    q: 'readiness index level assessment maturity' },
     { k: 'SYS.05', l: 'Access',               h: UP + 'index.html#sys-05',                 t: 'Scene',    q: 'contact access request referral seats intake' },

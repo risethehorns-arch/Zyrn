@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZYRN &mdash; Duk, an open-source agent</title>
+<meta name="description" content="Duk is an open-source agent being built at Zyrn to work on a firm's operating core — brainstorming, drafting and arguing improvements with the people who run it. Built on one rule: no answer until the question is the right one.">
+<link rel="canonical" href="https://zyrn.org/duk.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ZYRN">
+<meta property="og:locale" content="en">
+<meta property="og:title" content="ZYRN &mdash; Duk, an open-source agent">
+<meta property="og:description" content="An open-source agent being built at Zyrn to work on a firm's operating core. Built on one rule: no answer until the question is the right one.">
+<meta property="og:url" content="https://zyrn.org/duk.html">
+<meta property="og:image" content="https://zyrn.org/assets/media/og.jpg?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ZYRN — the wordmark cut by its Pulse seam, inside the particle core.">
+<meta property="og:image:secure_url" content="https://zyrn.org/assets/media/og.jpg?v=2">
+<meta property="og:image:type" content="image/jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/media/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/media/icons/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/media/icons/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<!-- The import map MUST precede every module load on the page, and a
+     <link rel="modulepreload"> IS a module load — see CLAUDE.md. -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/",
+    "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.mjs",
+    "lil-gui": "https://cdn.jsdelivr.net/npm/lil-gui@0.19.2/dist/lil-gui.esm.js"
+  }
+}
+</script>
+
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/misc/GPUComputationRenderer.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/postprocessing/EffectComposer.js">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<link rel="stylesheet" href="assets/css/service.css">
+<link rel="stylesheet" href="assets/css/field.css">
+<link rel="stylesheet" href="assets/css/footer.css">
+<link rel="stylesheet" href="assets/css/cmdk.css">
+<link rel="stylesheet" href="assets/css/duk.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Duk",
+  "applicationCategory": "BusinessApplication",
+  "url": "https://zyrn.org/duk.html",
+  "creator": {"@type":"Organization","name":"ZYRN","url":"https://zyrn.org"},
+  "description": "An open-source agent for a firm's operating core, in development at Zyrn.",
+  "softwareVersion": "unreleased"
+}
+</script>
+</head>
+<body>
+
+<!-- Scattered (S2) and staying that way while the interrogation narrows,
+     then structure (S1), then one system (S3). The bed argues the page. -->
+<canvas id="field" aria-hidden="true"></canvas>
+
+<div class="grid" aria-hidden="true">
+  <span class="grid__line grid__line--a"></span>
+  <span class="grid__line grid__line--b"></span>
+</div>
+
+<div class="readout" aria-hidden="true">
+  <span class="readout__label">ZYRN / SYS.08 &middot; <span id="readoutState">FIELD</span> &mdash; <span id="readoutPct">000</span>%</span>
+  <span class="readout__track"><span class="readout__fill" id="readoutFill"></span></span>
+</div>
+
+<div class="shell">
+
+  <nav class="nav">
+    <div class="nav__row">
+      <a href="index.html" aria-label="ZYRN — home">
+        <span class="glitch">
+          <span class="shear shear--auto is-sheared" style="--shear-size:20px">
+            <span class="shear__half shear__half--top">ZYRN</span>
+            <span class="shear__half shear__half--bot">ZYRN</span>
+            <span class="shear__seam"></span>
+          </span>
+        </span>
+      </a>
+      <div class="nav__links">
+        <a href="index.html#sys-03" class="nav__link">Work<sup class="nav__sup">04</sup></a>
+        <a href="foundation.html" class="nav__link">Foundation</a>
+        <a href="index.html#sys-04" class="nav__link">System</a>
+        <a href="services.html" class="nav__link">Services</a>
+        <a href="index.html#production" class="nav__link" aria-current="page">In production</a>
+        <a href="index.html#sys-05" class="nav__link">Contact</a>
+      </div>
+      <div class="nav__end">
+        <span class="mono nav__coords">AMM 31.95&deg;N / 35.93&deg;E</span>
+        <a class="btn btn--hairline" href="index.html#sys-05">Request access</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ── HERO ──────────────────────────────────────────────────────── -->
+    <header class="duk-hero">
+      <span class="mono duk-hero__idx" aria-hidden="true">SYS.08 &mdash; IN PRODUCTION / NOT YET RELEASED</span>
+
+      <div class="duk-hero__lock">
+        <span class="dukmark" aria-hidden="true">
+          <svg viewBox="0 0 48 48">
+            <circle class="dukmark__r dukmark__r--o" cx="24" cy="24" r="20"></circle>
+            <circle class="dukmark__r dukmark__r--m" cx="24" cy="24" r="13.5"></circle>
+            <circle class="dukmark__r dukmark__r--i" cx="24" cy="24" r="7"></circle>
+            <circle class="dukmark__c" cx="24" cy="24" r="2.4"></circle>
+          </svg>
+        </span>
+        <span class="duk-hero__name">Duk</span>
+      </div>
+
+      <h1 class="duk-hero__title" data-keepout data-reveal data-kinetic>It asks first.</h1>
+
+      <p class="duk-hero__lede" data-keepout>An open-source agent, being built at Zyrn, that works on a firm&rsquo;s operating core &mdash; brainstorming, drafting and arguing real improvements with the people who actually run it. One rule underneath all of it: <b>no answer until the question is the right one.</b></p>
+
+      <div class="mono duk-hero__meta" data-keepout>
+        <span class="dukstat">IN DEVELOPMENT</span>
+        <span>LICENCE <b>OPEN SOURCE</b></span>
+        <span>BUILT BY <b>ZYRN</b></span>
+        <span>RUNS <b>ON YOUR OWN INFRASTRUCTURE</b></span>
+      </div>
+    </header>
+
+
+    <!-- ── 01 · THE NAME ─────────────────────────────────────────────── -->
+    <section class="duk-sec" aria-labelledby="nameT">
+      <div class="duk-sec__head" data-keepout>
+        <span class="mono duk-sec__num">01</span>
+        <h2 class="duk-sec__title" id="nameT">The name</h2>
+      </div>
+
+      <div class="name" data-keepout data-reveal>
+        <div>
+          <p class="name__b">Programmers have kept a rubber duck on the desk for forty years. You explain the broken code to it, out loud, line by line &mdash; and somewhere in the explanation you find the bug. The duck never says anything. It works because <em>being made to articulate a thing is most of understanding it.</em></p>
+          <p class="name__b">Duk is that, with the duck able to ask back.</p>
+          <p class="name__b">Almost everything in this category is built to produce. Give it a prompt, receive a strategy, a plan, a deck. That is the easy half, and it is usually the wrong half &mdash; because the prompt already contains the mistake, and a fluent answer to the wrong question is worse than no answer at all. It is just harder to argue with.</p>
+        </div>
+        <div class="name__card">
+          <span class="dukmark" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <circle class="dukmark__r dukmark__r--o" cx="24" cy="24" r="20"></circle>
+              <circle class="dukmark__r dukmark__r--m" cx="24" cy="24" r="13.5"></circle>
+              <circle class="dukmark__r dukmark__r--i" cx="24" cy="24" r="7"></circle>
+              <circle class="dukmark__c" cx="24" cy="24" r="2.4"></circle>
+            </svg>
+          </span>
+          <span class="mono name__k">DUK &mdash; /d&#652;k/</span>
+          <p class="name__d">The oldest debugging tool there is, given the ability to ask back.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── 02 · THE INTERROGATION ────────────────────────────────────────
+         The signature instrument. Twenty-two plausible causes, four
+         questions, and an answer that is not the one anyone stated. The
+         chain is authored — see interrogate.js for why. -->
+    <section class="in-sec" aria-label="How Duk narrows a problem">
+      <div class="in__track" id="inTrack">
+        <div class="in__stage" data-round="0">
+
+          <div class="in__head">
+            <span class="mono in__step" id="inStep">00 &mdash; THE STATEMENT</span>
+            <span class="mono in__meta">
+              <span class="in__live" id="inLive">22 / 22 LIVE</span>
+              <span class="in__ask">QUESTIONS <span id="inAsk">00</span></span>
+              <span class="in__pct"><span id="inPct">000</span>%</span>
+            </span>
+          </div>
+
+          <div class="in__body">
+            <div class="in__field" id="inField" aria-hidden="true"></div>
+
+            <div class="in__talk">
+              <span class="mono in__tag"><span>DUK</span><span>ASKS</span></span>
+              <p class="in__q" id="inQ">Our sales team keeps missing quota.</p>
+              <p class="in__a" id="inA" style="opacity:0"></p>
+            </div>
+          </div>
+
+          <p class="in__note" id="inNote">Twenty-two candidate causes, and everyone in the room is holding a different one. A tool that answers this question now is guessing in a confident voice.</p>
+
+          <p class="sr-only">An illustration of Duk&rsquo;s intended method: candidate causes are eliminated by successive questions until one structural constraint remains.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── 03 · WHAT IT DOES ─────────────────────────────────────────── -->
+    <section class="duk-sec" aria-labelledby="doesT">
+      <div class="duk-sec__head" data-keepout>
+        <span class="mono duk-sec__num">03</span>
+        <h2 class="duk-sec__title" id="doesT">What it is being built to do</h2>
+      </div>
+
+      <ol class="does" data-keepout data-reveal>
+        <li class="does__i">
+          <span class="mono does__n">01</span>
+          <div>
+            <h3 class="does__t">Ask</h3>
+            <p class="does__d">Read the business you describe and ask the next question that would actually narrow it &mdash; not the next one on a checklist. Most of the value is in the first four questions, and almost nobody asks them.</p>
+          </div>
+        </li>
+        <li class="does__i">
+          <span class="mono does__n">02</span>
+          <div>
+            <h3 class="does__t">Argue</h3>
+            <p class="does__d">Hold a position when the evidence supports it, and say so when it does not. A tool that agrees with everything you propose is a mirror with a subscription attached.</p>
+          </div>
+        </li>
+        <li class="does__i">
+          <span class="mono does__n">03</span>
+          <div>
+            <h3 class="does__t">Draft</h3>
+            <p class="does__d">Write the actual artefact &mdash; the operating model, the role definition, the policy, the page &mdash; in your formats and your voice, at a standard you would send rather than one you would rewrite.</p>
+          </div>
+        </li>
+        <li class="does__i">
+          <span class="mono does__n">04</span>
+          <div>
+            <h3 class="does__t">Build</h3>
+            <p class="does__d">Produce the thing, not a description of the thing. If it proposes a page, it ships the page. This is the line most of the category does not cross, and it is the one that decides whether anything changes on Monday.</p>
+          </div>
+        </li>
+        <li class="does__i">
+          <span class="mono does__n">05</span>
+          <div>
+            <h3 class="does__t">Measure</h3>
+            <p class="does__d">Name the number a change should move <em>before</em> the change is made, so it can be wrong out loud. An agent that cannot be caught being wrong cannot be trusted when it is right.</p>
+          </div>
+        </li>
+        <li class="does__i">
+          <span class="mono does__n">06</span>
+          <div>
+            <h3 class="does__t">Remember</h3>
+            <p class="does__d">Carry the firm&rsquo;s own decisions forward &mdash; what was tried, what it cost, who owns it now &mdash; so the fourth quarter stops re-litigating the first.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+
+    <!-- ── 04 · REFUSALS ─────────────────────────────────────────────── -->
+    <section class="duk-sec" aria-labelledby="refT">
+      <div class="duk-sec__head" data-keepout>
+        <span class="mono duk-sec__num">04</span>
+        <h2 class="duk-sec__title" id="refT">What it will refuse to do</h2>
+      </div>
+
+      <div class="ref" data-keepout data-reveal>
+        <div class="ref__c">
+          <span class="mono ref__h">It will</span>
+          <ul class="ref__l">
+            <li>Say &ldquo;I do not know&rdquo; &mdash; and then say what would settle it</li>
+            <li>Show the reasoning that produced a recommendation, in full</li>
+            <li>Run entirely on infrastructure you control</li>
+            <li>Be forked, audited, and disagreed with</li>
+          </ul>
+        </div>
+        <div class="ref__c ref__c--no">
+          <span class="mono ref__h">It will not</span>
+          <ul class="ref__l">
+            <li>Generate a strategy from a one-line prompt</li>
+            <li>Invent a number because a slide needed one</li>
+            <li>Hold your data as the price of the answer</li>
+            <li>Let you treat a structural problem as a tooling problem</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── 05 · WHY IT IS OPEN ───────────────────────────────────────── -->
+    <section class="duk-sec" aria-labelledby="openT">
+      <div class="duk-sec__head" data-keepout>
+        <span class="mono duk-sec__num">05</span>
+        <h2 class="duk-sec__title" id="openT">Why it is open</h2>
+      </div>
+
+      <div class="name" data-keepout data-reveal>
+        <div>
+          <p class="name__b">The same rule that governs every brand kit we hand over: <em>it is the client&rsquo;s from the day it ships, and if it needs us in order to keep working, it was not finished.</em> A firm&rsquo;s operating core is the last thing that should be rented.</p>
+          <p class="name__b">There is a second reason, and it is the harder one. Duk&rsquo;s job is to have opinions about where authority sits inside your company. <em>You cannot take that advice from a black box.</em> If the reasoning is not inspectable, the recommendation is just a confident stranger telling you to reorganise.</p>
+          <p class="name__b">So: readable source, self-hosted, forkable. If we disappear, it keeps working. That is not generosity &mdash; it is the only version of this that a serious firm should agree to run.</p>
+        </div>
+        <div class="name__card">
+          <span class="mono name__k">THE RULE, RESTATED</span>
+          <p class="name__d">If it needs us in order to keep working, it is not finished.</p>
+          <a class="btn btn--hairline" href="brand.html">Where that rule comes from</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── 06 · STATUS ───────────────────────────────────────────────── -->
+    <section class="duk-sec" aria-labelledby="statT">
+      <div class="duk-sec__head" data-keepout>
+        <span class="mono duk-sec__num">06</span>
+        <h2 class="duk-sec__title" id="statT">Where it actually is</h2>
+      </div>
+
+      <div class="stat" data-keepout data-reveal>
+        <div>
+          <p class="stat__b"><em>Duk is not released.</em> There is no public build, no waiting list counter, and no launch date on this page &mdash; if one appears here later it will be because it is true, not because the page needed one.</p>
+          <p class="stat__b">What exists is the part that matters and cannot be shortcut: the method. Four service lines, run by hand, repeatedly, on real firms. Duk is that method being encoded &mdash; which is why it starts by asking rather than by generating, and why the answer it reaches for is usually about authority rather than about tools.</p>
+          <p class="stat__b">It is being built in the open. When there is something to run, it will be here and it will be forkable on day one.</p>
+          <a class="btn btn--hairline" href="mailto:access@zyrn.org?subject=Duk%20%E2%80%94%20early%20access">Ask about early access</a>
+          <a class="btn btn--hairline" href="services/ai-transformation.html">The AI adoption line</a>
+        </div>
+
+        <aside class="stat__side">
+          <span class="mono stat__row"><span>Status</span><b>In development</b></span>
+          <span class="mono stat__row"><span>Stage</span><b>Encoding the method</b></span>
+          <span class="mono stat__row">
+            <span>Progress</span>
+            <span class="stat__bar" aria-label="Stage two of five" role="img">
+              <i class="is-on"></i><i class="is-on"></i><i></i><i></i><i></i>
+            </span>
+          </span>
+          <span class="mono stat__row"><span>Licence</span><b>Open source</b></span>
+          <span class="mono stat__row"><span>Hosting</span><b>Yours</b></span>
+          <span class="mono stat__row"><span>Public build</span><b>Not yet</b></span>
+          <span class="mono stat__row"><span>Early access</span><b>By referral</b></span>
+        </aside>
+      </div>
+    </section>
+
+
+    <!-- ── FOOTER ────────────────────────────────────────────────────── -->
+    <footer class="sitefoot">
+      <div class="sitefoot__in" data-keepout>
+
+        <div class="sitefoot__top">
+          <div class="sitefoot__brand">
+            <span class="glitch">
+              <span class="shear shear--auto is-sheared" style="--shear-size:30px">
+                <span class="shear__half shear__half--top">ZYRN</span>
+                <span class="shear__half shear__half--bot">ZYRN</span>
+                <span class="shear__seam"></span>
+              </span>
+            </span>
+            <p class="sitefoot__line">Organizations, engineered.<br>The operating core of modern firms.</p>
+            <a class="sitefoot__mail" href="mailto:access@zyrn.org">ACCESS@ZYRN.ORG</a>
+          </div>
+
+          <nav class="sitefoot__cols" aria-label="Footer">
+            <div class="fcol">
+              <span class="mono fcol__h">Lines</span>
+              <a href="services/website-design.html"><span class="mono">01</span> Website design</a>
+              <a href="services/brand-kit.html"><span class="mono">02</span> Brand kit</a>
+              <a href="services/business-structuring.html"><span class="mono">03</span> Business structuring</a>
+              <a href="services/ai-transformation.html"><span class="mono">04</span> AI adoption</a>
+            </div>
+            <div class="fcol">
+              <span class="mono fcol__h">The firm</span>
+              <a href="foundation.html">Foundation</a>
+              <a href="brand.html">Brand kit &mdash; the method</a>
+              <a href="lumina.html">Lumina &mdash; a case</a>
+              <a href="duk.html" aria-current="page">Duk &mdash; in production</a>
+              <a href="index.html#sys-05">Access</a>
+            </div>
+            <div class="fcol">
+              <span class="mono fcol__h">Intake</span>
+              <span class="fcol__stat">Q3 &mdash; 2026</span>
+              <span class="fcol__stat">01 of 04 seats open</span>
+              <span class="fcol__stat">By referral</span>
+              <span class="fcol__stat">Two quarters minimum</span>
+            </div>
+          </nav>
+        </div>
+
+        <div class="sitefoot__bar mono">
+          <span class="sitefoot__stamp">
+            <span class="mark" aria-hidden="true">
+              <svg class="mark__half mark__half--top" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+              <svg class="mark__half mark__half--bot" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+              <span class="mark__seam"></span>
+            </span>
+            ZYRN &mdash; EST. 2026
+          </span>
+          <span>AMM 31.95&deg;N / 35.93&deg;E</span>
+          <span class="sitefoot__clock">AMM <b id="footClock">--:--:--</b></span>
+          <a class="lum" href="https://www.lumina-jo.com/" target="_blank" rel="noopener noreferrer"
+             aria-label="Lumina — opens in a new tab">
+            <img src="assets/media/lumina-logo.png" alt="Lumina" width="222" height="60" loading="lazy" decoding="async">
+          </a>
+          <span class="sitefoot__spacer"></span>
+          <span>SYS.08 &mdash; DUK</span>
+          <span>V.2.0 / EN &mdash; AR</span>
+        </div>
+
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/ui.js"></script>
+<script src="assets/js/nav.js"></script>
+<script src="assets/js/cmdk.js"></script>
+<script src="assets/js/footer.js"></script>
+
+<script type="module">
+import { initField }       from './assets/js/field.js';
+import { initInterrogate } from './assets/js/modules/interrogate.js';
+
+const roState = document.getElementById('readoutState');
+initField({
+  program: [
+    { at: 0.00, form: 'S2' },   // twenty-two candidates, no shape
+    { at: 0.42, form: 'S2' },   // still scattered while the questions run
+    { at: 0.76, form: 'S1' },   // structure — the answer is structural
+    { at: 1.00, form: 'S3' },   // one operating core
+  ],
+  channel: { tilt: { S2: 10, S1: 46, S3: 24 },
+             spin: { S2: 80, S1: 150, S3: 190 } },
+  onState: (p, n) => { if (roState) roState.textContent = n; },
+});
+
+initInterrogate();
+</script>
+</body>
+</html>

@@ -70,6 +70,25 @@ brand.html              SYS.06 — HOW WE PRESENT A BRAND KIT. Rewritten 2026-08
                         `git show 59ace3c:brand.html`. Either way nothing was
                         lost — Zyrn's own doctrine is operative in THIS file,
                         which is where it was always enforced from.
+duk.html                SYS.08 — DUK, our own open-source agent, IN
+                        DEVELOPMENT. It is NOT released, and the page is
+                        written to hold that line: status chip in the hero,
+                        a §06 that says plainly there is no public build, no
+                        launch date, no waiting-list counter. Ambition about
+                        DESIGN INTENT is fine and deliberate; claims about
+                        adoption, benchmarks or dates are not, and none are
+                        made. **The one soft number is the five-pip progress
+                        bar in §06, set to 2/5 — the owner should confirm or
+                        change it.**
+                        Identity: named for the rubber duck (explain the
+                        problem out loud and you find it yourself), and the
+                        whole product thesis is "it asks before it answers".
+                        The mark is a listening aperture, three arcs turning
+                        at different rates — deliberately NOT a picture of a
+                        duck. No new hue: Duk is ours, so it takes Obsidian,
+                        Vapor and mono like everything else, and gets its
+                        energy from motion. Its instrument is THE
+                        INTERROGATION (see below).
 lumina.html             SYS.07 — CASE 01. The site's first and only piece of
                         proof. Lumina (private real-estate advisory, Amman) is
                         a Zyrn client; this is their brand kit and website, and
@@ -100,6 +119,9 @@ assets/js/modules/      the signature instruments, one per service page:
                                  different rates
                     rebase.js    lumina.html — nine real tokens moving between
                                  two real palettes, interpolated in OKLab
+                    interrogate.js
+                                 duk.html — twenty-two candidate causes cut
+                                 down to one constraint by four questions
 assets/css/svc-modules.css
                         styling for all four instruments.
 assets/css/styles.css   all styling, tokens at :root (incl. the glass + glitch systems)
@@ -109,9 +131,13 @@ assets/css/services.css services.html only — the core diagram, the line rows
                         and their four glyphs, the matrix
 assets/css/case.css     lumina.html — the case layout, both instruments, and
                         THE VITRINE (see doctrine below)
-assets/css/proof.css    index.html only — the proof band. Split out of
-                        case.css so the landing page does not pull two pinned
-                        instruments and Lumina's two typefaces to style one card
+assets/css/proof.css    index.html only — the "In production" band. Split
+                        out of case.css so the landing page does not pull two
+                        pinned instruments and Lumina's two typefaces to
+                        style two cards
+assets/css/duk.css      Duk's mark and page. Loaded on duk.html AND on
+                        index.html, because the band carries the live mark
+                        and nothing else should own that component
 assets/js/cmdk.js       THE INDEX (⌘K) — on every page. See below.
 assets/css/cmdk.css     its housing
 assets/js/ui.js         shared on every page: irregular glitch scheduling + page
@@ -459,6 +485,25 @@ Two more on `lumina.html`, same shape:
   the same interpolation that paints the swatch, so the readout cannot drift
   from the colour.
 
+One on `duk.html`:
+
+- **interrogate** — twenty-two candidate causes for a stated problem, cut to
+  one by four questions. Authored, not simulated, for the same reason as
+  `graph.js`: a demo that lands somewhere different every load cannot make
+  an argument twice. It is also honest about what it is — this is what Duk
+  is DESIGNED to do, demonstrated, not a recording of a shipped product.
+  **Label collisions are solved by a relaxation pass, not by tuning the
+  seed.** Twenty-two labels 90–140px wide sit ~16 degrees apart on a ring;
+  banding the radii helped and did not finish it, and the field is a third
+  the size on a phone where every near-miss became a hit. So the seeded
+  angles are a starting point and a deterministic pass pushes overlapping
+  pairs apart until nothing intersects — once per resize, not per frame.
+  Two traps it cost: `flex-direction:row-reverse` does NOT make a box
+  extend leftward (the box still starts at `left:50%`; use `right:50%`), and
+  a node anchored by one edge does not land centred when it scales up — it
+  put the surviving label off the right of a phone screen until the target
+  position accounted for the box's own half-width.
+
 **Testing them headlessly:** do not scroll. Headless paints reliably at scroll 0
 and `window.scrollTo` fights Lenis. `_track.js` derives progress from the track's
 rect, so pulling the track up with a negative `margin-top` produces any progress
@@ -604,7 +649,7 @@ for pinned stages described above.
 
 ## The index — ⌘K (added 2026-08-18)
 
-`assets/js/cmdk.js` + `cmdk.css`, on all nine pages. Thirteen destinations:
+`assets/js/cmdk.js` + `cmdk.css`, on all ten pages. Fourteen destinations:
 the pages, the four landing scenes, and the mailto.
 
 - **Every result is a real `<a>` in the document.** `field.js` owns internal
@@ -728,7 +773,10 @@ unreadable smudge.
 - Verify a deploy against `https://risethehorns-arch.github.io/Zyrn/`, not the
   custom domain — Pages serves a push immediately, DNS lags.
 - SYS.03's four lines now link to `services/*.html`, and `services.html`
-  indexes them. The nav is Work / Foundation / System / Services / Contact.
+  indexes them. The nav is Work / Foundation / System / Services /
+  **In production** / Contact — the last one added 2026-08-19, pointing at
+  `index.html#production`. `nav.js` clones `.nav__links` for the phone
+  sheet, so it appeared there on its own.
 - Service pages still have no per-service proof, but `lumina.html` closes
   out to both relevant lines and `brand.html` §04 links into it. The two
   service pages that Lumina evidences (website-design, brand-kit) do not

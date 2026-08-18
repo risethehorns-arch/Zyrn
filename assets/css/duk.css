@@ -1,0 +1,351 @@
+/* ══════════════════════════════════════════════════════════════════════
+   DUK — Zyrn's open-source agent
+
+   Loaded on duk.html AND on index.html, because the landing page's "In
+   production" band carries Duk's mark and nothing else should own it.
+
+   NO NEW HUE. Duk is Zyrn's own product, so unlike Lumina it gets no
+   vitrine and no foreign palette — it is Obsidian, Vapor and mono, same as
+   everything else. Its energy comes from MOTION and from the field behind
+   it rather than from a colour nobody else on the site is allowed to use.
+   That is the harder version and the right one: doctrine rule 1 says the
+   silence is the luxury, and a product that needs a neon to feel advanced
+   is telling you something about the product.
+
+   THE MARK is a listening aperture — three arcs at different radii turning
+   at different rates around a centre that pulses. It is not a logo of a
+   duck. The name comes from the rubber duck (see duk.html §01) and the
+   mark refuses the joke on purpose: what the tool DOES is listen, narrow,
+   and hold still on the answer, and that is what the rings do.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── the mark ───────────────────────────────────────────────────────── */
+
+.dukmark{
+  --spin:1;
+  display:inline-block;line-height:0;
+  width:var(--dm,40px);height:var(--dm,40px);
+  flex:0 0 auto;
+}
+.dukmark svg{display:block;width:100%;height:100%;overflow:visible}
+.dukmark circle{
+  fill:none;stroke:var(--vapor);
+  transform-origin:24px 24px;
+  transform-box:view-box;
+}
+.dukmark__r{stroke-linecap:butt}
+.dukmark__r--o{
+  stroke-width:1.4;opacity:0.42;
+  stroke-dasharray:28 13.887;
+  animation:dm-spin calc(15s / var(--spin)) linear infinite;
+}
+.dukmark__r--m{
+  stroke-width:1.6;opacity:0.62;
+  stroke-dasharray:30 12.41;
+  animation:dm-spin calc(10s / var(--spin)) linear infinite reverse;
+}
+.dukmark__r--i{
+  stroke-width:1.8;opacity:0.85;
+  stroke-dasharray:7.5 3.495;
+  animation:dm-spin calc(6.5s / var(--spin)) linear infinite;
+}
+.dukmark__c{
+  fill:var(--vapor);stroke:none;
+  animation:dm-beat 2.9s cubic-bezier(.16,1,.3,1) infinite;
+}
+@keyframes dm-spin{to{transform:rotate(360deg)}}
+@keyframes dm-beat{
+  0%,100%{opacity:0.55;r:2.1}
+  14%    {opacity:1;   r:3.1}
+  30%    {opacity:0.7; r:2.3}
+}
+@media (prefers-reduced-motion:reduce){
+  .dukmark circle{animation:none!important}
+  .dukmark__c{opacity:0.9}
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   THE PAGE
+   ══════════════════════════════════════════════════════════════════════ */
+
+.duk-hero{
+  padding:clamp(116px,19vh,186px) var(--gutter) clamp(36px,6vh,70px);
+  max-width:1180px;margin:0 auto;
+}
+.duk-hero__idx{display:block;color:var(--steel);margin-bottom:clamp(18px,3.4vh,30px)}
+.duk-hero__lock{
+  display:flex;align-items:center;gap:clamp(14px,2vw,22px);
+  margin-bottom:clamp(20px,3.6vh,34px);
+}
+.duk-hero__lock .dukmark{--dm:clamp(44px,5.4vw,66px)}
+.duk-hero__name{
+  font-size:clamp(38px,5.4vw,66px);line-height:1;letter-spacing:-0.045em;
+  font-weight:500;color:var(--vapor);
+}
+.duk-hero__title{
+  font-size:clamp(30px,4.8vw,60px);line-height:1.06;letter-spacing:-0.03em;
+  font-weight:400;margin:0 0 clamp(18px,3vh,28px);max-width:19ch;
+}
+.duk-hero__lede{
+  font-size:clamp(15px,1.55vw,19px);line-height:1.62;
+  color:rgba(242,243,245,0.74);max-width:64ch;margin:0;
+}
+.duk-hero__meta{
+  display:flex;flex-wrap:wrap;gap:10px clamp(18px,3vw,42px);
+  margin-top:clamp(26px,4.4vh,42px);
+  padding-top:18px;border-top:1px solid var(--hair);color:var(--steel);
+}
+.duk-hero__meta b{font-weight:400;color:rgba(242,243,245,0.86)}
+
+/* the status chip — the most load-bearing element on the page. Duk is not
+   shipped, and every claim here has to be read through that. */
+.dukstat{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:5px 11px;border:1px solid var(--hair-strong);border-radius:2px;
+  color:rgba(242,243,245,0.86);
+}
+.dukstat::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:var(--vapor);
+  animation:dk-live 2.2s ease-in-out infinite;
+}
+@keyframes dk-live{0%,100%{opacity:0.35}50%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.dukstat::before{animation:none}}
+
+/* ── section furniture ──────────────────────────────────────────────── */
+
+.duk-sec{max-width:1180px;margin:0 auto;padding:clamp(58px,10vh,110px) var(--gutter)}
+.duk-sec__head{
+  display:flex;align-items:baseline;gap:16px;
+  border-bottom:1px solid var(--hair);padding-bottom:14px;
+  margin-bottom:clamp(26px,4.6vh,46px);
+}
+.duk-sec__num{color:var(--steel);flex:0 0 auto}
+.duk-sec__title{font-size:clamp(21px,2.5vw,30px);font-weight:400;letter-spacing:-0.02em;margin:0}
+
+/* ── 01 · the name ──────────────────────────────────────────────────── */
+
+.name{
+  display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);
+  gap:clamp(22px,4vw,56px);align-items:center;
+}
+.name__b{margin:0 0 18px;font-size:clamp(15px,1.7vw,18px);line-height:1.66;color:rgba(242,243,245,0.74)}
+.name__b:last-child{margin-bottom:0}
+.name__b em{color:var(--vapor);font-style:normal}
+.name__card{
+  border:1px solid var(--hair);background:rgba(14,15,18,0.6);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  padding:clamp(24px,3.6vw,40px);
+  display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;
+}
+.name__card .dukmark{--dm:clamp(64px,9vw,104px)}
+.name__k{color:var(--steel)}
+.name__d{font-size:clamp(15px,1.7vw,19px);line-height:1.5;color:rgba(242,243,245,0.8);margin:0;max-width:30ch}
+
+/* ── 02 · the interrogation ─────────────────────────────────────────── */
+
+.in__track{position:relative;height:520vh}
+.in__stage{
+  --ping:0;--pingr:0;--solved:0;
+  position:sticky;top:0;min-height:100svh;
+  display:flex;flex-direction:column;justify-content:center;
+  gap:clamp(10px,1.8vh,20px);
+  padding:clamp(72px,10vh,108px) var(--gutter) clamp(24px,4vh,44px);
+}
+.in__head{
+  display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap;
+  border-bottom:1px solid var(--hair);padding-bottom:10px;
+}
+.in__step{color:var(--vapor);transition:opacity 260ms}
+.in__step.is-swap,.in__live.is-swap{opacity:0}
+.in__live,.in__pct,.in__ask{color:var(--steel);transition:opacity 260ms}
+.in__meta{display:flex;align-items:center;gap:clamp(12px,2vw,26px)}
+.in__head span{text-shadow:0 1px 12px rgba(14,15,18,0.75)}
+
+.in__body{
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);
+  gap:clamp(18px,3vw,44px);align-items:center;
+}
+
+/* the candidate field */
+.in__field{
+  /* Square, and sized by the SMALLER of the column and the height budget.
+     `width:100%` + `aspect-ratio` + `max-height` does not work here: the
+     ratio derives height from width, and max-height then clips it without
+     narrowing the box, so the field silently stops being square and the
+     scatter goes oval. */
+  position:relative;
+  width:min(100%, 68svh, 640px);aspect-ratio:1/1;
+  margin:0 auto;
+}
+/* the question leaving the centre */
+.in__field::after{
+  content:'';position:absolute;left:50%;top:50%;
+  width:calc(var(--pingr) * 116%);height:calc(var(--pingr) * 116%);
+  transform:translate(-50%,-50%);
+  border:1px solid rgba(242,243,245,0.5);border-radius:50%;
+  opacity:calc(var(--ping) * 0.7);
+  pointer-events:none;
+}
+.incand{
+  --dead:0;--found:0;
+  position:absolute;left:50%;top:50%;
+  display:flex;align-items:center;gap:7px;
+  margin:-7px 0 0 -7px;
+  white-space:nowrap;
+  opacity:calc(1 - var(--dead) * 0.86);
+  will-change:transform,opacity;
+}
+.incand__d{
+  width:7px;height:7px;border-radius:50%;flex:0 0 auto;
+  background:rgba(242,243,245,calc(0.62 - var(--dead) * 0.44 + var(--found) * 0.38));
+  box-shadow:0 0 calc(var(--found) * 30px) rgba(242,243,245,0.8);
+}
+.incand__l{
+  /* These sit directly on the field with no panel behind them, so they take
+     the same veil every other bare-on-field label does — and they start at
+     0.68 rather than 0.5, because a candidate has to be READABLE before it
+     can be struck out for the strike-out to mean anything. */
+  font-size:10px;letter-spacing:0.1em;
+  color:rgba(242,243,245,calc(0.68 - var(--dead) * 0.52 + var(--found) * 0.32));
+  text-decoration:line-through;
+  text-decoration-color:rgba(242,243,245,calc(var(--dead) * 0.55));
+  text-shadow:0 1px 10px rgba(14,15,18,0.95),0 0 22px rgba(14,15,18,0.8);
+}
+/* the survivor stops being one of twenty-two */
+/* Anchored by its RIGHT edge, so the box genuinely extends leftward from
+   the dot. `flex-direction:row-reverse` alone does not do this — it only
+   reorders the children inside a box that still starts at left:50% and
+   grows right, which meant the relaxation pass below was separating boxes
+   that were not where it thought they were. */
+.incand[data-left]{
+  left:auto;right:50%;
+  margin-left:0;margin-right:-7px;
+  flex-direction:row-reverse;
+}
+.incand[data-left] .incand__l{text-align:right}
+.incand[data-keeps]{z-index:2}
+.incand[data-keeps] .incand__l{
+  font-size:calc(8.5px + var(--found) * 6px);
+  letter-spacing:calc(0.12em + var(--found) * 0.06em);
+}
+
+/* the transcript */
+.in__talk{
+  border:1px solid var(--hair);background:rgba(14,15,18,0.62);
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
+  padding:clamp(18px,2.6vw,30px);
+  display:flex;flex-direction:column;gap:14px;
+  position:relative;overflow:hidden;
+}
+/* a scanline that crosses on every new question */
+.in__talk::before{
+  content:'';position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(242,243,245,0.7),transparent);
+  transform:translateY(calc(var(--pingr) * 100vh));
+  opacity:var(--ping);pointer-events:none;
+}
+.in__tag{color:var(--steel);display:flex;justify-content:space-between;gap:12px}
+.in__q{
+  margin:0;font-size:clamp(17px,2.1vw,25px);line-height:1.28;
+  letter-spacing:-0.02em;color:var(--vapor);
+  min-height:2.6em;transition:opacity 240ms;
+}
+.in__q.is-swap{opacity:0}
+.in__a{
+  margin:0;font-family:var(--font-mono);font-size:12.5px;line-height:1.6;
+  color:rgba(242,243,245,0.66);
+  padding-left:14px;border-left:1px solid var(--hair-strong);
+  min-height:3.2em;transition:opacity 300ms;
+}
+.in__note{
+  margin:0;max-width:80ch;font-size:13px;line-height:1.62;
+  color:rgba(242,243,245,0.66);min-height:3.2em;
+  transition:opacity 240ms;text-shadow:0 1px 12px rgba(14,15,18,0.75);
+}
+.in__note.is-swap{opacity:0}
+
+/* ── 03 · what it does ──────────────────────────────────────────────── */
+
+.does{list-style:none;margin:0;padding:0;border-top:1px solid var(--hair)}
+.does__i{
+  display:grid;grid-template-columns:auto minmax(0,1fr);
+  gap:clamp(14px,2.4vw,28px);
+  padding:clamp(17px,2.3vh,23px) 0;border-bottom:1px solid var(--hair);
+  transition:background 260ms ease;
+}
+.does__i:hover{background:rgba(242,243,245,0.02)}
+.does__n{color:var(--steel);padding-top:4px}
+.does__t{margin:0;font-size:16px;font-weight:500;color:var(--vapor)}
+.does__d{margin:7px 0 0;font-size:14px;line-height:1.62;color:rgba(242,243,245,0.62);max-width:74ch}
+
+/* ── 04 · refusals ──────────────────────────────────────────────────── */
+
+.ref{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;
+  background:var(--hair);border:1px solid var(--hair)}
+.ref__c{
+  background:rgba(14,15,18,0.6);padding:clamp(20px,2.6vw,30px);
+  display:flex;flex-direction:column;gap:12px;
+}
+.ref__h{color:var(--steel)}
+.ref__l{margin:0;padding-left:17px}
+.ref__l li{font-size:14px;line-height:1.6;color:rgba(242,243,245,0.66);margin-bottom:9px}
+.ref__l li:last-child{margin-bottom:0}
+.ref__c--no .ref__l li{color:rgba(242,243,245,0.5)}
+
+/* ── 06 · status ────────────────────────────────────────────────────── */
+
+.stat{
+  display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+  gap:clamp(24px,4vw,56px);align-items:start;
+}
+.stat__b{font-size:15px;line-height:1.68;color:rgba(242,243,245,0.72);margin:0 0 20px;max-width:56ch}
+.stat__b em{color:var(--vapor);font-style:normal}
+.stat__side{
+  border:1px solid var(--hair);background:rgba(14,15,18,0.6);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  padding:clamp(20px,2.6vw,28px);display:flex;flex-direction:column;gap:0;
+}
+.stat__row{
+  display:flex;justify-content:space-between;gap:14px;color:var(--steel);
+  padding:11px 0;border-bottom:1px solid var(--hair);
+}
+.stat__row:last-child{border-bottom:none}
+.stat__row b{font-weight:400;color:rgba(242,243,245,0.84);text-align:right}
+/* a bar rather than a percentage: a percentage on unshipped work is a
+   number someone will quote back at you */
+.stat__bar{display:flex;gap:3px;align-items:center}
+.stat__bar i{width:9px;height:3px;background:rgba(242,243,245,0.16);border-radius:1px}
+.stat__bar i.is-on{background:var(--vapor)}
+
+/* ── responsive ─────────────────────────────────────────────────────── */
+
+@media (max-width:900px){
+  .name,.stat{grid-template-columns:1fr}
+  .ref{grid-template-columns:1fr}
+  .in__body{grid-template-columns:1fr;gap:12px}
+  /* the transcript leads: on a small screen the words are the argument and
+     the field is the illustration, which is the reverse of desktop */
+  .in__talk{order:-1}
+  /* Width, NOT max-height — capping the height of an aspect-ratio box
+     leaves the width alone and the field goes oval. Same trap the desktop
+     rule above documents; it caught me here anyway. */
+  .in__field{width:min(100%, 36svh, 320px)}
+  .incand__l{font-size:8.5px;letter-spacing:0.06em}
+  .in__track{height:460vh}
+  .in__stage{padding-top:88px;padding-bottom:18px;gap:8px}
+  .in__q{font-size:16px;min-height:3.4em}
+  .in__a{font-size:11.5px;min-height:2.8em}
+  .in__note{font-size:12px;min-height:4.6em}
+  .in__live,.in__ask{font-size:9px}
+}
+@media (max-width:560px){
+  .does__i{grid-template-columns:1fr;gap:3px}
+  .does__n{padding-top:0}
+  .duk-hero__title{max-width:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .in__track{height:auto}
+  .in__stage{position:static;min-height:0}
+}

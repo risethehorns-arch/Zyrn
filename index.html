@@ -52,6 +52,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/styles.css">
 <link rel="stylesheet" href="assets/css/field.css">
+<link rel="stylesheet" href="assets/css/duk.css">
 <link rel="stylesheet" href="assets/css/proof.css">
 <link rel="stylesheet" href="assets/css/footer.css">
 <link rel="stylesheet" href="assets/css/cmdk.css">
@@ -129,7 +130,8 @@
         <a href="foundation.html" class="nav__link" data-reveal data-rdelay="180">Foundation</a>
         <a href="#sys-04" class="nav__link" data-reveal data-rdelay="260">System</a>
         <a href="services.html" class="nav__link" data-reveal data-rdelay="340">Services</a>
-        <a href="#sys-05" class="nav__link" data-reveal data-rdelay="420">Contact</a>
+        <a href="#production" class="nav__link" data-reveal data-rdelay="400">In production</a>
+        <a href="#sys-05" class="nav__link" data-reveal data-rdelay="460">Contact</a>
       </div>
 
       <div class="nav__end" data-reveal data-rdelay="500">
@@ -334,47 +336,88 @@
 
     <div class="runway runway--short" aria-hidden="true"></div>
 
-    <!-- ── PROOF · IN PRODUCTION ─────────────────────────────────────────
-         The site's first piece of evidence. Deliberately placed after the
-         service lines and before the readiness index: the lines make the
-         claim, this answers "show me", and only then does the index ask the
-         reader to assess themselves.
+    <!-- ── IN PRODUCTION ────────────────────────────────────────────────
+         The band the nav's "In production" tab points at. Two cards, and
+         they are deliberately in different states: one shipped and running,
+         one being built in the open. A portfolio that only shows finished
+         work says nothing about what a firm is currently betting on.
 
-         It carries no `data-sys-section` and no rail entry on purpose — the
-         five-scene rhythm is capped at five (docs/strategy.md §4), and this
-         is evidence for SYS.03 rather than a sixth scene. -->
-    <section class="section proof" aria-labelledby="proofT">
+         No `data-sys-section` and no rail entry: the five-scene rhythm is
+         capped at five (docs/strategy.md §4). This is evidence for SYS.03,
+         not a sixth scene. -->
+    <section class="section proof" id="production" aria-labelledby="proofT">
       <div class="row row--top">
         <div class="badge mono veil" data-reveal data-rdelay="100">SYS.03 &mdash; IN PRODUCTION</div>
         <p class="lede lede--wide veil" data-reveal data-rdelay="200" data-keepout id="proofT">
-          Built, handed over, and then replaced without being rebuilt.
+          One system shipped and still running. One being built in the open.
         </p>
       </div>
 
-      <a class="proof__card" href="lumina.html" data-reveal data-rdelay="300" data-keepout>
-        <span class="proof__shot">
-          <img src="assets/media/work/lumina-card.webp" alt="The Lumina website, live"
-               width="1120" height="700" loading="lazy" decoding="async">
-        </span>
+      <div class="proof__row" data-keepout>
 
-        <span class="proof__body">
-          <span class="proof__mark">
-            <img src="assets/media/lumina-logo.png" alt="Lumina" width="222" height="60"
-                 loading="lazy" decoding="async">
+        <a class="proof__card" href="lumina.html" data-reveal data-rdelay="300">
+          <span class="proof__vis">
+            <img src="assets/media/work/lumina-card.webp" alt="The Lumina website, live"
+                 width="1200" height="750" loading="lazy" decoding="async">
           </span>
-          <span class="proof__t">Private real-estate advisory, Amman</span>
-          <span class="proof__b">Brand kit and website. Six weeks after launch the client asked for a different palette &mdash; every ground, every accent. Eight tokens were replaced and one added, in a single commit.</span>
-          <span class="proof__nums mono">
-            <span><b>14</b> pages</span>
-            <span><b>09</b> tokens</span>
-            <span><b>00</b> components rebuilt</span>
+
+          <span class="proof__body">
+            <span class="proof__head">
+              <span class="proof__mark">
+                <img src="assets/media/lumina-logo.png" alt="Lumina" width="222" height="60"
+                     loading="lazy" decoding="async">
+              </span>
+              <span class="mono proof__st proof__st--live">Live</span>
+            </span>
+            <span class="proof__t">Private real-estate advisory, Amman</span>
+            <span class="proof__b">Brand kit and website. Six weeks after launch the whole palette was replaced &mdash; eight tokens out, one in, in a single commit. No component was rebuilt.</span>
+            <span class="proof__nums mono">
+              <span><b>14</b> pages</span>
+              <span><b>09</b> tokens</span>
+              <span><b>00</b> rebuilt</span>
+            </span>
+            <span class="proof__go mono">
+              Read the case
+              <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
           </span>
-          <span class="proof__go mono">
-            Read the case
-            <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+
+        <a class="proof__card proof__card--duk" href="duk.html" data-reveal data-rdelay="380">
+          <span class="proof__vis proof__vis--duk">
+            <span class="dukfield" aria-hidden="true">
+              <span class="dukmark">
+                <svg viewBox="0 0 48 48">
+                  <circle class="dukmark__r dukmark__r--o" cx="24" cy="24" r="20"></circle>
+                  <circle class="dukmark__r dukmark__r--m" cx="24" cy="24" r="13.5"></circle>
+                  <circle class="dukmark__r dukmark__r--i" cx="24" cy="24" r="7"></circle>
+                  <circle class="dukmark__c" cx="24" cy="24" r="2.4"></circle>
+                </svg>
+              </span>
+              <span class="dukfield__q mono">why?</span>
+            </span>
           </span>
-        </span>
-      </a>
+
+          <span class="proof__body">
+            <span class="proof__head">
+              <span class="proof__wm">Duk</span>
+              <span class="mono proof__st proof__st--dev">In development</span>
+            </span>
+            <span class="proof__t">An open-source agent that asks first</span>
+            <span class="proof__b">Built here, to work on a firm&rsquo;s operating core &mdash; brainstorming, drafting and arguing real improvements with the people who run it. It interrogates before it produces, because a fluent answer to the wrong question is the expensive kind.</span>
+            <span class="proof__nums mono">
+              <span><b>04</b> questions</span>
+              <span><b>22</b> candidates</span>
+              <span><b>01</b> constraint</span>
+            </span>
+            <span class="proof__go mono">
+              Meet Duk
+              <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </span>
+        </a>
+
+      </div>
     </section>
 
     <div class="runway runway--short" aria-hidden="true"></div>
@@ -570,24 +613,26 @@ initField({
   // everything below it down the page. Section centres as scroll progress,
   // desktop 1440x900 / phone 390x844:
   //
-  //   SYS.01 0.00 / 0.00   SYS.02 0.19 / 0.08   SYS.03 0.37 / 0.32
-  //   PROOF  0.56 / 0.56   SYS.04 0.75 / 0.77   SYS.05 0.93 / 0.96
+  //   SYS.01 0.00 / 0.00   SYS.02 0.20 / 0.17   SYS.03 0.38 / 0.35
+  //   PROD   0.57 / 0.54   SYS.04 0.74 / 0.71   SYS.05 0.92 / 0.86
   //
-  // The two widths agree closely from SYS.03 down; they diverge at SYS.02
-  // because a phone stacks that scene into a much taller block. The stops
-  // below are the mean, biased so each morph COMPLETES just before its
-  // section reaches the viewport centre rather than while it is arriving.
+  // Re-measured again on 2026-08-19 when the band gained its second card
+  // (Duk) and grew. The two widths now agree within ~0.06 everywhere; they
+  // used to diverge badly at SYS.02, and a longer page is what closed that.
+  // The stops below are the mean, biased so each morph COMPLETES just
+  // before its section reaches the viewport centre rather than while it is
+  // still arriving.
   //
   // If you add or remove a section here, re-measure — do not nudge these by
   // eye. The runway spacers are part of the same measurement.
   program: [
     { at: 0.00, form: 'S3' },   // SYS.01 hero — the operating core, at rest
-    { at: 0.20, form: 'S3' },   // SYS.02 "Built once. Runs itself." — it holds
-    { at: 0.33, form: 'S1' },   // SYS.03 — the core opens into four arms,
-    { at: 0.62, form: 'S1' },   //          and STAYS open across the proof
-                                //          band, because that band is those
-                                //          same four lines in production
-    { at: 0.78, form: 'S3' },   // SYS.04 readiness — the ladder climbs back
+    { at: 0.22, form: 'S3' },   // SYS.02 "Built once. Runs itself." — it holds
+    { at: 0.35, form: 'S1' },   // SYS.03 — the core opens into four arms,
+    { at: 0.62, form: 'S1' },   //          and STAYS open across the "In
+                                //          production" band, because that
+                                //          band is those same lines running
+    { at: 0.74, form: 'S3' },   // SYS.04 readiness — the ladder climbs back
     { at: 1.00, form: 'S4' },   // SYS.05 access — released
   ],
   onState: (p, name) => { if (roState) roState.textContent = name; },
