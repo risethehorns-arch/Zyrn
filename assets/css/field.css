@@ -370,10 +370,12 @@ body.is-leaving .sysnav{opacity:0;transition:opacity 260ms linear}
 
 .navsheet{
   position:fixed;inset:0;z-index:55;
+  /* below the bar, so the X stays reachable -- see body.is-navopen .nav */
+  top:var(--navh,0px);
   background:rgba(8,9,11,0.94);
   -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
   display:flex;flex-direction:column;
-  gap:34px;padding:96px var(--gutter,24px) 40px;
+  gap:34px;padding:28px var(--gutter,24px) 40px;
   /* With the Services disclosure open the sheet can outgrow a short phone.
      `justify-content:center` + overflow clips the TOP of an overflowing flex
      child and you can never scroll back to it; auto margins centre the same
@@ -485,6 +487,25 @@ body.is-leaving .sysnav{opacity:0;transition:opacity 260ms linear}
   margin-top:auto;
 }
 body.is-navopen{overflow:hidden}
+
+/* While the sheet is open the nav bar IS the close control -- the toggle
+   morphs into an X, and a phone has no Escape key. So the bar has to stay
+   both visible and tappable, and the sheet is told to start below it
+   (--navh, measured in nav.js) rather than at inset:0.
+
+   Raising the nav with z-index cannot work and was tried first: `.shell`
+   is `position:relative;z-index:10`, which makes it a stacking context, so
+   `.nav` inside it can never paint above a sheet that is a child of body
+   at z-index 55 -- no value on the nav escapes its parent's 10. Moving the
+   sheet into `.shell` instead would put a `position:fixed` element under an
+   ancestor that takes a transform during page transitions, which silently
+   re-anchors it to the shell. Not covering the bar is the fix with no
+   stacking or containing-block trap in it.
+
+   The bar is normally 70% obsidian so the page reads through it. Over an
+   open sheet that shows a slab of stale page in the top strip, so match
+   the sheet's own value and the two read as one surface. */
+body.is-navopen .nav{background:rgba(8,9,11,0.94)}
 
 @media (max-width:899px){
   .navtoggle{display:flex}

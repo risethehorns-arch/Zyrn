@@ -1,0 +1,86 @@
+/* ══════════════════════════════════════════════════════════════════════
+   ZYRN — THE PROOF BAND
+
+   Its own file rather than a block inside case.css: this is the only piece
+   of the case-study work that the LANDING page needs, and case.css carries
+   two pinned instruments, five vitrine variants and a dependency on
+   Lumina's two typefaces. Loading all of that on index.html to style one
+   card would be a real cost for no benefit.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════════════════════════
+   THE PROOF BAND  (index.html, between SYS.03 and SYS.04)
+
+   The landing page carried no evidence at all until 2026-08-19 — the four
+   lines made a claim and nothing on the page answered "show me". This is
+   the answer, and it is one card rather than a grid because there is one
+   case: a row of three would advertise two that do not exist.
+
+   The whole card is a single <a>. Its children are spans, not divs, so the
+   markup stays valid inside an anchor. One `data-reveal` on the anchor and
+   none inside it — a nested reveal never fires (CLAUDE.md).
+   ══════════════════════════════════════════════════════════════════════ */
+
+.proof__card{
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);
+  gap:clamp(20px,3vw,44px);align-items:center;
+  margin-top:clamp(26px,4vh,44px);
+  padding:clamp(18px,2.4vw,28px);
+  border:1px solid var(--hair);
+  background:rgba(14,15,18,0.6);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  transition:border-color 320ms var(--ease-reveal,cubic-bezier(.16,1,.3,1)),
+             transform 420ms var(--ease-reveal,cubic-bezier(.16,1,.3,1));
+}
+@media (hover:hover) and (pointer:fine){
+  .proof__card:hover{border-color:var(--hair-strong);transform:translateY(-2px)}
+  .proof__card:hover .proof__shot img{transform:scale(1.03)}
+  .proof__card:hover .proof__go .arrow{transform:translateX(4px)}
+}
+.proof__card:focus-visible{outline:2px solid var(--vapor);outline-offset:3px}
+
+.proof__shot{
+  display:block;overflow:hidden;border-radius:6px;
+  border:1px solid var(--hair);background:#05070B;
+}
+.proof__shot img{
+  display:block;width:100%;height:auto;
+  transition:transform 620ms var(--ease-reveal,cubic-bezier(.16,1,.3,1));
+}
+
+.proof__body{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(10px,1.6vh,15px)}
+
+/* Lumina's mark under Lumina's own treatment, as everywhere else it
+   appears on this site. Not recoloured to sit inside a Zyrn panel. */
+.proof__mark{display:block;line-height:0}
+.proof__mark img{
+  display:block;height:19px;width:auto;
+  filter:drop-shadow(0 2px 9px rgba(0,0,0,0.55))
+         drop-shadow(0 0 20px rgba(255,178,90,0.32));
+}
+.proof__t{
+  display:block;font-size:clamp(17px,2vw,23px);line-height:1.2;
+  letter-spacing:-0.02em;color:var(--vapor);
+}
+.proof__b{
+  display:block;font-size:14px;line-height:1.62;
+  color:rgba(242,243,245,0.66);max-width:46ch;
+}
+.proof__nums{
+  display:flex;flex-wrap:wrap;gap:8px clamp(14px,2vw,26px);
+  color:var(--steel);padding-top:4px;
+}
+.proof__nums b{
+  font-weight:400;color:var(--vapor);
+  font-variant-numeric:tabular-nums;margin-right:5px;
+}
+.proof__go{
+  display:inline-flex;align-items:center;gap:9px;
+  color:rgba(242,243,245,0.86);
+  border-bottom:1px solid var(--hair-strong);padding-bottom:3px;margin-top:4px;
+}
+.proof__go .arrow{transition:transform 320ms var(--ease-reveal,cubic-bezier(.16,1,.3,1))}
+
+@media (max-width:860px){
+  .proof__card{grid-template-columns:1fr;gap:20px}
+}

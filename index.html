@@ -52,6 +52,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/styles.css">
 <link rel="stylesheet" href="assets/css/field.css">
+<link rel="stylesheet" href="assets/css/proof.css">
 <link rel="stylesheet" href="assets/css/footer.css">
 <link rel="stylesheet" href="assets/css/cmdk.css">
 <link rel="stylesheet" href="assets/css/intro.css">
@@ -333,6 +334,51 @@
 
     <div class="runway runway--short" aria-hidden="true"></div>
 
+    <!-- ── PROOF · IN PRODUCTION ─────────────────────────────────────────
+         The site's first piece of evidence. Deliberately placed after the
+         service lines and before the readiness index: the lines make the
+         claim, this answers "show me", and only then does the index ask the
+         reader to assess themselves.
+
+         It carries no `data-sys-section` and no rail entry on purpose — the
+         five-scene rhythm is capped at five (docs/strategy.md §4), and this
+         is evidence for SYS.03 rather than a sixth scene. -->
+    <section class="section proof" aria-labelledby="proofT">
+      <div class="row row--top">
+        <div class="badge mono veil" data-reveal data-rdelay="100">SYS.03 &mdash; IN PRODUCTION</div>
+        <p class="lede lede--wide veil" data-reveal data-rdelay="200" data-keepout id="proofT">
+          Built, handed over, and then replaced without being rebuilt.
+        </p>
+      </div>
+
+      <a class="proof__card" href="lumina.html" data-reveal data-rdelay="300" data-keepout>
+        <span class="proof__shot">
+          <img src="assets/media/work/lumina-card.webp" alt="The Lumina website, live"
+               width="1120" height="700" loading="lazy" decoding="async">
+        </span>
+
+        <span class="proof__body">
+          <span class="proof__mark">
+            <img src="assets/media/lumina-logo.png" alt="Lumina" width="222" height="60"
+                 loading="lazy" decoding="async">
+          </span>
+          <span class="proof__t">Private real-estate advisory, Amman</span>
+          <span class="proof__b">Brand kit and website. Six weeks after launch the client asked for a different palette &mdash; every ground, every accent. Eight tokens were replaced and one added, in a single commit.</span>
+          <span class="proof__nums mono">
+            <span><b>14</b> pages</span>
+            <span><b>09</b> tokens</span>
+            <span><b>00</b> components rebuilt</span>
+          </span>
+          <span class="proof__go mono">
+            Read the case
+            <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </span>
+      </a>
+    </section>
+
+    <div class="runway runway--short" aria-hidden="true"></div>
+
     <!-- ── SYS.04 · readiness index ─────────────────────────────────── -->
     <section class="section" id="sys-04" data-screen-label="Readiness index" data-sys-section="04">
       <div class="row row--top">
@@ -400,7 +446,7 @@
               Request access
               <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
             </a>
-            <a class="btn btn--hairline" href="brand.html">Brand system</a>
+            <a class="btn btn--hairline" href="brand.html">How we build a brand kit</a>
           </div>
         </div>
 
@@ -453,7 +499,8 @@
             <div class="fcol">
               <span class="mono fcol__h">The firm</span>
               <a href="foundation.html">Foundation</a>
-              <a href="brand.html">Brand system</a>
+              <a href="brand.html">Brand kit &mdash; the method</a>
+              <a href="lumina.html">Lumina &mdash; a case</a>
               <a href="index.html#sys-04">Readiness index</a>
               <a href="index.html#sys-05">Access</a>
             </div>
@@ -518,15 +565,28 @@ const sCount  = document.getElementById('sCount');
 const pad = n => { const s = String(n).padStart(6, '0'); return s.slice(0, -3) + ',' + s.slice(-3); };
 
 initField({
-  // Anchored to where the scenes actually sit. Measured section centres, as
-  // scroll progress: SYS.01 0.00 · SYS.02 0.26 · SYS.03 0.51 · SYS.04 0.76 ·
-  // SYS.05 dominant from 0.90. Consistent within ~0.02 between a 1440x900
-  // desktop and a 430x880 phone, so one set of stops serves both.
+  // Anchored to where the scenes actually sit. RE-MEASURED 2026-08-19, when
+  // the proof band was inserted between SYS.03 and SYS.04 and pushed
+  // everything below it down the page. Section centres as scroll progress,
+  // desktop 1440x900 / phone 390x844:
+  //
+  //   SYS.01 0.00 / 0.00   SYS.02 0.19 / 0.08   SYS.03 0.37 / 0.32
+  //   PROOF  0.56 / 0.56   SYS.04 0.75 / 0.77   SYS.05 0.93 / 0.96
+  //
+  // The two widths agree closely from SYS.03 down; they diverge at SYS.02
+  // because a phone stacks that scene into a much taller block. The stops
+  // below are the mean, biased so each morph COMPLETES just before its
+  // section reaches the viewport centre rather than while it is arriving.
+  //
+  // If you add or remove a section here, re-measure — do not nudge these by
+  // eye. The runway spacers are part of the same measurement.
   program: [
     { at: 0.00, form: 'S3' },   // SYS.01 hero — the operating core, at rest
-    { at: 0.30, form: 'S3' },   // SYS.02 "Built once. Runs itself." — it holds
-    { at: 0.48, form: 'S1' },   // SYS.03 — the core opens into four arms,
-    { at: 0.60, form: 'S1' },   //          one per line, settled as it centres
+    { at: 0.20, form: 'S3' },   // SYS.02 "Built once. Runs itself." — it holds
+    { at: 0.33, form: 'S1' },   // SYS.03 — the core opens into four arms,
+    { at: 0.62, form: 'S1' },   //          and STAYS open across the proof
+                                //          band, because that band is those
+                                //          same four lines in production
     { at: 0.78, form: 'S3' },   // SYS.04 readiness — the ladder climbs back
     { at: 1.00, form: 'S4' },   // SYS.05 access — released
   ],

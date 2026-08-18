@@ -161,3 +161,139 @@
   .spec-table{font-size:13px}
   .spec-table th:last-child,.spec-table td:last-child{padding-right:0}
 }
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   THE KIT AS A DELIVERABLE  (rewritten 2026-08-19)
+
+   This page used to document ZYRN'S OWN brand. It now documents how a
+   brand kit is built and handed to a client, with another firm's kit —
+   Lumina's — as the worked example. Owner's direction: the tab should
+   speak generally about the deliverable and show an example that is not
+   Zyrn.
+
+   The old page is kept verbatim at _archive/brand-zyrn-doctrine-v2.html.
+   Nothing was lost: Zyrn's own doctrine is the operative copy in
+   CLAUDE.md, which is where it was always enforced from.
+
+   Everything Lumina-coloured lives inside `.vit` (case.css), which is
+   loaded here for exactly that component. Outside the vitrines this page
+   is unchanged Zyrn — Obsidian, Vapor, Space Grotesk, hairlines.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.doc__link{
+  color:var(--vapor);
+  border-bottom:1px solid var(--hair-strong);
+  transition:border-color 200ms ease;
+}
+.doc__link:hover{border-bottom-color:rgba(242,243,245,0.55)}
+
+/* ── 02 · the anatomy ───────────────────────────────────────────────── */
+
+.kit{
+  list-style:none;margin:22px 0 0;padding:0;
+  border-top:1px solid var(--hair);
+}
+.kit__i{
+  display:grid;grid-template-columns:auto minmax(0,1fr);
+  gap:clamp(14px,2.4vw,28px);
+  padding:clamp(18px,2.4vh,24px) 0;
+  border-bottom:1px solid var(--hair);
+}
+.kit__n{color:var(--steel);padding-top:4px}
+.kit__t{margin:0;font-size:16px;font-weight:500;color:var(--vapor)}
+.kit__d{margin:7px 0 0;font-size:14px;line-height:1.65;color:rgba(242,243,245,0.62);max-width:74ch}
+
+/* ── 03 · the vitrines ──────────────────────────────────────────────── */
+
+.lvit{margin:22px 0 0;background:rgba(14,15,18,0.4)}
+.lvit__b{padding:clamp(20px,3vw,32px)}
+.lvit__n{
+  margin:22px 0 0;font-size:13.5px;line-height:1.7;
+  color:rgba(242,243,245,0.6);max-width:78ch;
+}
+.lvit__n em{color:var(--vapor);font-style:normal}
+
+/* palette */
+.lpal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.8vw,20px)}
+.lpal__i{display:flex;flex-direction:column;gap:3px;min-width:0}
+.lpal__c{
+  display:block;height:clamp(44px,6vh,64px);border-radius:6px;
+  border:1px solid rgba(242,243,245,0.1);margin-bottom:6px;
+}
+.lpal__i b{font-weight:400;color:var(--vapor);font-size:10.5px}
+.lpal__i .mono:not(b){color:var(--steel);font-size:10px}
+.lpal__u{font-size:12px;line-height:1.45;color:rgba(242,243,245,0.5)}
+
+/* type — set in Lumina's own faces, which is the entire point */
+.ltype{padding:18px 0;border-bottom:1px solid var(--hair)}
+.ltype:last-of-type{border-bottom:none}
+.ltype__cap{display:block;color:var(--steel);text-transform:none;margin-bottom:12px}
+.ltype__d{
+  margin:0;font-family:var(--font-lum-display);font-weight:400;
+  font-size:clamp(28px,4.6vw,52px);line-height:1.1;color:#F7F2E9;
+}
+.ltype__s{
+  margin:0;font-family:var(--font-lum-sans);
+  font-size:clamp(15px,1.7vw,19px);line-height:1.55;
+  color:rgba(247,242,233,0.8);max-width:56ch;
+}
+
+/* the mark, on Lumina's own ground and under Lumina's own treatment */
+.lmark{
+  display:flex;align-items:center;justify-content:center;
+  padding:clamp(30px,6vh,60px) 20px;
+  background:#0B1018;border-radius:10px;
+  border:1px solid rgba(192,127,62,0.28);
+}
+.lmark__stage img{
+  display:block;height:clamp(28px,4vw,40px);width:auto;
+  filter:drop-shadow(0 2px 9px rgba(0,0,0,0.55))
+         drop-shadow(0 0 24px rgba(255,178,90,0.4));
+}
+
+/* motion — the curve running, beside a linear one, so the difference is
+   visible rather than asserted. Same duration, same distance. */
+.lease{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr);
+  gap:14px;align-items:center;margin-top:14px}
+.lease__cap{color:var(--steel);text-transform:none}
+.lease__v{color:var(--vapor);margin:0 0 6px;font-size:12px}
+.lease__track{
+  position:relative;height:2px;border-radius:2px;
+  background:rgba(247,242,233,0.11);
+}
+.lease__dot{
+  position:absolute;top:50%;left:0;width:10px;height:10px;margin-top:-5px;
+  border-radius:50%;background:#FFB25A;
+  box-shadow:0 0 14px rgba(255,178,90,0.6);
+}
+.lease__dot--brand{animation:lease-run 2.6s cubic-bezier(.22,.68,.16,1) infinite alternate}
+.lease__dot--lin{animation:lease-run 2.6s linear infinite alternate;
+  background:rgba(247,242,233,0.4);box-shadow:none}
+@keyframes lease-run{from{left:0}to{left:calc(100% - 10px)}}
+@media (prefers-reduced-motion:reduce){
+  .lease__dot{animation:none;left:calc(100% - 10px)}
+}
+
+/* ── 04 · the claim ─────────────────────────────────────────────────── */
+
+.claim{
+  margin:22px 0;padding:clamp(22px,3.4vw,34px);
+  border:1px solid var(--hair);border-left:2px solid rgba(242,243,245,0.45);
+  background:rgba(14,15,18,0.5);
+}
+.claim__b{
+  margin:0 0 20px;font-size:clamp(15px,1.8vw,19px);line-height:1.62;
+  color:rgba(242,243,245,0.82);max-width:70ch;
+}
+.claim__b em{color:var(--vapor);font-style:normal}
+
+@media (max-width:900px){
+  .lpal{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:767px){
+  .kit__i{grid-template-columns:minmax(0,1fr);gap:4px}
+  .kit__n{padding-top:0}
+  .lease{grid-template-columns:minmax(0,1fr);gap:8px}
+  .lpal{grid-template-columns:1fr 1fr}
+}

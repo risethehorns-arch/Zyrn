@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZYRN &mdash; Lumina, a case</title>
+<meta name="description" content="Lumina is a private real-estate advisory in Amman. Zyrn built its brand kit and the site that carries it — then replaced the entire palette in one commit without rebuilding a single component.">
+<link rel="canonical" href="https://zyrn.org/lumina.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ZYRN">
+<meta property="og:locale" content="en">
+<meta property="og:title" content="ZYRN &mdash; Lumina, a case">
+<meta property="og:description" content="Lumina is a private real-estate advisory in Amman. Zyrn built its brand kit and the site that carries it — then replaced the entire palette in one commit without rebuilding a single component.">
+<meta property="og:url" content="https://zyrn.org/lumina.html">
+<meta property="og:image" content="https://zyrn.org/assets/media/og.jpg?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ZYRN — the wordmark cut by its Pulse seam, inside the particle core.">
+<meta property="og:image:secure_url" content="https://zyrn.org/assets/media/og.jpg?v=2">
+<meta property="og:image:type" content="image/jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/media/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/media/icons/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/media/icons/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<!-- The import map MUST precede every module load on the page, and a
+     <link rel="modulepreload"> IS a module load — see CLAUDE.md. -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/",
+    "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.mjs",
+    "lil-gui": "https://cdn.jsdelivr.net/npm/lil-gui@0.19.2/dist/lil-gui.esm.js"
+  }
+}
+</script>
+
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/misc/GPUComputationRenderer.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/postprocessing/EffectComposer.js">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Instrument Serif + Sans are LUMINA'S faces, requested here only so the
+     specimens in the vitrines are set in the real thing. They are scoped to
+     `--font-lum-*` in case.css and never touch Zyrn's own type. -->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<link rel="stylesheet" href="assets/css/service.css">
+<link rel="stylesheet" href="assets/css/field.css">
+<link rel="stylesheet" href="assets/css/footer.css">
+<link rel="stylesheet" href="assets/css/cmdk.css">
+<link rel="stylesheet" href="assets/css/case.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Lumina — a brand that survived being replaced",
+  "url": "https://zyrn.org/lumina.html",
+  "author": {"@type":"Organization","name":"ZYRN","url":"https://zyrn.org"},
+  "publisher": {"@type":"Organization","name":"ZYRN","url":"https://zyrn.org"},
+  "about": {
+    "@type":"Organization",
+    "name":"Lumina",
+    "url":"https://www.lumina-jo.com/",
+    "description":"Private real-estate advisory in Amman, Jordan."
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- The field opens SCATTERED (S2) — a brief with no form yet — takes
+     structure (S1), resolves into one system (S3), and releases (S4).
+     The page's argument, in the bed. -->
+<canvas id="field" aria-hidden="true"></canvas>
+
+<div class="grid" aria-hidden="true">
+  <span class="grid__line grid__line--a"></span>
+  <span class="grid__line grid__line--b"></span>
+</div>
+
+<div class="readout" aria-hidden="true">
+  <span class="readout__label">ZYRN / SYS.07 &middot; <span id="readoutState">FIELD</span> &mdash; <span id="readoutPct">000</span>%</span>
+  <span class="readout__track"><span class="readout__fill" id="readoutFill"></span></span>
+</div>
+
+<div class="shell">
+
+  <nav class="nav">
+    <div class="nav__row">
+      <a href="index.html" aria-label="ZYRN — home">
+        <span class="glitch">
+          <span class="shear shear--auto is-sheared" style="--shear-size:20px">
+            <span class="shear__half shear__half--top">ZYRN</span>
+            <span class="shear__half shear__half--bot">ZYRN</span>
+            <span class="shear__seam"></span>
+          </span>
+        </span>
+      </a>
+      <div class="nav__links">
+        <a href="index.html#sys-03" class="nav__link">Work<sup class="nav__sup">04</sup></a>
+        <a href="foundation.html" class="nav__link">Foundation</a>
+        <a href="index.html#sys-04" class="nav__link">System</a>
+        <a href="services.html" class="nav__link">Services</a>
+        <a href="index.html#sys-05" class="nav__link">Contact</a>
+      </div>
+      <div class="nav__end">
+        <span class="mono nav__coords">AMM 31.95&deg;N / 35.93&deg;E</span>
+        <a class="btn btn--hairline" href="index.html#sys-05">Request access</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ── HERO ──────────────────────────────────────────────────────── -->
+    <header class="case-hero case">
+      <span class="mono case-hero__idx" aria-hidden="true">SYS.07 &mdash; CASE 01 / SHIPPED</span>
+
+      <span class="case-hero__mark">
+        <img src="assets/media/lumina-logo.png" alt="Lumina" width="222" height="60" decoding="async">
+      </span>
+
+      <h1 class="case-hero__title" data-keepout data-reveal data-kinetic>A brand that survived being replaced.</h1>
+
+      <p class="case-hero__lede" data-keepout>Lumina is a private real-estate advisory in Amman. Zyrn built its brand kit and the site that carries it. Six weeks after launch the client asked for a different palette &mdash; every ground, every accent, every hairline &mdash; and it shipped in one commit, with no component rebuilt.</p>
+
+      <div class="mono case-hero__meta" data-keepout>
+        <span>ROLE <b>BRAND KIT + WEBSITE</b></span>
+        <span>YEAR <b>2026</b></span>
+        <span>STATUS <b>LIVE</b></span>
+        <a class="case-hero__out" href="https://www.lumina-jo.com/" target="_blank" rel="noopener noreferrer">
+          LUMINA-JO.COM
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </a>
+      </div>
+    </header>
+
+
+    <!-- ── 01 · THE BRIEF ────────────────────────────────────────────── -->
+    <section class="case-sec" aria-labelledby="briefT">
+      <div class="case-sec__head" data-keepout>
+        <span class="mono case-sec__num">01</span>
+        <h2 class="case-sec__title" id="briefT">The brief</h2>
+      </div>
+
+      <div class="brief" data-keepout data-reveal>
+        <div class="brief__c">
+          <span class="mono brief__h">Who it sells to</span>
+          <p class="brief__b">Diplomats and foreign buyers arriving in Amman with a serious budget and a short timeline. They are not browsing. They have weeks, not seasons, and they need someone already holding the relationships.</p>
+        </div>
+        <div class="brief__c">
+          <span class="mono brief__h">What it sells</span>
+          <p class="brief__b">Villas, penthouses and standalone residences in Abdoun, Dabouq, Khalda and Um Uthaina &mdash; most of them never listed publicly, and represented on the condition that they stay that way.</p>
+        </div>
+        <div class="brief__c">
+          <span class="mono brief__h">What the site has to do</span>
+          <p class="brief__b">One job. Put a qualified enquiry into WhatsApp. Everything on the surface is measured against that, which is why the page argues for discretion before it shows a single price.</p>
+        </div>
+      </div>
+
+      <figure class="pull vit" data-keepout data-reveal>
+        <blockquote class="pull__q">Most of Amman&rsquo;s best addresses never reach a listing portal.</blockquote>
+        <figcaption class="mono pull__src">LUMINA &mdash; THE APPROACH, SET IN INSTRUMENT SERIF</figcaption>
+      </figure>
+    </section>
+
+
+    <!-- ── 02 · THE SURFACE ──────────────────────────────────────────────
+         A tour of five pages of the live site inside one large window.
+         Two of them are Lumina's own scroll instruments, captured at even
+         progress across their pinned tracks — so scrolling this window
+         replays their animation rather than describing it. rack.js builds
+         the five layers; only the phone strip is authored here. -->
+    <section class="rk-sec" id="rkSec" aria-label="The built surface">
+      <div class="rk__track" id="rkTrack">
+        <div class="rk__stage">
+
+          <div class="rk__head">
+            <span class="mono rk__cap" id="rkCap">THE LANDING &mdash; WHERE LUXURY FINDS ITS LIGHT</span>
+            <span class="mono rk__meta">
+              <span id="rkIdx">01 / 05</span>
+              <span class="rk__dots" id="rkDots" aria-hidden="true"></span>
+              <span><span id="rkPct">000</span>%</span>
+            </span>
+          </div>
+
+          <div class="rk" id="rk" aria-hidden="true">
+            <div class="rk__desk">
+              <div class="rk__bar">
+                <span class="rk__dot"></span><span class="rk__dot"></span><span class="rk__dot"></span>
+                <span class="mono rk__url" id="rkUrl">www.lumina-jo.com</span>
+              </div>
+              <div class="rk__win" id="rkWin"></div>
+            </div>
+
+            <div class="rk__phone">
+              <span class="rk__notch"></span>
+              <div class="rk__win rk__win--phone">
+                <img id="rkMobImg" src="assets/media/work/lumina-mob.webp"
+                     alt="" width="560" height="3567" decoding="async" loading="lazy">
+              </div>
+            </div>
+          </div>
+
+          <div class="rk__foot">
+            <p class="rk__note" id="rkNote">The page opens on a residence at dusk with live Amman weather, the current listing count and the commission structure floating over it. Everything above the fold is a reason to keep reading rather than a headline about excellence.</p>
+            <a class="rk__out mono" href="https://www.lumina-jo.com/" target="_blank" rel="noopener noreferrer">
+              Try it yourself
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+            </a>
+          </div>
+
+          <p class="sr-only">Screen captures of the live Lumina website: the landing page, the room furnisher, the investment build, the listings collection and the services page, at desktop and phone widths.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── 03 · THE RE-BASE ──────────────────────────────────────────────
+         The signature instrument. Nine real tokens moving between two real
+         palettes, interpolated in OKLab, with a live specimen underneath. -->
+    <section class="rb-sec" aria-label="The palette re-base">
+      <div class="rb__track" id="rbTrack">
+        <div class="rb__stage">
+          <div class="rb__head">
+            <span class="mono rb__step" id="rbStep">01 &mdash; THE SET THAT SHIPPED</span>
+            <span class="mono rb__date" id="rbDate">2026 &mdash; 07 &mdash; 14</span>
+            <span class="mono rb__tally" id="rbTally">00 / 08 REPLACED</span>
+            <span class="mono rb__pct"><span id="rbPct">000</span>%</span>
+          </div>
+
+          <div class="rb__body">
+            <div class="rb__grid" id="rbGrid" aria-hidden="true"></div>
+
+            <div class="rb__spec">
+              <div class="vit">
+                <div class="mono vit__tag">
+                  <span>SPECIMEN &mdash; LUMINA SURFACE</span>
+                  <span>LIVE TOKENS</span>
+                </div>
+                <div class="lspec" id="rbSpec">
+                  <span class="lspec__kick">Amman &middot; Private advisory</span>
+                  <h3 class="lspec__h">Where luxury finds its light.</h3>
+                  <span class="lspec__plinth"></span>
+                  <p class="lspec__b">Exclusive villas and residences in Amman&rsquo;s most prestigious neighbourhoods &mdash; sourced quietly, represented properly.</p>
+                  <div class="lspec__card">
+                    <b>The Cedar House</b>
+                    <span>Sold in eleven days, off-market</span>
+                  </div>
+                  <span class="lspec__cta">Book a private consultation</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p class="rb__note" id="rbNote">The set that shipped. Eight tokens, one stylesheet, and every component on fourteen pages reading from them rather than carrying colour of its own.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── 04 · WHAT SHIPPED ─────────────────────────────────────────── -->
+    <section class="case-sec" aria-labelledby="numsT">
+      <div class="case-sec__head" data-keepout>
+        <span class="mono case-sec__num">04</span>
+        <h2 class="case-sec__title" id="numsT">What shipped</h2>
+      </div>
+
+      <div class="nums" data-keepout data-reveal>
+        <div class="num">
+          <span class="num__v">14</span>
+          <span class="mono num__l">Pages</span>
+          <p class="num__n">Listings, areas, investment, valuation, management, team and the studio &mdash; not one landing page with anchors.</p>
+        </div>
+        <div class="num">
+          <span class="num__v">09</span>
+          <span class="mono num__l">Tokens</span>
+          <p class="num__n">The whole palette. Every component reads them; none carries a colour of its own.</p>
+        </div>
+        <div class="num">
+          <span class="num__v">03</span>
+          <span class="mono num__l">Self-hosted faces</span>
+          <p class="num__n">Instrument Serif, Instrument Sans, and Space Grotesk for one wordmark. No font CDN in the critical path.</p>
+        </div>
+        <div class="num">
+          <span class="num__v">00</span>
+          <span class="mono num__l">Third-party scripts</span>
+          <p class="num__n">The content policy pins <span class="mono">script-src</span> to <span class="mono">&rsquo;self&rsquo;</span>. Nothing executes on that site that was not written for it.</p>
+        </div>
+        <div class="num">
+          <span class="num__v">00</span>
+          <span class="mono num__l">Build steps</span>
+          <p class="num__n">No bundler, no framework, no package manifest. The client can open any file and read what it does.</p>
+        </div>
+        <div class="num">
+          <span class="num__v">00</span>
+          <span class="mono num__l">Components rebuilt</span>
+          <p class="num__n">After a wholesale palette replacement six weeks into production. That number is the deliverable.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── 05 · STILL RUNNING ────────────────────────────────────────── -->
+    <section class="case-sec" aria-labelledby="outroT">
+      <div class="case-sec__head" data-keepout>
+        <span class="mono case-sec__num">05</span>
+        <h2 class="case-sec__title" id="outroT">Still running</h2>
+      </div>
+
+      <div class="outro" data-keepout data-reveal>
+        <div>
+          <h3 class="outro__t">The kit outlived the design that introduced it.</h3>
+          <p class="outro__b">That is the only durable test of a brand system. A kit that cannot absorb the client changing their mind is a set of pictures with a manual attached &mdash; and the bill for changing their mind arrives as a rebuild.</p>
+          <p class="outro__b">Lumina&rsquo;s footer carries Zyrn&rsquo;s wordmark, in Zyrn&rsquo;s own type and Zyrn&rsquo;s own violet, printed on their ground without a drop of amber on it. Ours carries theirs the same way. Neither mark was recoloured to fit the other, which is the shortest statement of the whole method we have.</p>
+          <a class="btn btn--hairline" href="services/brand-kit.html">The brand kit line</a>
+          <a class="btn btn--hairline" href="services/website-design.html">The website line</a>
+        </div>
+
+        <aside class="outro__side">
+          <span class="mono outro__row"><span>Client</span><b>Lumina</b></span>
+          <span class="mono outro__row"><span>Sector</span><b>Private real-estate advisory</b></span>
+          <span class="mono outro__row"><span>Market</span><b>Amman, JO</b></span>
+          <span class="mono outro__row"><span>Lines engaged</span><b>02 &mdash; brand kit, website</b></span>
+          <span class="mono outro__row"><span>Re-based</span><b>2026 &mdash; 07 &mdash; 28</b></span>
+          <span class="mono outro__row"><span>Status</span><b>Live &amp; maintained</b></span>
+          <a class="case-hero__out" href="https://www.lumina-jo.com/" target="_blank" rel="noopener noreferrer">
+            <span class="mono">VISIT LUMINA-JO.COM</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </a>
+        </aside>
+      </div>
+    </section>
+
+
+    <!-- ── FOOTER ────────────────────────────────────────────────────── -->
+    <footer class="sitefoot">
+      <div class="sitefoot__in" data-keepout>
+
+        <div class="sitefoot__top">
+          <div class="sitefoot__brand">
+            <span class="glitch">
+              <span class="shear shear--auto is-sheared" style="--shear-size:30px">
+                <span class="shear__half shear__half--top">ZYRN</span>
+                <span class="shear__half shear__half--bot">ZYRN</span>
+                <span class="shear__seam"></span>
+              </span>
+            </span>
+            <p class="sitefoot__line">Organizations, engineered.<br>The operating core of modern firms.</p>
+            <a class="sitefoot__mail" href="mailto:access@zyrn.org">ACCESS@ZYRN.ORG</a>
+          </div>
+
+          <nav class="sitefoot__cols" aria-label="Footer">
+            <div class="fcol">
+              <span class="mono fcol__h">Lines</span>
+              <a href="services/website-design.html"><span class="mono">01</span> Website design</a>
+              <a href="services/brand-kit.html"><span class="mono">02</span> Brand kit</a>
+              <a href="services/business-structuring.html"><span class="mono">03</span> Business structuring</a>
+              <a href="services/ai-transformation.html"><span class="mono">04</span> AI adoption</a>
+            </div>
+            <div class="fcol">
+              <span class="mono fcol__h">The firm</span>
+              <a href="foundation.html">Foundation</a>
+              <a href="brand.html">Brand kit &mdash; the method</a>
+              <a href="lumina.html" aria-current="page">Lumina &mdash; a case</a>
+              <a href="index.html#sys-04">Readiness index</a>
+              <a href="index.html#sys-05">Access</a>
+            </div>
+            <div class="fcol">
+              <span class="mono fcol__h">Intake</span>
+              <span class="fcol__stat">Q3 &mdash; 2026</span>
+              <span class="fcol__stat">01 of 04 seats open</span>
+              <span class="fcol__stat">By referral</span>
+              <span class="fcol__stat">Two quarters minimum</span>
+            </div>
+          </nav>
+        </div>
+
+        <div class="sitefoot__bar mono">
+          <span class="sitefoot__stamp">
+            <span class="mark" aria-hidden="true">
+              <svg class="mark__half mark__half--top" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+              <svg class="mark__half mark__half--bot" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+              <span class="mark__seam"></span>
+            </span>
+            ZYRN &mdash; EST. 2026
+          </span>
+          <span>AMM 31.95&deg;N / 35.93&deg;E</span>
+          <span class="sitefoot__clock">AMM <b id="footClock">--:--:--</b></span>
+          <a class="lum" href="https://www.lumina-jo.com/" target="_blank" rel="noopener noreferrer"
+             aria-label="Lumina — opens in a new tab">
+            <img src="assets/media/lumina-logo.png" alt="Lumina" width="222" height="60" loading="lazy" decoding="async">
+          </a>
+          <span class="sitefoot__spacer"></span>
+          <span>SYS.07 &mdash; CASE 01</span>
+          <span>V.2.0 / EN &mdash; AR</span>
+        </div>
+
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/ui.js"></script>
+<script src="assets/js/nav.js"></script>
+<script src="assets/js/cmdk.js"></script>
+<script src="assets/js/footer.js"></script>
+
+<script type="module">
+import { initField }  from './assets/js/field.js';
+import { initRack }   from './assets/js/modules/rack.js';
+import { initRebase } from './assets/js/modules/rebase.js';
+
+const roState = document.getElementById('readoutState');
+initField({
+  program: [
+    { at: 0.00, form: 'S2' },   // a brief, with no form yet
+    { at: 0.30, form: 'S1' },   // structure
+    { at: 0.66, form: 'S3' },   // one system
+    { at: 1.00, form: 'S4' },   // released — it is live
+  ],
+  channel: { tilt: { S2: 12, S1: 44, S3: 24, S4: 30 },
+             spin: { S2: 90, S1: 150, S3: 190, S4: 220 } },
+  onState: (p, n) => { if (roState) roState.textContent = n; },
+});
+
+initRack();
+initRebase();
+</script>
+</body>
+</html>

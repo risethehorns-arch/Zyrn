@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ZYRN — Brand system</title>
-<meta name="description" content="The Zyrn brand system: doctrine, palette, type, the shear, motion law, and voice.">
+<title>ZYRN — The brand kit</title>
+<meta name="description" content="How Zyrn builds and hands over a brand kit: seven parts, four properties, and a worked example — Lumina's palette, type, mark and motion law.">
 <link rel="canonical" href="https://zyrn.org/brand.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ZYRN">
 <meta property="og:locale" content="en">
-<meta property="og:title" content="ZYRN — Brand system">
-<meta property="og:description" content="The Zyrn brand system: doctrine, palette, type, the shear, motion law, and voice.">
+<meta property="og:title" content="ZYRN — The brand kit">
+<meta property="og:description" content="How Zyrn builds and hands over a brand kit: seven parts, four properties, and a worked example — Lumina's palette, type, mark and motion law.">
 <meta property="og:url" content="https://zyrn.org/brand.html">
 <meta property="og:image" content="https://zyrn.org/assets/media/og.jpg?v=2">
 <meta property="og:image:width" content="1200">
@@ -49,8 +49,11 @@
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/postprocessing/EffectComposer.js">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Instrument Serif + Sans are LUMINA'S faces, requested for the §03
+     specimens only. Scoped to `--font-lum-*` in case.css. -->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/styles.css">
+<link rel="stylesheet" href="assets/css/case.css">
 <link rel="stylesheet" href="assets/css/brand.css">
 <link rel="stylesheet" href="assets/css/field.css">
 <link rel="stylesheet" href="assets/css/footer.css">
@@ -64,17 +67,6 @@
      canvas and the module at the foot of this file to return it to a flat
      ground without touching anything else. */
   #field{opacity:0.38}
-  .ramp{
-    display:flex;height:64px;border:1px solid var(--hair);border-radius:6px;
-    overflow:hidden;margin:18px 0 10px;
-  }
-  .ramp__stop{flex:1;display:flex;align-items:flex-end;padding:8px}
-  .ramp__stop span{
-    font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;
-    text-transform:uppercase;color:rgba(14,15,18,0.75);
-  }
-  .ramp__stop:first-child span,.ramp__stop:nth-child(2) span{color:rgba(242,243,245,0.9)}
-  .doc__sub{color:var(--vapor);margin-top:26px;font-size:15px}
 </style>
 </head>
 <body class="doc">
@@ -101,7 +93,7 @@
       <a href="index.html#sys-05" class="nav__link">Contact</a>
     </div>
     <div class="nav__end">
-      <span class="mono nav__coords">SYS.06 — BRAND SYSTEM</span>
+      <span class="mono nav__coords">SYS.06 — THE BRAND KIT</span>
       <a class="btn btn--hairline" href="index.html">Back to site</a>
     </div>
   </div>
@@ -110,337 +102,264 @@
 <main class="doc__wrap">
 
   <header class="doc__head">
-    <div class="badge mono">SYS.06 — BRAND SYSTEM / V.2.0</div>
-    <h1 class="doc__title">The instrument,<br>documented.</h1>
+    <div class="badge mono">SYS.06 &mdash; BRAND KIT / THE DELIVERABLE</div>
+    <h1 class="doc__title">What a brand kit<br>has to survive.</h1>
     <p class="doc__lede">
-      Every value on this page is load-bearing. Where a decision is not covered here,
-      take the quieter option — that is the rule, not a fallback.
+      A logo pack survives until the first thing nobody anticipated. A brand kit is the
+      smaller, harder object underneath it: the set of decisions that lets everything
+      downstream get made without asking. This page is what we hand over, why it is
+      shaped that way, and one worked example &mdash;
+      <a class="doc__link" href="lumina.html">Lumina&rsquo;s</a>.
     </p>
   </header>
 
-  <!-- ── doctrine ─────────────────────────────────────────────────── -->
+  <!-- ── 01 · what we mean ─────────────────────────────────────────── -->
   <section class="doc__sec">
-    <h2 class="doc__h2"><span class="mono doc__num">01</span> Doctrine</h2>
-    <p class="doc__note">Four rules. They govern every ambiguous decision, and they outrank taste.</p>
+    <h2 class="doc__h2"><span class="mono doc__num">01</span> What we mean by a kit</h2>
+    <p class="doc__note">Four properties. A deliverable missing any one of them will not hold, and we have watched each of them fail in someone else&rsquo;s handover.</p>
     <ol class="rules">
       <li class="rule-item">
-        <h3 class="rule-item__t">Silence is the luxury</h3>
-        <p class="rule-item__b">80%+ of any viewport is empty or field. Density is what everyone else does.</p>
+        <h3 class="rule-item__t">Tokenised</h3>
+        <p class="rule-item__b">Every colour, size, radius and duration is a named value in one place, and no component carries one of its own. This is the difference between changing a brand and rebuilding a product.</p>
       </li>
       <li class="rule-item">
-        <h3 class="rule-item__t">Metadata as ornament</h3>
-        <p class="rule-item__b">The only decoration permitted is real information — coordinates, indices, versions — set in mono.</p>
+        <h3 class="rule-item__t">Ruled, not suggested</h3>
+        <p class="rule-item__b">A kit states what may never happen, not only what looks good. &ldquo;The accent appears once per surface&rdquo; can be checked. &ldquo;Use the accent sparingly&rdquo; cannot, and will be gone within two quarters.</p>
       </li>
       <li class="rule-item">
-        <h3 class="rule-item__t">One Pulse per surface</h3>
-        <p class="rule-item__b">The accent appears exactly once per viewport. A second instance is a bug. On field surfaces it is emitted by the simulation and printed only on the mark &mdash; see 08.</p>
+        <h3 class="rule-item__t">Operable</h3>
+        <p class="rule-item__b">It ships as the files that run the brand, not as a document describing them. A rule that lives only in a PDF is a wish. A rule that lives in the stylesheet is the brand.</p>
       </li>
       <li class="rule-item">
-        <h3 class="rule-item__t">The shear belongs to the logo</h3>
-        <p class="rule-item__b">Never shear photography, headlines, or panels. One signature device, used once.</p>
+        <h3 class="rule-item__t">Portable</h3>
+        <p class="rule-item__b">It has to work in hands we did not choose &mdash; a developer hired next year, an agency brought in for a campaign. If it only works while we are holding it, we have sold a dependency.</p>
       </li>
     </ol>
   </section>
 
-  <!-- ── palette ──────────────────────────────────────────────────── -->
+  <!-- ── 02 · the anatomy ──────────────────────────────────────────── -->
   <section class="doc__sec">
-    <h2 class="doc__h2"><span class="mono doc__num">02</span> Palette</h2>
-    <p class="doc__note">Four values and a hairline. There is no secondary palette, and no tints beyond the opacities listed.</p>
-    <div class="swatches">
-      <div class="sw">
-        <span class="sw__chip" style="background:#0E0F12;border:1px solid var(--hair)"></span>
-        <span class="mono sw__n">Obsidian</span><span class="mono sw__v">#0E0F12</span>
-        <span class="sw__u">Page ground, panel fill at 60%</span>
-      </div>
-      <div class="sw">
-        <span class="sw__chip" style="background:#F2F3F5"></span>
-        <span class="mono sw__n">Vapor</span><span class="mono sw__v">#F2F3F5</span>
-        <span class="sw__u">Primary text, rules, the wordmark</span>
-      </div>
-      <div class="sw">
-        <span class="sw__chip" style="background:#6E56F8"></span>
-        <span class="mono sw__n">Pulse</span><span class="mono sw__v">#6E56F8</span>
-        <span class="sw__u">Emitted by the field; printed only on the mark. See 08</span>
-      </div>
-      <div class="sw">
-        <span class="sw__chip" style="background:#767E8C"></span>
-        <span class="mono sw__n">Steel</span><span class="mono sw__v">#767E8C</span>
-        <span class="sw__u">Mono metadata, secondary text</span>
-      </div>
-    </div>
-    <table class="spec-table">
-      <thead><tr><th>Token</th><th>Value</th><th>Applied to</th></tr></thead>
-      <tbody>
-        <tr><td class="mono">--hair</td><td class="mono">rgba(242,243,245,0.08)</td><td>Every border and divider, 1px</td></tr>
-        <tr><td class="mono">--hair-strong</td><td class="mono">rgba(242,243,245,0.15)</td><td>Hairline buttons only</td></tr>
-        <tr><td class="mono">--grid-line</td><td class="mono">rgba(242,243,245,0.04)</td><td>The two vertical grid rules</td></tr>
-        <tr><td class="mono">selection</td><td class="mono">rgba(110,86,248,0.25)</td><td>Text selection</td></tr>
-        <tr><td class="mono">veil</td><td class="mono">0 1px 12px rgba(14,15,18,0.6)</td><td>Text over the field. Nothing heavier</td></tr>
-      </tbody>
-    </table>
+    <h2 class="doc__h2"><span class="mono doc__num">02</span> What is in every kit</h2>
+    <p class="doc__note">Seven parts. The list does not change per client; what fills it does.</p>
+
+    <ol class="kit">
+      <li class="kit__i">
+        <span class="mono kit__n">01</span>
+        <div class="kit__b">
+          <h3 class="kit__t">Ground &amp; palette</h3>
+          <p class="kit__d">Named tokens with a stated job each &mdash; page base, raised surface, text, accent, hairline &mdash; plus the opacities that are allowed and the ones that are not. Never a page of swatches with no rule attached to them.</p>
+        </div>
+      </li>
+      <li class="kit__i">
+        <span class="mono kit__n">02</span>
+        <div class="kit__b">
+          <h3 class="kit__t">Type</h3>
+          <p class="kit__d">Two faces at most, a scale rather than a list of sizes, and one sentence saying which face is never allowed to do the other&rsquo;s job. Weights are enumerated: a weight not in the kit is not in the brand.</p>
+        </div>
+      </li>
+      <li class="kit__i">
+        <span class="mono kit__n">03</span>
+        <div class="kit__b">
+          <h3 class="kit__t">The mark</h3>
+          <p class="kit__d">Construction, clear space, minimum size, and the one thing it may never do. Every mark has that one thing, and naming it is most of the work.</p>
+        </div>
+      </li>
+      <li class="kit__i">
+        <span class="mono kit__n">04</span>
+        <div class="kit__b">
+          <h3 class="kit__t">Motion law</h3>
+          <p class="kit__d">Durations and easing as values, not adjectives. &ldquo;Confident, never bouncy&rdquo; is a mood board; one easing curve and three durations are a brand that still moves the same way after someone else touches it.</p>
+        </div>
+      </li>
+      <li class="kit__i">
+        <span class="mono kit__n">05</span>
+        <div class="kit__b">
+          <h3 class="kit__t">Layout</h3>
+          <p class="kit__d">Gutter, maximum measure, radii, and the rhythm between sections. This is the part clients rarely ask for and the first thing that visibly decays without it.</p>
+        </div>
+      </li>
+      <li class="kit__i">
+        <span class="mono kit__n">06</span>
+        <div class="kit__b">
+          <h3 class="kit__t">Voice</h3>
+          <p class="kit__d">What the firm says, and specifically what it refuses to say. The refusals do more work than the permissions &mdash; they are what a junior writer can actually apply on a Friday afternoon.</p>
+        </div>
+      </li>
+      <li class="kit__i">
+        <span class="mono kit__n">07</span>
+        <div class="kit__b">
+          <h3 class="kit__t">The handover</h3>
+          <p class="kit__d">The token file, the faces, the source, and a short document that explains the reasoning rather than restating the values. The values are already in the code; the reasoning is the part that is otherwise lost.</p>
+        </div>
+      </li>
+    </ol>
   </section>
 
-  <!-- ── the mark ─────────────────────────────────────────────────── -->
+  <!-- ── 03 · worked example ───────────────────────────────────────────
+       Everything Lumina-coloured below sits inside a `.vit` vitrine. Their
+       palette and their two faces apply inside it; outside it this page is
+       Zyrn. Another firm's brand is shown, not adopted. -->
   <section class="doc__sec">
-    <h2 class="doc__h2"><span class="mono doc__num">03</span> The mark</h2>
+    <h2 class="doc__h2"><span class="mono doc__num">03</span> A worked example &mdash; Lumina</h2>
     <p class="doc__note">
-      Two copies of the wordmark, each clipped to one half, offset in opposite directions
-      with a Pulse seam on the join. Aligned is <em>before</em>; sheared is <em>after</em>.
-      It never snaps back — that is the whole argument of the brand, executed in geometry.
+      <a class="doc__link" href="https://www.lumina-jo.com/" target="_blank" rel="noopener noreferrer">Lumina</a>
+      is a private real-estate advisory in Amman, and a Zyrn client. What follows is their
+      kit, not ours &mdash; their values, their faces, their rules, printed as they are.
+      Each panel below is a specimen frame: inside it, Lumina&rsquo;s system applies.
+      <em>Another firm&rsquo;s brand is never recoloured to sit more comfortably in ours.</em>
     </p>
 
-    <div class="mark-demo">
-      <div class="mark-demo__cell">
-        <span class="mono mark-demo__cap">PROGRESS 0 — ALIGNED</span>
-        <span class="shear" style="--shear-size:56px">
-          <span class="shear__half shear__half--top">ZYRN</span>
-          <span class="shear__half shear__half--bot">ZYRN</span>
-          <span class="shear__seam"></span>
-        </span>
+    <!-- palette -->
+    <div class="vit lvit">
+      <div class="mono vit__tag">
+        <span>01 &mdash; GROUND &amp; PALETTE</span>
+        <span>LUMINA &mdash; 09 TOKENS</span>
       </div>
-      <div class="mark-demo__cell">
-        <span class="mono mark-demo__cap">PROGRESS 1 — SHEARED</span>
-        <span class="shear shear--auto is-sheared" style="--shear-size:56px">
-          <span class="shear__half shear__half--top">ZYRN</span>
-          <span class="shear__half shear__half--bot">ZYRN</span>
-          <span class="shear__seam"></span>
-        </span>
-      </div>
-      <div class="mark-demo__cell">
-        <span class="mono mark-demo__cap">MONOGRAM</span>
-        <span class="mark mark--lg" aria-hidden="true">
-          <svg class="mark__half mark__half--top" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
-          <svg class="mark__half mark__half--bot" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
-          <span class="mark__seam"></span>
-        </span>
+      <div class="lvit__b">
+        <div class="lpal">
+          <div class="lpal__i"><span class="lpal__c" style="background:#05070B"></span><b class="mono">--ink</b><span class="mono">#05070B</span><span class="lpal__u">Page base</span></div>
+          <div class="lpal__i"><span class="lpal__c" style="background:#0B1018"></span><b class="mono">--navy</b><span class="mono">#0B1018</span><span class="lpal__u">Brand base, panels</span></div>
+          <div class="lpal__i"><span class="lpal__c" style="background:#121A24"></span><b class="mono">--navy-2</b><span class="mono">#121A24</span><span class="lpal__u">Raised surface</span></div>
+          <div class="lpal__i"><span class="lpal__c" style="background:#1A2431"></span><b class="mono">--navy-3</b><span class="mono">#1A2431</span><span class="lpal__u">Raised surface</span></div>
+          <div class="lpal__i"><span class="lpal__c" style="background:#F7F2E9"></span><b class="mono">--cream</b><span class="mono">#F7F2E9</span><span class="lpal__u">Text</span></div>
+          <div class="lpal__i"><span class="lpal__c" style="background:#FFB25A"></span><b class="mono">--gold</b><span class="mono">#FFB25A</span><span class="lpal__u">Accent &mdash; CTA, kickers, numerals</span></div>
+          <div class="lpal__i"><span class="lpal__c" style="background:#FFE0B0"></span><b class="mono">--gold-lt</b><span class="mono">#FFE0B0</span><span class="lpal__u">Glow highlight</span></div>
+          <div class="lpal__i"><span class="lpal__c" style="background:#C07F3E"></span><b class="mono">--gold-dp</b><span class="mono">#C07F3E</span><span class="lpal__u">Hairlines</span></div>
+          <div class="lpal__i"><span class="lpal__c" style="background:#7FD9E8"></span><b class="mono">--plinth</b><span class="mono">#7FD9E8</span><span class="lpal__u">Cyan plinth glow, hero only</span></div>
+        </div>
+        <p class="lvit__n">Nine tokens and one hairline value. The rule that makes it a kit rather than a palette: <em>no component carries a colour of its own.</em> Every surface on fourteen pages reads these names, which is why the whole set could later be replaced in a single file.</p>
       </div>
     </div>
 
+    <!-- type -->
+    <div class="vit lvit">
+      <div class="mono vit__tag">
+        <span>02 &mdash; TYPE</span>
+        <span>INSTRUMENT SERIF / INSTRUMENT SANS</span>
+      </div>
+      <div class="lvit__b">
+        <div class="ltype">
+          <span class="mono ltype__cap">Display &mdash; Instrument Serif, 400 only</span>
+          <p class="ltype__d">Where luxury finds its light.</p>
+        </div>
+        <div class="ltype">
+          <span class="mono ltype__cap">Body &amp; UI &mdash; Instrument Sans, 400 / 600</span>
+          <p class="ltype__s">Exclusive villas and residences in Amman&rsquo;s most prestigious neighbourhoods &mdash; sourced quietly, represented properly.</p>
+        </div>
+        <p class="lvit__n">Two faces, one enumerated weight on the display face. The enforceable sentence in Lumina&rsquo;s kit is <em>&ldquo;display type is always the serif; never set a headline in the sans&rdquo;</em> &mdash; short enough to be remembered and specific enough to be caught in review.</p>
+      </div>
+    </div>
+
+    <!-- mark -->
+    <div class="vit lvit">
+      <div class="mono vit__tag">
+        <span>03 &mdash; THE MARK</span>
+        <span>LUMINA &mdash; ON DARK</span>
+      </div>
+      <div class="lvit__b">
+        <div class="lmark">
+          <span class="lmark__stage">
+            <img src="assets/media/lumina-logo.png" alt="Lumina" width="222" height="60" loading="lazy" decoding="async">
+          </span>
+        </div>
+        <p class="lvit__n">The mark carries two drop-shadows and an amber bloom &mdash; a lift on the ground rather than a flat placement. It is the one element of their kit with light of its own, and it is the reason the wordmark reads on a photograph without a plate behind it. <em>The mark on this page is printed under Lumina&rsquo;s own treatment, not restyled to match this document.</em></p>
+      </div>
+    </div>
+
+    <!-- motion -->
+    <div class="vit lvit">
+      <div class="mono vit__tag">
+        <span>04 &mdash; MOTION LAW</span>
+        <span>ONE CURVE</span>
+      </div>
+      <div class="lvit__b">
+        <p class="mono lease__v">--ease: cubic-bezier(.22, .68, .16, 1)</p>
+        <div class="lease">
+          <span class="mono lease__cap">Lumina&rsquo;s curve</span>
+          <span class="lease__track"><span class="lease__dot lease__dot--brand"></span></span>
+        </div>
+        <div class="lease">
+          <span class="mono lease__cap">Linear, for comparison</span>
+          <span class="lease__track"><span class="lease__dot lease__dot--lin"></span></span>
+        </div>
+        <p class="lvit__n">One curve, written once and referenced everywhere. A brand whose motion is described as &ldquo;smooth&rdquo; ends up with nine different curves inside a year, because nine people each decided what smooth meant. A brand with a token ends up with one.</p>
+      </div>
+    </div>
+
+    <!-- surface -->
+    <div class="vit lvit">
+      <div class="mono vit__tag">
+        <span>05 &mdash; LAYOUT</span>
+        <span>THE MEASURABLE PART</span>
+      </div>
+      <div class="lvit__b">
+        <table class="spec-table">
+          <tbody>
+            <tr><th>Gutter</th><td class="mono">clamp(20px, 5vw, 88px)</td></tr>
+            <tr><th>Maximum measure</th><td class="mono">1440px</td></tr>
+            <tr><th>Radius</th><td class="mono">10px &middot; 18px</td></tr>
+            <tr><th>Faces</th><td class="mono">3 &times; woff2, self-hosted</td></tr>
+            <tr><th>Third-party script origins</th><td class="mono">0</td></tr>
+          </tbody>
+        </table>
+        <p class="lvit__n">The layout values are in the kit for the same reason the colours are: they are the part a new hand will otherwise guess at. Self-hosting the faces is a brand decision as much as a performance one &mdash; a font that fails to load is a brand that fails to load.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 04 · the test ─────────────────────────────────────────────── -->
+  <section class="doc__sec">
+    <h2 class="doc__h2"><span class="mono doc__num">04</span> The test that matters</h2>
+    <p class="doc__note">Any kit looks correct on the day it is presented. The question is what happens the first time the client changes their mind.</p>
+
+    <div class="claim">
+      <p class="claim__b">Six weeks after Lumina&rsquo;s kit shipped, the client asked for a different palette &mdash; not an adjustment, a replacement. Every ground, every accent, every hairline. Eight tokens were replaced and one was added, in a single commit. <em>No component was rebuilt.</em></p>
+      <a class="btn btn--hairline" href="lumina.html">See the re-base &mdash; Lumina, a case</a>
+    </div>
+
+    <p class="doc__note">That is the only durable test we know of. A kit that cannot absorb a change of mind has quietly priced one in as a rebuild, and the invoice arrives later with someone else&rsquo;s name on it.</p>
+  </section>
+
+  <!-- ── 05 · handover ─────────────────────────────────────────────── -->
+  <section class="doc__sec">
+    <h2 class="doc__h2"><span class="mono doc__num">05</span> How it is handed over</h2>
     <table class="spec-table">
-      <thead><tr><th>Property</th><th>Law</th></tr></thead>
+      <thead><tr><th>Artefact</th><th>Form</th></tr></thead>
       <tbody>
-        <tr><td>Offset</td><td>Exactly 10% of font-size (<span class="mono">0.1em</span>). Never more.</td></tr>
-        <tr><td>Direction</td><td>Top half moves left, bottom half moves right. Always.</td></tr>
-        <tr><td>Seam</td><td><span class="mono">scaleX(progress)</span>, 2px, Pulse, 12px overhang each side.</td></tr>
-        <tr><td>Tracking</td><td><span class="mono">0.06em</span>, weight 500, uppercase.</td></tr>
-        <tr><td>Trigger</td><td>Both marks shear together, 300ms after load. One beat, one component &mdash; the nav mark and the hero mark are never in different states.</td></tr>
-        <tr><td>Latch</td><td>One-way. Reaching progress 1 is permanent for the session.</td></tr>
-        <tr><td>Reduced motion</td><td>Render statically at progress 1.</td></tr>
+        <tr><th>Tokens</th><td>A single stylesheet block. The names are the contract; the values are free to change.</td></tr>
+        <tr><th>Faces</th><td>The licensed files themselves, self-hosted, with the licence in the folder.</td></tr>
+        <tr><th>The mark</th><td>Vector source plus the exact treatment as code, not as a screenshot of the treatment.</td></tr>
+        <tr><th>Source</th><td>The running site or product, in the client&rsquo;s own repository, with no build step we did not explain.</td></tr>
+        <tr><th>Reasoning</th><td>One document covering why, not what. The what is already in the files and would only drift from them.</td></tr>
       </tbody>
     </table>
+    <p class="doc__note">It is the client&rsquo;s from the day it ships. If a kit needs us in order to keep working, it was not finished.</p>
   </section>
 
-  <!-- ── type ─────────────────────────────────────────────────────── -->
+  <!-- ── 06 · scope ────────────────────────────────────────────────── -->
   <section class="doc__sec">
-    <h2 class="doc__h2"><span class="mono doc__num">04</span> Type</h2>
-    <p class="doc__note">Two families, four weights total. No third typeface, ever.</p>
-
-    <div class="type-row">
-      <span class="mono type-row__cap">DISPLAY — SPACE GROTESK 400 / clamp(48px, 6.5vw, 72px) / -0.01em</span>
-      <p class="type-row__spec" style="font-size:clamp(40px,5vw,64px);font-weight:400;line-height:1.05;letter-spacing:-0.01em">Built once. Runs itself.</p>
-    </div>
-    <div class="type-row">
-      <span class="mono type-row__cap">LEDE — SPACE GROTESK 400 / clamp(18px, 1.4vw, 20px) / 1.65</span>
-      <p class="type-row__spec" style="font-size:20px;line-height:1.65">Zyrn builds the operating core of modern firms.</p>
-    </div>
-    <div class="type-row">
-      <span class="mono type-row__cap">BODY — SPACE GROTESK 400 / 15px / 1.65 / 70% Vapor</span>
-      <p class="type-row__spec" style="font-size:15px;line-height:1.65;color:rgba(242,243,245,.7)">From org chart to inference layer, measured and versioned.</p>
-    </div>
-    <div class="type-row">
-      <span class="mono type-row__cap">METADATA — IBM PLEX MONO 400 / 11px / 0.16em / UPPER / STEEL</span>
-      <p class="type-row__spec mono" style="font-size:11px">SYS.02 — INTELLIGENCE LAYER / AMM 31.95°N / 35.93°E</p>
-    </div>
-  </section>
-
-  <!-- ── motion ───────────────────────────────────────────────────── -->
-  <section class="doc__sec">
-    <h2 class="doc__h2"><span class="mono doc__num">05</span> Motion law</h2>
-    <p class="doc__note">
-      Motion is scroll-driven. Nothing loops, nothing autoplays, and nothing moves
-      that the reader did not move themselves.
-    </p>
-    <table class="spec-table">
-      <thead><tr><th>System</th><th>Value</th><th>Reads as</th></tr></thead>
-      <tbody>
-        <tr><td>Scrub smoothing</td><td class="mono">1 − e^(−5·dt)</td><td>Mass and machinery, not UI</td></tr>
-        <tr><td>Reveal</td><td class="mono">700ms cubic-bezier(.22,1,.36,1)</td><td>Machined into place</td></tr>
-        <tr><td>Reveal clip</td><td class="mono">inset(0 0 18% 0) → 0</td><td>Cut, not floated</td></tr>
-        <tr><td>Shear</td><td class="mono">650ms cubic-bezier(.83,0,.17,1)</td><td>A mechanism throwing</td></tr>
-        <tr><td>UI transitions</td><td class="mono">300ms</td><td>Responsive, unremarkable</td></tr>
-        <tr><td>Parallax</td><td class="mono">scale 1 → 1.04</td><td>Subliminal push-in</td></tr>
-        <tr><td>Shear range</td><td class="mono">first 220px of scroll</td><td>The opening gesture</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <!-- ── the glitch ──────────────────────────────────────────────── -->
-  <section class="doc__sec">
-    <h2 class="doc__h2"><span class="mono doc__num">05b</span> The glitch</h2>
-    <p class="doc__note">
-      A transmission artefact on a signal that is already sheared. It never
-      un-shears anything: every layer is applied to a wrapper or to a throwaway
-      clone, so the latched halves underneath are untouched by definition.
-    </p>
-    <table class="spec-table">
-      <thead><tr><th>Layer</th><th>Behaviour</th></tr></thead>
-      <tbody>
-        <tr><td>Jolt</td><td class="mono">translate &plusmn;6px, skew &plusmn;1.6&deg;, steps(1)</td></tr>
-        <tr><td>Chroma</td><td class="mono">text-shadow split, Pulse / #33C9DE, up to 5px</td></tr>
-        <tr><td>Slices</td><td class="mono">2 cloned ghosts, clip-path bands, &plusmn;11px</td></tr>
-        <tr><td>Scan</td><td class="mono">2px Pulse line + 1px cyan line, opposed</td></tr>
-        <tr><td>Burst</td><td class="mono">300ms full / 130ms micro (42% of fires)</td></tr>
-        <tr><td>Schedule</td><td class="mono">1.8&ndash;5.2s gaps; 62% double, 22% triple</td></tr>
-        <tr><td>Reduced motion</td><td class="mono">no glitch at all</td></tr>
-      </tbody>
-    </table>
-    <p class="doc__note">
-      A fixed interval reads as a metronome, which is the opposite of a glitch.
-      Real artefacts cluster: mostly quiet, then two or three in quick
-      succession. Each mark keeps its own randomised schedule, and marks that
-      are off screen never fire.
-    </p>
-  </section>
-
-  <!-- ── voice ────────────────────────────────────────────────────── -->
-  <section class="doc__sec">
-    <h2 class="doc__h2"><span class="mono doc__num">06</span> Voice</h2>
-    <p class="doc__note">Declarative, specific, and short. The brand does not sell; it states terms.</p>
+    <h2 class="doc__h2"><span class="mono doc__num">06</span> What a kit is not</h2>
     <div class="voice">
       <div class="voice__col voice__col--yes">
-        <span class="mono voice__cap">WRITE</span>
+        <span class="mono voice__cap">A kit is</span>
         <ul class="voice__list">
-          <li>“It installs the system and stays until it runs.”</li>
-          <li>“Every engagement opens on a number.”</li>
-          <li>“Four engagements a quarter. The constraint is deliberate.”</li>
-          <li>Real figures, indices, and dates as ornament.</li>
+          <li>The decisions that make the next hundred decisions cheap</li>
+          <li>Enforceable in review by someone who was not in the room</li>
+          <li>Owned outright by the client</li>
+          <li>Short enough to be read in one sitting</li>
         </ul>
       </div>
       <div class="voice__col voice__col--no">
-        <span class="mono voice__cap">NEVER</span>
+        <span class="mono voice__cap">A kit is not</span>
         <ul class="voice__list">
-          <li>Exclamation marks, or any superlative.</li>
-          <li>“Cutting-edge”, “revolutionary”, “seamless”, “unlock”.</li>
-          <li>Claims of outcomes the index cannot show.</li>
-          <li>Faces, stock portraits, or team photography.</li>
+          <li>A positioning strategy &mdash; that is decided before this begins</li>
+          <li>A campaign, or a set of layouts to be copied</li>
+          <li>A sixty-page document nobody opens twice</li>
+          <li>A guarantee against taste &mdash; it narrows the room, it does not furnish it</li>
         </ul>
       </div>
     </div>
-  </section>
-
-  <!-- ── layout ───────────────────────────────────────────────────── -->
-  <section class="doc__sec">
-    <h2 class="doc__h2"><span class="mono doc__num">07</span> Layout</h2>
-    <table class="spec-table">
-      <thead><tr><th>Rule</th><th>Value</th></tr></thead>
-      <tbody>
-        <tr><td>Horizontal gutter</td><td class="mono">clamp(20px, 4vw, 48px)</td></tr>
-        <tr><td>Section padding</td><td class="mono">110px top / 56–64px bottom</td></tr>
-        <tr><td>Section height</td><td class="mono">min 100svh</td></tr>
-        <tr><td>Grid rules</td><td class="mono">33.333% and 66.666%, hidden below md</td></tr>
-        <tr><td>Panel</td><td class="mono">radius 8px, 1px hairline, obsidian 60%, blur 2px</td></tr>
-        <tr><td>Button radius</td><td class="mono">4px</td></tr>
-        <tr><td>Scene beat</td><td class="mono">30vh after the hero, 18vh thereafter</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <!-- the field -->
-  <section class="doc__sec">
-    <h2 class="doc__h2"><span class="mono doc__num">08</span> The field</h2>
-    <p class="doc__note">
-      SYS.07. A 90,000-point GPU simulation is the bed on every surface of the
-      site. It is not footage, and there is no asset behind it &mdash; the page
-      renders its own subject. Full spec in
-      <span class="mono">docs/spec-presence-field.md</span>.
-    </p>
-
-    <h3 class="doc__sub">Ramp</h3>
-    <p class="doc__note">
-      Four stops, exposed as shader uniforms. The shipped ramp is
-      <span class="mono">vivid</span>: it puts a green-teal at the cold end so
-      the field travels through hue, not only through luminance. Pulse remains
-      the anchor and the dominant stop. If the field reads flat, move the
-      breakpoints, never the hues.
-    </p>
-    <div class="ramp" aria-hidden="true">
-      <div class="ramp__stop" style="background:#5FE3B0"><span>0.00 Teal</span></div>
-      <div class="ramp__stop" style="background:#33C9DE"><span>0.36 Cyan</span></div>
-      <div class="ramp__stop" style="background:#6E56F8"><span>0.72 Pulse</span></div>
-      <div class="ramp__stop" style="background:#F2F3F5"><span>1.00 Vapor</span></div>
-    </div>
-    <p class="doc__note mono" style="font-size:11px">
-      EMITTED, NEVER PRINTED. THE TWO COLD STOPS EXIST ONLY AS LIGHT IN THE
-      SIMULATION &mdash; NO DOM ELEMENT, ON ANY PAGE, MAY USE THEM AS INK.
-    </p>
-    <p class="doc__note">
-      The strict in-palette ramp &mdash; Steel <span class="mono">#767E8C</span>
-      &rarr; Pulse &rarr; Pulse-lifted <span class="mono">#A99BFF</span> &rarr;
-      Vapor &mdash; is still available and is one word per page:
-      <span class="mono">initField({ ramp: 'strict' })</span>. It reads as a
-      luminance ramp rather than a hue ramp: quieter, and closer to the
-      original doctrine.
-    </p>
-
-    <h3 class="doc__sub">States</h3>
-    <table class="spec-table">
-      <thead><tr><th>State</th><th>Shape</th><th>What it says</th></tr></thead>
-      <tbody>
-        <tr><td class="mono">S1 FIELD</td><td>Tilted 4-arm log spiral</td>
-            <td>The organization as found. Structure exists, but it is emergent.</td></tr>
-        <tr><td class="mono">S2 DISPERSE</td><td>Scattered box, dimmed</td>
-            <td>Entropy. The same parts, no system.</td></tr>
-        <tr><td class="mono">S3 CORE</td><td>Rippling torus</td>
-            <td>The engineered operating loop. Closed, continuous, breathing.</td></tr>
-        <tr><td class="mono">S4 RELEASE</td><td>Sparse drifting slab</td>
-            <td>Self-calibrating. It holds without the field driving it.</td></tr>
-      </tbody>
-    </table>
-    <p class="doc__note">
-      Each surface runs its own program over these four states, and its own tilt
-      and spin, so moving between pages reads as one instrument changing
-      channels. The landing page runs all four across SYS.01&ndash;05; each
-      service page runs two.
-    </p>
-
-    <h3 class="doc__sub">Departures</h3>
-    <p class="doc__note">
-      The field required three amendments to the rules above. They are in force
-      on every surface except this one.
-    </p>
-    <ul class="rules">
-      <li class="rule-item">
-        <h3 class="mono rule-item__t">03 &mdash; Additive light is permitted</h3>
-        <p class="rule-item__b">
-          &ldquo;No glows, no noise&rdquo; exists to stop decorative glow being
-          sprinkled on a flat page. Where emitted light is the entire medium,
-          there is no flat page to protect.
-        </p>
-      </li>
-      <li class="rule-item">
-        <h3 class="mono rule-item__t">04 &mdash; The field is the Pulse</h3>
-        <p class="rule-item__b">
-          Because the simulation carries Pulse continuously, no button, rule or
-          hover state prints the accent &mdash; on a field surface it is light,
-          not ink. <strong>The mark is the exception.</strong> The seam is
-          specified in 03 as 2px Pulse with a 12px overhang, and it stays
-          exactly that: the signature is the one place the accent is still
-          printed. It draws on <span class="mono">--pulse-mark</span>, a token
-          that exists only for the wordmark, the monogram and the glitch slice,
-          because <span class="mono">--pulse</span> itself is remapped to Vapor
-          everywhere else.
-        </p>
-      </li>
-      <li class="rule-item">
-        <h3 class="mono rule-item__t">05 &mdash; The count is read, not typed</h3>
-        <p class="rule-item__b">
-          The hero states its particle count as live metadata. If the performance
-          governor steps the field down, the number changes with it. Doctrine
-          rule two &mdash; the only decoration is real information &mdash; taken
-          to its conclusion.
-        </p>
-      </li>
-    </ul>
+    <p class="doc__note">The brand kit is one of four Zyrn lines and is routinely engaged with the website line, because a kit with nothing running on it cannot be tested. <a class="doc__link" href="services/brand-kit.html">The brand kit line</a> &middot; <a class="doc__link" href="services.html">All four lines</a></p>
   </section>
 
     <footer class="sitefoot">
@@ -470,7 +389,8 @@
             <div class="fcol">
               <span class="mono fcol__h">The firm</span>
               <a href="foundation.html">Foundation</a>
-              <a href="brand.html">Brand system</a>
+              <a href="brand.html">Brand kit &mdash; the method</a>
+              <a href="lumina.html">Lumina &mdash; a case</a>
               <a href="index.html#sys-04">Readiness index</a>
               <a href="index.html#sys-05">Access</a>
             </div>
@@ -500,7 +420,7 @@
             <img src="assets/media/lumina-logo.png" alt="Lumina" width="222" height="60" loading="lazy" decoding="async">
           </a>
           <span class="sitefoot__spacer"></span>
-          <span>SYS.06 &mdash; BRAND SYSTEM</span>
+          <span>SYS.06 &mdash; THE BRAND KIT</span>
           <span>V.2.0 / EN &mdash; AR</span>
         </div>
 

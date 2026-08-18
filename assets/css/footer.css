@@ -116,3 +116,12 @@
   .lum:hover img{filter:drop-shadow(0 0 24px rgba(255,178,90,0.62))}
 }
 .lum:focus-visible{outline:2px solid var(--vapor);outline-offset:4px;border-radius:2px}
+
+/* The mark is 17px tall, which is a 21px tap target — half the 44px a
+   thumb needs. Grow the hit area with padding and cancel it again with an
+   equal negative margin, so the box a finger lands on is 45px while the
+   box the flex row lays out is unchanged. Coarse pointers only: a mouse
+   is already precise, and this would only inflate the focus ring. */
+@media (pointer:coarse){
+  .lum{padding:14px 12px;margin:-14px -12px}
+}

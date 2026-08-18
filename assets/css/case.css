@@ -1,0 +1,546 @@
+/* ══════════════════════════════════════════════════════════════════════
+   ZYRN — CASE PAGES  (lumina.html)
+
+   The site's first piece of proof, and the first page that has to print
+   ANOTHER FIRM'S BRAND without either recolouring it or letting it loose
+   on ours.
+
+   THE VITRINE RULE. Every Lumina colour and every Lumina typeface lives
+   inside `.vit` — a bounded, labelled specimen frame. Inside it, Lumina's
+   tokens apply and Instrument Serif sets the headlines. Outside it, Zyrn
+   doctrine is untouched: Obsidian, Vapor, Space Grotesk, IBM Plex Mono,
+   hairlines, one Pulse.
+
+   That is the same principle already stated in footer.css and mirrored in
+   Lumina's own zyrn-credit.css — another firm's mark is not recoloured to
+   fit ours — extended from a logo to a whole palette. The frame is the
+   honest way to show someone else's work: it is on display, not adopted.
+   The mono caption on every vitrine says whose surface it is.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* Lumina's two faces, named so nothing can reach them by accident. They
+   are only ever applied inside a vitrine (`.vit`, `.lspec`, `.pull`) — the
+   doctrine rule "never replace the two typefaces" is about Zyrn's own
+   surface, and a specimen of someone else's brand set in Space Grotesk
+   would be a picture of the wrong thing. Both fall back to a stock
+   serif/sans, so a blocked font request degrades to the right SHAPE. */
+:root{
+  --font-lum-display:'Instrument Serif',Georgia,'Times New Roman',serif;
+  --font-lum-sans:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+
+.case{position:relative}
+
+/* ── hero ───────────────────────────────────────────────────────────── */
+
+.case-hero{
+  padding:clamp(120px,20vh,190px) var(--gutter) clamp(40px,7vh,80px);
+  max-width:1180px;margin:0 auto;
+}
+.case-hero__idx{display:block;color:var(--steel);margin-bottom:clamp(20px,4vh,34px)}
+
+/* Lumina's mark at hero scale, under Lumina's own treatment — the same
+   two drop-shadows footer.css uses, which are lifted from their site. */
+.case-hero__mark{
+  display:inline-flex;line-height:0;margin-bottom:clamp(22px,4vh,36px);
+}
+.case-hero__mark img{
+  display:block;height:clamp(30px,4.4vw,44px);width:auto;
+  filter:drop-shadow(0 2px 9px rgba(0,0,0,0.55))
+         drop-shadow(0 0 26px rgba(255,178,90,0.34));
+}
+.case-hero__title{
+  font-size:clamp(38px,6.4vw,78px);line-height:1.02;letter-spacing:-0.032em;
+  font-weight:400;margin:0 0 clamp(20px,3.4vh,30px);max-width:15ch;
+}
+.case-hero__lede{
+  font-size:clamp(15px,1.55vw,19px);line-height:1.62;
+  color:rgba(242,243,245,0.74);max-width:62ch;margin:0;
+}
+.case-hero__meta{
+  display:flex;flex-wrap:wrap;gap:10px clamp(20px,3vw,44px);
+  margin-top:clamp(28px,4.6vh,44px);
+  padding-top:18px;border-top:1px solid var(--hair);
+  color:var(--steel);
+}
+.case-hero__meta b{font-weight:400;color:rgba(242,243,245,0.86)}
+.case-hero__out{
+  display:inline-flex;align-items:center;gap:8px;
+  color:rgba(242,243,245,0.86);
+  border-bottom:1px solid var(--hair-strong);padding-bottom:2px;
+  transition:color 200ms ease,border-color 200ms ease;
+}
+.case-hero__out:hover{color:var(--vapor);border-bottom-color:rgba(242,243,245,0.5)}
+.case-hero__out svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2}
+
+/* ── section furniture ──────────────────────────────────────────────── */
+
+.case-sec{
+  max-width:1180px;margin:0 auto;
+  padding:clamp(64px,11vh,120px) var(--gutter);
+}
+.case-sec__head{
+  display:flex;align-items:baseline;gap:16px;
+  border-bottom:1px solid var(--hair);padding-bottom:14px;
+  margin-bottom:clamp(28px,5vh,50px);
+}
+.case-sec__num{color:var(--steel);flex:0 0 auto}
+.case-sec__title{
+  font-size:clamp(21px,2.5vw,30px);font-weight:400;letter-spacing:-0.02em;
+  margin:0;
+}
+
+/* ── 01 · the brief ─────────────────────────────────────────────────── */
+
+.brief{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;
+  background:var(--hair);border:1px solid var(--hair)}
+.brief__c{
+  background:rgba(14,15,18,0.6);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  padding:clamp(20px,2.6vw,30px);
+  display:flex;flex-direction:column;gap:12px;
+}
+.brief__h{color:var(--steel)}
+.brief__b{
+  margin:0;font-size:14.5px;line-height:1.62;
+  color:rgba(242,243,245,0.76);
+}
+
+/* Their own sentence, in their own face. A pull quote is the one place a
+   case study should stop paraphrasing. */
+.pull{
+  margin:clamp(28px,5vh,48px) 0 0;
+  padding:clamp(24px,4vw,40px) clamp(22px,4vw,44px);
+  border:1px solid var(--hair);
+  background:rgba(14,15,18,0.5);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+}
+.pull__q{
+  margin:0;font-family:var(--font-lum-display,Georgia,serif);
+  font-size:clamp(22px,3.4vw,40px);line-height:1.18;letter-spacing:-0.01em;
+  color:#F7F2E9;
+}
+.pull__src{display:block;margin-top:16px;color:var(--steel)}
+
+/* ── 02 · the rack ──────────────────────────────────────────────────
+   v1 put one page in a small frame and the owner's note was exact: too
+   small, and not enough of the work to make anyone want to go and look.
+   This is five pages in a window that takes the whole measure, with the
+   step readout and the note stripped back so the SCREEN is the section
+   rather than the furniture around it. */
+
+.rk__track{position:relative;height:620vh}
+.rk__stage{
+  position:sticky;top:0;min-height:100svh;
+  display:flex;flex-direction:column;justify-content:center;
+  gap:clamp(10px,1.6vh,18px);
+  padding:clamp(70px,10vh,104px) var(--gutter) clamp(24px,4vh,44px);
+}
+.rk__head{
+  display:flex;justify-content:space-between;align-items:baseline;
+  gap:16px;flex-wrap:wrap;
+  border-bottom:1px solid var(--hair);padding-bottom:10px;
+}
+.rk__cap{color:rgba(242,243,245,0.9);transition:opacity 240ms}
+.rk__cap.is-swap{opacity:0}
+.rk__meta{display:flex;align-items:center;gap:clamp(10px,1.6vw,20px);color:var(--steel)}
+.rk__head span{text-shadow:0 1px 12px rgba(14,15,18,0.75)}
+
+/* which of the five you are on */
+.rk__dots{display:inline-flex;gap:5px;align-items:center}
+.rk__dot2{
+  width:5px;height:5px;border-radius:50%;
+  background:rgba(242,243,245,0.22);
+  transition:background 300ms ease,transform 300ms cubic-bezier(.16,1,.3,1);
+}
+.rk__dot2.is-on{background:var(--vapor);transform:scale(1.5)}
+
+.rk{
+  --in:0;
+  /* THE WINDOW IS SIZED BY HEIGHT, NOT WIDTH, and that is the only way it
+     can be big. A pinned stage cannot scroll, so the window has to fit in
+     what is left of 100svh after the nav, the head and the note — and a
+     16:10 box given the full column width comes out ~840px tall on a
+     1440x900 screen and simply hangs off the bottom of the viewport.
+     So: pick the height first, derive the width from the aspect ratio.
+     At 900px tall that is a 1024x640 window; on a taller display it grows
+     with the viewport instead of being capped at an arbitrary max-width. */
+  --winh:min(68svh,760px);
+  position:relative;width:100%;margin:0 auto;
+  display:flex;align-items:flex-end;justify-content:center;
+  opacity:calc(0.2 + 0.8 * var(--in));
+  transform:translate3d(0,calc((1 - var(--in)) * 26px),0);
+  will-change:transform,opacity;
+}
+
+.rk__desk{
+  position:relative;flex:1 1 auto;min-width:0;
+  max-width:calc(var(--winh) * 1.6);
+  border:1px solid var(--hair-strong);border-radius:10px;
+  overflow:hidden;background:#05070B;
+  box-shadow:0 40px 110px rgba(0,0,0,0.62);
+}
+.rk__bar{
+  display:flex;align-items:center;gap:7px;
+  padding:9px 13px;border-bottom:1px solid var(--hair);
+  background:rgba(14,15,18,0.92);
+}
+.rk__dot{width:7px;height:7px;border-radius:50%;background:rgba(242,243,245,0.18)}
+.rk__url{
+  margin-left:12px;color:rgba(242,243,245,0.5);font-size:10px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  transition:opacity 240ms;
+}
+.rk__url.is-swap{opacity:0}
+
+.rk__win{position:relative;overflow:hidden;aspect-ratio:16/10;background:#05070B}
+/* every strip is stacked in the same box; rack.js fades between them */
+.rk__layer{
+  position:absolute;top:0;left:0;width:100%;height:auto;display:block;
+  will-change:transform,opacity;
+}
+.rk__win--phone img{
+  position:absolute;top:0;left:0;width:100%;height:auto;display:block;
+  will-change:transform;
+}
+
+.rk__phone{
+  position:relative;flex:0 0 auto;width:clamp(120px,13%,178px);
+  margin-left:clamp(-64px,-5vw,-40px);margin-bottom:-26px;
+  border:1px solid var(--hair-strong);border-radius:18px;
+  overflow:hidden;background:#05070B;
+  box-shadow:0 28px 70px rgba(0,0,0,0.68);
+}
+.rk__phone .rk__win{aspect-ratio:390/844}
+.rk__notch{
+  position:absolute;top:6px;left:50%;transform:translateX(-50%);
+  width:34%;height:5px;border-radius:3px;
+  background:rgba(0,0,0,0.72);z-index:2;
+}
+
+/* the note, and the one control whose whole job is to send you there */
+.rk__foot{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  gap:clamp(16px,3vw,40px);
+}
+.rk__note{
+  margin:0;max-width:82ch;font-size:13px;line-height:1.6;
+  color:rgba(242,243,245,0.68);
+  /* two lines' worth, reserved. The note swaps per scene and an unreserved
+     box would resize the stage under the window every time it changed. */
+  min-height:3.2em;transition:opacity 240ms;
+  text-shadow:0 1px 12px rgba(14,15,18,0.75);
+}
+.rk__note.is-swap{opacity:0}
+.rk__out{
+  flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;
+  color:rgba(242,243,245,0.86);
+  border-bottom:1px solid var(--hair-strong);padding-bottom:3px;
+  transition:color 200ms ease,border-color 200ms ease;
+  text-shadow:0 1px 12px rgba(14,15,18,0.75);
+}
+.rk__out:hover{color:var(--vapor);border-bottom-color:rgba(242,243,245,0.55)}
+.rk__out svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2}
+
+/* ── 03 · the re-base ───────────────────────────────────────────────── */
+
+/* 320vh, not 400 — see the retiming note in rebase.js. Same amount of
+   change over less scroll is the whole fix. */
+.rb__track{position:relative;height:320vh}
+.rb__stage{
+  position:sticky;top:0;min-height:100svh;
+  display:flex;flex-direction:column;justify-content:center;
+  gap:clamp(12px,2vh,22px);
+  padding:clamp(76px,11vh,116px) var(--gutter) clamp(40px,6vh,64px);
+}
+.rb__head{
+  display:flex;justify-content:space-between;align-items:baseline;gap:14px;
+  border-bottom:1px solid var(--hair);padding-bottom:12px;
+}
+.rb__step{color:var(--vapor);transition:opacity 260ms}
+.rb__step.is-swap,.rb__date.is-swap,.rb__tally.is-swap{opacity:0}
+.rb__date,.rb__tally,.rb__pct{color:var(--steel);transition:opacity 260ms}
+.rb__head span,.rb__note{text-shadow:0 1px 12px rgba(14,15,18,0.75)}
+
+.rb__body{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
+  gap:clamp(18px,3vw,40px);align-items:start;
+}
+
+/* the nine swatches */
+.rb__stage{--wave:0;--settle:0;--sweeping:0}
+
+.rb__grid{
+  --arrive:1;
+  position:relative;
+  display:flex;flex-direction:column;gap:1px;
+  border:1px solid var(--hair);background:var(--hair);
+  opacity:calc(0.15 + 0.85 * var(--arrive));
+  transform:translate3d(calc((1 - var(--arrive)) * -14px),0,0);
+}
+
+/* The scan line rides the wave down the column, sitting on whichever token
+   is mid-change. It is a readout, not an ornament — where it is, is what is
+   moving — which is also why it fades out once the sweep is done. */
+.rb__grid::after{
+  content:'';position:absolute;left:0;right:0;height:2px;
+  top:calc(var(--wave) * 100%);
+  background:linear-gradient(90deg,
+    transparent, rgba(255,178,90,0.85) 22%, rgba(255,224,176,0.95) 50%,
+    rgba(255,178,90,0.85) 78%, transparent);
+  box-shadow:0 0 22px rgba(255,178,90,0.6);
+  opacity:var(--sweeping);
+  pointer-events:none;
+}
+.rbc{
+  --t:0;--in:1;
+  display:flex;align-items:center;gap:clamp(10px,1.4vw,16px);
+  padding:clamp(7px,1vh,11px) clamp(10px,1.4vw,16px);
+  background:rgba(14,15,18,0.72);
+  position:relative;
+}
+.rbc__chip{
+  flex:0 0 auto;width:clamp(26px,3vw,38px);height:clamp(18px,2.2vh,26px);
+  border-radius:3px;border:1px solid rgba(242,243,245,0.14);
+  /* `t*(1-t)` peaks at the MIDPOINT of a token's travel and is zero at both
+     ends, so a chip is lit exactly while it is actually changing and sits
+     flat before and after. One expression, no keyframes, no timers. */
+  box-shadow:0 0 calc(var(--t) * (1 - var(--t)) * 52px) rgba(255,178,90,0.6);
+  transform:scale(calc(1 + var(--t) * (1 - var(--t)) * 0.34));
+  transition:box-shadow 120ms linear,transform 120ms linear;
+}
+/* the row itself brightens while its token is in flight */
+.rbc{
+  transition:background 200ms linear;
+  background:rgba(14,15,18,calc(0.72 - var(--t) * (1 - var(--t)) * 0.28));
+}
+.rbc[data-added]{opacity:calc(0.18 + 0.82 * var(--in))}
+.rbc__meta{display:grid;grid-template-columns:minmax(0,1fr) auto;
+  gap:2px 12px;align-items:baseline;min-width:0;flex:1 1 auto}
+.rbc__name{font-weight:400;color:rgba(242,243,245,0.88);font-size:10.5px}
+.rbc__hex{color:rgba(242,243,245,0.62);font-size:10.5px;text-align:right;
+  font-variant-numeric:tabular-nums}
+.rbc__use{grid-column:1 / -1;color:var(--steel);font-size:9px}
+
+/* the specimen — a live Lumina card reading the same values */
+.rb__spec{position:relative}
+
+/* Locked at the end of the track: the result gets a beat of its own rather
+   than the last 15% being motionless. */
+.rb__stage::after{
+  content:'SHIPPED — 2026.07.28';
+  position:absolute;right:var(--gutter);bottom:clamp(52px,8vh,80px);
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:0.2em;
+  color:rgba(255,178,90,0.9);
+  padding:5px 10px;border:1px solid rgba(255,178,90,0.35);
+  opacity:var(--settle);
+  transform:translate3d(0,calc((1 - var(--settle)) * 8px),0);
+  pointer-events:none;
+}
+.vit{
+  --lift:0;
+  position:relative;border:1px solid var(--hair);
+  border-radius:4px;overflow:hidden;
+}
+.vit__tag{
+  display:flex;justify-content:space-between;gap:12px;
+  padding:8px 12px;border-bottom:1px solid var(--hair);
+  background:rgba(14,15,18,0.86);color:var(--steel);font-size:9px;
+}
+.lspec{
+  --arrive:1;
+  opacity:calc(0.15 + 0.85 * var(--arrive));
+  transform:translate3d(calc((1 - var(--arrive)) * 14px),
+                        calc(var(--lift) * -6px),0);
+  /* every one of these is written per frame by rebase.js */
+  --ink:#060C18;--navy:#0E1729;--navy-2:#16223A;--navy-3:#1E2C48;
+  --cream:#F6F1E7;--gold:#D6BF9E;--gold-lt:#FAE5C8;--gold-dp:#9C8259;
+  --plinth:#7FD9E8;
+  background:var(--ink);
+  padding:clamp(20px,3vw,34px);
+  display:flex;flex-direction:column;gap:clamp(12px,2vh,18px);
+}
+.lspec__kick{
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:0.18em;
+  text-transform:uppercase;color:var(--gold);
+}
+.lspec__h{
+  margin:0;font-family:var(--font-lum-display,Georgia,serif);font-weight:400;
+  font-size:clamp(20px,2.7vw,32px);line-height:1.14;color:var(--cream);
+}
+.lspec__b{
+  margin:0;font-family:var(--font-lum-sans,system-ui,sans-serif);
+  font-size:13px;line-height:1.6;color:color-mix(in srgb,var(--cream) 76%,transparent);
+}
+.lspec__card{
+  border:1px solid var(--gold-dp);border-radius:10px;
+  background:var(--navy-2);
+  padding:14px 16px;display:flex;flex-direction:column;gap:5px;
+}
+.lspec__card b{
+  font-family:var(--font-lum-sans,system-ui,sans-serif);
+  font-weight:600;font-size:14px;color:var(--cream);
+}
+.lspec__card span{
+  font-family:var(--font-lum-sans,system-ui,sans-serif);
+  font-size:11.5px;color:var(--gold-lt);
+}
+.lspec__cta{
+  align-self:flex-start;
+  font-family:var(--font-lum-sans,system-ui,sans-serif);font-size:12.5px;
+  padding:9px 18px;border-radius:999px;
+  border:1px solid var(--gold);color:var(--cream);
+  background:color-mix(in srgb,var(--gold) 12%,transparent);
+}
+/* The cyan light under Lumina's hero. `width:100%` is explicit rather than
+   left to flex stretch: this class was `.spec` first, and styles.css's own
+   `.spec` (a definition row) carries align-items:baseline, which collapsed
+   an empty span to zero width and painted nothing at all. */
+.lspec__plinth{
+  width:100%;height:2px;border-radius:2px;
+  background:var(--plinth);
+  box-shadow:0 0 18px var(--plinth);
+  opacity:0.85;
+}
+
+.rb__note{
+  max-width:66ch;font-size:14px;line-height:1.75;
+  color:rgba(242,243,245,0.72);min-height:4.6em;margin:0;
+  transition:opacity 240ms;
+}
+.rb__note.is-swap{opacity:0}
+
+/* ── 04 · what shipped ──────────────────────────────────────────────── */
+
+.nums{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:1px;background:var(--hair);border:1px solid var(--hair);
+}
+.num{
+  background:rgba(14,15,18,0.6);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  padding:clamp(20px,2.6vw,30px);
+  display:flex;flex-direction:column;gap:8px;
+}
+.num__v{
+  font-size:clamp(30px,4.4vw,54px);line-height:1;letter-spacing:-0.03em;
+  color:var(--vapor);font-variant-numeric:tabular-nums;
+}
+.num__l{color:var(--steel)}
+.num__n{font-size:13px;line-height:1.55;color:rgba(242,243,245,0.6);margin:0}
+
+/* ── 05 · outro ─────────────────────────────────────────────────────── */
+
+.outro{
+  display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);
+  gap:clamp(24px,4vw,56px);align-items:start;
+}
+.outro__t{
+  font-size:clamp(24px,3.4vw,42px);line-height:1.12;letter-spacing:-0.026em;
+  font-weight:400;margin:0 0 18px;
+}
+.outro__b{font-size:15px;line-height:1.68;color:rgba(242,243,245,0.72);margin:0 0 26px;max-width:52ch}
+.outro__side{
+  border:1px solid var(--hair);background:rgba(14,15,18,0.6);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  padding:clamp(20px,2.6vw,28px);display:flex;flex-direction:column;gap:14px;
+}
+.outro__row{display:flex;justify-content:space-between;gap:14px;color:var(--steel)}
+.outro__row b{font-weight:400;color:rgba(242,243,245,0.84);text-align:right}
+
+/* ── mobile ─────────────────────────────────────────────────────────── */
+
+@media (max-width:900px){
+  .brief{grid-template-columns:1fr}
+  .nums{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .outro{grid-template-columns:1fr}
+  .rb__body{grid-template-columns:1fr;gap:14px}
+  /* On a phone the two halves cannot both be on screen. The specimen is
+     the argument — it is the thing that visibly re-tints — so it goes
+     first and the swatch column follows it. */
+  .rb__spec{order:-1}
+  .rb__track{height:340vh}
+  .rk__track{height:280vh}
+  .rbc__use{display:none}
+}
+
+/* ── the phone ──────────────────────────────────────────────────────
+   Everything below here is a budget problem rather than a taste one: a
+   pinned stage cannot scroll, so anything that does not fit inside 100svh
+   is simply never read — and the note under each instrument is the copy
+   that says what the stage means. */
+@media (max-width:720px){
+  /* THE RACK ON A PHONE.
+
+     Checked first, because it decides the layout: Lumina's room and invest
+     instruments are DESKTOP-ONLY. Probing both pages at 390x844 returns no
+     sticky element at all — the pinned stage does not exist there and the
+     pages fall back to ordinary scrolling. So the desktop window is not the
+     lesser view to be demoted on a phone; it is the only place the
+     signature interaction can be seen, and it has to lead here too.
+
+     Three of the five scenes are graphic — the wireframe room furnishing
+     itself, the building going up, the residence at dusk — and those read
+     fine at this size. Body copy does not, and never was the evidence.
+
+     So the window BLEEDS past the gutter to the screen edges, and the phone
+     comes out of the flex row into an overlapping inset. Together that is
+     roughly 70% more window area than sharing a padded row with it. */
+  .rk{
+    display:block;position:relative;
+    width:100vw;margin-left:calc(var(--gutter) * -1);
+  }
+  .rk__desk{
+    opacity:1;filter:none;max-width:none;
+    border-radius:0;border-left:none;border-right:none;
+    box-shadow:0 22px 60px rgba(0,0,0,0.6);
+  }
+  .rk__phone{
+    position:absolute;right:calc(var(--gutter) + 4px);bottom:-16px;z-index:2;
+    width:84px;margin:0;
+    border-radius:11px;box-shadow:0 14px 34px rgba(0,0,0,0.72);
+  }
+  .rk__notch{height:3px;top:4px}
+  .rk__bar{padding:6px 9px;gap:5px}
+  .rk__dot{width:5px;height:5px}
+  .rk__url{margin-left:8px;font-size:8.5px}
+  .rk__stage{padding-top:88px;padding-bottom:18px;gap:9px}
+  .rk__head{gap:6px 12px;padding-bottom:8px}
+  .rk__cap{font-size:9px;line-height:1.5;letter-spacing:0.12em}
+  .rk__meta{font-size:9px;gap:10px}
+  /* the note and the outbound link stack — side by side they leave the
+     note about twelve characters wide */
+  .rk__foot{flex-direction:column;gap:10px}
+  .rk__note{min-height:7.2em;font-size:12px;line-height:1.6}
+
+  /* THE RE-BASE. Four items in one mono row wrap onto three lines at this
+     width. The date and the tally are supporting detail; the step name and
+     the percentage are the instrument, so those two stay. */
+  .rb__date,.rb__tally{display:none}
+  .rb__stage{padding-top:92px;padding-bottom:20px;gap:10px}
+  .rbc{padding:4px 10px;gap:10px}
+  .rbc__chip{width:26px;height:15px}
+  .rbc__meta{grid-template-columns:minmax(0,1fr) auto;gap:0 10px}
+  .rbc__name,.rbc__hex{font-size:9.5px}
+  .lspec{padding:16px 16px 18px;gap:9px}
+  .lspec__h{font-size:19px}
+  .lspec__b{font-size:11.5px;line-height:1.5}
+  .lspec__card{padding:10px 12px;gap:3px}
+  .lspec__card b{font-size:12.5px}
+  .lspec__card span{font-size:10.5px}
+  .lspec__cta{font-size:11px;padding:7px 14px}
+  .vit__tag{padding:6px 10px;font-size:8px}
+  .rb__note{min-height:5.4em;font-size:12.5px;line-height:1.6}
+}
+@media (max-width:560px){
+  .nums{grid-template-columns:1fr}
+  .case-hero__title{max-width:none}
+}
+
+/* Reduced motion: the instruments already draw their settled state, but
+   the sticky stages would still pin a very tall track for no payoff. */
+@media (prefers-reduced-motion:reduce){
+  .rk__track,.rb__track{height:auto}
+  .rk__stage,.rb__stage{position:static;min-height:0}
+  .rk{opacity:1;transform:none}
+}

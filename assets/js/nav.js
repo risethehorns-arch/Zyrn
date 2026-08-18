@@ -172,8 +172,20 @@
     }
 
     if (open) {
+      /* The sheet starts below the bar rather than at inset:0, so the X in
+         the bar stays tappable. Measure rather than hard-code 76px: the row
+         is padding + whatever its tallest child happens to be, and that has
+         already changed once. */
+      document.documentElement.style.setProperty(
+        '--navh', Math.round(nav.getBoundingClientRect().height) + 'px');
       sheet.hidden = false;
-      // next frame so the transition has a start state
+      /* The sheet is display:none while hidden (see the [hidden] rule in
+         styles.css — without it this fixed overlay ate every tap on the
+         phone). Going none -> flex and adding the class in the same task
+         would give the transition no start state to move from, so read a
+         layout property first: that forces the style flush, and the
+         opacity/stagger then animate from 0 rather than snapping on. */
+      void sheet.offsetHeight;
       requestAnimationFrame(function () {
         sheet.classList.add('is-on');
         var first = list.querySelector('a');
@@ -206,6 +218,10 @@
 
   // rotating past the breakpoint should not strand an open sheet
   window.addEventListener('resize', function () {
-    if (open && window.innerWidth >= 900) set(false);
+    if (!open) return;
+    if (window.innerWidth >= 900) { set(false); return; }
+    // rotation changes the bar's height; the sheet's offset has to follow
+    document.documentElement.style.setProperty(
+      '--navh', Math.round(nav.getBoundingClientRect().height) + 'px');
   }, { passive: true });
 })();

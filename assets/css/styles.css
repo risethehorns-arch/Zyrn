@@ -80,6 +80,25 @@ body{
 
 a{color:var(--vapor);text-decoration:none}
 
+/* ── [hidden] must actually hide ────────────────────────────────────
+   A `display` in an author rule outranks the UA sheet's
+   `[hidden]{display:none}`, so any component that sets its own display
+   and is toggled from JS via `el.hidden` stays laid out, invisible, and
+   — if it is `position:fixed` — still eating every pointer event.
+
+   That shipped: `.navsheet{display:flex}` left the closed mobile menu as
+   a full-viewport ghost at z-index 55, and it swallowed 100% of taps on
+   every page below 900px. Nothing on the phone was clickable; the site
+   still scrolled, which is why it read as "that one link is broken"
+   rather than "the mobile site is dead".
+
+   `!important` here is deliberate and is the narrowest fix available:
+   the alternative is remembering to write `.x[hidden]{display:none}`
+   beside every future component, which is precisely what failed. Nothing
+   in this project uses `hidden="until-found"`, which is the one pattern
+   this would break. */
+[hidden]{display:none!important}
+
 /* text over video — nothing heavier than this */
 .veil{text-shadow:0 1px 12px rgba(14,15,18,0.6)}
 
@@ -92,6 +111,14 @@ a{color:var(--vapor);text-decoration:none}
 }
 
 .rule{height:1px;background:var(--hair);margin:16px 0}
+
+/* Visible to a screen reader, to nothing else. Used where a decorative
+   figure needs a description that would be noise on screen. `clip-path`
+   rather than `display:none`, which removes it from the a11y tree too. */
+.sr-only{
+  position:absolute;width:1px;height:1px;margin:-1px;padding:0;
+  overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
+}
 
 
 /* ── SYS.00 · video bed ─────────────────────────────────────────────── */

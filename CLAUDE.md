@@ -50,10 +50,33 @@ services.html           SYS.03 — the index for the four lines, and the nav slo
                         services/index.html, because `routeFor()` keys on the
                         last path segment and a directory URL yields '' —
                         which is already the landing page's key.
-brand.html              SYS.06 brand system — a reference document, deliberately NOT
-                        immersive (its job is legibility, not atmosphere).
-                        Reachable from the footer's "The firm" column; it gave
-                        up its nav slot to services.html on 2026-08-18.
+brand.html              SYS.06 — HOW WE PRESENT A BRAND KIT. Rewritten 2026-08-19
+                        at the owner's direction: it used to document Zyrn's
+                        OWN brand, which is inward-facing and makes no argument
+                        to a buyer. It now covers the deliverable generally —
+                        four properties, seven parts, the handover — with a
+                        worked example that is deliberately NOT Zyrn: Lumina's
+                        palette, type, mark, motion and layout, in vitrines.
+                        Still a document rather than an experience (legibility,
+                        not atmosphere), and still reachable from the footer's
+                        "The firm" column, labelled "Brand kit — the method" so
+                        it cannot be confused with the SERVICE line of the same
+                        name two columns over.
+                        The previous page survives in two places, and NOT in
+                        the repo working tree: `_archive/` is gitignored, so
+                        the local copy at
+                        _archive/brand-zyrn-doctrine-v2.html exists on this
+                        machine only. In a fresh clone, recover it with
+                        `git show 59ace3c:brand.html`. Either way nothing was
+                        lost — Zyrn's own doctrine is operative in THIS file,
+                        which is where it was always enforced from.
+lumina.html             SYS.07 — CASE 01. The site's first and only piece of
+                        proof. Lumina (private real-estate advisory, Amman) is
+                        a Zyrn client; this is their brand kit and website, and
+                        the fact that the whole palette was later replaced
+                        without a component being rebuilt. Root level, not
+                        work/lumina.html — `routeFor()` keys on the last path
+                        segment. Two instruments, see below.
 services/*.html         four service pages, one per line, in this order:
                         01 website-design · 02 brand-kit · 03 business-structuring
                         · 04 ai-transformation ("AI adoption & transformation").
@@ -72,6 +95,11 @@ assets/js/modules/      the signature instruments, one per service page:
                         readiness.js 04 — the index climbing 00 to 04
                     core.js      services.html — the set's own instrument
                     matrix.js    services.html — the combination matrix
+                    rack.js      lumina.html — two device frames with the real
+                                 Lumina site scrolling inside them, at
+                                 different rates
+                    rebase.js    lumina.html — nine real tokens moving between
+                                 two real palettes, interpolated in OKLab
 assets/css/svc-modules.css
                         styling for all four instruments.
 assets/css/styles.css   all styling, tokens at :root (incl. the glass + glitch systems)
@@ -79,6 +107,11 @@ assets/css/brand.css    brand-page-only document layout
 assets/css/service.css  service-page layer (hero, module cards, phases, signals)
 assets/css/services.css services.html only — the core diagram, the line rows
                         and their four glyphs, the matrix
+assets/css/case.css     lumina.html — the case layout, both instruments, and
+                        THE VITRINE (see doctrine below)
+assets/css/proof.css    index.html only — the proof band. Split out of
+                        case.css so the landing page does not pull two pinned
+                        instruments and Lumina's two typefaces to style one card
 assets/js/cmdk.js       THE INDEX (⌘K) — on every page. See below.
 assets/css/cmdk.css     its housing
 assets/js/ui.js         shared on every page: irregular glitch scheduling + page
@@ -90,7 +123,18 @@ assets/js/main.js       DOM runtime (hero shear · readout rail · reveals)
                         canvas or a video element.
                         NEVER pass desynchronized:true to getContext anywhere in
                         this project — it hard-froze the renderer on this machine.
-assets/media/           empty. Kept for future stills only — the site has no video.
+assets/media/           icons, the share card, the Lumina mark.
+assets/media/work/      the case-study captures — five stitched strips of the
+                        LIVE www.lumina-jo.com (hero, room, invest, listings,
+                        services) plus a mobile strip and the landing-page
+                        card. Taken at 2x/3x and finished with a light
+                        contrast/saturation/unsharp pass so they survive
+                        being scaled into a device frame; the first pass was
+                        noticeably soft. ~1MB total, all lazy but the first.
+                        Rebuild with the capture scripts, not by hand — the
+                        instrument strips depend on the measured pinned-track
+                        ranges, and the flat ones on hiding fixed elements so
+                        the nav does not repeat once per band.
 design/                 source of record from Claude Design (.dc.html) — reference only, never served
 docs/build-spec.md      the authored brief (v1.0 — written for the video bed)
 docs/spec-presence-field.md
@@ -216,6 +260,28 @@ Pin the keyframe values statically with `!important` and screenshot that instead
 
 When the spec is silent, choose the quieter option.
 
+5. **Another firm's brand is shown, never adopted — THE VITRINE.** Added
+   2026-08-19, when `brand.html` and `lumina.html` both began printing
+   Lumina's palette and Lumina's two typefaces.
+
+   Every foreign colour and every foreign face lives inside `.vit`
+   (`assets/css/case.css`): a bounded frame with a mono caption naming
+   whose surface it is. Inside it, their system applies. Outside it, Zyrn
+   is untouched — Obsidian, Vapor, Space Grotesk, IBM Plex Mono, hairlines,
+   one Pulse. Lumina's faces are bound to `--font-lum-display` /
+   `--font-lum-sans` so nothing can reach them by accident, and both fall
+   back to a stock serif/sans so a blocked font request degrades to the
+   right SHAPE rather than to Space Grotesk.
+
+   This is the rule already stated in `footer.css` and mirrored in Lumina's
+   own `zyrn-credit.css` — *another firm's mark is not recoloured to fit
+   ours* — extended from a logo to a whole brand. It is also why a specimen
+   of someone else's kit set in OUR typeface would be worthless: it would
+   be a picture of the wrong thing.
+
+   `brand.html` §03 and `lumina.html` §03 are the reference implementations.
+   Do not "harmonise" a vitrine with the page around it.
+
 ## Tokens
 
 | Token    | Value                    |
@@ -238,6 +304,13 @@ Mono labels are always `11px / uppercase / tracking 0.16em / Steel`.
 - Never replace the two typefaces.
 - No exclamation marks or superlatives in copy.
 - No faces, no stock portraits.
+- **Adding or removing a section on `index.html` re-anchors the field.**
+  The `program` stops are measured section centres as scroll progress, so a
+  new section moves everything below it. Done once already: the proof band
+  went in between SYS.03 and SYS.04 on 2026-08-19 and every stop after
+  SYS.02 changed. Re-measure at 1440x900 AND 390x844 and take the mean —
+  do not nudge by eye. The comment above `program:` in `index.html` carries
+  the current measurements.
 - Do not remove the `.runway` spacers — they are the beat between scenes, where
   only the field is on screen. Do not inflate them either: at the spec's
   `80vh + 3x55vh` they were 1973px of a 6204px page, so a third of the site was
@@ -347,10 +420,58 @@ screen.
   engagement does. Without the convergence the index caps at the constraint's
   rate and never reaches the Level 04 the copy promises.
 
+Two more on `lumina.html`, same shape:
+
+- **rack** — a TOUR OF FIVE PAGES of the live Lumina site in one window.
+  Scroll and the window scrolls the page it is showing; keep going and it
+  hands over to the next. Rebuilt 2026-08-19: v1 was one page in a small
+  frame, and the owner's note was that it was too small and showed too
+  little to make anyone want to go and look.
+  Two of the five are Lumina's own scroll instruments — `/room` furnishes
+  an empty wireframe room as you scroll, `/invest` puts a building up floor
+  by floor. Their frames were captured at even progress across each pinned
+  track (`.room-pin` 4140px, `.build-pin` 3420px), so the window REPLAYS
+  their animation rather than describing it. That is why those two strips
+  stack whole bands and the flat pages stack cropped ones.
+  **The window is sized by HEIGHT, not width** (`--winh`, then width from
+  the 16:10 ratio). A pinned stage cannot scroll, and a 16:10 box given the
+  full column width is ~840px tall on a 1440x900 screen and simply hangs
+  off the viewport. Height first is the only way it can be big.
+  **Lumina's instruments are desktop-only** — probing `/room` and `/invest`
+  at 390x844 returns no sticky element at all. So the desktop window leads
+  on phones too, bled to the screen edges, with the phone frame demoted to
+  an overlapping inset. An earlier pass had that backwards.
+- **rebase** — nine real tokens moving between two real Lumina palettes.
+  **Retimed 2026-08-19 because the pacing was wrong and the owner felt it:**
+  "scrolling but barely anything changing, and then it just goes to the one
+  below". v1 ran the sweep from 0.22 to 0.76 of a 400vh track, so 46% of it
+  — about 1800px of scrolling — was motionless. It is a 320vh track now,
+  the sweep occupies 0.05 to 0.86, and the two remaining ends do something:
+  the head brings both panels in, the tail locks the result with a dated
+  stamp. A scan line rides the wave down the column, and each chip lights
+  and scales on `t*(1-t)`, which peaks at the midpoint of that token's
+  travel and is zero at both ends — so a chip is lit exactly while it is
+  changing, with no keyframes and no timers.
+  **Interpolated in OKLab, and that is not decoration**: the headline move is
+  `#D6BF9E → #FFB25A`, a hue rotation as well as a saturation jump, and a
+  channel-wise sRGB lerp routes the midpoint through a dead khaki that was in
+  neither palette and reads as a bug. Every hex printed on screen comes from
+  the same interpolation that paints the swatch, so the readout cannot drift
+  from the colour.
+
 **Testing them headlessly:** do not scroll. Headless paints reliably at scroll 0
 and `window.scrollTo` fights Lenis. `_track.js` derives progress from the track's
 rect, so pulling the track up with a negative `margin-top` produces any progress
-value with the document still at scroll 0.
+value with the document still at scroll 0. **Hide the preceding siblings when you
+do** — the negative margin drags the track up over content still sitting at its
+natural position, and the overlap looks exactly like a layout bug that is not
+there.
+
+**A pinned stage cannot scroll.** Anything taller than `100svh` is unreachable,
+and the note under each instrument is the copy that says what the stage means.
+Measure the union of the stage's CHILDREN — `scrollHeight` lies here, because a
+flex column with `justify-content:center` reports its own height even when the
+content overflows past both edges.
 
 ## The footer (added 2026-08-18)
 
@@ -415,10 +536,75 @@ are tempted to hard-code the menu, this is why it is not.
 - `main` gets `inert` while the sheet is open. `main`, not `.shell`: the
   toggle lives outside `main`, and making its own ancestor inert would leave
   no way to close the menu.
+- **The sheet starts BELOW the bar, not at `inset:0`.** `top:var(--navh)`,
+  measured in `nav.js` on open and on resize. When the sheet covered the
+  full viewport the toggle — which has morphed into an X, and is a phone's
+  only close control — was painted underneath it and could not be tapped:
+  the menu opened and then trapped you until you picked a link.
+  Raising the nav with `z-index` CANNOT work and was tried first. `.shell`
+  is `position:relative;z-index:10`, so it is a stacking context, and
+  `.nav` inside it can never paint above a sheet that is a child of `body`
+  at 55. Moving the sheet into `.shell` instead would put a `position:fixed`
+  element under an ancestor that takes a transform during page transitions,
+  which silently re-anchors it. Not covering the bar is the fix with no
+  trap in it. `body.is-navopen .nav` also takes the sheet's own 94%
+  obsidian so the two read as one surface.
+- Opening now forces a reflow (`void sheet.offsetHeight`) before adding
+  `is-on`. The sheet is genuinely `display:none` when closed, and going
+  none→flex and adding the class in one task leaves the opacity transition
+  no start state to move from.
+
+## "The page loaded clean" is not "the page works"
+
+`check.py` navigates and listens. Every signature instrument on this site is
+scroll-driven, and `_track.js` seeds each client with `cb(0)` — so a bug that
+only fires at p>0 never runs during that check.
+
+It cost a real crash. `rebase.js` declared `const stage` for the stage
+ELEMENT at the top of `initRebase`, and then `const stage = p < CUTS[0] ? 0
+: ...` for the stage INDEX inside `draw()`. The inner one shadows the outer
+for the whole function body, so the tail of `draw()` called
+`.style.setProperty` on a number and threw on every frame the instrument was
+on screen. The page reported clean because at p=0 that index is 0, which is
+falsy, so the guarded block was skipped — and it looked fine until someone
+scrolled to it.
+
+**`exercise.py` is the fix**: it finds every track on a page, steps each one
+0 → 1 with the negative-margin trick, and collects exceptions the whole way.
+Run it alongside `check.py` after touching any instrument.
+
+Related, and also measurable: **dead scroll**. `motion.py` steps a track
+through 21 progress values, records the instrument's visible state at each,
+and reports how many steps produced a change plus the longest run that
+produced none. That longest run IS what a reader experiences as "nothing is
+happening". The re-base scored 9 dead steps of 20 before its retiming and 1
+after; the rack scores 0.
+
+## Verifying mobile — the checks that would have caught the ghost sheet
+
+A screenshot proves layout and nothing else. Three checks, all cheap, all
+now standing:
+
+1. **Hit test the viewport.** Sample a grid with `document.elementFromPoint`
+   and count how many points reach the page rather than an overlay. The
+   ghost sheet scored 100% swallowed on every page and looked perfect in
+   every screenshot.
+2. **Tap with real touch events.** `Input.dispatchTouchEvent`, not
+   `el.click()` — `el.click()` dispatches straight at the node and skips
+   hit testing, so it "proves" that a completely buried control works.
+   This is how the open menu's unreachable close button was missed.
+3. **Measure tap targets.** 44px minimum. The footer's Lumina mark was a
+   21px-tall target even after it became reachable; it now takes coarse-
+   pointer-only padding with an equal negative margin, so the hit box is
+   45px while the laid-out box is unchanged.
+
+Also worth re-running after any layout change: `document.scrollWidth` vs
+`innerWidth` for horizontal overflow, and the children-union measurement
+for pinned stages described above.
 
 ## The index — ⌘K (added 2026-08-18)
 
-`assets/js/cmdk.js` + `cmdk.css`, on all eight pages. Twelve destinations:
+`assets/js/cmdk.js` + `cmdk.css`, on all nine pages. Thirteen destinations:
 the pages, the four landing scenes, and the mailto.
 
 - **Every result is a real `<a>` in the document.** `field.js` owns internal
@@ -442,10 +628,28 @@ the pages, the four landing scenes, and the mailto.
    `Failed to resolve module specifier "three"`. The field still ran (the
    real import later found the map) so nothing looked broken — the preload
    was simply wasted. If you add a page, put the map first.
-2. **`[hidden]` loses to any class that sets `display`.** `.mx__go` is
-   `display:inline-flex`, so `el.hidden = true` did nothing and the
-   single-line shortcut stayed on screen for every selection. Pair any
-   `display`-setting class with an explicit `[hidden]{display:none}`.
+2. **`[hidden]` loses to any class that sets `display`.** Closed globally
+   on 2026-08-19 with `[hidden]{display:none!important}` in `styles.css`,
+   after the same bug shipped twice.
+
+   First instance: `.mx__go` is `display:inline-flex`, so `el.hidden = true`
+   did nothing and the matrix's single-line shortcut stayed on screen for
+   every selection. That was fixed per-element — which fixed the instance
+   and not the class of bug.
+
+   Second instance, and much worse: `.navsheet` is `display:flex` and
+   `position:fixed;inset:0;z-index:55`. The CLOSED phone menu was therefore
+   a full-viewport invisible overlay on every page, and it swallowed
+   **100% of taps below 900px** — measured, not estimated. Nothing on a
+   phone was clickable. It still SCROLLED (the sheet's own content is
+   shorter than the viewport, so touch scrolling chained to the page),
+   which is exactly why it was reported as "the Lumina logo doesn't open"
+   rather than "the mobile site is dead".
+
+   Two things let it survive this long, and both are now part of the test
+   routine below: screenshots cannot see it, and `el.click()` bypasses hit
+   testing entirely. Only `document.elementFromPoint` and real
+   `Input.dispatchTouchEvent` taps find it.
 
 **Every CTA on the landing page was dead** until 2026-08-18. All four
 "Request access" controls on `index.html` — nav, hero access card, SYS.02, and
@@ -468,6 +672,21 @@ of all four `services/*.html` pointed at `assets/media/lumina-logo.png`, which
 resolves to `/services/assets/...` and 404'd; and `.sig__stage` had no
 horizontal gutter, so every instrument's step readout and note sat flush
 against the viewport edge.
+
+## Class-name collisions — check before you name a block
+
+`.spec` was already taken TWICE (`styles.css`, a definition row with
+`align-items:baseline`; and `svc-modules.css`, the brand-kit page's
+specimen instrument) when the Lumina specimen on `lumina.html` was named
+`.spec` as well. `case.css` loads last so it won `display`, but
+`align-items:baseline` leaked through from `styles.css` and collapsed an
+empty `<span>` — the cyan plinth bar — to **zero width**. It painted
+nothing, with a correct background, height, opacity and display.
+
+The Lumina specimen is `.lspec*` now. Before naming a new block, grep the
+existing sheets for the stem. All of `styles.css`, `service.css`,
+`svc-modules.css`, `field.css` and `footer.css` are loaded together on
+most pages, and a partial override is far harder to see than a total one.
 
 ## The share card
 
@@ -510,9 +729,19 @@ unreadable smudge.
   custom domain — Pages serves a push immediately, DNS lags.
 - SYS.03's four lines now link to `services/*.html`, and `services.html`
   indexes them. The nav is Work / Foundation / System / Services / Contact.
-- Service pages have no per-service proof either — same gap as the landing page.
-- No proof anywhere on the site: no case study, metric, or named engagement. Expected
-  at launch, but it is the first thing a CIO will look for. See docs/strategy.md §5.
+- Service pages still have no per-service proof, but `lumina.html` closes
+  out to both relevant lines and `brand.html` §04 links into it. The two
+  service pages that Lumina evidences (website-design, brand-kit) do not
+  yet link TO the case.
+- ~~No proof anywhere on the site~~ **CLOSED 2026-08-19.** `lumina.html`
+  (SYS.07 — CASE 01) is the case study, and the proof band on `index.html`
+  between SYS.03 and SYS.04 is its entry point. Every number on both is
+  counted from the Lumina repo rather than asserted: 14 pages, 5,461 lines
+  of CSS, 7,228 of JS, 3 self-hosted faces, a CSP pinned to `'self'`, and
+  the 8-replaced/1-added token re-base of 2026-07-28. The screenshots are
+  stitched captures of the LIVE www.lumina-jo.com, not mockups.
+  Still true that this is ONE case. A second would let the landing band
+  become a row rather than a single card.
 - Real 60fps at 90k has NOT been measured on hardware. Headless renders this page
   at roughly one frame per second of virtual time, so it cannot judge frame rate.
   Open any page with `?probe=1` in a real browser and read the console.
