@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://zyrn.org/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://zyrn.org/foundation.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://zyrn.org/brand.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://zyrn.org/services/human-capital.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://zyrn.org/services/website-design.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://zyrn.org/services/brand-kit.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://zyrn.org/services/business-structuring.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://zyrn.org/services/ai-transformation.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://zyrn.org/services/web-strategy.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>

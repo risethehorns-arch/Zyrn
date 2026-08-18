@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ZYRN — Business structuring</title>
+<title>ZYRN &mdash; Business structuring</title>
 <meta name="description" content="Reorganisations move boxes. Zyrn moves decision rights — because the org chart is only the map, and authority is the terrain.">
 <link rel="canonical" href="https://zyrn.org/services/business-structuring.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ZYRN">
 <meta property="og:locale" content="en">
-<meta property="og:title" content="ZYRN — Business structuring">
+<meta property="og:title" content="ZYRN &mdash; Business structuring">
 <meta property="og:description" content="Reorganisations move boxes. Zyrn moves decision rights — because the org chart is only the map, and authority is the terrain.">
 <meta property="og:url" content="https://zyrn.org/services/business-structuring.html">
 <meta property="og:image" content="https://zyrn.org/assets/media/og.jpg">
@@ -23,6 +23,8 @@
 <link rel="stylesheet" href="../assets/css/styles.css">
 <link rel="stylesheet" href="../assets/css/service.css">
 <link rel="stylesheet" href="../assets/css/field.css">
+<link rel="stylesheet" href="../assets/css/footer.css">
+<link rel="stylesheet" href="../assets/css/svc-modules.css">
 
 <script type="importmap">
 {
@@ -37,9 +39,9 @@
 </head>
 <body>
 
-<!-- shared ground: the same field, the same grid, so moving between the
-     four lines reads as one instrument changing channels. Each page runs a
-     different formation program and a different tilt/spin. -->
+<!-- shared ground: the same field, off the same seed, carried across the
+     navigation by field.js so the pages read as one surface changing
+     channels rather than as separate documents. -->
 <canvas id="field" aria-hidden="true"></canvas>
 
 <div class="grid" aria-hidden="true">
@@ -48,7 +50,7 @@
 </div>
 
 <div class="readout" aria-hidden="true">
-  <span class="readout__label">ZYRN / SYS.02 &middot; <span id="readoutState">FIELD</span> — <span id="readoutPct">000</span>%</span>
+  <span class="readout__label">ZYRN / SYS.03 &middot; <span id="readoutState">FIELD</span> &mdash; <span id="readoutPct">000</span>%</span>
   <span class="readout__track"><span class="readout__fill" id="readoutFill"></span></span>
 </div>
 
@@ -66,7 +68,8 @@
         </span>
       </a>
       <div class="nav__links">
-        <a href="../index.html#sys-03" class="nav__link">Work<sup class="nav__sup">06</sup></a>
+        <a href="../index.html#sys-03" class="nav__link">Work<sup class="nav__sup">04</sup></a>
+        <a href="../foundation.html" class="nav__link">Foundation</a>
         <a href="../index.html#sys-04" class="nav__link">System</a>
         <a href="../brand.html" class="nav__link">Brand</a>
         <a href="../index.html#sys-05" class="nav__link">Contact</a>
@@ -78,71 +81,100 @@
     </div>
   </nav>
 
-  <main class="page-in">
+  <main>
 
     <header class="svc-hero">
-      <span class="mono svc-hero__idx" aria-hidden="true">02</span>
+      <span class="mono svc-hero__idx" aria-hidden="true">03</span>
       <h1 class="svc-hero__title" data-keepout data-reveal data-kinetic>Business<br>structuring.</h1>
-      <p class="svc-hero__lede" data-keepout>Reorganisations move boxes. Zyrn moves decision rights — because the org chart is only the map, and authority is the terrain. Structure is what the firm does under pressure, not what it publishes.</p>
+      <p class="svc-hero__lede" data-keepout>Reorganisations move boxes. Zyrn moves decision rights &mdash; because the org chart is only the map, and authority is the terrain. Structure is what a firm does under pressure, not what it publishes.</p>
       <div class="mono svc-hero__meta" data-keepout>DECISION RIGHTS &nbsp;/&nbsp; INCENTIVES &nbsp;/&nbsp; OPERATING MODEL &nbsp;/&nbsp; GOVERNANCE</div>
     </header>
 
     <div class="svc-sec" style="padding-top:0">
-    <nav class="tabs" data-active="1" aria-label="Service lines">
-      <a class="tab" href="human-capital.html">
+    <nav class="tabs" data-active="2" aria-label="Service lines">
+      <a class="tab" href="website-design.html">
         <span class="mono tab__idx">01</span>
-        <span class="tab__name">Human capital</span>
+        <span class="tab__name">Website design</span>
       </a>
-      <a class="tab is-active" href="business-structuring.html">
+      <a class="tab" href="brand-kit.html">
         <span class="mono tab__idx">02</span>
+        <span class="tab__name">Brand kit</span>
+      </a>
+      <a class="tab is-active" href="business-structuring.html" aria-current="page">
+        <span class="mono tab__idx">03</span>
         <span class="tab__name">Business structuring</span>
       </a>
       <a class="tab" href="ai-transformation.html">
-        <span class="mono tab__idx">03</span>
-        <span class="tab__name">AI transformation</span>
-      </a>
-      <a class="tab" href="web-strategy.html">
         <span class="mono tab__idx">04</span>
-        <span class="tab__name">Web &amp; strategy</span>
+        <span class="tab__name">AI adoption</span>
       </a>
     </nav>
     </div>
 
+
+    <!-- SIGNATURE · DECISION RIGHTS ───────────────────────────────────
+         The same eleven nodes, rewired. Left: the chart as published.
+         Right: authority where the work is. -->
+    <section class="sig sig--graph" id="sigGraph" aria-label="Decision rights, rewired">
+      <div class="sig__track">
+        <div class="sig__stage">
+          <div class="sig__head">
+            <span class="mono sig__step" id="graphStep">01 &mdash; AS PUBLISHED</span>
+            <span class="mono sig__pct"><span id="graphPct">000</span>%</span>
+          </div>
+
+          <svg class="grf" id="grf" viewBox="0 0 900 460" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <g class="grf__edges" id="grfEdges"></g>
+            <g class="grf__nodes" id="grfNodes"></g>
+          </svg>
+
+          <div class="grf__legend mono">
+            <span><i class="grf__key grf__key--esc"></i> ESCALATED DECISION</span>
+            <span><i class="grf__key grf__key--own"></i> OWNED WHERE IT LANDS</span>
+            <span id="grfStat">HOPS TO A DECISION &mdash; <b>4.2</b></span>
+          </div>
+
+          <p class="sig__note" id="graphNote">Every decision travels to the top and back. The chart is accurate and the firm is still slow.</p>
+        </div>
+      </div>
+    </section>
+
+
     <section class="svc-sec">
       <div class="svc-sec__head" data-keepout>
         <h2 class="svc-sec__title">What it covers</h2>
-        <p class="svc-sec__note" data-keepout>Six modules. Structure is diagnosed before anything is moved.</p>
+        <p class="svc-sec__note" data-keepout>Six modules. Authority is mapped before any box is moved.</p>
       </div>
       <div class="mods" data-keepout>
         <article class="mod" data-reveal data-rdelay="120">
-          <span class="mono mod__idx">02a</span>
-          <h3 class="mod__title">Decision map</h3>
-          <p class="mod__body">Every material decision, its real owner, and the distance between that and the stated owner.</p>
+          <span class="mono mod__idx">03a</span>
+          <h3 class="mod__title">Decision rights</h3>
+          <p class="mod__body">Who decides what, at what threshold, and who only needs to be told. Written per decision, not per title.</p>
         </article>
         <article class="mod" data-reveal data-rdelay="190">
-          <span class="mono mod__idx">02b</span>
-          <h3 class="mod__title">Accountability model</h3>
-          <p class="mod__body">Ownership defined at the level where the information already sits.</p>
+          <span class="mono mod__idx">03b</span>
+          <h3 class="mod__title">Incentives</h3>
+          <p class="mod__body">What the current structure actually rewards, which is rarely what the strategy asks for.</p>
         </article>
         <article class="mod" data-reveal data-rdelay="260">
-          <span class="mono mod__idx">02c</span>
-          <h3 class="mod__title">Incentive audit</h3>
-          <p class="mod__body">What the firm rewards, read against what it says it wants.</p>
+          <span class="mono mod__idx">03c</span>
+          <h3 class="mod__title">Operating model</h3>
+          <p class="mod__body">How work crosses the firm: handoffs, queues, and the places load silently accumulates.</p>
         </article>
         <article class="mod" data-reveal data-rdelay="330">
-          <span class="mono mod__idx">02d</span>
-          <h3 class="mod__title">Operating cadence</h3>
-          <p class="mod__body">The meeting, review, and escalation rhythm that carries the model.</p>
+          <span class="mono mod__idx">03d</span>
+          <h3 class="mod__title">Governance</h3>
+          <p class="mod__body">The forums that decide, their cadence, and the ones that can be deleted outright.</p>
         </article>
         <article class="mod" data-reveal data-rdelay="400">
-          <span class="mono mod__idx">02e</span>
-          <h3 class="mod__title">Governance spine</h3>
-          <p class="mod__body">Thresholds, mandates, and the decisions deliberately left unmade.</p>
+          <span class="mono mod__idx">03e</span>
+          <h3 class="mod__title">Accountability</h3>
+          <p class="mod__body">A named owner per outcome. Shared ownership is treated as an unassigned outcome.</p>
         </article>
         <article class="mod" data-reveal data-rdelay="470">
-          <span class="mono mod__idx">02f</span>
-          <h3 class="mod__title">Interfaces</h3>
-          <p class="mod__body">Contracts between functions, so handoffs stop being negotiations.</p>
+          <span class="mono mod__idx">03f</span>
+          <h3 class="mod__title">Load</h3>
+          <p class="mod__body">Where the structure is carrying more than it was designed for, measured before it is redesigned.</p>
         </article>
       </div>
     </section>
@@ -150,23 +182,23 @@
     <section class="svc-sec">
       <div class="svc-sec__head" data-keepout>
         <h2 class="svc-sec__title">How it runs</h2>
-        <p class="svc-sec__note" data-keepout>Three phases, the same three every line runs. The engagement is measured at each one.</p>
+        <p class="svc-sec__note" data-keepout>Three phases, the same three every line runs. Measured at each one.</p>
       </div>
       <div class="phases" data-keepout>
         <div class="phase" data-reveal data-rdelay="120">
           <span class="mono phase__k">P.01</span>
           <h3 class="phase__title">Diagnose</h3>
-          <p class="phase__body">Six to eight weeks. A structural read taken from how decisions actually travel, not from the reporting lines.</p>
+          <p class="phase__body">Four to six weeks. Decision mapping, incentive audit, and the escalation paths people actually use.</p>
         </div>
         <div class="phase" data-reveal data-rdelay="210">
           <span class="mono phase__k">P.02</span>
-          <h3 class="phase__title">Rebuild</h3>
-          <p class="phase__body">One to two quarters. Decision rights, cadence, and interfaces redrawn and put under load.</p>
+          <h3 class="phase__title">Restructure</h3>
+          <p class="phase__body">One to two quarters. Rights reassigned, forums cut, and the operating model rewritten around them.</p>
         </div>
         <div class="phase" data-reveal data-rdelay="300">
           <span class="mono phase__k">P.03</span>
           <h3 class="phase__title">Calibrate</h3>
-          <p class="phase__body">Ongoing. The model is measured against cycle time and rework, and adjusted quarterly.</p>
+          <p class="phase__body">Ongoing. Structure is reviewed against real decisions, quarter over quarter.</p>
         </div>
       </div>
     </section>
@@ -178,27 +210,27 @@
       </div>
       <ul class="signals" data-keepout>
         <li class="signal" data-reveal data-rdelay="120">
-          <span class="mono signal__k">CYCLE TIME</span>
-          <span class="signal__v">Decisions close in one pass instead of touring the organization.</span>
+          <span class="mono signal__k">ESCALATION</span>
+          <span class="signal__v">Fewer decisions travel further than they need to.</span>
         </li>
         <li class="signal" data-reveal data-rdelay="190">
-          <span class="mono signal__k">ESCALATION</span>
-          <span class="signal__v">Fewer decisions travel upward for want of a mandate.</span>
+          <span class="mono signal__k">CYCLE TIME</span>
+          <span class="signal__v">The gap between a decision being needed and being made.</span>
         </li>
         <li class="signal" data-reveal data-rdelay="260">
           <span class="mono signal__k">OWNERSHIP</span>
-          <span class="signal__v">Every material decision has one name against it.</span>
+          <span class="signal__v">Every outcome resolves to one name.</span>
         </li>
         <li class="signal" data-reveal data-rdelay="330">
-          <span class="mono signal__k">REWORK</span>
-          <span class="signal__v">Work stops being redone because two functions held the same assumption differently.</span>
+          <span class="mono signal__k">FORUMS</span>
+          <span class="signal__v">Count goes down; the remaining ones decide rather than update.</span>
         </li>
       </ul>
     </section>
 
     <section class="svc-end">
-      <h2 class="svc-end__title" data-keepout>Authority,<br>drawn straight.</h2>
-      <p class="body veil" style="margin-top:24px">The engagement closes when decisions stop needing Zyrn in the room to reach an owner.</p>
+      <h2 class="svc-end__title" data-keepout data-reveal data-kinetic>Authority,<br>where the work is.</h2>
+      <p class="body veil" style="margin-top:24px">The engagement closes when decisions stop travelling up to be made.</p>
       <div class="cta-row" style="margin-top:32px">
         <a class="btn btn--pulse" href="../index.html#sys-05">
           Request access
@@ -208,17 +240,68 @@
       </div>
     </section>
 
-    <footer class="footer mono">
-      <span class="footer__stamp">
-        <span class="mark" aria-hidden="true">
-          <svg class="mark__half mark__half--top" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
-          <svg class="mark__half mark__half--bot" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
-          <span class="mark__seam"></span>
-        </span>
-        ZYRN — EST. 2026
-      </span>
-      <span class="footer__coords">SYS.02 — BUSINESS STRUCTURING</span>
-      <span>V.1.0 / EN — AR</span>
+    <footer class="sitefoot">
+      <div class="sitefoot__in" data-keepout>
+
+        <div class="sitefoot__top">
+          <div class="sitefoot__brand">
+            <span class="glitch">
+              <span class="shear shear--auto" id="footMark" style="--shear-size:clamp(38px,5.2vw,62px)">
+                <span class="shear__half shear__half--top">ZYRN</span>
+                <span class="shear__half shear__half--bot">ZYRN</span>
+                <span class="shear__seam"></span>
+              </span>
+            </span>
+            <p class="sitefoot__line">Organizations, engineered.</p>
+            <a class="sitefoot__mail" href="mailto:access@zyrn.org?subject=Request%20access%20%E2%80%94%20Q3%202026">access@zyrn.org</a>
+          </div>
+
+          <nav class="sitefoot__cols" aria-label="Footer">
+            <div class="fcol">
+              <span class="mono fcol__h">Lines</span>
+              <a href="../services/website-design.html"><span class="mono">01</span> Website design</a>
+              <a href="../services/brand-kit.html"><span class="mono">02</span> Brand kit</a>
+              <a href="../services/business-structuring.html"><span class="mono">03</span> Business structuring</a>
+              <a href="../services/ai-transformation.html"><span class="mono">04</span> AI adoption</a>
+            </div>
+            <div class="fcol">
+              <span class="mono fcol__h">The firm</span>
+              <a href="../foundation.html">Foundation</a>
+              <a href="../brand.html">Brand system</a>
+              <a href="../index.html#sys-04">Readiness index</a>
+              <a href="../index.html#sys-05">Access</a>
+            </div>
+            <div class="fcol">
+              <span class="mono fcol__h">Intake</span>
+              <span class="fcol__stat">Q3 &mdash; 2026</span>
+              <span class="fcol__stat">01 of 04 seats open</span>
+              <span class="fcol__stat">By referral</span>
+              <span class="fcol__stat">Two quarters minimum</span>
+            </div>
+          </nav>
+        </div>
+
+        <div class="sitefoot__bar mono">
+          <span class="sitefoot__stamp">
+            <span class="mark" aria-hidden="true">
+              <svg class="mark__half mark__half--top" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+              <svg class="mark__half mark__half--bot" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+              <span class="mark__seam"></span>
+            </span>
+            ZYRN &mdash; EST. 2026
+          </span>
+          <span>AMM 31.95&deg;N / 35.93&deg;E</span>
+          <span class="sitefoot__clock">AMM <b id="footClock">--:--:--</b></span>
+          <a class="lum" href="https://www.lumina-jo.com/" target="_blank" rel="noopener noreferrer"
+             aria-label="Lumina — opens in a new tab">
+            <img src="assets/media/lumina-logo.png" alt="Lumina" width="222" height="60" loading="lazy" decoding="async">
+          </a>
+          <span class="sitefoot__spacer"></span>
+          <span>SYS.03 &mdash; BUSINESS STRUCTURING</span>
+          <span>V.2.0 / EN &mdash; AR</span>
+        </div>
+
+      </div>
     </footer>
 
   </main>
@@ -226,19 +309,24 @@
 
 <script src="../assets/js/main.js"></script>
 <script src="../assets/js/ui.js"></script>
+<script src="../assets/js/footer.js"></script>
 
 <script type="module">
 import { initField } from '../assets/js/field.js';
+import { initGraph } from '../assets/js/modules/graph.js';
+
 const roState = document.getElementById('readoutState');
 initField({
   program: [
-    { at: 0.00, form: 'S3' },   // decision rights as a closed loop
+    { at: 0.00, form: 'S3' },   // the loop, as it should run
     { at: 0.62, form: 'S3' },
-    { at: 1.00, form: 'S4' },
+    { at: 1.00, form: 'S4' },   // released to run without us
   ],
   channel: { tilt: { S3: 26 }, spin: { S3: 120 } },
   onState: (p, n) => { if (roState) roState.textContent = n; },
 });
+
+initGraph();
 </script>
 </body>
 </html>

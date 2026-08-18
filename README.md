@@ -22,19 +22,37 @@ those states carry the argument:
 | `S4 RELEASE` | drifting starfield | Self-calibrating. It holds without the field driving it. |
 
 Each page runs its own program over those states and its own tilt and spin, so
-moving between pages reads as one instrument changing channels.
+moving between pages reads as one instrument changing channels. Navigation is
+continuous: clicking through morphs the field to whatever the destination opens
+on, fades only the content, and the incoming page builds its particles already
+settled there. The bed never blinks.
+
+## The service lines
+
+Four, each with an instrument you drive by scrolling:
+
+| | Line | Instrument |
+|---|---|---|
+| 01 | Website design | a surface assembling itself — structure, hierarchy, type, system, live |
+| 02 | Brand kit | the kit applied to itself; the chips and the mark are the real ones |
+| 03 | Business structuring | decision rights rewired from the published chart to authority at the work |
+| 04 | AI adoption & transformation | the readiness index climbing 00 to 04, constraint named |
 
 ## Layout
 
 ```
 index.html              landing — five scenes, SYS.01 hero to SYS.05 access
 brand.html              the brand system, as a document
-services/*.html         one page per service line
-assets/js/field.js      the simulation: GPGPU sim, shaders, formations, governor
+services/*.html         one page per service line, each with its own instrument
+assets/js/field.js      the simulation: GPGPU sim, shaders, formations, governor,
+                        and the page-to-page continuity handoff
+assets/js/modules/      the signature instruments (build, specimen, graph,
+                        readiness) plus their shared scroll plumbing
 assets/js/main.js       DOM runtime — the shear, the readout rail, reveals
-assets/js/ui.js         the glitch scheduler and page-transition veil
+assets/js/ui.js         the glitch scheduler
 assets/css/styles.css   tokens and base system
 assets/css/field.css    the field's page layer
+assets/css/svc-modules.css  the instruments
 docs/                   the build spec, the field spec, positioning research
 design/                 source of record from Claude Design (reference only)
 CLAUDE.md               the operative rules — read before any visual change

@@ -1,0 +1,116 @@
+/* ══════════════════════════════════════════════════════════════════════
+   ZYRN — SYS.00 · THE ENTRANCE (landing page only)
+
+   The mark assembles itself in the centre of the viewport, gets cut, and
+   then flies into its real position in the hero. Sequence:
+
+     0—460ms    the two halves arrive from opposite edges and meet ALIGNED
+     500—940ms  ONLY THEN does the Pulse line sweep in from the right
+     820ms      it lands, and the halves shear apart around it
+     1120ms     the glitch fires on the finished mark
+     1500ms     the whole mark FLIPs into the hero lockup and the page fades up
+
+   The field is rendering behind this the whole time — the entrance is an
+   overlay on the bed, not a splash screen in front of it. Nothing here
+   covers the canvas.
+
+   Every timing below is mirrored in assets/js/intro.js. Change one, change
+   both. The JS also enforces a hard 4s failsafe, so a dropped animation
+   event can never leave the page hidden.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.intro{
+  position:fixed;inset:0;z-index:60;
+  display:grid;place-items:center;
+  pointer-events:none;
+}
+.intro__stage{
+  position:relative;display:inline-block;
+  transform-origin:top left;
+  will-change:transform;
+}
+
+/* the content is only hidden once JS has taken control, so a failure to
+   boot leaves the page perfectly readable */
+body.is-intro .shell{opacity:0}
+body.is-intro .readout,
+body.is-intro .sysnav{opacity:0}
+.shell{transition:opacity 620ms cubic-bezier(.16,1,.3,1)}
+
+/* the mark starts invisible; the halves are animated in individually */
+.intro .shear__half{opacity:0}
+.intro .shear__seam{transform:scaleX(0);opacity:0}
+
+
+/* ── 1 · the halves arrive from opposite edges ─────────────────────
+   fill-mode `both` on the arrival so it holds the landed state, and
+   `forwards` on the shear so it does not back-fill over the arrival
+   while it is still waiting out its delay. */
+
+.intro.is-run .shear__half--top{
+  animation:zin-right 460ms cubic-bezier(.16,1,.3,1) both,
+            zshear-top 260ms cubic-bezier(.22,1,.36,1) 820ms forwards;
+}
+.intro.is-run .shear__half--bot{
+  animation:zin-left 460ms cubic-bezier(.16,1,.3,1) both,
+            zshear-bot 260ms cubic-bezier(.22,1,.36,1) 820ms forwards;
+}
+@keyframes zin-right{
+  0%  {transform:translate3d(64vw,0,0);opacity:0;filter:blur(12px)}
+  55% {opacity:1}
+  100%{transform:translate3d(0,0,0);opacity:1;filter:blur(0)}
+}
+@keyframes zin-left{
+  0%  {transform:translate3d(-64vw,0,0);opacity:0;filter:blur(12px)}
+  55% {opacity:1}
+  100%{transform:translate3d(0,0,0);opacity:1;filter:blur(0)}
+}
+@keyframes zshear-top{to{transform:translate3d(-0.1em,0,0)}}
+@keyframes zshear-bot{to{transform:translate3d(0.1em,0,0)}}
+
+
+/* ── 2 · the Pulse line sweeps in from the right and cuts ──────────── */
+
+.intro__slice{
+  position:absolute;left:-50vw;right:-50vw;top:50%;
+  height:2px;margin-top:-1px;
+  background:var(--pulse-mark,#6E56F8);
+  box-shadow:0 0 22px rgba(110,86,248,0.95),0 0 5px rgba(110,86,248,1);
+  transform:translate3d(140vw,0,0);opacity:0;
+  will-change:transform;
+}
+.intro.is-run .intro__slice{
+  /* 500ms, not 400: the line must follow a COMPLETED mark, not race it */
+  animation:zslice 440ms cubic-bezier(.2,.85,.2,1) 500ms forwards;
+}
+@keyframes zslice{
+  0%  {transform:translate3d(140vw,0,0);opacity:0}
+  12% {opacity:1}
+  74% {transform:translate3d(0,0,0);opacity:1}
+  100%{transform:translate3d(-26vw,0,0);opacity:0}
+}
+
+/* the mark's own seam takes over exactly where the sweep lands */
+.intro.is-run .shear__seam{
+  animation:zseam 300ms cubic-bezier(.22,1,.36,1) 840ms forwards;
+}
+@keyframes zseam{
+  from{transform:scaleX(0);opacity:0}
+  to  {transform:scaleX(1);opacity:1}
+}
+
+
+/* ── 3 · hand off to the hero ──────────────────────────────────────── */
+
+.intro.is-flip .intro__stage{
+  transition:transform 760ms cubic-bezier(.65,0,.35,1),
+             opacity 240ms linear 620ms;
+}
+.intro.is-done{opacity:0;transition:opacity 200ms linear}
+
+
+/* ── reduced motion: no entrance at all ────────────────────────────── */
+@media (prefers-reduced-motion:reduce){
+  .intro{display:none}
+  body.is-intro .shell{opacity:1}
+}

@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="assets/css/styles.css">
 <link rel="stylesheet" href="assets/css/brand.css">
 <link rel="stylesheet" href="assets/css/field.css">
+<link rel="stylesheet" href="assets/css/footer.css">
 
 <script type="importmap">
 {
@@ -71,6 +72,12 @@
       </span>
       </span>
     </a>
+    <div class="nav__links">
+      <a href="index.html#sys-03" class="nav__link">Work<sup class="nav__sup">04</sup></a>
+      <a href="foundation.html" class="nav__link">Foundation</a>
+      <a href="index.html#sys-04" class="nav__link">System</a>
+      <a href="index.html#sys-05" class="nav__link">Contact</a>
+    </div>
     <div class="nav__end">
       <span class="mono nav__coords">SYS.06 — BRAND SYSTEM</span>
       <a class="btn btn--hairline" href="index.html">Back to site</a>
@@ -414,21 +421,73 @@
     </ul>
   </section>
 
-  <footer class="footer mono doc__foot">
-    <span class="footer__stamp">
-      <span class="mark" aria-hidden="true">
-        <svg class="mark__half mark__half--top" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
-        <svg class="mark__half mark__half--bot" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
-        <span class="mark__seam"></span>
-      </span>
-      ZYRN — EST. 2026
-    </span>
-    <span class="footer__coords">AMM 31.95&deg;N / 35.93&deg;E</span>
-    <span>V.2.0 / EN — AR</span>
-  </footer>
+    <footer class="sitefoot">
+      <div class="sitefoot__in" data-keepout>
+
+        <div class="sitefoot__top">
+          <div class="sitefoot__brand">
+            <span class="glitch">
+              <span class="shear shear--auto" id="footMark" style="--shear-size:clamp(38px,5.2vw,62px)">
+                <span class="shear__half shear__half--top">ZYRN</span>
+                <span class="shear__half shear__half--bot">ZYRN</span>
+                <span class="shear__seam"></span>
+              </span>
+            </span>
+            <p class="sitefoot__line">Organizations, engineered.</p>
+            <a class="sitefoot__mail" href="mailto:access@zyrn.org?subject=Request%20access%20%E2%80%94%20Q3%202026">access@zyrn.org</a>
+          </div>
+
+          <nav class="sitefoot__cols" aria-label="Footer">
+            <div class="fcol">
+              <span class="mono fcol__h">Lines</span>
+              <a href="services/website-design.html"><span class="mono">01</span> Website design</a>
+              <a href="services/brand-kit.html"><span class="mono">02</span> Brand kit</a>
+              <a href="services/business-structuring.html"><span class="mono">03</span> Business structuring</a>
+              <a href="services/ai-transformation.html"><span class="mono">04</span> AI adoption</a>
+            </div>
+            <div class="fcol">
+              <span class="mono fcol__h">The firm</span>
+              <a href="foundation.html">Foundation</a>
+              <a href="brand.html">Brand system</a>
+              <a href="index.html#sys-04">Readiness index</a>
+              <a href="index.html#sys-05">Access</a>
+            </div>
+            <div class="fcol">
+              <span class="mono fcol__h">Intake</span>
+              <span class="fcol__stat">Q3 &mdash; 2026</span>
+              <span class="fcol__stat">01 of 04 seats open</span>
+              <span class="fcol__stat">By referral</span>
+              <span class="fcol__stat">Two quarters minimum</span>
+            </div>
+          </nav>
+        </div>
+
+        <div class="sitefoot__bar mono">
+          <span class="sitefoot__stamp">
+            <span class="mark" aria-hidden="true">
+              <svg class="mark__half mark__half--top" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+              <svg class="mark__half mark__half--bot" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+              <span class="mark__seam"></span>
+            </span>
+            ZYRN &mdash; EST. 2026
+          </span>
+          <span>AMM 31.95&deg;N / 35.93&deg;E</span>
+          <span class="sitefoot__clock">AMM <b id="footClock">--:--:--</b></span>
+          <a class="lum" href="https://www.lumina-jo.com/" target="_blank" rel="noopener noreferrer"
+             aria-label="Lumina — opens in a new tab">
+            <img src="assets/media/lumina-logo.png" alt="Lumina" width="222" height="60" loading="lazy" decoding="async">
+          </a>
+          <span class="sitefoot__spacer"></span>
+          <span>SYS.06 &mdash; BRAND SYSTEM</span>
+          <span>V.2.0 / EN &mdash; AR</span>
+        </div>
+
+      </div>
+    </footer>
 
 </main>
 <script src="assets/js/ui.js"></script>
+<script src="assets/js/footer.js"></script>
 
 <script type="module">
 /* One held formation, no morph, no stats. The document stays readable first;

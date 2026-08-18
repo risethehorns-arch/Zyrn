@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZYRN — Foundation</title>
+<meta name="description" content="Zyrn is an org-engineering firm. It installs the operating core of a business — people, structure, and intelligence as one system — and leaves when it runs.">
+<link rel="canonical" href="https://zyrn.org/foundation.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ZYRN">
+<meta property="og:locale" content="en">
+<meta property="og:title" content="ZYRN — Foundation">
+<meta property="og:description" content="Zyrn is an org-engineering firm. It installs the operating core of a business — people, structure, and intelligence as one system — and leaves when it runs.">
+<meta property="og:url" content="https://zyrn.org/foundation.html">
+<meta property="og:image" content="https://zyrn.org/assets/media/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The Zyrn presence field — a particle torus rendered live in the browser.">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Zyrn",
+  "url": "https://zyrn.org",
+  "logo": "https://zyrn.org/assets/media/og.jpg",
+  "description": "An org-engineering firm. Zyrn installs the operating core of a business — people, structure, and intelligence as one system.",
+  "address": { "@type": "PostalAddress", "addressLocality": "Amman", "addressCountry": "JO" },
+  "founder": {
+    "@type": "Person",
+    "name": "Yazan Tarawneh",
+    "jobTitle": "Founder & Chief Executive"
+  }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<link rel="stylesheet" href="assets/css/service.css">
+<link rel="stylesheet" href="assets/css/field.css">
+<link rel="stylesheet" href="assets/css/footer.css">
+<link rel="stylesheet" href="assets/css/foundation.css">
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/",
+    "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.mjs",
+    "lil-gui": "https://cdn.jsdelivr.net/npm/lil-gui@0.19.2/dist/lil-gui.esm.js"
+  }
+}
+</script>
+</head>
+<body>
+
+<canvas id="field" aria-hidden="true"></canvas>
+
+<div class="grid" aria-hidden="true">
+  <span class="grid__line grid__line--a"></span>
+  <span class="grid__line grid__line--b"></span>
+</div>
+
+<div class="readout" aria-hidden="true">
+  <span class="readout__label">ZYRN / SYS.00 &middot; <span id="readoutState">FIELD</span> &mdash; <span id="readoutPct">000</span>%</span>
+  <span class="readout__track"><span class="readout__fill" id="readoutFill"></span></span>
+</div>
+
+<div class="shell">
+
+  <nav class="nav">
+    <div class="nav__row">
+      <a href="index.html" aria-label="ZYRN — home">
+        <span class="glitch">
+          <span class="shear shear--auto is-sheared" style="--shear-size:20px">
+            <span class="shear__half shear__half--top">ZYRN</span>
+            <span class="shear__half shear__half--bot">ZYRN</span>
+            <span class="shear__seam"></span>
+          </span>
+        </span>
+      </a>
+      <div class="nav__links">
+        <a href="index.html#sys-03" class="nav__link">Work<sup class="nav__sup">04</sup></a>
+        <a href="foundation.html" class="nav__link" aria-current="page">Foundation</a>
+        <a href="index.html#sys-04" class="nav__link">System</a>
+        <a href="brand.html" class="nav__link">Brand</a>
+        <a href="index.html#sys-05" class="nav__link">Contact</a>
+      </div>
+      <div class="nav__end">
+        <span class="mono nav__coords">AMM 31.95&deg;N / 35.93&deg;E</span>
+        <a class="btn btn--hairline" href="index.html#sys-05">Request access</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <header class="svc-hero">
+      <span class="mono svc-hero__idx" aria-hidden="true">00</span>
+      <h1 class="svc-hero__title" data-keepout data-reveal data-kinetic>Foundation.</h1>
+      <p class="svc-hero__lede" data-keepout>
+        Zyrn is an org-engineering firm. It installs the operating core of a
+        business &mdash; people, structure, and intelligence as one system &mdash;
+        and the engagement closes when that core runs without us.
+      </p>
+      <div class="mono svc-hero__meta" data-keepout>EST. 2026 &nbsp;/&nbsp; AMMAN, JO &nbsp;/&nbsp; BY REFERRAL</div>
+    </header>
+
+    <!-- ── 01 · what it is, by what it refuses to be ─────────────────── -->
+    <section class="fnd">
+      <div class="fnd__head" data-keepout>
+        <span class="mono fnd__num">01 &mdash; WHAT ZYRN IS</span>
+        <h2 class="fnd__title" data-reveal data-kinetic>Two positions it refuses,<br>and the one it holds.</h2>
+        <p class="fnd__note">The distinction is not vanity. It decides what gets handed over at the end, and whether the firm is any more capable than it was at the start.</p>
+      </div>
+      <div class="stance" data-keepout>
+        <article class="stance__c" data-reveal data-rdelay="100">
+          <span class="mono stance__k">NOT THIS</span>
+          <h3 class="stance__t">An agency</h3>
+          <p class="stance__b">An agency delivers artefacts. The work ends when the file is handed over, and the firm that commissioned it is exactly as capable as it was before.</p>
+        </article>
+        <article class="stance__c" data-reveal data-rdelay="180">
+          <span class="mono stance__k">NOT THIS</span>
+          <h3 class="stance__t">A consultancy</h3>
+          <p class="stance__b">A consultancy delivers advice. It leaves after the deck, and the recommendation starts degrading the moment it meets an operating model nobody changed.</p>
+        </article>
+        <article class="stance__c stance__c--is" data-reveal data-rdelay="260">
+          <span class="mono stance__k">THIS</span>
+          <h3 class="stance__t">An operating core</h3>
+          <p class="stance__b">Zyrn installs the system and stays until it runs. What gets handed over is capability &mdash; the team ships without us, which is the only exit worth writing into a contract.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ── 02 · the mission ──────────────────────────────────────────── -->
+    <section class="fnd">
+      <div class="fnd__head" data-keepout>
+        <span class="mono fnd__num">02 &mdash; THE MISSION</span>
+      </div>
+      <div data-keepout>
+        <h2 class="mission" data-reveal data-kinetic>Elevate the firm.<br><em>Not the deck.</em></h2>
+        <p class="mission__b" data-reveal data-rdelay="140">
+          Zyrn exists to raise what a business is capable of &mdash; its structure,
+          its surface, its decisions, and the intelligence running underneath all
+          three. Every engagement opens on a readiness number and closes on a
+          higher one. If the number has not moved, the engagement has not worked.
+          That is a shared position, not a disclaimer.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── 03 · who it is for ────────────────────────────────────────── -->
+    <section class="fnd">
+      <div class="fnd__head" data-keepout>
+        <span class="mono fnd__num">03 &mdash; WHO IT IS FOR</span>
+        <h2 class="fnd__title" data-reveal data-kinetic>Anyone accountable<br>for the whole thing.</h2>
+      </div>
+      <div data-keepout>
+        <div class="forwho" data-reveal data-rdelay="120">
+          <span>CEOs &amp; founders</span>
+          <span>Companies</span>
+          <span>Firms</span>
+          <span>Organizations</span>
+          <span>Small or large</span>
+        </div>
+        <p class="fnd__note" data-reveal data-rdelay="200">
+          Size is not the qualifier. A four-person firm with a decision it cannot
+          make is a harder problem than a four-hundred-person firm with a process
+          it has outgrown &mdash; and both are the work.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── 04 · the founder ────────────────────────────────────────────
+         The name is set in the shear component — the same law the wordmark
+         obeys. Both .shear__half spans must carry identical text; that is
+         how the clip-and-offset works. -->
+    <section class="fnd">
+      <div class="fnd__head" data-keepout>
+        <span class="mono fnd__num">04 &mdash; THE FOUNDER</span>
+      </div>
+
+      <div class="fndr" data-keepout>
+        <div class="fndr__mark" data-reveal>
+          <span class="glitch">
+            <span class="shear shear--auto" id="fndrName" style="--shear-size:clamp(22px,2.9vw,38px)">
+              <span class="shear__half shear__half--top">YAZAN TARAWNEH</span>
+              <span class="shear__half shear__half--bot">YAZAN TARAWNEH</span>
+              <span class="shear__seam"></span>
+            </span>
+          </span>
+          <span class="mono fndr__role">FOUNDER &amp; CHIEF EXECUTIVE</span>
+        </div>
+
+        <div data-reveal data-rdelay="140">
+          <p class="fndr__b">
+            He leads a team of engineers, strategists, and designers, and works
+            inside the firms he serves rather than alongside them &mdash;
+            accountable to their outcomes rather than to a scope of work. It is
+            the reason the work tends to arrive as something the firm had not
+            thought to ask for.
+          </p>
+          <p class="fndr__b">
+            Measurement and change, held by the same person: the first tells a
+            business where its ceiling actually is, the second is what moves it.
+            Most firms buy those two things separately and then wonder why they
+            never meet.
+          </p>
+
+          <div class="creds" id="creds">
+            <span class="creds__slice" aria-hidden="true"></span>
+            <div class="cred">
+              <span class="mono cred__k">01</span>
+              <span class="cred__v">MSc &mdash; Business intelligence</span>
+            </div>
+            <div class="cred">
+              <span class="mono cred__k">02</span>
+              <span class="cred__v">Harvard Business School &mdash; LCOR, leading change &amp; organizational renewal</span>
+            </div>
+            <div class="cred">
+              <span class="mono cred__k">03</span>
+              <span class="cred__v">Intrapreneur &mdash; builds from inside the business</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── close ─────────────────────────────────────────────────────── -->
+    <section class="fnd-end">
+      <h2 class="fnd-end__t" data-keepout data-reveal data-kinetic>Organizations,<br>engineered.</h2>
+      <p class="body veil" style="margin-top:24px;max-width:52ch">
+        Four engagements a quarter. The constraint is deliberate &mdash; the work
+        requires staying.
+      </p>
+      <div class="cta-row" style="margin-top:32px">
+        <a class="btn btn--pulse" href="index.html#sys-05">
+          Request access
+          <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+        </a>
+        <a class="btn btn--hairline" href="index.html#sys-03">See the four lines</a>
+      </div>
+    </section>
+
+    <footer class="sitefoot">
+      <div class="sitefoot__in" data-keepout>
+
+        <div class="sitefoot__top">
+          <div class="sitefoot__brand">
+            <span class="glitch">
+              <span class="shear shear--auto" id="footMark" style="--shear-size:clamp(38px,5.2vw,62px)">
+                <span class="shear__half shear__half--top">ZYRN</span>
+                <span class="shear__half shear__half--bot">ZYRN</span>
+                <span class="shear__seam"></span>
+              </span>
+            </span>
+            <p class="sitefoot__line">Organizations, engineered.</p>
+            <a class="sitefoot__mail" href="mailto:access@zyrn.org?subject=Request%20access%20%E2%80%94%20Q3%202026">access@zyrn.org</a>
+          </div>
+
+          <nav class="sitefoot__cols" aria-label="Footer">
+            <div class="fcol">
+              <span class="mono fcol__h">Lines</span>
+              <a href="services/website-design.html"><span class="mono">01</span> Website design</a>
+              <a href="services/brand-kit.html"><span class="mono">02</span> Brand kit</a>
+              <a href="services/business-structuring.html"><span class="mono">03</span> Business structuring</a>
+              <a href="services/ai-transformation.html"><span class="mono">04</span> AI adoption</a>
+            </div>
+            <div class="fcol">
+              <span class="mono fcol__h">The firm</span>
+              <a href="foundation.html">Foundation</a>
+              <a href="brand.html">Brand system</a>
+              <a href="index.html#sys-04">Readiness index</a>
+              <a href="index.html#sys-05">Access</a>
+            </div>
+            <div class="fcol">
+              <span class="mono fcol__h">Intake</span>
+              <span class="fcol__stat">Q3 &mdash; 2026</span>
+              <span class="fcol__stat">01 of 04 seats open</span>
+              <span class="fcol__stat">By referral</span>
+              <span class="fcol__stat">Two quarters minimum</span>
+            </div>
+          </nav>
+        </div>
+
+        <div class="sitefoot__bar mono">
+          <span class="sitefoot__stamp">
+            <span class="mark" aria-hidden="true">
+              <svg class="mark__half mark__half--top" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+              <svg class="mark__half mark__half--bot" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+              <span class="mark__seam"></span>
+            </span>
+            ZYRN &mdash; EST. 2026
+          </span>
+          <span>AMM 31.95&deg;N / 35.93&deg;E</span>
+          <span class="sitefoot__clock">AMM <b id="footClock">--:--:--</b></span>
+          <a class="lum" href="https://www.lumina-jo.com/" target="_blank" rel="noopener noreferrer"
+             aria-label="Lumina — opens in a new tab">
+            <img src="assets/media/lumina-logo.png" alt="Lumina" width="222" height="60" loading="lazy" decoding="async">
+          </a>
+          <span class="sitefoot__spacer"></span>
+          <span>SYS.00 &mdash; FOUNDATION</span>
+          <span>V.2.0 / EN &mdash; AR</span>
+        </div>
+
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/ui.js"></script>
+<script src="assets/js/footer.js"></script>
+
+<script type="module">
+import { initField } from './assets/js/field.js';
+import { initFoundation } from './assets/js/modules/foundation.js';
+
+const roState = document.getElementById('readoutState');
+initField({
+  program: [
+    { at: 0.00, form: 'S1' },   // the field, as everything starts
+    { at: 0.55, form: 'S1' },
+    { at: 1.00, form: 'S3' },   // engineered into a core
+  ],
+  channel: { tilt: { S1: 34, S3: 24 }, spin: { S1: 120 } },
+  onState: (p, n) => { if (roState) roState.textContent = n; },
+});
+
+initFoundation();
+</script>
+</body>
+</html>

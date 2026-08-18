@@ -22,6 +22,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/styles.css">
 <link rel="stylesheet" href="assets/css/field.css">
+<link rel="stylesheet" href="assets/css/footer.css">
+<link rel="stylesheet" href="assets/css/intro.css">
 
 <script type="importmap">
 {
@@ -46,6 +48,23 @@
 <div class="grid" aria-hidden="true">
   <span class="grid__line grid__line--a"></span>
   <span class="grid__line grid__line--b"></span>
+</div>
+
+<!-- ── SYS.00 · the entrance ────────────────────────────────────────
+     The mark assembles in the centre of the viewport — inside the hole of
+     the ring the hero opens on — is cut by the Pulse line, glitches, then
+     flies into the hero lockup. assets/js/intro.js owns the sequence. -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro__stage">
+    <span class="glitch" id="introGlitch">
+      <span class="shear" id="introMark" style="--shear-size:clamp(54px,10.5vw,128px)">
+        <span class="shear__half shear__half--top">ZYRN</span>
+        <span class="shear__half shear__half--bot">ZYRN</span>
+        <span class="shear__seam"></span>
+      </span>
+    </span>
+    <span class="intro__slice"></span>
+  </div>
 </div>
 
 <!-- ── section index rail ───────────────────────────────────────────
@@ -84,10 +103,11 @@
       </div>
 
       <div class="nav__links">
-        <a href="#sys-03" class="nav__link" data-reveal data-rdelay="100">Work<sup class="nav__sup">06</sup></a>
-        <a href="#sys-04" class="nav__link" data-reveal data-rdelay="200">System</a>
-        <a href="#" class="nav__link" data-reveal data-rdelay="300">Journal</a>
-        <a href="#sys-05" class="nav__link" data-reveal data-rdelay="400">Contact</a>
+        <a href="#sys-03" class="nav__link" data-reveal data-rdelay="100">Work<sup class="nav__sup">04</sup></a>
+        <a href="foundation.html" class="nav__link" data-reveal data-rdelay="180">Foundation</a>
+        <a href="#sys-04" class="nav__link" data-reveal data-rdelay="260">System</a>
+        <a href="brand.html" class="nav__link" data-reveal data-rdelay="340">Brand</a>
+        <a href="#sys-05" class="nav__link" data-reveal data-rdelay="420">Contact</a>
       </div>
 
       <div class="nav__end" data-reveal data-rdelay="500">
@@ -103,10 +123,10 @@
     <section class="section" data-screen-label="Hero" data-sys-section="01">
       <div class="row row--top">
         <div class="index">
-          <span class="mono index__item veil" data-reveal data-rdelay="150">01 / HUMAN CAPITAL</span>
-          <span class="mono index__item veil" data-reveal data-rdelay="270">02 / BUSINESS STRUCTURING</span>
-          <span class="mono index__item veil" data-reveal data-rdelay="390">03 / AI TRANSFORMATION</span>
-          <span class="mono index__item veil" data-reveal data-rdelay="510">04 / WEB &amp; STRATEGY</span>
+          <span class="mono index__item veil" data-reveal data-rdelay="150">01 / WEBSITE DESIGN</span>
+          <span class="mono index__item veil" data-reveal data-rdelay="270">02 / BRAND KIT</span>
+          <span class="mono index__item veil" data-reveal data-rdelay="390">03 / BUSINESS STRUCTURING</span>
+          <span class="mono index__item veil" data-reveal data-rdelay="510">04 / AI ADOPTION</span>
         </div>
         <p class="lede veil" data-reveal data-rdelay="300" data-keepout>
           Zyrn builds the operating core of modern firms — people, structure, and intelligence as one system.
@@ -253,17 +273,26 @@
       </div>
 
       <div class="lines" data-keepout>
-        <a class="line" href="services/human-capital.html" data-reveal data-rdelay="280">
+        <a class="line" href="services/website-design.html" data-reveal data-rdelay="280">
           <span class="mono line__idx">01</span>
           <div class="line__body">
-            <h3 class="line__title">Human capital</h3>
-            <p class="line__lede">Skills treated as infrastructure. Roles redesigned around outcomes, and mobility that moves faster than the job descriptions.</p>
+            <h3 class="line__title">Website design</h3>
+            <p class="line__lede">The surface is the instrument a firm gets judged by before anyone speaks to it. Built as a system, held to a performance budget, and handed over.</p>
           </div>
-          <span class="mono line__meta">ROLE DESIGN / SKILLS TAXONOMY / MOBILITY</span>
+          <span class="mono line__meta">STRUCTURE / DESIGN SYSTEM / BUILD / MEASUREMENT</span>
         </a>
 
-        <a class="line" href="services/business-structuring.html" data-reveal data-rdelay="360">
+        <a class="line" href="services/brand-kit.html" data-reveal data-rdelay="360">
           <span class="mono line__idx">02</span>
+          <div class="line__body">
+            <h3 class="line__title">Brand kit</h3>
+            <p class="line__lede">A brand is a set of decisions, written down. Documented to the value rather than to the mood, so anyone can apply it without asking.</p>
+          </div>
+          <span class="mono line__meta">PALETTE / TYPE / MOTION / VOICE</span>
+        </a>
+
+        <a class="line" href="services/business-structuring.html" data-reveal data-rdelay="440">
+          <span class="mono line__idx">03</span>
           <div class="line__body">
             <h3 class="line__title">Business structuring</h3>
             <p class="line__lede">Decision rights before org charts. Where authority sits, what it owns, and which incentives are quietly working against it.</p>
@@ -271,22 +300,13 @@
           <span class="mono line__meta">DECISION RIGHTS / INCENTIVES / OPERATING MODEL</span>
         </a>
 
-        <a class="line" href="services/ai-transformation.html" data-reveal data-rdelay="440">
-          <span class="mono line__idx">03</span>
-          <div class="line__body">
-            <h3 class="line__title">AI transformation</h3>
-            <p class="line__lede">Adoption is an operating-model problem wearing a technology costume. The model gets rebuilt first; the tooling follows it.</p>
-          </div>
-          <span class="mono line__meta">ADOPTION / WORKFLOW REBUILD / GOVERNANCE</span>
-        </a>
-
-        <a class="line" href="services/web-strategy.html" data-reveal data-rdelay="520">
+        <a class="line" href="services/ai-transformation.html" data-reveal data-rdelay="520">
           <span class="mono line__idx">04</span>
           <div class="line__body">
-            <h3 class="line__title">Web &amp; strategy</h3>
-            <p class="line__lede">The surface a firm presents is the instrument it is judged by. Positioning, brand system, and the digital surface as one build.</p>
+            <h3 class="line__title">AI adoption &amp; transformation</h3>
+            <p class="line__lede">Adoption is an operating-model problem wearing a technology costume. The model gets rebuilt first; the tooling follows it.</p>
           </div>
-          <span class="mono line__meta">POSITIONING / BRAND SYSTEM / DIGITAL SURFACE</span>
+          <span class="mono line__meta">READINESS / WORKFLOW REBUILD / GOVERNANCE</span>
         </a>
       </div>
     </section>
@@ -386,17 +406,68 @@
     </section>
 
     <!-- ── footer ───────────────────────────────────────────────────── -->
-    <footer class="footer mono">
-      <span class="footer__stamp">
-        <span class="mark" aria-hidden="true">
-          <svg class="mark__half mark__half--top" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
-          <svg class="mark__half mark__half--bot" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
-          <span class="mark__seam"></span>
-        </span>
-        ZYRN — EST. 2026
-      </span>
-      <span class="footer__coords">AMM 31.95&deg;N / 35.93&deg;E</span>
-      <span>V.2.0 / EN — AR</span>
+    <footer class="sitefoot">
+      <div class="sitefoot__in" data-keepout>
+
+        <div class="sitefoot__top">
+          <div class="sitefoot__brand">
+            <span class="glitch">
+              <span class="shear shear--auto" id="footMark" style="--shear-size:clamp(38px,5.2vw,62px)">
+                <span class="shear__half shear__half--top">ZYRN</span>
+                <span class="shear__half shear__half--bot">ZYRN</span>
+                <span class="shear__seam"></span>
+              </span>
+            </span>
+            <p class="sitefoot__line">Organizations, engineered.</p>
+            <a class="sitefoot__mail" href="mailto:access@zyrn.org?subject=Request%20access%20%E2%80%94%20Q3%202026">access@zyrn.org</a>
+          </div>
+
+          <nav class="sitefoot__cols" aria-label="Footer">
+            <div class="fcol">
+              <span class="mono fcol__h">Lines</span>
+              <a href="services/website-design.html"><span class="mono">01</span> Website design</a>
+              <a href="services/brand-kit.html"><span class="mono">02</span> Brand kit</a>
+              <a href="services/business-structuring.html"><span class="mono">03</span> Business structuring</a>
+              <a href="services/ai-transformation.html"><span class="mono">04</span> AI adoption</a>
+            </div>
+            <div class="fcol">
+              <span class="mono fcol__h">The firm</span>
+              <a href="foundation.html">Foundation</a>
+              <a href="brand.html">Brand system</a>
+              <a href="index.html#sys-04">Readiness index</a>
+              <a href="index.html#sys-05">Access</a>
+            </div>
+            <div class="fcol">
+              <span class="mono fcol__h">Intake</span>
+              <span class="fcol__stat">Q3 &mdash; 2026</span>
+              <span class="fcol__stat">01 of 04 seats open</span>
+              <span class="fcol__stat">By referral</span>
+              <span class="fcol__stat">Two quarters minimum</span>
+            </div>
+          </nav>
+        </div>
+
+        <div class="sitefoot__bar mono">
+          <span class="sitefoot__stamp">
+            <span class="mark" aria-hidden="true">
+              <svg class="mark__half mark__half--top" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+              <svg class="mark__half mark__half--bot" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+              <span class="mark__seam"></span>
+            </span>
+            ZYRN &mdash; EST. 2026
+          </span>
+          <span>AMM 31.95&deg;N / 35.93&deg;E</span>
+          <span class="sitefoot__clock">AMM <b id="footClock">--:--:--</b></span>
+          <a class="lum" href="https://www.lumina-jo.com/" target="_blank" rel="noopener noreferrer"
+             aria-label="Lumina — opens in a new tab">
+            <img src="assets/media/lumina-logo.png" alt="Lumina" width="222" height="60" loading="lazy" decoding="async">
+          </a>
+          <span class="sitefoot__spacer"></span>
+          <span>SYS.01 &mdash; SYS.05</span>
+          <span>V.2.0 / EN &mdash; AR</span>
+        </div>
+
+      </div>
     </footer>
 
   </main>
@@ -404,6 +475,7 @@
 
 <script src="assets/js/main.js"></script>
 <script src="assets/js/ui.js"></script>
+<script src="assets/js/footer.js"></script>
 
 <script type="module">
 /* SYS.01 → SYS.05 mapped onto the field's states. The page now OPENS on the
@@ -411,7 +483,12 @@
    so the operating core is what you land on. From there the motion argues the
    thesis: the core opens into the four lines, the readiness index climbs from
    emergent structure back to an engineered loop, and access releases it. */
+import { initIntro } from './assets/js/intro.js';
 import { initField } from './assets/js/field.js';
+
+// before initField: the entrance needs to PEEK at the continuity handoff,
+// and field.js consumes it
+initIntro();
 
 const roState = document.getElementById('readoutState');
 const hCount  = document.getElementById('hCount');

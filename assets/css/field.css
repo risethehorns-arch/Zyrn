@@ -308,3 +308,41 @@ html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
 .lenis.lenis-stopped{overflow:hidden}
 .lenis.lenis-scrolling iframe{pointer-events:none}
+
+
+/* ── 8. page continuity ─────────────────────────────────────────────
+   The v1.0 transition dropped an obsidian veil over the whole viewport,
+   which reads as two documents. Here ONLY the content moves: the canvas
+   is never touched, so the field carries straight through the navigation
+   and the pages read as one surface changing channels. */
+.shell,
+body > main{
+  transition:opacity 400ms cubic-bezier(.4,0,.2,1),
+             transform 400ms cubic-bezier(.4,0,.2,1),
+             filter 400ms cubic-bezier(.4,0,.2,1);
+}
+body.is-leaving .shell,
+body.is-leaving > main{
+  opacity:0;
+  transform:translateY(-14px) scale(0.994);
+  filter:blur(5px);
+  pointer-events:none;
+}
+body.is-entering .shell,
+body.is-entering > main{
+  animation:page-in 620ms cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes page-in{
+  from{opacity:0;transform:translateY(16px) scale(0.995);filter:blur(6px)}
+  to  {opacity:1;transform:none;filter:blur(0)}
+}
+/* the readout and the section rail belong to the instrument, not to the
+   document — they cross over without fading */
+body.is-leaving .readout,
+body.is-leaving .sysnav{opacity:0;transition:opacity 260ms linear}
+
+@media (prefers-reduced-motion:reduce){
+  .shell,body > main{transition:none}
+  body.is-leaving .shell,body.is-leaving > main{opacity:1;transform:none;filter:none}
+  body.is-entering .shell,body.is-entering > main{animation:none}
+}

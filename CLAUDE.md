@@ -30,13 +30,35 @@ assets/js/field.js      SYS.07 — THE BED, on every page. A 90k-point GPGPU par
                         ?nogl=1 · ?particles=N · ?coarse=1 · ?debug
 assets/css/field.css    the page layer for the field: mounts the canvas, enforces
                         Departure 4 site-wide, adds the stats strip and flat fallback.
+foundation.html         SYS.00 — what the firm is, the mission, who it is for, and
+                        the founder. Its motion is deliberately quieter than the
+                        service instruments: the mark's own language (a shear on
+                        the founder's name, one Pulse slice across the credential
+                        row) and nothing that pins the scroll.
+                        The founder is Yazan Tarawneh, set in the shear
+                        component — both .shear__half spans must carry identical
+                        text or the clip-and-offset breaks. Carries JSON-LD
+                        Organization + founder.
 brand.html              SYS.06 brand system — a reference document, deliberately NOT
                         immersive (its job is legibility, not atmosphere)
-services/*.html         four dedicated service pages, one per line. Generated from a
-                        single template — keep them in sync; edit all four or none.
-                        Each carries the same field + grid, so moving between them
-                        reads as one instrument switching channels — a different
-                        formation program and tilt/spin per line.
+services/*.html         four service pages, one per line, in this order:
+                        01 website-design · 02 brand-kit · 03 business-structuring
+                        · 04 ai-transformation ("AI adoption & transformation").
+                        Generated from ONE template — keep them in sync; edit all
+                        four or none. Each carries the same field + grid, plus its
+                        own SIGNATURE INSTRUMENT (see below).
+                        Human capital and Web & strategy were retired 2026-08-18
+                        at the owner's direction; both are in
+                        _archive/retired-services/ and can be restored as a fifth
+                        and sixth line without rework.
+assets/js/modules/      the signature instruments, one per service page:
+                        _track.js    shared rAF scroll-progress plumbing
+                        build.js     01 — a surface assembling itself, five stages
+                        specimen.js  02 — the brand kit, operable
+                        graph.js     03 — decision rights, rewired on scroll
+                        readiness.js 04 — the index climbing 00 to 04
+assets/css/svc-modules.css
+                        styling for all four instruments.
 assets/css/styles.css   all styling, tokens at :root (incl. the glass + glitch systems)
 assets/css/brand.css    brand-page-only document layout
 assets/css/service.css  service-page layer (hero, module cards, phases, signals)
@@ -243,6 +265,73 @@ starves `setTimeout` so a delayed probe never runs either. Use
 synchronously, and freeze each copy with
 `animation-play-state:paused; animation-delay:-Nms !important`.
 
+## Page continuity (added 2026-08-18)
+
+Navigation between field pages no longer looks like two documents. `field.js`
+owns internal links now; `ui.js`'s obsidian veil is retired.
+
+- **leaving** — the field morphs to whatever formation the DESTINATION opens on
+  (`ROUTES` in `field.js`), only the CONTENT fades, and the canvas is never
+  touched. 430ms, then navigate.
+- **landing** — the incoming page reads a short-lived `sessionStorage` handoff
+  and builds its particles **already settled** in that formation instead of
+  assembling them from a shell, then fades its content in.
+- Because the field is deterministic (same seed everywhere), the bed is in the
+  same place on both sides and the navigation reads as one surface changing
+  channels.
+- The handoff has a 4s TTL on purpose: a stale one from a back button hours
+  later must not suppress the cold-start assembly.
+- `body.is-field-ready` is added once the bed is live. It is the only reliable
+  thing to wait on when testing, because `boot()` is async.
+
+**If you add a page with a field, add it to `ROUTES`.** A page that is not in
+the map is left to the browser and navigates normally — correct behaviour, but
+it will blink.
+
+## Signature instruments (added 2026-08-18)
+
+One per service line, all on the same shape: a 340vh track, a stage pinned with
+`position:sticky`, a mono step readout, and a note that swaps per stage.
+`_track.js` gives each one a 0..1 progress on rAF — not on a scroll event,
+because Lenis drives scrolling on rAF and a scroll listener would lag the field
+by a frame or two. One shared loop serves the page and parks when nothing is on
+screen.
+
+- **build** — five stages, driven by a single `[data-stage]` attribute on the
+  frame. CSS does the rest, so a stage change is one attribute write.
+- **specimen** — three cross-faded panels. The chips report the real hex and the
+  real rule, and the mark runs the actual shear component, not a picture of one.
+- **graph** — two authored layouts lerped by scroll. Deliberately NOT a force
+  simulation: a layout that settles differently every load is the wrong thing
+  for an argument you want to make twice.
+- **readiness** — five dimensions at authored rates, so the constraint is
+  obvious on sight. They converge over the last 40% because that is what the
+  engagement does. Without the convergence the index caps at the constraint's
+  rate and never reaches the Level 04 the copy promises.
+
+**Testing them headlessly:** do not scroll. Headless paints reliably at scroll 0
+and `window.scrollTo` fights Lenis. `_track.js` derives progress from the track's
+rect, so pulling the track up with a negative `margin-top` produces any progress
+value with the document still at scroll 0.
+
+## The footer (added 2026-08-18)
+
+`assets/css/footer.css` + `assets/js/footer.js`, on all seven pages. Three
+things in it are worth not breaking:
+
+- **The live Amman clock** is computed in `Asia/Amman`, not in the visitor's
+  zone — it says something true about the firm rather than echoing the
+  reader's own system clock back at them. Doctrine rule 2, literally.
+- **`data-keepout` on `.sitefoot__in` is load-bearing.** Without it the
+  column links fight the field behind them and the footer is unreadable.
+- **The Lumina mark is a deliberate palette exception.** `assets/media/
+  lumina-logo.png` links out to lumina-jo.com carrying Lumina's own
+  treatment — the two drop-shadows and the hover lift are lifted verbatim
+  from that site's `.mark-img` rule, amber glow included. It is the one
+  place on this site where a foreign hue is printed, and that is correct:
+  another firm's mark should not be recoloured to fit ours. Do not
+  "harmonise" it.
+
 ## Scroll layer (added 2026-08-17)
 
 - **Section index rail** (`.sysnav`, landing only) — the five SYS numerals down
@@ -267,7 +356,8 @@ synchronously, and freeze each copy with
   on the site. The field renders its own subject, so there is nothing to source.
 - No favicon yet — should be the Z monogram (two-half clip + Pulse seam).
 - Nav below `sm` should swap the full wordmark for the Z monogram.
-- `Journal` is the last unrouted nav link. Per docs/strategy.md it is the credibility
+- ~~`Journal` unrouted~~ RESOLVED 2026-08-18: the nav slot now goes to
+  `foundation.html`. Journal is no longer in the nav at all. Per docs/strategy.md it is the credibility
   engine for a referral-only firm — strongest candidate after the readiness assessment.
 - Domain is **zyrn.org**, registered at Spaceship. `CNAME` in the repo root binds
   GitHub Pages to the apex; canonicals, `og:url` and `sitemap.xml` all point at

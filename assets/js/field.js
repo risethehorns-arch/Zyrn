@@ -72,6 +72,50 @@ const FORM_BASE = {
 };
 const ORDER = ['S1', 'S2', 'S3', 'S4'];
 
+/* ══ CONTINUITY ══════════════════════════════════════════════════════
+   Every page runs the same field off the same seed, so the bed does not
+   have to blink between documents — it can carry through the navigation
+   and let only the type swap. Two halves:
+
+     leaving  the field morphs to whatever formation the DESTINATION
+              opens on while the content fades out, then we navigate
+     landing  the incoming page reads the handoff, builds its particles
+              already settled in that formation instead of assembling
+              them from a shell, and fades its content in
+
+   The result reads as one surface changing channels rather than as two
+   pages. Handoff is deliberately short-lived: a stale one (back button
+   hours later, a restored tab) must not suppress the intro. */
+const ROUTES = {
+  '': 'S3', 'index.html': 'S3', 'brand.html': 'S3',
+  'foundation.html': 'S1',
+  'website-design.html': 'S1',
+  'brand-kit.html': 'S3',
+  'business-structuring.html': 'S3',
+  'ai-transformation.html': 'S1',
+  'human-capital.html': 'S1', 'web-strategy.html': 'S1',
+};
+const HANDOFF_KEY = 'zyrn:handoff';
+const HANDOFF_TTL = 4000;
+
+function readHandoff() {
+  try {
+    const raw = sessionStorage.getItem(HANDOFF_KEY);
+    sessionStorage.removeItem(HANDOFF_KEY);
+    if (!raw) return null;
+    const h = JSON.parse(raw);
+    if (!h || !ORDER.includes(h.form)) return null;
+    if (Date.now() - (h.t || 0) > HANDOFF_TTL) return null;
+    return h;
+  } catch (e) { return null; }
+}
+function routeFor(href) {
+  try {
+    const file = new URL(href, location.href).pathname.split('/').pop() || '';
+    return ROUTES[file] || null;
+  } catch (e) { return null; }
+}
+
 /* ── RAMPS ──────────────────────────────────────────────────────────
    `vivid` is the default. It puts a green-teal at the cold end and runs
    teal → cyan → Pulse → Vapor, which is what gives the field real hue
@@ -572,6 +616,10 @@ async function boot(canvas, cfg) {
   scene.add(bg);
 
   /* ── sim ──────────────────────────────────────────────────────────── */
+  const HANDOFF = readHandoff();
+  const ENTER_FORM = HANDOFF ? HANDOFF.form : null;
+  if (HANDOFF) document.body.classList.add('is-entering');
+
   let COUNT = pickTier();
   const RAMP = RAMPS[cfg.ramp] || RAMPS.vivid;
   const RAMP_POS = (cfg.rampPos || RAMP.pos).slice();
@@ -606,13 +654,27 @@ async function boot(canvas, cfg) {
     {
       const p = pos0.image.data, v = vel0.image.data;
       const r2 = mulberry32(SEED ^ 0x9E3779B9);
+      // Arriving from another page: place every particle already ON the
+      // formation the previous page morphed to, so the bed is continuous
+      // across the navigation. Otherwise start on a shell, so a cold load
+      // READS as an assembly.
+      const enter = ENTER_FORM ? targets[ENTER_FORM] : null;
+      const tilt = ENTER_FORM ? FORM[ENTER_FORM].tilt : 0;
+      const ct = Math.cos(tilt), stt = Math.sin(tilt);
       for (let i = 0; i < COUNT; i++) {
         const o = i * 4;
-        // start on a shell so the first settle READS as an assembly
-        const th = r2() * TAU, ph = Math.acos(2 * r2() - 1), rr = 3.2 + r2() * 2.4;
-        p[o]     = rr * Math.sin(ph) * Math.cos(th);
-        p[o + 1] = rr * Math.sin(ph) * Math.sin(th);
-        p[o + 2] = rr * Math.cos(ph);
+        if (enter) {
+          const x = enter[o], y = enter[o + 1], z = enter[o + 2];
+          // rotation about X only: spin is 0 at t=0 on both sides
+          p[o]     = x            + (r2() - 0.5) * 0.03;
+          p[o + 1] = y * ct - z * stt + (r2() - 0.5) * 0.03;
+          p[o + 2] = y * stt + z * ct + (r2() - 0.5) * 0.03;
+        } else {
+          const th = r2() * TAU, ph = Math.acos(2 * r2() - 1), rr = 3.2 + r2() * 2.4;
+          p[o]     = rr * Math.sin(ph) * Math.cos(th);
+          p[o + 1] = rr * Math.sin(ph) * Math.sin(th);
+          p[o + 2] = rr * Math.cos(ph);
+        }
         p[o + 3] = r2();
         v[o] = v[o + 1] = v[o + 2] = 0;
         v[o + 3] = r2();                       // the permanent per-particle seed
@@ -997,6 +1059,8 @@ async function boot(canvas, cfg) {
 
   /* ── loop ─────────────────────────────────────────────────────────── */
   const CAPTURE = !!FLAGS.freeze || FLAGS.pin !== null;
+  const LEAVE = { form: null, m: 0 };
+  const smoothstep01 = (x) => x * x * (3 - 2 * x);
   let frozen = false, capSteps = 0, probeFired = false;
   let last = performance.now(), simTime = 0, rafId = 0, running = true;
   let paraX = 0, paraY = 0;
@@ -1045,7 +1109,14 @@ async function boot(canvas, cfg) {
     /* formation state */
     const p  = FLAGS.freeze ? parseFloat(Q.get('mix') || '1')
              : (FLAGS.pin !== null ? FLAGS.pin : progress);
-    const st = FLAGS.freeze ? freezeState() : stateAt(p);
+    let st = FLAGS.freeze ? freezeState() : stateAt(p);
+
+    /* leaving for another page: drive the field to whatever that page opens
+       on, overriding the scroll program for the length of the transition */
+    if (LEAVE.form) {
+      LEAVE.m = Math.min(1, LEAVE.m + dt / 0.42);
+      st = { a: st.a, b: LEAVE.form, m: LEAVE.m < 1 ? smoothstep01(LEAVE.m) : 1 };
+    }
 
     uSim.uTargetA.value = targetTex[st.a];
     uSim.uTargetB.value = targetTex[st.b];
@@ -1238,8 +1309,43 @@ async function boot(canvas, cfg) {
     if (typeof cfg.onFlat === 'function') cfg.onFlat();
   });
 
+  /* ── continuity: hand the field to the next page ─────────────────── */
+  if (!CAPTURE) {
+    document.addEventListener('click', (e) => {
+      if (e.defaultPrevented || e.button !== 0) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const a = e.target.closest && e.target.closest('a[href]');
+      if (!a || a.target === '_blank' || a.hasAttribute('download')) return;
+      const href = a.getAttribute('href');
+      if (!href || href.charAt(0) === '#' || /^(mailto:|tel:)/i.test(href)) return;
+      if (a.host && a.host !== location.host) return;
+      const form = routeFor(href);
+      if (!form) return;                       // not a field page — let it navigate
+
+      e.preventDefault();
+      LEAVE.form = form; LEAVE.m = 0;
+      document.body.classList.add('is-leaving');
+      try {
+        sessionStorage.setItem(HANDOFF_KEY, JSON.stringify({ form, t: Date.now() }));
+      } catch (err) { /* private mode — the intro just plays instead */ }
+      setTimeout(() => { location.href = a.href; }, REDUCED ? 0 : 430);
+    });
+
+    // restored from bfcache with the veil still up
+    addEventListener('pageshow', (e) => {
+      if (e.persisted) {
+        document.body.classList.remove('is-leaving');
+        LEAVE.form = null; LEAVE.m = 0;
+      }
+    });
+  }
+
   rafId = requestAnimationFrame(frame);
-  console.info('[ZYRN] SYS.07 field —', COUNT, 'particles, dpr', dpr().toFixed(2));
+  // a definitive "the bed is live" signal — CSS can key off it, and it is the
+  // only reliable thing to wait on when testing, since boot() is async
+  document.body.classList.add('is-field-ready');
+  console.info('[ZYRN] SYS.07 field —', COUNT, 'particles, dpr', dpr().toFixed(2),
+               HANDOFF ? '(entered on ' + ENTER_FORM + ')' : '');
 
   return {
     get count() { return COUNT; },

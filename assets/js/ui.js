@@ -105,41 +105,14 @@
 
 
   /* ── 2 · page transitions ────────────────────────────────────────
-     Fade the obsidian veil up, then navigate. Because every page shares
-     the same ground colour and the same fixed video bed, the swap reads
-     as one continuous surface rather than two documents. */
+     RETIRED. v1.0 dropped an obsidian veil over the viewport and navigated
+     behind it, which reads as two documents handing off. field.js now owns
+     navigation instead: it morphs the field to whatever formation the
+     destination opens on, fades the CONTENT only, and the incoming page
+     builds its particles already settled in that formation. The bed never
+     blinks, so the pages read as one surface.
 
-  var veil = document.createElement('div');
-  veil.className = 'veil-swap';
-  document.body.appendChild(veil);
+     Links that field.js does not claim (external, mailto, downloads, and
+     any page without a field) fall through to the browser untouched. */
 
-  function isInternal(a) {
-    if (!a || !a.getAttribute) return false;
-    var href = a.getAttribute('href') || '';
-    if (!href || href.charAt(0) === '#') return false;
-    if (/^(mailto:|tel:|https?:)/i.test(href) && a.host !== location.host) return false;
-    if (a.target === '_blank' || a.hasAttribute('download')) return false;
-    return /\.html?($|[?#])/.test(href) || href.indexOf('/') === 0;
-  }
-
-  document.addEventListener('click', function (e) {
-    if (e.defaultPrevented || e.button !== 0) return;
-    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-
-    var a = e.target.closest ? e.target.closest('a') : null;
-    if (!isInternal(a)) return;
-
-    var href = a.getAttribute('href');
-    if (reduced) return;                 // let the browser navigate normally
-
-    e.preventDefault();
-    document.documentElement.classList.add('is-leaving');
-    setTimeout(function () { location.href = href; }, 380);
-  });
-
-  // Returning via the back button restores from bfcache with the veil still
-  // up — clear it so the page isn't left behind a black sheet.
-  window.addEventListener('pageshow', function (e) {
-    if (e.persisted) document.documentElement.classList.remove('is-leaving');
-  });
 })();
