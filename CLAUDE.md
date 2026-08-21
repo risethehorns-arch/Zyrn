@@ -899,10 +899,10 @@ it is almost certainly a control that does nothing.
 "Read the system doc" was removed outright at the owner's direction
 (2026-08-18) — there is no system doc, so the button could not be wired.
 
-Still open: the three `.cap__row` links in SYS.02 (Diagnostic core, Structural
-rebuild, Live calibration) are `href="#"`. They carry an arrow, so they read
-as links and currently jump to the top of the page. They need a destination
-decided rather than invented.
+~~Still open: the three `.cap__row` links in SYS.02~~ **RESOLVED
+2026-08-21** — the destination was never decided because there is nothing
+to decide: they are phases, not products. The affordance was removed
+rather than a destination invented. See the note further down.
 
 Also fixed the same day, both shipped-and-live: the Lumina mark in the footer
 of all four `services/*.html` pointed at `assets/media/lumina-logo.png`, which
@@ -1004,6 +1004,46 @@ unreadable smudge.
   now — Lumina (live), Axes (in service), Duk (in development) — but two
   of those three are ours, so a second client case is still the thing
   that would change the argument.
-- Real 60fps at 90k has NOT been measured on hardware. Headless renders this page
-  at roughly one frame per second of virtual time, so it cannot judge frame rate.
-  Open any page with `?probe=1` in a real browser and read the console.
+- ~~Real 60fps at 90k has NOT been measured on hardware~~ **CLOSED
+  2026-08-21.** Measured, on an NVIDIA RTX 3050 via ANGLE/D3D11 at
+  1440x900:
+
+  | page | points | median GPU ms | p95 ms | fps | governor |
+  |------|--------|---------------|--------|-----|----------|
+  | index.html | 90,000 | **2.78** | 3.87 | 144 (vsync) | rung 0 |
+  | axes.html  | 90,000 | **2.69** | 3.69 | 144 (vsync) | rung 0 |
+  | 393x610 `?coarse=1` | 14,400 | 2.81 | 4.03 | 144 | rung 0 |
+
+  144fps is the display refresh, not a ceiling — the number that matters
+  is 2.78ms median, which is 17% of a 60Hz frame budget and 40% of a
+  144Hz one. The governor never stepped down, GPU timer queries resolved
+  (120 samples), cold start 2.5s. The two 2D canvases added on the same
+  day (`axent.js`, `axsplit.js`) cost nothing measurable — axes.html is
+  the FASTER of the two pages.
+
+  **The old note here said "headless is useless as an fps oracle". That
+  was wrong, and it is worth knowing why:** the one-frame-per-second
+  behaviour is a property of `--virtual-time-budget`, not of headless.
+  Drop that flag, pass `--use-angle=d3d11 --enable-gpu`, wait in
+  WALL-CLOCK seconds, and `--headless=new` renders on the real adapter at
+  real speed. `gpuprobe.py` (job tmp) does exactly that and reads the
+  result off `document.title`, which `field.js` sets alongside the console
+  line — more reliable than console capture, which misses anything logged
+  before `Runtime.enable` lands. Still true: a virtual-time capture cannot
+  judge frame rate, and this measures THIS machine's GPU, not a phone's.
+
+- Duk's §06 no longer carries a progress bar. It was two pips of five and
+  the stage was invented — the one asserted number on a page written
+  specifically to refuse invented numbers. A bar needs a denominator, and
+  there is no drawn finish line to count toward. The paragraph beside it
+  now says so. Every remaining row in that panel is checkable: status,
+  stage in words, licence, hosting, public build, early access.
+
+- The three `.cap__row` items in SYS.02 are no longer links. They are the
+  PHASES of an engagement, not products, and there is no page per phase;
+  they carried an arrow and `href="#"`, so three controls read as links
+  and jumped the reader to the top. Rather than invent three destinations
+  the affordance is gone, and one real one sits under the panel — "The
+  four lines that carry them", to `services.html`. `.cap__arrow` and its
+  hover rule are kept in `styles.css` for the day the method gets a page
+  of its own; nothing renders them today.

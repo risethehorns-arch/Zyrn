@@ -492,7 +492,21 @@ h1,h2,h3,h4,blockquote,.mono,summary,figcaption,th{text-wrap:balance}
   display:inline-flex;color:rgba(242,243,245,0.4);
   transition:transform var(--t-ui),color var(--t-ui);
 }
+/* The rows are not links — see the note in index.html. `.cap__arrow` and
+   its hover are kept because the markup may want them back the day the
+   method gets a page of its own; nothing renders them today. */
 .cap__row:hover .cap__arrow{transform:translate(2px,-2px);color:var(--vapor)}
+
+/* The panel's one real destination. */
+.cap__go{
+  display:inline-flex;align-items:center;gap:9px;margin-top:20px;
+  font-size:14px;color:rgba(242,243,245,0.8);
+  border-bottom:1px solid var(--hair-strong);padding-bottom:3px;
+  transition:color var(--t-ui);
+}
+.cap__go .arrow{transition:transform var(--t-ui)}
+.cap__go:hover{color:var(--vapor)}
+.cap__go:hover .arrow{transform:translate(2px,-2px)}
 .cap__body{
   display:block;margin-top:6px;
   font-size:14px;line-height:1.6;color:rgba(242,243,245,0.6);

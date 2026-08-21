@@ -315,9 +315,6 @@
 .stat__row b{font-weight:400;color:rgba(242,243,245,0.84);text-align:right}
 /* a bar rather than a percentage: a percentage on unshipped work is a
    number someone will quote back at you */
-.stat__bar{display:flex;gap:3px;align-items:center}
-.stat__bar i{width:9px;height:3px;background:rgba(242,243,245,0.16);border-radius:1px}
-.stat__bar i.is-on{background:var(--vapor)}
 
 /* ── responsive ─────────────────────────────────────────────────────── */
 
