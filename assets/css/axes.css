@@ -1,0 +1,560 @@
+/* ══════════════════════════════════════════════════════════════════════
+   AXES — Zyrn's own assistant module
+
+   Loaded on axes.html AND on index.html, because the landing page's "In
+   production" band carries the live mark and the lane panel, and nothing
+   else should own those components. Same arrangement as duk.css.
+
+   NO NEW HUE, same as Duk. Obsidian, Vapor, mono, hairlines. A module
+   that needs a neon to feel advanced is telling you something about the
+   module — and doctrine rule 1 says the silence is the luxury.
+
+   THE MARK is three axes crossing at one origin, inside the hexagon they
+   describe: the hexagon's three long diagonals ARE the three axes, so the
+   whole figure is one construction rather than a drawing plus a border.
+   A node runs out along each axis on its own period. It is the name,
+   stated literally, and it is the method: one origin, several directions,
+   worked at the same time.
+
+   v1 drew them as RAYS from the centre inside a dashed circle, and at
+   card size that is a clock — three hands of unequal apparent length on a
+   dial of tick marks. An axis extends both ways; drawing the full
+   diameters is both more correct and the thing that kills the reading.
+
+   It shares one idea with the Duk mark deliberately — `--spin`, a single
+   custom property the containing card can raise on hover. The mark owns
+   how it moves; the card only says how fast. The two marks are siblings
+   and should read as siblings.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── the mark ───────────────────────────────────────────────────────── */
+
+.axmark{
+  --spin:1;
+  display:inline-block;line-height:0;
+  width:var(--am,40px);height:var(--am,40px);
+  flex:0 0 auto;
+}
+.axmark svg{display:block;width:100%;height:100%;overflow:visible}
+/* The <g> has to be in this selector, not just the shapes. SVG's default
+   transform-origin is 0 0, so a rotation on the group swung the entire
+   triad around the top-left corner of the viewBox and the mark orbited
+   out from under its own envelope. It looked like a scattered
+   constellation rather than three axes out of one point. */
+.axmark line,.axmark circle,.axmark__g{
+  transform-origin:24px 24px;
+  transform-box:view-box;
+}
+.axmark__a{stroke:var(--vapor);stroke-width:1.2;opacity:0.5;stroke-linecap:round}
+/* Not animated on its own: it sits INSIDE the rotating group so that its
+   vertices stay on the ends of the axes. Turning it separately would pull
+   the construction apart, which is the one thing the mark cannot do. */
+.axmark__e{fill:none;stroke:var(--vapor);stroke-width:1;opacity:0.2}
+.axmark__g{animation:ax-orbit calc(46s / var(--spin)) linear infinite}
+.axmark__n{fill:var(--vapor);stroke:none}
+/* Three coprime-ish periods, so the triad never repeats a pose you have
+   already watched. Same trick as the glass panels' idle drift.
+   The negative delays matter as much as the periods: without them all
+   three nodes sit on the origin at t=0 and the mark opens on a blob. */
+.axmark__n--1{opacity:0.9;animation:ax-run1 calc(4.1s / var(--spin)) cubic-bezier(.5,0,.5,1) -1.2s infinite}
+.axmark__n--2{opacity:0.9;animation:ax-run2 calc(5.3s / var(--spin)) cubic-bezier(.5,0,.5,1) -2.6s infinite}
+.axmark__n--3{opacity:0.9;animation:ax-run3 calc(6.7s / var(--spin)) cubic-bezier(.5,0,.5,1) -4.1s infinite}
+.axmark__c{fill:var(--vapor);stroke:none;opacity:0.95}
+
+@keyframes ax-orbit{to{transform:rotate(360deg)}}
+/* Unit directions are (0,-1), (0.866,0.5), (-0.866,0.5) — the same three
+   the SVG draws its rays along, at 13 units of travel. */
+@keyframes ax-run1{0%,100%{transform:translate(0,0)}52%{transform:translate(0,-15px)}}
+@keyframes ax-run2{0%,100%{transform:translate(0,0)}52%{transform:translate(12.99px,7.5px)}}
+@keyframes ax-run3{0%,100%{transform:translate(0,0)}52%{transform:translate(-12.99px,7.5px)}}
+
+@media (prefers-reduced-motion:reduce){
+  .axmark line,.axmark circle,.axmark__g{animation:none!important}
+  .axmark__n--1{transform:translate(0,-10px)}
+  .axmark__n--2{transform:translate(8.66px,5px)}
+  .axmark__n--3{transform:translate(-8.66px,5px)}
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   THE LANDING-BAND PANEL
+
+   Axes has no screenshot either, and for a better reason than Duk's: its
+   output is not a screen. It produced the page you are reading. So the
+   panel shows the method — one origin on a ruled field of axes, with a
+   sweep running the lanes — rather than a picture of a product.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.proof__vis--axes{background:#0B0C0F;border-color:var(--hair)}
+.axfield{
+  --spin:1;
+  position:relative;display:flex;align-items:center;justify-content:center;
+  aspect-ratio:16/10;overflow:hidden;
+  /* six lanes, stated as the background rather than as six elements */
+  background-image:repeating-linear-gradient(
+    to bottom,
+    rgba(242,243,245,0.055) 0 1px,
+    transparent 1px 15.2%);
+  background-position:0 8%;
+}
+/* The entity. Fills the panel rather than sitting in the middle of it:
+   the formations are square and the panel is 16:10, so axent.js derives
+   its unit from min(w,h) and the arms end well inside the short edge.
+   `display:block` matters — an inline canvas gets a text baseline and
+   leaves a few px of dead panel under it. */
+.axent{
+  position:absolute;inset:0;display:block;
+  width:100%;height:100%;z-index:2;pointer-events:none;
+}
+/* the sweep — alive before you touch it, faster once you do */
+.axfield::before{
+  content:'';position:absolute;top:0;bottom:0;width:38%;
+  background:linear-gradient(90deg,transparent,rgba(242,243,245,0.075),transparent);
+  animation:ax-sweep calc(7.5s / var(--spin)) cubic-bezier(.5,0,.5,1) infinite;
+  pointer-events:none;
+}
+@keyframes ax-sweep{
+  0%{transform:translateX(-110%)}
+  100%{transform:translateX(370%)}
+}
+@media (prefers-reduced-motion:reduce){.axfield::before{animation:none;opacity:0.4}}
+.axfield__q{
+  position:absolute;left:0;right:0;bottom:9%;
+  text-align:center;font-size:9.5px;letter-spacing:0.3em;
+  color:rgba(242,243,245,0.42);
+  opacity:0;transform:translateY(6px);
+  transition:opacity 420ms ease,transform 520ms cubic-bezier(.16,1,.3,1),
+             letter-spacing 520ms cubic-bezier(.16,1,.3,1);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   THE PAGE
+   ══════════════════════════════════════════════════════════════════════ */
+
+.ax-hero{
+  padding:clamp(116px,19vh,186px) var(--gutter) clamp(36px,6vh,70px);
+  max-width:1180px;margin:0 auto;
+}
+.ax-hero__idx{display:block;color:var(--steel);margin-bottom:clamp(18px,3.4vh,30px)}
+.ax-hero__lock{
+  display:flex;align-items:center;gap:clamp(14px,2vw,22px);
+  margin-bottom:clamp(20px,3.6vh,34px);
+}
+.ax-hero__lock .axmark{--am:clamp(44px,5.4vw,66px)}
+.ax-hero__name{
+  font-size:clamp(38px,5.4vw,66px);line-height:1;letter-spacing:-0.045em;
+  font-weight:500;color:var(--vapor);
+}
+.ax-hero__title{
+  font-size:clamp(30px,4.8vw,60px);line-height:1.06;letter-spacing:-0.03em;
+  font-weight:400;margin:0 0 clamp(18px,3vh,28px);max-width:17ch;
+}
+.ax-hero__lede{
+  font-size:clamp(15px,1.55vw,19px);line-height:1.62;
+  color:rgba(242,243,245,0.74);max-width:64ch;margin:0;
+}
+.ax-hero__lede b{font-weight:400;color:var(--vapor)}
+.ax-hero__meta{
+  display:flex;flex-wrap:wrap;gap:10px clamp(18px,3vw,42px);
+  margin-top:clamp(26px,4.4vh,42px);
+  padding-top:18px;border-top:1px solid var(--hair);color:var(--steel);
+}
+.ax-hero__meta b{font-weight:400;color:rgba(242,243,245,0.86)}
+
+/* Axes IS running, so unlike Duk's chip this one is a statement of fact
+   rather than a caveat. It still gets the live dot, because the dot is
+   the honest part: it says "now", not "soon". */
+.axstat{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:5px 11px;border:1px solid var(--hair-strong);border-radius:2px;
+  color:rgba(242,243,245,0.86);
+}
+.axstat::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:var(--vapor);
+  animation:ax-live 2.2s ease-in-out infinite;
+}
+@keyframes ax-live{0%,100%{opacity:0.35}50%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.axstat::before{animation:none}}
+
+/* ── section furniture ──────────────────────────────────────────────── */
+
+.ax-sec{max-width:1180px;margin:0 auto;padding:clamp(58px,10vh,110px) var(--gutter)}
+.ax-sec__head{
+  display:flex;align-items:baseline;gap:16px;
+  border-bottom:1px solid var(--hair);padding-bottom:14px;
+  margin-bottom:clamp(26px,4.6vh,46px);
+}
+.ax-sec__num{color:var(--steel);flex:0 0 auto}
+.ax-sec__title{font-size:clamp(21px,2.5vw,30px);font-weight:400;letter-spacing:-0.02em;margin:0}
+
+/* ── 01 · the name ──────────────────────────────────────────────────── */
+
+.axn{
+  display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);
+  gap:clamp(22px,4vw,56px);align-items:center;
+}
+.axn__b{margin:0 0 18px;font-size:clamp(15px,1.7vw,18px);line-height:1.66;color:rgba(242,243,245,0.74)}
+.axn__b:last-child{margin-bottom:0}
+.axn__b em{color:var(--vapor);font-style:normal}
+.axn__card{
+  border:1px solid var(--hair);background:rgba(14,15,18,0.6);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  padding:clamp(24px,3.6vw,40px);
+  display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;
+}
+.axn__card .axmark{--am:clamp(64px,9vw,104px)}
+.axn__k{color:var(--steel)}
+.axn__d{font-size:clamp(15px,1.7vw,19px);line-height:1.5;color:rgba(242,243,245,0.8);margin:0;max-width:30ch}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   02 · THE DECOMPOSITION  (axsplit.js)
+
+   Rebuilt 2026-08-21. The first version was a pinned scroll instrument —
+   a 430vh track, a sticky stage, six lanes translated on rAF, two
+   absolutely-positioned payoff boxes — and it was reported broken from
+   three different devices in a row. Each report was a real defect and
+   each fix was correct, but a new one appeared underneath it every time,
+   because the fragility was structural rather than incidental:
+
+     · a stage that must fit inside 100svh clips whatever does not, and
+       a pinned stage cannot be scrolled to reveal it
+     · layers stacked by absolute position collide at heights you did not
+       author at, and there is no layout rule stopping them
+     · everything is a clamp, and clamp FLOORS do not shrink
+     · nothing is visible until the reader has scrolled to the exact
+       progress value that reveals it
+
+   None of those are bugs you can finish fixing. So this is the same
+   account built the other way round: EVERYTHING IS IN FLOW AND EVERYTHING
+   IS ALWAYS VISIBLE. No sticky, no track, no absolute positioning over
+   content, no dependency on viewport height, no progress-gated copy. All
+   forty-one operations are readable at once rather than one at a time
+   under a moving sweep — which is also simply better, because a reader
+   can now compare the axes instead of watching them.
+
+   The motion is in two places that cannot affect layout: a canvas that
+   draws inside its own fixed-aspect box, and CSS animating opacity only.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── the brief ──────────────────────────────────────────────────────── */
+
+.dcx__brief{
+  margin:0 0 clamp(20px,3vh,30px);
+  padding:clamp(20px,3vw,34px) clamp(20px,3.4vw,40px);
+  border:1px solid var(--hair);
+  border-left:2px solid rgba(242,243,245,0.34);
+  background:rgba(14,15,18,0.6);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  display:flex;flex-direction:column;gap:clamp(11px,1.6vh,16px);
+}
+.dcx__lbl,.dcx__cap{color:var(--steel)}
+.dcx__brief blockquote{
+  margin:0;font-size:clamp(19px,2.9vw,34px);line-height:1.26;
+  letter-spacing:-0.022em;color:var(--vapor);
+}
+/* It is a quotation and it is set as one, but the marks are hung outside
+   the measure so the sentence itself still starts on the left edge. */
+.dcx__brief blockquote::before{content:'\201C';margin-left:-0.42em}
+.dcx__brief blockquote::after{content:'\201D'}
+
+.dcx__lede{
+  margin:0 0 clamp(26px,4vh,40px);max-width:74ch;
+  font-size:clamp(14px,1.55vw,16px);line-height:1.66;
+  color:rgba(242,243,245,0.72);
+}
+
+/* ── the moving picture ─────────────────────────────────────────────── */
+
+.dcx__vis{
+  margin:0 0 clamp(26px,4vh,42px);
+  border:1px solid var(--hair);background:rgba(5,7,11,0.86);
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
+  overflow:hidden;
+}
+/* The canvas is GIVEN its box rather than measuring the page for one.
+   `aspect-ratio` on a block in flow is the whole reason this component
+   cannot break: it has a definite height at every width without ever
+   reading the viewport. `display:block` because an inline canvas sits on
+   a text baseline and leaves a few dead pixels under itself. */
+.dcx__c{display:block;width:100%;aspect-ratio:1180/300}
+/* In flow under the canvas, not floated over it. Overlaid it wrapped to
+   two lines on a phone and sat on the bottom edge of the picture — and
+   the one rule this whole section is built on is that nothing is
+   positioned over anything else. */
+.dcx__vlbl{
+  display:block;text-align:center;
+  padding:9px 12px;border-top:1px solid var(--hair);
+  color:rgba(242,243,245,0.38);font-size:9px;letter-spacing:0.24em;
+  line-height:1.6;
+}
+
+/* ── the six axes ───────────────────────────────────────────────────── */
+
+.dcx__grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(12px,1.6vw,18px);
+  margin-bottom:clamp(26px,4vh,42px);
+}
+.dcxc{
+  display:flex;flex-direction:column;
+  padding:clamp(16px,1.9vw,22px);
+  border:1px solid var(--hair);
+  background:rgba(14,15,18,0.6);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  transition:border-color 320ms var(--ease-reveal,cubic-bezier(.16,1,.3,1)),
+             background 320ms ease;
+}
+.dcxc__n{color:var(--steel);display:block}
+.dcxc__t{
+  margin:6px 0 2px;font-size:clamp(17px,1.8vw,21px);font-weight:400;
+  letter-spacing:-0.02em;color:var(--vapor);
+}
+.dcxc__q{color:var(--steel);display:block;margin-bottom:clamp(13px,1.8vh,17px)}
+
+.dcxc__ops{
+  list-style:none;margin:0 0 clamp(14px,2vh,18px);padding:0;
+  display:flex;flex-direction:column;gap:6px;flex:1 1 auto;
+  border-top:1px solid var(--hair);padding-top:clamp(12px,1.6vh,15px);
+}
+.dcxc__ops li{
+  position:relative;padding-left:16px;
+  font-size:10px;letter-spacing:0.08em;line-height:1.5;
+  color:rgba(242,243,245,0.62);
+}
+/* The scan. Each operation lights in turn, top to bottom, on a loop the
+   whole card shares — so a card reads as WORKING rather than as a list
+   that has been printed. Delay is derived from --i on the element, so
+   adding or removing an operation needs no CSS change.
+
+   Opacity and colour only: this animation must never be able to move
+   anything, which is the entire lesson of the version this replaced. */
+.dcxc__ops li::before{
+  content:'';position:absolute;left:0;top:0.52em;
+  width:5px;height:1px;background:rgba(242,243,245,0.34);
+}
+.dcxc__ops li::after{
+  content:'';position:absolute;left:0;top:calc(0.52em - 1.5px);
+  width:5px;height:4px;background:var(--vapor);opacity:0;
+  animation:dcx-scan 7.6s linear infinite;
+  animation-delay:calc(var(--i) * 0.34s);
+}
+@keyframes dcx-scan{
+  0%,100%{opacity:0}
+  2%{opacity:0.95}
+  9%{opacity:0}
+}
+.dcxc__f{
+  color:var(--steel);display:block;line-height:1.6;
+  border-top:1px solid var(--hair);padding-top:clamp(10px,1.4vh,13px);
+}
+
+/* The axis nobody asked for. It is marked, not hidden — the whole point
+   of the page is that this is the one that answered. */
+.dcxc[data-off]{
+  border-color:var(--hair-strong);
+  background:rgba(14,15,18,0.76);
+}
+.dcxc[data-off] .dcxc__t{color:var(--vapor)}
+.dcxc[data-off] .dcxc__n::after{
+  content:' · OFF-BRIEF';color:rgba(242,243,245,0.72);
+}
+.dcxc__ops li[data-hit]{color:var(--vapor)}
+.dcxc__ops li[data-hit]::before{background:var(--vapor);width:9px}
+
+@media (hover:hover) and (pointer:fine){
+  .dcxc:hover{border-color:var(--hair-strong);background:rgba(14,15,18,0.78)}
+  .dcxc:hover .dcxc__ops li{color:rgba(242,243,245,0.82)}
+}
+
+/* ── the finding ────────────────────────────────────────────────────── */
+
+.dcx__find{
+  margin-bottom:clamp(20px,3vh,30px);
+  padding:clamp(22px,3.2vw,38px) clamp(20px,3.4vw,42px);
+  border:1px solid var(--hair-strong);
+  background:rgba(14,15,18,0.72);
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
+  display:flex;flex-direction:column;gap:clamp(12px,1.8vh,18px);
+}
+.dcx__find__l{color:var(--steel)}
+/* A sentence, not metadata. The first build set this in .mono and the
+   uppercase-plus-tracking turned two lines of display type into three
+   lines of shouting — .mono belongs on the label above it and nowhere
+   else in this block. */
+.dcx__find__b{
+  margin:0;font-size:clamp(18px,2.4vw,28px);line-height:1.3;
+  letter-spacing:-0.02em;color:var(--vapor);max-width:34ch;
+}
+.dcx__find__n{
+  margin:0;max-width:76ch;font-size:13.5px;line-height:1.66;
+  color:rgba(242,243,245,0.66);
+}
+.dcx__find__n code{
+  font-family:var(--font-mono);font-size:0.92em;
+  color:rgba(242,243,245,0.86);
+}
+
+/* ── the artefact ───────────────────────────────────────────────────── */
+
+.dcx__out{
+  padding:clamp(22px,3.2vw,38px) clamp(20px,3.4vw,42px);
+  border:1px solid var(--hair);
+  background:rgba(14,15,18,0.6);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  display:flex;flex-direction:column;gap:clamp(14px,2vh,20px);
+}
+.dcx__out__l{color:var(--steel)}
+/* Set in the display face, not in mono. This line used to be an actual
+   declaration of CSS and mono was correct for it; it is a sentence now,
+   and mono on a sentence reads as terminal output — which is the exact
+   impression this whole section was re-authored to remove. */
+.dcx__out__c{
+  display:block;margin:0;font-family:var(--font-sans);
+  font-size:clamp(17px,2.2vw,26px);line-height:1.3;letter-spacing:-0.02em;
+  color:var(--vapor);max-width:30ch;
+}
+.dcx__out__s{
+  list-style:none;margin:0;padding:0;
+  display:flex;flex-wrap:wrap;gap:8px clamp(16px,2.4vw,32px);
+  color:var(--steel);
+  border-top:1px solid var(--hair);padding-top:clamp(12px,1.8vh,16px);
+}
+.dcx__out__s b{
+  font-weight:400;color:var(--vapor);
+  font-variant-numeric:tabular-nums;margin-right:6px;
+}
+.dcx__out__n{
+  margin:0;max-width:76ch;font-size:13.5px;line-height:1.66;
+  color:rgba(242,243,245,0.66);
+}
+
+/* ── responsive ─────────────────────────────────────────────────────
+   Two column counts and one aspect change, and that is the whole of it.
+   There is nothing here keyed to viewport HEIGHT, because nothing in
+   this section is sized by it. */
+@media (max-width:1040px){
+  .dcx__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .dcx__c{aspect-ratio:900/320}
+}
+@media (max-width:680px){
+  .dcx__grid{grid-template-columns:1fr}
+  /* Taller on a phone so the six lanes still separate: the fan-out is a
+     fraction of the box height, so a wide flat box on a narrow screen
+     would stack them into one line. */
+  .dcx__c{aspect-ratio:420/300}
+  .dcx__brief{padding:clamp(18px,4vw,26px)}
+  .dcx__brief blockquote{font-size:clamp(18px,5.4vw,26px)}
+  .dcx__find__b{font-size:clamp(17px,5vw,24px);max-width:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  /* The scan is the only motion in the DOM here. Off, every operation
+     simply prints — which is what it does anyway between pulses. */
+  .dcxc__ops li::after{animation:none;opacity:0}
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   03 · THE SPEC SHEET
+   Deliberately NOT the numbered list Duk's §03 uses. Duk describes intent
+   for a thing that does not exist; Axes states capacity for a thing that
+   does, so it is set as a spec sheet with a mono constraint on each row.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.spec6{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:1px;background:var(--hair);border:1px solid var(--hair);
+}
+.spec6__c{
+  background:rgba(14,15,18,0.62);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  padding:clamp(18px,2.4vw,26px);
+  display:flex;flex-direction:column;gap:10px;
+  transition:background 300ms ease;
+}
+.spec6__c:hover{background:rgba(20,22,26,0.78)}
+.spec6__n{color:var(--steel)}
+.spec6__t{margin:0;font-size:16px;font-weight:500;color:var(--vapor);letter-spacing:-0.01em}
+.spec6__d{margin:0;font-size:13.5px;line-height:1.6;color:rgba(242,243,245,0.62)}
+.spec6__x{
+  margin-top:auto;padding-top:12px;border-top:1px solid var(--hair);
+  color:rgba(242,243,245,0.44);font-size:9.5px;line-height:1.7;
+}
+
+/* ── 04 · the ledger ────────────────────────────────────────────────── */
+
+.led{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,0.85fr);
+  gap:clamp(24px,4vw,56px);align-items:start;
+}
+.led__b{font-size:15px;line-height:1.68;color:rgba(242,243,245,0.72);margin:0 0 20px;max-width:56ch}
+.led__b em{color:var(--vapor);font-style:normal}
+.led__t{
+  border:1px solid var(--hair);background:rgba(14,15,18,0.6);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  padding:clamp(18px,2.4vw,26px);display:flex;flex-direction:column;
+}
+.led__h{color:var(--steel);padding-bottom:12px;border-bottom:1px solid var(--hair-strong)}
+.led__r{
+  display:flex;justify-content:space-between;align-items:baseline;gap:14px;
+  color:var(--steel);padding:10px 0;border-bottom:1px solid var(--hair);
+}
+.led__r:last-child{border-bottom:none}
+.led__r b{
+  font-weight:400;color:var(--vapor);text-align:right;
+  font-variant-numeric:tabular-nums;
+}
+.led__r em{font-style:normal;color:rgba(242,243,245,0.4);font-size:9px;display:block;margin-top:2px}
+
+/* ── 05 · the standing checks ───────────────────────────────────────── */
+
+.chk{list-style:none;margin:0;padding:0;border-top:1px solid var(--hair)}
+.chk__i{
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto;
+  gap:clamp(12px,2.2vw,26px);align-items:baseline;
+  padding:clamp(15px,2.1vh,21px) 0;border-bottom:1px solid var(--hair);
+  transition:background 260ms ease;
+}
+.chk__i:hover{background:rgba(242,243,245,0.02)}
+.chk__n{color:var(--steel)}
+.chk__t{margin:0;font-size:15px;font-weight:500;color:var(--vapor)}
+.chk__d{margin:6px 0 0;font-size:13.5px;line-height:1.6;color:rgba(242,243,245,0.6);max-width:72ch}
+.chk__v{color:rgba(242,243,245,0.5);white-space:nowrap;font-size:9.5px}
+
+/* ── 06 · the ask, kept quiet ───────────────────────────────────────── */
+
+.own{
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);
+  gap:clamp(24px,4vw,56px);align-items:center;
+}
+.own__b{font-size:15px;line-height:1.68;color:rgba(242,243,245,0.72);margin:0 0 20px;max-width:58ch}
+.own__b em{color:var(--vapor);font-style:normal}
+.own__acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.own__card{
+  border:1px solid var(--hair);background:rgba(14,15,18,0.6);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  padding:clamp(22px,3vw,32px);display:flex;flex-direction:column;gap:0;
+}
+.own__row{
+  display:flex;justify-content:space-between;gap:14px;color:var(--steel);
+  padding:11px 0;border-bottom:1px solid var(--hair);
+}
+.own__row:last-child{border-bottom:none}
+.own__row b{font-weight:400;color:rgba(242,243,245,0.84);text-align:right}
+
+/* ── responsive ─────────────────────────────────────────────────────── */
+
+@media (max-width:1040px){
+  .spec6{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:900px){
+  .axn,.led,.own{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .spec6{grid-template-columns:1fr}
+  .chk__i{grid-template-columns:auto minmax(0,1fr);gap:12px}
+  .chk__v{grid-column:2;padding-top:6px}
+  .ax-hero__title{max-width:none}
+}

@@ -87,6 +87,58 @@
   }
 
 
+  /* ── widows ──────────────────────────────────────────────────────
+     Bind the last two words of every text block with a non-breaking
+     space, so no line can ever end up holding one word on its own.
+
+     Reported from a phone: "PHONE" alone under a label, "it." alone
+     under the quoted brief, "was." alone under the finding. A sweep of
+     one page across seven viewports found sixty-eight of them, so it was
+     never a property of those blocks — it is a property of every measure
+     on the site that happens to be narrow. Copy that sits perfectly at
+     1440 orphans at 393, and the widths between are continuous, so it
+     cannot be authored away one string at a time.
+
+     `text-wrap: pretty` is declared in styles.css and is the right tool,
+     but it was measured A/B here and changed nothing for most of these
+     blocks — so it stays as an improvement where the engine honours it,
+     and this runs underneath as the guarantee. One non-breaking space is
+     deterministic in every browser back to forever.
+
+     Three things it is careful about:
+       · only the LAST text node is touched, so markup inside a sentence
+         survives untouched
+       · nothing inside <code> or <pre>, where a space is content
+       · nothing where the bound pair would be long enough to overflow a
+         320px column — a widow is a blemish, a horizontal scrollbar is
+         a defect, and they are not worth trading                     */
+
+  function setupWidows() {
+    var SEL = 'p, li, blockquote, figcaption, h1, h2, h3, h4,'
+            + ' .mono, .proof__t, .dcxc__f, .dcx__vlbl';
+    var els = document.querySelectorAll(SEL);
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      if (el.closest('code, pre, [data-kinetic]')) continue;
+      if (el.querySelector('code, pre')) {
+        /* a trailing <code> is its own unbreakable unit already */
+      }
+      var n = el.lastChild;
+      while (n && (n.nodeType !== 3 || !n.nodeValue.replace(/\s+/g, ''))) {
+        n = n.previousSibling;
+      }
+      if (!n) continue;
+      var v = n.nodeValue.replace(/\s+$/, '');
+      var cut = v.lastIndexOf(' ');
+      if (cut < 1) continue;
+      var pair = v.slice(cut + 1);
+      var prev = v.slice(0, cut).split(' ').pop();
+      if (!pair || pair.length > 13 || (pair.length + prev.length) > 22) continue;
+      n.nodeValue = v.slice(0, cut) + ' ' + pair;
+    }
+  }
+
+
   /* ── kinetic headlines ───────────────────────────────────────────
      Splits [data-kinetic] into per-word spans so a headline arrives word by
      word instead of as one block. Walks child nodes rather than touching
@@ -217,6 +269,8 @@
 
   /* ── boot ────────────────────────────────────────────────────────── */
 
+  setupWidows();           // before kinetic: it splits on spaces, and a
+                           // bound pair must arrive as one word
   setupKinetic();          // before reveals: the observer must see final markup
   setupReveals();
   shearMarks();

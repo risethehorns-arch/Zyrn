@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZYRN &mdash; Axes, the module that built this</title>
+<meta name="description" content="Axes is Zyrn's own assistant module, running on Claude Opus 5. It reads a whole system, decomposes an ambiguous brief along the axes a real problem has, works all of them at once, and returns the artefact. This site is one of its outputs.">
+<link rel="canonical" href="https://zyrn.org/axes.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ZYRN">
+<meta property="og:locale" content="en">
+<meta property="og:title" content="ZYRN &mdash; Axes, the module that built this">
+<meta property="og:description" content="Zyrn's own assistant module, running on Claude Opus 5. It takes an ambiguous brief apart along six axes, works all of them at once, and returns the change itself. This site is one of its outputs.">
+<meta property="og:url" content="https://zyrn.org/axes.html">
+<meta property="og:image" content="https://zyrn.org/assets/media/og.jpg?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ZYRN — the wordmark cut by its Pulse seam, inside the particle core.">
+<meta property="og:image:secure_url" content="https://zyrn.org/assets/media/og.jpg?v=2">
+<meta property="og:image:type" content="image/jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/media/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/media/icons/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/media/icons/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<!-- The import map MUST precede every module load on the page, and a
+     <link rel="modulepreload"> IS a module load — see CLAUDE.md. -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/",
+    "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.mjs",
+    "lil-gui": "https://cdn.jsdelivr.net/npm/lil-gui@0.19.2/dist/lil-gui.esm.js"
+  }
+}
+</script>
+
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/misc/GPUComputationRenderer.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/postprocessing/EffectComposer.js">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<link rel="stylesheet" href="assets/css/service.css">
+<link rel="stylesheet" href="assets/css/field.css">
+<link rel="stylesheet" href="assets/css/footer.css">
+<link rel="stylesheet" href="assets/css/cmdk.css">
+<link rel="stylesheet" href="assets/css/axes.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Axes",
+  "applicationCategory": "DeveloperApplication",
+  "url": "https://zyrn.org/axes.html",
+  "creator": {"@type":"Organization","name":"ZYRN","url":"https://zyrn.org"},
+  "description": "Zyrn's in-house assistant module, running on Claude Opus 5. It decomposes an ambiguous brief along six axes, works them in parallel, and returns the change itself.",
+  "operatingSystem": "Web"
+}
+</script>
+</head>
+<body>
+
+<!-- One core (S3) — the brief. It opens into arms (S1) as the axes split,
+     stays open while they are worked, and releases (S4) on the artefact.
+     The bed is arguing the same thing the instrument is. -->
+<canvas id="field" aria-hidden="true"></canvas>
+
+<div class="grid" aria-hidden="true">
+  <span class="grid__line grid__line--a"></span>
+  <span class="grid__line grid__line--b"></span>
+</div>
+
+<div class="readout" aria-hidden="true">
+  <span class="readout__label">ZYRN / SYS.09 &middot; <span id="readoutState">FIELD</span> &mdash; <span id="readoutPct">000</span>%</span>
+  <span class="readout__track"><span class="readout__fill" id="readoutFill"></span></span>
+</div>
+
+<div class="shell">
+
+  <nav class="nav">
+    <div class="nav__row">
+      <a href="index.html" aria-label="ZYRN — home">
+        <span class="glitch">
+          <span class="shear shear--auto is-sheared" style="--shear-size:20px">
+            <span class="shear__half shear__half--top">ZYRN</span>
+            <span class="shear__half shear__half--bot">ZYRN</span>
+            <span class="shear__seam"></span>
+          </span>
+        </span>
+      </a>
+      <div class="nav__links">
+        <a href="index.html#sys-03" class="nav__link">Work<sup class="nav__sup">04</sup></a>
+        <a href="foundation.html" class="nav__link">Foundation</a>
+        <a href="index.html#sys-04" class="nav__link">System</a>
+        <a href="services.html" class="nav__link">Services</a>
+        <a href="index.html#production" class="nav__link" aria-current="page">In production</a>
+        <a href="index.html#sys-05" class="nav__link">Contact</a>
+      </div>
+      <div class="nav__end">
+        <span class="mono nav__coords">AMM 31.95&deg;N / 35.93&deg;E</span>
+        <a class="btn btn--hairline" href="index.html#sys-05">Request access</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ── HERO ──────────────────────────────────────────────────────── -->
+    <header class="ax-hero">
+      <span class="mono ax-hero__idx" aria-hidden="true">SYS.09 &mdash; IN PRODUCTION / IN SERVICE</span>
+
+      <div class="ax-hero__lock">
+        <span class="axmark" aria-hidden="true">
+          <svg viewBox="0 0 48 48">
+            <g class="axmark__g">
+              <polygon class="axmark__e" points="24,5 40.45,14.5 40.45,33.5 24,43 7.55,33.5 7.55,14.5"></polygon>
+              <line class="axmark__a" x1="24" y1="5" x2="24" y2="43"></line>
+              <line class="axmark__a" x1="7.55" y1="14.5" x2="40.45" y2="33.5"></line>
+              <line class="axmark__a" x1="40.45" y1="14.5" x2="7.55" y2="33.5"></line>
+              <circle class="axmark__n axmark__n--1" cx="24" cy="24" r="1.9"></circle>
+              <circle class="axmark__n axmark__n--2" cx="24" cy="24" r="1.9"></circle>
+              <circle class="axmark__n axmark__n--3" cx="24" cy="24" r="1.9"></circle>
+            </g>
+            <circle class="axmark__c" cx="24" cy="24" r="2.2"></circle>
+          </svg>
+        </span>
+        <span class="ax-hero__name">Axes</span>
+      </div>
+
+      <h1 class="ax-hero__title" data-keepout data-reveal data-kinetic>It takes one sentence apart.</h1>
+
+      <p class="ax-hero__lede" data-keepout>Axes is Zyrn&rsquo;s own assistant module, running on Claude Opus 5. It holds an entire system in mind before it moves anything inside it, takes an ambiguous brief apart along the axes a real problem actually has, works every one of them at once, and returns the artefact rather than a description of the artefact. <b>The site you are reading is one of its outputs.</b></p>
+
+      <div class="mono ax-hero__meta" data-keepout>
+        <span class="axstat">IN SERVICE</span>
+        <span>MODEL <b>CLAUDE OPUS 5</b></span>
+        <span>BUILT BY <b>ZYRN</b></span>
+        <span>DEPLOYED TO <b>ONE FIRM</b></span>
+      </div>
+    </header>
+
+
+    <!-- ── 01 · THE NAME ─────────────────────────────────────────────── -->
+    <section class="ax-sec" aria-labelledby="axnT">
+      <div class="ax-sec__head" data-keepout>
+        <span class="mono ax-sec__num">01</span>
+        <h2 class="ax-sec__title" id="axnT">The name</h2>
+      </div>
+
+      <div class="axn" data-keepout data-reveal>
+        <div>
+          <p class="axn__b">An axis is two things at once: a direction you can move along, and a direction you can <em>measure</em> along. Every problem that arrives at a firm arrives stated on exactly one of them &mdash; the one the person who noticed it happened to be standing on.</p>
+          <p class="axn__b">Almost nothing is actually wrong on that axis alone. A page that looks correct can be untouchable. A process everyone follows can have no owner. A number that is going up can be going up for the reason that will end it. <em>A brief is a report from one direction. What is actually wrong usually sits in another.</em></p>
+          <p class="axn__b">So the module is named for the plural. It opens every direction a claim could live on, works them together, and only then decides what the problem was. That is the whole method, and it is the same method the firm sells &mdash; which is why this one is ours and Duk is the one we give away.</p>
+        </div>
+        <div class="axn__card">
+          <span class="axmark" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <g class="axmark__g">
+                <polygon class="axmark__e" points="24,5 40.45,14.5 40.45,33.5 24,43 7.55,33.5 7.55,14.5"></polygon>
+                <line class="axmark__a" x1="24" y1="5" x2="24" y2="43"></line>
+                <line class="axmark__a" x1="7.55" y1="14.5" x2="40.45" y2="33.5"></line>
+                <line class="axmark__a" x1="40.45" y1="14.5" x2="7.55" y2="33.5"></line>
+                <circle class="axmark__n axmark__n--1" cx="24" cy="24" r="1.9"></circle>
+                <circle class="axmark__n axmark__n--2" cx="24" cy="24" r="1.9"></circle>
+                <circle class="axmark__n axmark__n--3" cx="24" cy="24" r="1.9"></circle>
+              </g>
+              <circle class="axmark__c" cx="24" cy="24" r="2.2"></circle>
+            </svg>
+          </span>
+          <span class="mono axn__k">AXES &mdash; THE PLURAL</span>
+          <p class="axn__d">One origin. Several directions. All of them open at the same time.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── 02 · THE DECOMPOSITION ────────────────────────────────────────
+         Re-authored 2026-08-21. This section used to work a REAL run
+         through in detail: an actual one-line brief about a broken link,
+         forty-one logged operations, the off-brief finding, and the CSS
+         declaration that closed it. It was true and it was well made, and
+         it was the wrong content for this page — quoted verbatim on a
+         product page, a bug report and a rule dump read as though the
+         SITE were malfunctioning. The owner reported exactly that, twice,
+         before naming it: "they look like the site is bugging."
+
+         The engineering example is gone. What replaces it is the same
+         argument stated as method rather than as incident: what each axis
+         asks, why the axis nobody names is the one that pays, and what
+         comes back at the end. It is also simply more useful to a reader
+         who runs an organisation rather than a codebase.
+
+         Everything is still in normal flow. No pinning, no absolute
+         positioning over content, no dependency on viewport height.
+         ─────────────────────────────────────────────────────────────── -->
+    <section class="ax-sec" aria-labelledby="dcxT">
+      <div class="ax-sec__head" data-keepout>
+        <span class="mono ax-sec__num">02</span>
+        <h2 class="ax-sec__title" id="dcxT">One brief, taken apart</h2>
+      </div>
+
+      <p class="dcx__lede">A brief arrives pointed at one thing. Axes does not start work on it. It starts by deciding which axes a claim like that could possibly live on, opens every one of them at once, and only then decides what the question really was. A brief is a report from one direction. What is actually wrong usually sits in another.</p>
+
+      <!-- The whole method as one moving picture: autonomous, fixed
+           aspect, drawing inside its own box. Not bound to scroll, so it
+           cannot be half-finished when you arrive, and cannot affect
+           layout. See axsplit.js. -->
+      <div class="dcx__vis">
+        <canvas class="dcx__c" data-axsplit aria-hidden="true"></canvas>
+        <span class="mono dcx__vlbl">ONE BRIEF &rarr; SIX AXES, IN PARALLEL &rarr; ONE ANSWER</span>
+      </div>
+
+      <div class="dcx__grid" data-keepout data-reveal>
+
+        <article class="dcxc">
+          <span class="mono dcxc__n">01</span>
+          <h3 class="dcxc__t">Surface</h3>
+          <span class="mono dcxc__q">what is presented</span>
+          <ol class="mono dcxc__ops">
+            <li style="--i:0">The structure as published</li>
+            <li style="--i:1">The process as written down</li>
+            <li style="--i:2">What the deck promises</li>
+            <li style="--i:3">Where the account contradicts itself</li>
+            <li style="--i:4">What was inherited, never revisited</li>
+          </ol>
+          <span class="mono dcxc__f">THE VERSION EVERYONE AGREES ON</span>
+        </article>
+
+        <article class="dcxc">
+          <span class="mono dcxc__n">02</span>
+          <h3 class="dcxc__t">State</h3>
+          <span class="mono dcxc__q">what is true right now</span>
+          <ol class="mono dcxc__ops">
+            <li style="--i:0">Who actually decides</li>
+            <li style="--i:1">Which step is really the queue</li>
+            <li style="--i:2">What gets escalated, and to whom</li>
+            <li style="--i:3">Which rule is quietly not followed</li>
+            <li style="--i:4">What the exceptions have become</li>
+          </ol>
+          <span class="mono dcxc__f">STATED AND ACTUAL ARE TWO DIFFERENT OBJECTS</span>
+        </article>
+
+        <article class="dcxc" data-off>
+          <span class="mono dcxc__n">03</span>
+          <h3 class="dcxc__t">Access</h3>
+          <span class="mono dcxc__q">what a person can reach</span>
+          <ol class="mono dcxc__ops">
+            <li style="--i:0">What one role can do unaided</li>
+            <li style="--i:1">Where a request has to wait</li>
+            <li style="--i:2">Which approvals nobody can see</li>
+            <li style="--i:3" data-hit>What a new joiner cannot find</li>
+            <li style="--i:4">Where the same work is done twice</li>
+          </ol>
+          <span class="mono dcxc__f">THE AXIS NOBODY ASKS FOR</span>
+        </article>
+
+        <article class="dcxc">
+          <span class="mono dcxc__n">04</span>
+          <h3 class="dcxc__t">Motion</h3>
+          <span class="mono dcxc__q">what changes over time</span>
+          <ol class="mono dcxc__ops">
+            <li style="--i:0">Throughput, stage by stage</li>
+            <li style="--i:1">Where the load is seasonal</li>
+            <li style="--i:2">What has drifted since the last change</li>
+            <li style="--i:3">Which decision keeps being remade</li>
+            <li style="--i:4">What the trend line hides</li>
+          </ol>
+          <span class="mono dcxc__f">A SNAPSHOT CANNOT SHOW A DIRECTION</span>
+        </article>
+
+        <article class="dcxc">
+          <span class="mono dcxc__n">05</span>
+          <h3 class="dcxc__t">Proof</h3>
+          <span class="mono dcxc__q">what has been shown</span>
+          <ol class="mono dcxc__ops">
+            <li style="--i:0">Which claim has a number behind it</li>
+            <li style="--i:1">Which number was counted</li>
+            <li style="--i:2">What was assumed, then repeated</li>
+            <li style="--i:3">Where the sample was too small</li>
+            <li style="--i:4">What has not been measured again</li>
+          </ol>
+          <span class="mono dcxc__f">CONFIDENCE IS NOT EVIDENCE</span>
+        </article>
+
+        <article class="dcxc">
+          <span class="mono dcxc__n">06</span>
+          <h3 class="dcxc__t">Risk</h3>
+          <span class="mono dcxc__q">what has not been examined</span>
+          <ol class="mono dcxc__ops">
+            <li style="--i:0">The dependency on one person</li>
+            <li style="--i:1">The step with no fallback</li>
+            <li style="--i:2">The real cost of the cheap option</li>
+            <li style="--i:3">What a change here would break</li>
+            <li style="--i:4">What is being deferred, and for how long</li>
+          </ol>
+          <span class="mono dcxc__f">THE QUESTION THAT WAS NEVER PUT</span>
+        </article>
+
+      </div>
+
+      <div class="dcx__find" data-keepout data-reveal>
+        <span class="mono dcx__find__l">WHY ALL SIX, EVERY TIME</span>
+        <p class="dcx__find__b">The answer is rarely on the axis the brief was pointed at.</p>
+        <p class="dcx__find__n">A request names the symptom that was noticed, which is a fact about who noticed it rather than about where the problem lives. Opening one axis confirms the framing; opening all six tests it. The two that cost the most to work &mdash; access and proof &mdash; are reliably the two nobody thinks to commission.</p>
+      </div>
+
+      <div class="dcx__out" data-keepout data-reveal>
+        <span class="mono dcx__out__l">WHAT COMES BACK</span>
+        <p class="dcx__out__c">The change itself, not a description of it.</p>
+        <ul class="mono dcx__out__s">
+          <li><b>01</b> stated cause</li>
+          <li><b>06</b> axes opened</li>
+          <li><b>00</b> recommendations to interpret</li>
+        </ul>
+        <p class="dcx__out__n">Written at the level of the rule rather than the instance, so it closes the class of problem and not the one example of it &mdash; then measured again against the axis that found it, because a change that has not been re-measured is a hypothesis.</p>
+      </div>
+    </section>
+
+
+    <!-- ── 03 · WHAT IT DOES ─────────────────────────────────────────── -->
+    <section class="ax-sec" aria-labelledby="capT">
+      <div class="ax-sec__head" data-keepout>
+        <span class="mono ax-sec__num">03</span>
+        <h2 class="ax-sec__title" id="capT">What it actually does</h2>
+      </div>
+
+      <div class="spec6" data-keepout data-reveal>
+        <div class="spec6__c">
+          <span class="mono spec6__n">01</span>
+          <h3 class="spec6__t">Holds the whole system</h3>
+          <p class="spec6__d">Every page, every stylesheet, every module, the doctrine file, and the recorded reason a rule exists &mdash; loaded before anything is changed. Most bad edits are locally correct.</p>
+          <span class="mono spec6__x">CONSTRAINT &mdash; IT DOES NOT REASON ABOUT FILES IT HAS NOT OPENED</span>
+        </div>
+        <div class="spec6__c">
+          <span class="mono spec6__n">02</span>
+          <h3 class="spec6__t">Decomposes the brief</h3>
+          <p class="spec6__d">Splits the request along surface, state, access, motion, proof and risk, and opens all six rather than the one it was pointed at. The axis nobody thinks to commission is reliably the one that pays.</p>
+          <span class="mono spec6__x">CONSTRAINT &mdash; THE REPORTED SYMPTOM IS NOT THE SCOPE</span>
+        </div>
+        <div class="spec6__c">
+          <span class="mono spec6__n">03</span>
+          <h3 class="spec6__t">Produces the artefact</h3>
+          <p class="spec6__d">Writes into the actual repository, in the style of the code already around it, with the comment that says why. Not a plan for the work, and not a draft to be re-typed by someone else.</p>
+          <span class="mono spec6__x">CONSTRAINT &mdash; OUTPUT IS A COMMIT, NOT A DOCUMENT</span>
+        </div>
+        <div class="spec6__c">
+          <span class="mono spec6__n">04</span>
+          <h3 class="spec6__t">Runs what it wrote</h3>
+          <p class="spec6__d">Drives a real browser, dispatches real touch events, steps every scroll instrument end to end, samples the console and the network on the deployed build rather than the local one.</p>
+          <span class="mono spec6__x">CONSTRAINT &mdash; AN UNMEASURED CHANGE IS A HYPOTHESIS</span>
+        </div>
+        <div class="spec6__c">
+          <span class="mono spec6__n">05</span>
+          <h3 class="spec6__t">Refuses the number</h3>
+          <p class="spec6__d">If a figure cannot be counted it does not go on the page. Every statistic on this site is read out of a repository or off a running simulation, and anything unmeasurable prints an em dash instead.</p>
+          <span class="mono spec6__x">CONSTRAINT &mdash; NO PLAUSIBLE CONSTANTS</span>
+        </div>
+        <div class="spec6__c">
+          <span class="mono spec6__n">06</span>
+          <h3 class="spec6__t">Keeps the doctrine</h3>
+          <p class="spec6__d">The firm&rsquo;s rules live in a file the module reads first and is bound by &mdash; one accent per viewport, two typefaces, the shear belongs to the logo. Taste, written down until it is enforceable.</p>
+          <span class="mono spec6__x">CONSTRAINT &mdash; THE HOUSE STYLE IS AN INPUT, NOT A SUGGESTION</span>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── 04 · THE EVIDENCE ─────────────────────────────────────────── -->
+    <section class="ax-sec" aria-labelledby="evT">
+      <div class="ax-sec__head" data-keepout>
+        <span class="mono ax-sec__num">04</span>
+        <h2 class="ax-sec__title" id="evT">The evidence is the page you are on</h2>
+      </div>
+
+      <div class="led" data-keepout data-reveal>
+        <div>
+          <p class="led__b">There is no template under this site, no page builder, no component library and no stock. The landing page began as a design document; <em>everything after it</em> &mdash; ten more pages, eight scroll instruments, the particle field, the case study, and the verification suite that keeps them honest &mdash; was written by the module and reviewed by a person before it shipped.</p>
+          <p class="led__b">The two rows worth reading twice are the last two. The field moving behind this text is ninety thousand points integrated on the GPU every frame, and there is <em>no asset behind it</em>: no video, no image sequence, nothing to download. And the whole site builds with nothing &mdash; it is files, served.</p>
+          <p class="led__b">Every number in this column was counted from the repository at the moment this page was written, not asserted. That is the rule the whole page is built on.</p>
+          <a class="btn btn--hairline" href="lumina.html">The client case &mdash; Lumina</a>
+        </div>
+
+        <div class="led__t">
+          <span class="mono led__h">COUNTED &mdash; ZYRN.ORG</span>
+          <span class="mono led__r"><span>Pages, live</span><b>11</b></span>
+          <span class="mono led__r"><span>Source lines<em>HTML &middot; CSS &middot; JS &middot; GLSL</em></span><b>13,903</b></span>
+          <span class="mono led__r"><span>Scroll instruments</span><b>08</b></span>
+          <span class="mono led__r"><span>Typefaces</span><b>02</b></span>
+          <span class="mono led__r"><span>Particles, per frame</span><b>90,000</b></span>
+          <span class="mono led__r"><span>Assets behind the field</span><b>00</b></span>
+          <span class="mono led__r"><span>Runtime dependencies<em>three &middot; lenis</em></span><b>02</b></span>
+          <span class="mono led__r"><span>Build steps</span><b>00</b></span>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── 05 · THE CHECKS ───────────────────────────────────────────── -->
+    <section class="ax-sec" aria-labelledby="chkT">
+      <div class="ax-sec__head" data-keepout>
+        <span class="mono ax-sec__num">05</span>
+        <h2 class="ax-sec__title" id="chkT">How it is kept honest</h2>
+      </div>
+
+      <ol class="chk" data-keepout data-reveal>
+        <li class="chk__i">
+          <span class="mono chk__n">01</span>
+          <div>
+            <h3 class="chk__t">Hit-test the viewport</h3>
+            <p class="chk__d">Sample the screen on a grid and count how many points reach the page rather than an overlay. A screenshot proves layout and nothing else. Something can be laid out perfectly and be completely unreachable, and no capture ever taken of it will say so.</p>
+          </div>
+          <span class="mono chk__v">0% INTERCEPTED &middot; 5 PAGES</span>
+        </li>
+        <li class="chk__i">
+          <span class="mono chk__n">02</span>
+          <div>
+            <h3 class="chk__t">Tap with real touch events</h3>
+            <p class="chk__d">Drive the phone menu with dispatched touches rather than a synthetic click. A synthetic click fires straight at the node and skips hit testing, so it will cheerfully prove that a completely buried control works.</p>
+          </div>
+          <span class="mono chk__v">OPEN / EXPAND / CLOSE</span>
+        </li>
+        <li class="chk__i">
+          <span class="mono chk__n">03</span>
+          <div>
+            <h3 class="chk__t">Exercise every instrument</h3>
+            <p class="chk__d">Step every scroll track from 0 to 1 and collect what throws. A page can load perfectly clean and still throw on every frame once someone scrolls to it &mdash; that has happened here exactly once, and this check is why it cannot happen twice.</p>
+          </div>
+          <span class="mono chk__v">09 TRACKS &middot; 00 THROWN</span>
+        </li>
+        <li class="chk__i">
+          <span class="mono chk__n">04</span>
+          <div>
+            <h3 class="chk__t">Measure dead scroll</h3>
+            <p class="chk__d">Sample an instrument at twenty-one progress values and report the longest run that changed nothing. That run is precisely what a reader experiences as &ldquo;I am scrolling and nothing is happening&rdquo;. One instrument here scored nine of twenty before it was retimed.</p>
+          </div>
+          <span class="mono chk__v">LONGEST DEAD RUN &middot; 01</span>
+        </li>
+        <li class="chk__i">
+          <span class="mono chk__n">05</span>
+          <div>
+            <h3 class="chk__t">Measure every tap target</h3>
+            <p class="chk__d">Forty-four pixels minimum, on every interactive element, at phone width. The footer mark passed as a link and failed as a target at twenty-one pixels tall.</p>
+          </div>
+          <span class="mono chk__v">MIN 45px</span>
+        </li>
+        <li class="chk__i">
+          <span class="mono chk__n">06</span>
+          <div>
+            <h3 class="chk__t">Console and network, deployed</h3>
+            <p class="chk__d">Every page and every request, checked against the build that is actually live rather than the one on the machine that made it.</p>
+          </div>
+          <span class="mono chk__v">11 PAGES &middot; CLEAN</span>
+        </li>
+      </ol>
+
+      <p class="led__b" data-keepout style="margin-top:clamp(24px,3.6vh,38px)">Every one of these exists because something got through first. They are not a quality process &mdash; they are scar tissue, and that is the only kind of check that reliably survives a deadline.</p>
+    </section>
+
+
+    <!-- ── 06 · YOURS ────────────────────────────────────────────────── -->
+    <section class="ax-sec" aria-labelledby="ownT">
+      <div class="ax-sec__head" data-keepout>
+        <span class="mono ax-sec__num">06</span>
+        <h2 class="ax-sec__title" id="ownT">Built for one firm</h2>
+      </div>
+
+      <div class="own" data-keepout data-reveal>
+        <div>
+          <p class="own__b">Axes was built for Zyrn, against Zyrn&rsquo;s own written doctrine, and it is not a product on a shelf. It is also not the same object as <a href="duk.html">Duk</a> &mdash; Duk is the open one, built to work on a client&rsquo;s operating core and given away. <em>Axes is the one we run in order to build things.</em></p>
+          <p class="own__b">What transfers is the shape rather than the module: something that holds your whole system at once, is bound by rules you wrote down, produces into your own repository, and is not permitted to claim anything it has not measured. Most of the work in getting there is not the model &mdash; it is deciding what your firm actually knows, and writing it somewhere a machine can be held to.</p>
+          <p class="own__b">If you have a body of work where holding all of it is the hard part, that is the conversation. It runs through the fourth line.</p>
+          <div class="own__acts">
+            <a class="btn btn--hairline" href="services/ai-transformation.html">The AI adoption line</a>
+            <a class="btn btn--hairline" href="mailto:info@zyrn.org?subject=Axes%20%E2%80%94%20a%20module%20of%20our%20own">Start a conversation</a>
+          </div>
+        </div>
+
+        <aside class="own__card">
+          <span class="mono own__row"><span>Status</span><b>In service</b></span>
+          <span class="mono own__row"><span>Model</span><b>Claude Opus 5</b></span>
+          <span class="mono own__row"><span>Bound by</span><b>A written doctrine</b></span>
+          <span class="mono own__row"><span>Output</span><b>Into the repository</b></span>
+          <span class="mono own__row"><span>Numbers</span><b>Counted, never asserted</b></span>
+          <span class="mono own__row"><span>Deployed to</span><b>One firm</b></span>
+          <span class="mono own__row"><span>Availability</span><b>Line 04</b></span>
+        </aside>
+      </div>
+    </section>
+
+
+    <!-- ── FOOTER ────────────────────────────────────────────────────── -->
+    <footer class="sitefoot">
+      <div class="sitefoot__in" data-keepout>
+
+        <div class="sitefoot__top">
+          <div class="sitefoot__brand">
+            <span class="glitch">
+              <span class="shear shear--auto is-sheared" style="--shear-size:30px">
+                <span class="shear__half shear__half--top">ZYRN</span>
+                <span class="shear__half shear__half--bot">ZYRN</span>
+                <span class="shear__seam"></span>
+              </span>
+            </span>
+            <p class="sitefoot__line">Organizations, engineered.<br>The operating core of modern firms.</p>
+            <a class="sitefoot__mail" href="mailto:info@zyrn.org">info@zyrn.org</a>
+          </div>
+
+          <nav class="sitefoot__cols" aria-label="Footer">
+            <div class="fcol">
+              <span class="mono fcol__h">Lines</span>
+              <a href="services/website-design.html"><span class="mono">01</span> Website design</a>
+              <a href="services/brand-kit.html"><span class="mono">02</span> Brand kit</a>
+              <a href="services/business-structuring.html"><span class="mono">03</span> Business structuring</a>
+              <a href="services/ai-transformation.html"><span class="mono">04</span> AI adoption</a>
+            </div>
+            <div class="fcol">
+              <span class="mono fcol__h">The firm</span>
+              <a href="foundation.html">Foundation</a>
+              <a href="brand.html">Brand kit &mdash; the method</a>
+              <a href="lumina.html">Lumina &mdash; a case</a>
+              <a href="axes.html" aria-current="page">Axes &mdash; in service</a>
+              <a href="duk.html">Duk &mdash; in production</a>
+              <a href="index.html#sys-05">Access</a>
+            </div>
+            <div class="fcol">
+              <span class="mono fcol__h">Intake</span>
+              <span class="fcol__stat">Q3 &mdash; 2026</span>
+              <span class="fcol__stat">01 of 04 seats open</span>
+              <span class="fcol__stat">By referral</span>
+              <span class="fcol__stat">Two quarters minimum</span>
+            </div>
+          </nav>
+        </div>
+
+        <div class="sitefoot__bar mono">
+          <span class="sitefoot__stamp">
+            <span class="mark" aria-hidden="true">
+              <svg class="mark__half mark__half--top" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+              <svg class="mark__half mark__half--bot" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+              <span class="mark__seam"></span>
+            </span>
+            ZYRN &mdash; EST. 2026
+          </span>
+          <span>AMM 31.95&deg;N / 35.93&deg;E</span>
+          <span class="sitefoot__clock">AMM <b id="footClock">--:--:--</b></span>
+          <a class="lum" href="https://www.lumina-jo.com/" target="_blank" rel="noopener noreferrer"
+             aria-label="Lumina — opens in a new tab">
+            <img src="assets/media/lumina-logo.png" alt="Lumina" width="222" height="60" loading="lazy" decoding="async">
+          </a>
+          <span class="sitefoot__spacer"></span>
+          <span>SYS.09 &mdash; AXES</span>
+          <span>V.2.0 / EN &mdash; AR</span>
+        </div>
+
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/ui.js"></script>
+<script src="assets/js/nav.js"></script>
+<script src="assets/js/cmdk.js"></script>
+<script src="assets/js/footer.js"></script>
+<script src="assets/js/axsplit.js"></script>
+
+<script type="module">
+import { initField }      from './assets/js/field.js';
+
+const roState = document.getElementById('readoutState');
+initField({
+  // Measured, not nudged, and RE-MEASURED 2026-08-21 when §02 stopped
+  // being a 430vh pinned track: the page went from 9,621px to 7,554px at
+  // 1440x900, so every stop after the hero moved. Section centres as
+  // scroll progress, mean of 1440x900 and 393x610 —
+  //   hero .043 · 01 .135 · 02 .350 · 03 .585 · 04 .707 · 05 .837 · 06 .964
+  //
+  // The bed argues the same thing the instrument does: one core (S3) is the
+  // brief, it is TAKEN APART (S2) while the six axes are worked, it comes
+  // back as structure (S1) exactly as the lanes merge and the artefact
+  // resolves, and releases (S4) on the last two sections.
+  //
+  // S2 behind the instrument is also the only formation that leaves it
+  // legible. S1 is dense through the middle of the viewport, which is
+  // precisely where six lanes of 8px mono live — the keep-out rects hold
+  // the contrast but they cannot make a torus a quiet ground.
+  program: [
+    { at: 0.00, form: 'S3' },   // the hero and the name: one brief, one core
+    { at: 0.28, form: 'S2' },   // §02 opens — taken apart
+    { at: 0.47, form: 'S2' },   // held apart across the six axes
+    { at: 0.63, form: 'S1' },   // §03/§04 — structure, and the proof of it
+    { at: 1.00, form: 'S4' },   // §06 — released, on the ask
+  ],
+  channel: { tilt: { S3: 18, S2: 8, S1: 52, S4: 30 },
+             spin: { S3: 120, S2: 90, S1: 165, S4: 205 } },
+  // Still below the 0.65 default: §02 is a lot of 10px mono. But it can
+  // come back up from the 0.34 the pinned instrument needed, because the
+  // operations now sit on real panels with their own obsidian ground
+  // instead of as bare hairlines on the open field.
+  disperseAlpha: 0.50,
+  onState: (p, n) => { if (roState) roState.textContent = n; },
+});
+
+</script>
+</body>
+</html>

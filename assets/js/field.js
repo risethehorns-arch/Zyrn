@@ -92,6 +92,7 @@ const ROUTES = {
   'services.html': 'S3',
   'lumina.html': 'S2',
   'duk.html': 'S2',
+  'axes.html': 'S3',
   'website-design.html': 'S1',
   'brand-kit.html': 'S3',
   'business-structuring.html': 'S3',
@@ -1140,17 +1141,25 @@ async function boot(canvas, cfg) {
        to one page's program */
     const mm = st.m;
     let turb = TURB.base, spring = 9.0, grav = 0, gAlpha = 1, size = 1.0;
+    // entropy is dimmer than order — but that reads as an argument only
+    // where there is something to contrast against. A page that OPENS on
+    // S2 (services/ai-transformation) lifts this so its hero is not murk;
+    // axes.html drops it, because S2 is the ground under a pinned
+    // instrument made of 8px mono and the default is loud enough to eat it.
+    //
+    // The two TRANSITION branches interpolate to and from this value
+    // rather than a literal 0.65. They used to hard-code it, so a page
+    // that tuned disperseAlpha got a step change in brightness at the
+    // segment boundary. At the default the arithmetic is unchanged.
+    const dA = cfg.disperseAlpha ?? 0.65;
     if (st.b === 'S2' && st.a !== 'S2') {              // coming apart
       turb  = TURB.base * (1 + (REDUCED ? 0 : 2.2) * Math.sin(Math.PI * mm));
-      gAlpha = 1 - 0.35 * mm;
+      gAlpha = 1 - (1 - dA) * mm;
     } else if (st.a === 'S2' && st.b !== 'S2') {       // gathering
       spring = 9.0 * (1 + 0.15 * Math.sin(Math.PI * mm));
-      gAlpha = 0.65 + 0.35 * mm;
+      gAlpha = dA + (1 - dA) * mm;
     } else if (st.a === 'S2' && st.b === 'S2') {
-      // entropy is dimmer than order — but that reads as an argument only
-      // where there is something to contrast against. A page that OPENS on
-      // S2 (services/ai-transformation) lifts this so its hero is not murk.
-      gAlpha = cfg.disperseAlpha ?? 0.65;
+      gAlpha = dA;
     } else if (st.a === 'S3' && st.b === 'S3') {       // the loop, breathing
       // the ring wants a soft, spraying outer edge rather than a clean tube
       turb = TURB.base * (1.55 + 1.1 * svAbs);

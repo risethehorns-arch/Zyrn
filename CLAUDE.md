@@ -70,6 +70,32 @@ brand.html              SYS.06 — HOW WE PRESENT A BRAND KIT. Rewritten 2026-08
                         `git show 59ace3c:brand.html`. Either way nothing was
                         lost — Zyrn's own doctrine is operative in THIS file,
                         which is where it was always enforced from.
+axes.html               SYS.09 — AXES, our own assistant module, IN
+                        SERVICE. It runs on Claude Opus 5 and it is the
+                        thing that built this site, which is the whole
+                        argument of the page and the reason it can be
+                        evidenced rather than described: §04 is a ledger
+                        of numbers counted out of THIS repository at the
+                        moment the page was written.
+                        It is deliberately NOT the same object as Duk.
+                        Duk is the open one, built for a client's own
+                        operating core and given away; Axes is the one
+                        the firm runs in order to build things, and the
+                        soft ask in §06 is for a module of your own
+                        through line 04 — not for Axes.
+                        Identity: the plural of axis — the directions a
+                        problem can be worked along. The mark is three
+                        axes crossing at one origin inside the hexagon
+                        they describe, and it must stay that way: v1 drew
+                        them as RAYS inside a dashed circle and at card
+                        size that is a CLOCK. An axis extends both ways.
+                        No new hue, same as Duk. §02 tells one real
+                        engagement — a brief, six axes, forty-one
+                        operations, an off-brief finding and the artefact
+                        — as a READABLE grid rather than as a pinned
+                        instrument. It was a pinned instrument until
+                        2026-08-21; see "Signature instruments" for why
+                        that was removed and what it cost.
 duk.html                SYS.08 — DUK, our own open-source agent, IN
                         DEVELOPMENT. It is NOT released, and the page is
                         written to hold that line: status chip in the hero,
@@ -122,6 +148,10 @@ assets/js/modules/      the signature instruments, one per service page:
                     interrogate.js
                                  duk.html — twenty-two candidate causes cut
                                  down to one constraint by four questions
+                    (decompose.js was axes.html's pinned instrument and
+                                 was REMOVED 2026-08-21 — see below. Its
+                                 replacement is assets/js/axsplit.js, which
+                                 is not a scroll instrument at all)
 assets/css/svc-modules.css
                         styling for all four instruments.
 assets/css/styles.css   all styling, tokens at :root (incl. the glass + glitch systems)
@@ -138,6 +168,29 @@ assets/css/proof.css    index.html only — the "In production" band. Split
 assets/css/duk.css      Duk's mark and page. Loaded on duk.html AND on
                         index.html, because the band carries the live mark
                         and nothing else should own that component
+assets/css/axes.css     Axes' mark, its landing-band panel, its page and
+                        the decomposition. Loaded on axes.html AND on
+                        index.html, same arrangement as duk.css
+assets/js/axsplit.js    THE SPLITTER — the moving picture in axes.html §02.
+                        One brief opens into six parallel streams and
+                        resolves into one artefact, on a loop. It reads
+                        NOTHING about the page — not scroll, not viewport
+                        height, not any other element — and draws inside a
+                        box it is given by `aspect-ratio` in normal flow.
+                        That is deliberate: it replaced a pinned instrument
+                        whose every defect came from measuring the page.
+assets/js/axent.js      THE AXES ENTITY — the panel on the Axes card, index.html
+                        only. A 2D-canvas particle entity, ~330 circular points,
+                        cycling core → six arms → ring on a 14s loop. It is the
+                        card's cover BECAUSE Axes has no interface to photograph:
+                        a module has no window, and an invented screenshot of a
+                        product that is running right now is the one lie this
+                        site cannot afford. Deliberately NOT WebGL — the landing
+                        page already spends its GPU on a 90k-point field, and a
+                        second context for a 385x240 panel is not worth a card.
+                        Parks on IntersectionObserver, one still frame under
+                        reduced motion, `pointer-events:none` so the card stays
+                        one hit target.
 assets/js/cmdk.js       THE INDEX (⌘K) — on every page. See below.
 assets/css/cmdk.css     its housing
 assets/js/ui.js         shared on every page: irregular glitch scheduling + page
@@ -504,6 +557,70 @@ One on `duk.html`:
   put the surviving label off the right of a phone screen until the target
   position accounted for the box's own half-width.
 
+`axes.html` deliberately has NO signature instrument any more.
+
+- **§02 was `decompose.js`, a pinned scroll instrument, and it was
+  removed on 2026-08-21 at the owner's direction after being reported
+  broken from three different devices in a row.** Every report was a
+  real defect and every fix was correct, and a new one appeared
+  underneath it each time — clipped copy on a short window, the finding
+  printing through the artefact on a phone, the whole thing sprawling
+  edge to edge on an ultrawide, and finally a measurement that had
+  silently decayed to zero so the six axes had never once moved.
+  That is not a run of bad luck, it is the shape of the thing:
+
+    · a stage that must fit inside `100svh` clips what does not fit,
+      and a pinned stage cannot be scrolled to reveal it
+    · layers stacked by absolute position collide at heights nobody
+      authored, and no layout rule prevents it
+    · everything is a `clamp()`, and clamp FLOORS do not shrink
+    · nothing is visible until the reader reaches the exact progress
+      value that reveals it, so every beat is a chance to show nothing
+
+  The replacement is the same account built the other way round:
+  everything in normal flow, everything always visible, all forty-one
+  operations legible AT ONCE as a six-card grid instead of one at a time
+  under a moving sweep. Motion lives in `assets/js/axsplit.js` — a canvas
+  drawing inside its own `aspect-ratio` box — and in CSS that animates
+  opacity only. Neither can move the layout, clip anything or collide
+  with anything. Verified with no horizontal overflow from 320px to
+  2530px wide and every block reaching full opacity at 393x610, 390x844,
+  2530x500, 1440x900 and 1920x1080.
+  The archived original is `_archive/decompose-pinned-instrument.js`
+  (gitignored, local only — it was never committed).
+
+  **Re-authored again, same day, and this one is a CONTENT rule.** The
+  flow rebuild was structurally sound and the owner still reported it as
+  looking broken — because the material was a bug report. §02 quoted a
+  real one-line brief about a broken link, printed forty-one log lines
+  (`[hidden] = true`, `display:flex wins`, `880 intercepted`), and ended
+  on a CSS declaration in a code panel. All of it was true, all of it was
+  well made, and on a PRODUCT page a visitor reads a quoted defect and a
+  rule dump as the site malfunctioning in front of them. "They look like
+  the site is bugging."
+
+  So the engineering incident is gone. The six axes now carry the
+  QUESTIONS each one opens, written for someone who runs an organisation
+  rather than a codebase — who actually decides, where a request waits,
+  which claim has a number behind it. The off-brief argument survives as
+  a principle instead of an anecdote, and the closing block states what
+  comes back rather than pasting it. There is no `<code>` element left on
+  the page and no line set in mono that is a sentence.
+
+  **The standing rule: never print a defect, a log line or a rule dump as
+  page copy on a product page.** Internal detail that reads as rigour in
+  a commit message reads as breakage on a website. Where a worked example
+  is wanted, it has to be work the buyer recognises, and it must not be
+  invented — which on this site means it comes from the Lumina case or it
+  is stated as method, never as a fabricated engagement.
+  The axis formerly called INPUT is ACCESS, for the same reason: "input"
+  reads as a keyboard.
+
+  **The lesson generalises and is the reason this is written down:** a
+  pinned instrument is a promise that the composition fits one viewport
+  height. Make that promise only where the content is genuinely fixed
+  and small. Where the content is a body of text, put it in flow.
+
 **Testing them headlessly:** do not scroll. Headless paints reliably at scroll 0
 and `window.scrollTo` fights Lenis. `_track.js` derives progress from the track's
 rect, so pulling the track up with a negative `margin-top` produces any progress
@@ -512,11 +629,30 @@ do** — the negative margin drags the track up over content still sitting at it
 natural position, and the overlap looks exactly like a layout bug that is not
 there.
 
+**The negative-margin trick does NOT move the field.** `sig.py` pulls the
+track up while the document stays at scroll 0, so the bed renders whatever
+formation page-progress 0 gives — every capture of an instrument shows it
+over the WRONG formation unless you also pass `?freeze=S1|S2|S3|S4`. This
+made the decomposition look unreadable against a torus it will never
+actually sit on.
+
 **A pinned stage cannot scroll.** Anything taller than `100svh` is unreachable,
 and the note under each instrument is the copy that says what the stage means.
 Measure the union of the stage's CHILDREN — `scrollHeight` lies here, because a
 flex column with `justify-content:center` reports its own height even when the
 content overflows past both edges.
+
+`axfit.py` (job tmp, not the repo) is that measurement, and it does two
+things because fitting turned out to be only half of it. It reports the
+children-union against the viewport at ten progress values across a
+spread of window sizes — **including short and ultrawide ones, which is
+what the owner actually runs and what nothing was being tested at** — and
+it reports every pair of VISIBLE boxes that intersect. Ancestor/descendant
+pairs are excluded; the individual lanes are included, because an
+absolutely-positioned payoff box sitting inside `.dc__field` is an
+ancestor pair with the field and a genuine collision with the lanes.
+Three real defects came out of it that every screenshot at 1440x900 had
+been hiding.
 
 ## The footer (added 2026-08-18)
 
@@ -599,6 +735,62 @@ are tempted to hard-code the menu, this is why it is not.
   none→flex and adding the class in one task leaves the opacity transition
   no start state to move from.
 
+## Typography — widows are a defect, and they are measurable
+
+A last line holding one word reads as broken rather than as typesetting:
+"PHONE" alone under a label, "it." alone under a quoted brief, "was."
+alone under a display line. Reported from a phone, and a sweep of one
+page across eight viewports found **74 of them** — so it was never a
+property of those blocks. It is a property of every measure on the site
+that happens to be narrow, and it cannot be authored away one string at
+a time, because copy that sits perfectly at 1440 orphans at 393 and the
+widths in between are continuous.
+
+Two layers, both site-wide:
+
+- `text-wrap: pretty` on body copy and `balance` on headings, quotations
+  and mono metadata (`styles.css`). Right tool, honoured by the engine
+  where it is supported.
+- `setupWidows()` in `main.js` binds the last two words of every text
+  block with a non-breaking space. This is the guarantee: one U+00A0 is
+  deterministic in every browser. It touches only the LAST text node, so
+  markup inside a sentence survives; it skips `<code>`, `<pre>` and
+  `[data-kinetic]`; and it skips any pair long enough to overflow a
+  320px column, because a widow is a blemish and a horizontal scrollbar
+  is a defect.
+
+`orphan2.py` + `orphan.js` measure it. Line boxes are read EXACTLY, by
+wrapping every word in a span and grouping by top edge — Range rects
+were the first attempt and they lied, because pseudo-element content and
+inline children split one line into several rects. **Split on whitespace
+EXCEPT U+00A0**: JavaScript's `\s` matches the non-breaking space, so a
+naive `/\s+/` tears apart the very binding under test and every run
+reports the unbound layout. Result now: 74 → 16, and every survivor is a
+two- or three-word last line, which is an ordinary ragged edge. Zero
+single-word widows on any page.
+
+Numbers and their units are not sentences: `.proof__nums > span` takes
+`white-space:nowrap` so "00 build steps" cannot break after "build".
+
+## Kill stale headless Chrome before you believe a probe
+
+Every tool here launches Chrome on a FIXED `--remote-debugging-port` and
+attaches to whatever answers. Runs that crash or are interrupted leave
+the process alive holding that port — and the next run silently attaches
+to the OLD browser, showing a page loaded before the change under test.
+
+This cost hours. Forty-one orphaned Chromes had accumulated, and a fix
+that was demonstrably present in the DOM measured as having no effect,
+repeatedly and consistently, across four rewrites of the probe. The
+readings were not noisy, they were confidently wrong, which is worse.
+
+    Get-Process chrome | Where-Object { $_.MainWindowTitle -eq '' } |
+      Stop-Process -Force
+
+Run that before any measurement session. If a probe reports that a
+change you can see in a screenshot had no effect, this is the first
+thing to check, not the fourth.
+
 ## "The page loaded clean" is not "the page works"
 
 `check.py` navigates and listens. Every signature instrument on this site is
@@ -649,7 +841,7 @@ for pinned stages described above.
 
 ## The index — ⌘K (added 2026-08-18)
 
-`assets/js/cmdk.js` + `cmdk.css`, on all ten pages. Fourteen destinations:
+`assets/js/cmdk.js` + `cmdk.css`, on all eleven pages. Fifteen destinations:
 the pages, the four landing scenes, and the mailto.
 
 - **Every result is a real `<a>` in the document.** `field.js` owns internal
@@ -769,9 +961,29 @@ unreadable smudge.
 - Domain is **zyrn.org**, registered at Spaceship. `CNAME` in the repo root binds
   GitHub Pages to the apex; canonicals, `og:url` and `sitemap.xml` all point at
   `https://zyrn.org`. If the host ever changes, those three plus `robots.txt`
-  and the `mailto:access@zyrn.org` in SYS.05 all need updating together.
+  and the `mailto:info@zyrn.org` in SYS.05 all need updating together.
+  **The address is `info@zyrn.org`** — the firm's formal address, set
+  2026-08-21. It replaced `access@zyrn.org`, which was a placeholder
+  from the design source and was never a real mailbox. It appears in
+  three places and they are kept deliberately distinct: the FOOTER on
+  all eleven pages carries a bare `mailto:` with no preset subject and
+  prints lowercase (it is a formal address, not a campaign); the CTAs
+  carry a contextual `?subject=`; and `foundation.html`'s Organization
+  JSON-LD carries `email` plus a `contactPoint`, which is what machines
+  read. The old `Q3 2026` in the request-access subject went with it —
+  a dated subject line is stale the quarter after it ships.
 - Verify a deploy against `https://risethehorns-arch.github.io/Zyrn/`, not the
   custom domain — Pages serves a push immediately, DNS lags.
+- The "In production" band on `index.html` is THREE cards as of
+  2026-08-21: Lumina / Axes / Duk, in that order — shipped, running,
+  being built. Each panel is a different KIND of thing on purpose:
+  Lumina is a photograph (a real site exists), Duk is its mark on a
+  ruled ground (nothing is built yet), Axes is a live particle entity
+  (it is running, and it has no interface). None of the three is a
+  mock-up, and none should become one. `proof.css` is an explicit three-column grid, NOT
+  `auto-fit`: auto-fit drops to two tracks around 1000px and orphans the
+  third card at half width with a hole beside it. Below 1040 the cards go
+  to one column AND lay out horizontally; below 640 they stack.
 - SYS.03's four lines now link to `services/*.html`, and `services.html`
   indexes them. The nav is Work / Foundation / System / Services /
   **In production** / Contact — the last one added 2026-08-19, pointing at
@@ -788,8 +1000,10 @@ unreadable smudge.
   of CSS, 7,228 of JS, 3 self-hosted faces, a CSP pinned to `'self'`, and
   the 8-replaced/1-added token re-base of 2026-07-28. The screenshots are
   stitched captures of the LIVE www.lumina-jo.com, not mockups.
-  Still true that this is ONE case. A second would let the landing band
-  become a row rather than a single card.
+  Still true that this is ONE CLIENT case. The band is a row of three
+  now — Lumina (live), Axes (in service), Duk (in development) — but two
+  of those three are ours, so a second client case is still the thing
+  that would change the argument.
 - Real 60fps at 90k has NOT been measured on hardware. Headless renders this page
   at roughly one frame per second of virtual time, so it cannot judge frame rate.
   Open any page with `?probe=1` in a real browser and read the console.

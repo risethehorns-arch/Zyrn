@@ -1,7 +1,7 @@
 /* ══════════════════════════════════════════════════════════════════════
    ZYRN — THE INDEX  (⌘K)
 
-   Eight pages, five landing scenes and four service lines. The nav can
+   Eleven pages, five landing scenes and four service lines. The nav can
    hold five slots and the footer holds the rest, which means most of the
    site is two clicks and a scroll away from anywhere. This is the direct
    route: one keystroke, type three letters, arrive.
@@ -43,11 +43,12 @@
     { k: '04',     l: 'AI adoption',          h: UP + 'services/ai-transformation.html',   t: 'Line',     q: 'ai artificial intelligence transformation workflow governance' },
     { k: 'SYS.06', l: 'The brand kit',        h: UP + 'brand.html',                        t: 'Method',   q: 'brand kit tokens colours type spec documentation how we present deliverable handover' },
     { k: 'SYS.07', l: 'Lumina — a case',      h: UP + 'lumina.html',                       t: 'Work',     q: 'lumina case study proof work client real estate amman example portfolio rebase' },
+    { k: 'SYS.09', l: 'Axes — the module',      h: UP + 'axes.html',                         t: 'Product',  q: 'axes module ai claude opus assistant in service built this site decomposition how we build' },
     { k: 'SYS.08', l: 'Duk — the agent',       h: UP + 'duk.html',                          t: 'Product',  q: 'duk ai agent open source artificial intelligence assistant brainstorm build in production' },
     { k: 'SYS.02', l: 'Capability',           h: UP + 'index.html#sys-02',                 t: 'Scene',    q: 'capability what zyrn does' },
     { k: 'SYS.04', l: 'Readiness index',      h: UP + 'index.html#sys-04',                 t: 'Scene',    q: 'readiness index level assessment maturity' },
     { k: 'SYS.05', l: 'Access',               h: UP + 'index.html#sys-05',                 t: 'Scene',    q: 'contact access request referral seats intake' },
-    { k: '→',      l: 'Request access',       h: 'mailto:access@zyrn.org?subject=Request%20access%20%E2%80%94%20Q3%202026', t: 'Action', q: 'email contact mail request access apply' },
+    { k: '→',      l: 'Request access',       h: 'mailto:info@zyrn.org?subject=Request%20access', t: 'Action', q: 'email contact mail request access apply' },
   ];
 
   /* ── the shell ─────────────────────────────────────────────────── */

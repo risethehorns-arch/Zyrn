@@ -102,6 +102,34 @@ a{color:var(--vapor);text-decoration:none}
 /* text over video — nothing heavier than this */
 .veil{text-shadow:0 1px 12px rgba(14,15,18,0.6)}
 
+/* ══════════════════════════════════════════════════════════════════════
+   ORPHAN CONTROL — site-wide, added 2026-08-21
+
+   A last line holding one short word reads as a defect rather than as
+   typography: "PHONE" alone under a label, "it." alone under a quoted
+   sentence, "was." alone under a display line. The owner reported exactly
+   that from a phone, and a sweep found 73 of them across one page and
+   seven viewports — so it was never a property of those two blocks, it
+   was a property of every measure on the site that happens to be narrow.
+
+   It is not fixable by hand. Copy that fits at 1440 orphans at 393, and
+   the widths in between are continuous. The browser is the only thing
+   that knows where the lines fall, so the browser is told to care:
+
+     balance — spread the lines evenly. For blocks of a few lines where
+               the SHAPE matters: headings, quotations, display lines,
+               mono metadata. Browsers cap this at a handful of lines
+               and fall back to normal beyond it, which is correct.
+     pretty  — normal line breaking, except the last line is never left
+               with an orphan. For body copy, where balancing a nine-line
+               paragraph would be wrong even if it were free.
+
+   Both degrade to ordinary wrapping where unsupported: nothing here is
+   load-bearing for layout, only for how a ragged edge reads.
+   ══════════════════════════════════════════════════════════════════════ */
+p,li,dd,figcaption,.lede{text-wrap:pretty}
+h1,h2,h3,h4,blockquote,.mono,summary,figcaption,th{text-wrap:balance}
+
 .mono{
   font-family:var(--font-mono);
   font-size:11px;

@@ -21,12 +21,18 @@
    none inside it — a nested reveal never fires (CLAUDE.md).
    ══════════════════════════════════════════════════════════════════════ */
 
-/* Two cards side by side, each stacked internally. v1 was one card laid
-   out horizontally (shot beside body); at half the width that arrangement
-   gives the copy about twenty characters a line, so the cards stack their
-   own contents instead. */
+/* Three cards side by side, each stacked internally. v1 was one card laid
+   out horizontally (shot beside body); at a third of the width that
+   arrangement gives the copy about a dozen characters a line, so the
+   cards stack their own contents instead.
+
+   Three is where an explicit column count has to replace `auto-fit`:
+   auto-fit at this container width drops to two tracks somewhere around
+   1000px and orphans the third card at half width with a hole beside it.
+   Below 1040 they go to a single column and the card that would have been
+   orphaned lays out horizontally instead — see the media queries. */
 .proof__row{
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
   gap:clamp(16px,2.4vw,28px);
   margin-top:clamp(26px,4vh,44px);
 }
@@ -56,6 +62,13 @@
   .proof__card--duk:hover .dukmark{--spin:2.6}
   .proof__card--duk:hover .dukfield__q{opacity:0.9;transform:none;letter-spacing:0.42em}
   .proof__card--duk:hover .dukfield::after{opacity:0.5;transform:scale(1)}
+
+  /* Axes answers the same way, through the same one property — except
+     for the entity itself, which is a canvas and cannot be driven by a
+     custom property: axent.js takes the pointer off the card directly
+     and doubles its own clock. */
+  .proof__card--axes:hover .axfield{--spin:3}
+  .proof__card--axes:hover .axfield__q{opacity:0.9;transform:none;letter-spacing:0.42em}
 }
 .proof__card:focus-visible{outline:2px solid var(--vapor);outline-offset:3px}
 
@@ -139,11 +152,17 @@
   font-size:9px;color:rgba(242,243,245,0.72);
 }
 .proof__st::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--vapor)}
+/* Three states, three dots, and the difference between them is the point
+   of the band: shipped holds steady, in service breathes because it is
+   working right now, in development blinks because it is not finished. */
 .proof__st--live::before{opacity:0.9}
-/* the one that is still moving is the one that blinks */
+.proof__st--svc::before{animation:pf-svc 3.4s ease-in-out infinite}
 .proof__st--dev::before{animation:pf-dev 2.2s ease-in-out infinite}
+@keyframes pf-svc{0%,100%{opacity:0.5}50%{opacity:1}}
 @keyframes pf-dev{0%,100%{opacity:0.28}50%{opacity:1}}
-@media (prefers-reduced-motion:reduce){.proof__st--dev::before{animation:none;opacity:0.7}}
+@media (prefers-reduced-motion:reduce){
+  .proof__st--dev::before,.proof__st--svc::before{animation:none;opacity:0.7}
+}
 
 .proof__t{
   display:block;font-size:clamp(16px,1.7vw,20px);line-height:1.24;
@@ -157,6 +176,10 @@
   display:flex;flex-wrap:wrap;gap:6px clamp(12px,1.6vw,20px);
   color:var(--steel);padding-top:2px;margin-top:auto;
 }
+/* Each stat is one unit. Left to wrap internally, "00 build steps" broke
+   after "build" and left "steps" alone on a second line — a number and
+   its unit are not a sentence and must not be hyphenated apart. */
+.proof__nums > span{white-space:nowrap}
 .proof__nums b{
   font-weight:400;color:var(--vapor);
   font-variant-numeric:tabular-nums;margin-right:5px;
@@ -169,6 +192,26 @@
 }
 .proof__go .arrow{transition:transform 320ms var(--ease-reveal,cubic-bezier(.16,1,.3,1))}
 
-@media (max-width:860px){
+/* One column below 1040. A full-width card with a 16:10 visual stacked on
+   top of it is a 600px-tall image on a laptop, so from here down to phone
+   width the card lays itself out horizontally instead — visual left, copy
+   right. That IS the v1 arrangement the note at the top of this file
+   rejected, and it is right again here for the reason it was wrong there:
+   the card is full width now, so the copy column is not twenty characters. */
+@media (max-width:1040px){
   .proof__row{grid-template-columns:1fr;gap:18px}
+  .proof__card{flex-direction:row;gap:clamp(16px,2.6vw,28px);align-items:stretch}
+  .proof__vis{flex:0 0 clamp(230px,38%,430px);margin-bottom:0;align-self:flex-start}
+  .proof__body{flex:1 1 auto}
+}
+/* and back to stacked once that copy column would drop under ~30 chars */
+@media (max-width:640px){
+  .proof__card{flex-direction:column}
+  /* `align-self` has to be reset with the rest of it. Once the card is a
+     COLUMN, flex-start is a cross-axis (horizontal) alignment, so the
+     panel shrank to its content width — which is nothing for the two
+     panels that are drawn rather than photographed, and 160px of hexagon
+     on a 390px screen. Lumina's card hid it, because an <img> carries an
+     intrinsic width and filled the box anyway. */
+  .proof__vis{flex:none;align-self:stretch;margin-bottom:clamp(14px,1.8vh,20px)}
 }

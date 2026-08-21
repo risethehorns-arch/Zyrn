@@ -54,6 +54,7 @@
 <link rel="stylesheet" href="assets/css/field.css">
 <link rel="stylesheet" href="assets/css/duk.css">
 <link rel="stylesheet" href="assets/css/proof.css">
+<link rel="stylesheet" href="assets/css/axes.css">
 <link rel="stylesheet" href="assets/css/footer.css">
 <link rel="stylesheet" href="assets/css/cmdk.css">
 <link rel="stylesheet" href="assets/css/intro.css">
@@ -337,10 +338,11 @@
     <div class="runway runway--short" aria-hidden="true"></div>
 
     <!-- ── IN PRODUCTION ────────────────────────────────────────────────
-         The band the nav's "In production" tab points at. Two cards, and
-         they are deliberately in different states: one shipped and running,
-         one being built in the open. A portfolio that only shows finished
-         work says nothing about what a firm is currently betting on.
+         The band the nav's "In production" tab points at. Three cards, and
+         they are deliberately in three different states: one shipped and
+         running for a client, one running inside the firm, one being built
+         in the open. A portfolio that only shows finished work says nothing
+         about what a firm is currently betting on.
 
          No `data-sys-section` and no rail entry: the five-scene rhythm is
          capped at five (docs/strategy.md §4). This is evidence for SYS.03,
@@ -349,7 +351,7 @@
       <div class="row row--top">
         <div class="badge mono veil" data-reveal data-rdelay="100">SYS.03 &mdash; IN PRODUCTION</div>
         <p class="lede lede--wide veil" data-reveal data-rdelay="200" data-keepout id="proofT">
-          One system shipped and still running. One being built in the open.
+          One system shipped and running for a client. One module running inside the firm. One being built in the open.
         </p>
       </div>
 
@@ -383,7 +385,39 @@
           </span>
         </a>
 
-        <a class="proof__card proof__card--duk" href="duk.html" data-reveal data-rdelay="380">
+        <a class="proof__card proof__card--axes" href="axes.html" data-reveal data-rdelay="380">
+          <span class="proof__vis proof__vis--axes">
+            <!-- Axes has no interface to photograph, so this is the
+                 module's behaviour drawn live rather than a mock-up of a
+                 product that does not have a window: one brief, taken
+                 apart along six axes worked at once, resolved to one
+                 boundary, on an eleven-second loop. See axent.js. -->
+            <span class="axfield" aria-hidden="true">
+              <canvas class="axent" data-axent></canvas>
+              <span class="axfield__q mono">one brief / six axes</span>
+            </span>
+          </span>
+
+          <span class="proof__body">
+            <span class="proof__head">
+              <span class="proof__wm">Axes</span>
+              <span class="mono proof__st proof__st--svc">In service</span>
+            </span>
+            <span class="proof__t">The module that built this site</span>
+            <span class="proof__b">Our own assistant module, running on Claude Opus 5. It holds a whole system at once, takes an ambiguous brief apart along six axes, works all of them together, and returns the artefact &mdash; this page included.</span>
+            <span class="proof__nums mono">
+              <span><b>11</b> pages</span>
+              <span><b>90K</b> particles</span>
+              <span><b>00</b> build steps</span>
+            </span>
+            <span class="proof__go mono">
+              See how it works
+              <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </span>
+        </a>
+
+        <a class="proof__card proof__card--duk" href="duk.html" data-reveal data-rdelay="460">
           <span class="proof__vis proof__vis--duk">
             <span class="dukfield" aria-hidden="true">
               <span class="dukmark">
@@ -485,7 +519,7 @@
             Engagements open with a diagnostic and a readiness number. If the number does not move, the engagement has not worked — a shared position, not a disclaimer.
           </p>
           <div class="cta-row" data-reveal data-rdelay="400">
-            <a class="btn btn--pulse" href="mailto:access@zyrn.org?subject=Request%20access%20%E2%80%94%20Q3%202026">
+            <a class="btn btn--pulse" href="mailto:info@zyrn.org?subject=Request%20access">
               Request access
               <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
             </a>
@@ -528,7 +562,7 @@
               </span>
             </span>
             <p class="sitefoot__line">Organizations, engineered.</p>
-            <a class="sitefoot__mail" href="mailto:access@zyrn.org?subject=Request%20access%20%E2%80%94%20Q3%202026">access@zyrn.org</a>
+            <a class="sitefoot__mail" href="mailto:info@zyrn.org">info@zyrn.org</a>
           </div>
 
           <nav class="sitefoot__cols" aria-label="Footer">
@@ -544,6 +578,7 @@
               <a href="foundation.html">Foundation</a>
               <a href="brand.html">Brand kit &mdash; the method</a>
               <a href="lumina.html">Lumina &mdash; a case</a>
+              <a href="axes.html">Axes &mdash; in service</a>
               <a href="index.html#sys-04">Readiness index</a>
               <a href="index.html#sys-05">Access</a>
             </div>
@@ -588,6 +623,7 @@
 <script src="assets/js/nav.js"></script>
 <script src="assets/js/cmdk.js"></script>
 <script src="assets/js/footer.js"></script>
+<script src="assets/js/axent.js"></script>
 
 <script type="module">
 /* SYS.01 → SYS.05 mapped onto the field's states. The page now OPENS on the
