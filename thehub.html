@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZYRN &mdash; THEHUB, a case</title>
+<meta name="description" content="THEHUB is a live, ad-funded directory of free and open-source software. It was running two rival design systems on one domain. Zyrn unified it — 180 pages, one system, and not a word of the editorial touched.">
+<link rel="canonical" href="https://zyrn.org/thehub.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ZYRN">
+<meta property="og:locale" content="en">
+<meta property="og:title" content="ZYRN &mdash; THEHUB, a case">
+<meta property="og:description" content="THEHUB is a live, ad-funded directory of free and open-source software. It was running two rival design systems on one domain. Zyrn unified it — 180 pages, one system, and not a word of the editorial touched.">
+<meta property="og:url" content="https://zyrn.org/thehub.html">
+<meta property="og:image" content="https://zyrn.org/assets/media/og.jpg?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ZYRN — the wordmark cut by its Pulse seam, inside the particle core.">
+<meta property="og:image:secure_url" content="https://zyrn.org/assets/media/og.jpg?v=2">
+<meta property="og:image:type" content="image/jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/media/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/media/icons/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/media/icons/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<!-- The import map MUST precede every module load on the page, and a
+     <link rel="modulepreload"> IS a module load — see CLAUDE.md. -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/",
+    "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.mjs",
+    "lil-gui": "https://cdn.jsdelivr.net/npm/lil-gui@0.19.2/dist/lil-gui.esm.js"
+  }
+}
+</script>
+
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/misc/GPUComputationRenderer.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/postprocessing/EffectComposer.js">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<link rel="stylesheet" href="assets/css/service.css">
+<link rel="stylesheet" href="assets/css/field.css">
+<link rel="stylesheet" href="assets/css/footer.css">
+<link rel="stylesheet" href="assets/css/cmdk.css">
+<link rel="stylesheet" href="assets/css/case.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "THEHUB — one domain, two design systems",
+  "url": "https://zyrn.org/thehub.html",
+  "author": {"@type":"Organization","name":"ZYRN","url":"https://zyrn.org"},
+  "publisher": {"@type":"Organization","name":"ZYRN","url":"https://zyrn.org"},
+  "about": {
+    "@type":"WebSite",
+    "name":"THEHUB",
+    "url":"https://www.qutaifan.com/",
+    "description":"A directory of free and open-source software."
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- The field opens SCATTERED (S2) — two systems, no agreement — takes
+     structure (S1), resolves into one (S3), and releases (S4). -->
+<canvas id="field" aria-hidden="true"></canvas>
+
+<div class="grid" aria-hidden="true">
+  <span class="grid__line grid__line--a"></span>
+  <span class="grid__line grid__line--b"></span>
+</div>
+
+<div class="readout" aria-hidden="true">
+  <span class="readout__label">ZYRN / SYS.08 &middot; <span id="readoutState">FIELD</span> &mdash; <span id="readoutPct">000</span>%</span>
+  <span class="readout__track"><span class="readout__fill" id="readoutFill"></span></span>
+</div>
+
+<div class="shell">
+
+  <nav class="nav">
+    <div class="nav__row">
+      <a href="index.html" aria-label="ZYRN — home">
+        <span class="glitch">
+          <span class="shear shear--auto is-sheared" style="--shear-size:20px">
+            <span class="shear__half shear__half--top">ZYRN</span>
+            <span class="shear__half shear__half--bot">ZYRN</span>
+            <span class="shear__seam"></span>
+          </span>
+        </span>
+      </a>
+      <div class="nav__links">
+        <a href="index.html#sys-03" class="nav__link">Work<sup class="nav__sup">04</sup></a>
+        <a href="foundation.html" class="nav__link">Foundation</a>
+        <a href="index.html#sys-04" class="nav__link">System</a>
+        <a href="services.html" class="nav__link">Services</a>
+        <a href="index.html#production" class="nav__link">In production</a>
+        <a href="index.html#sys-05" class="nav__link">Contact</a>
+      </div>
+      <div class="nav__end">
+        <span class="mono nav__coords">AMM 31.95&deg;N / 35.93&deg;E</span>
+        <a class="btn btn--hairline" href="index.html#sys-05">Request access</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ── HERO ──────────────────────────────────────────────────────── -->
+    <header class="case-hero case">
+      <span class="mono case-hero__idx" aria-hidden="true">SYS.08 &mdash; CASE 02 / SHIPPED</span>
+
+      <span class="case-hero__mark">
+        <img src="assets/media/thehub-logo.png" alt="THEHUB" width="367" height="104" decoding="async">
+      </span>
+
+      <h1 class="case-hero__title" data-keepout data-reveal data-kinetic>One domain, two design systems.</h1>
+
+      <p class="case-hero__lede" data-keepout>THEHUB is a live, ad-funded directory of free and open-source software, hand-built over 180 static pages. A hundred and forty-six of them were cyan. Thirty-one were violet, on a different ground, at a different width, behind a different navigation. Nobody had ever seen the two halves next to each other, because no visitor arrives at a site twice.</p>
+
+      <div class="mono case-hero__meta" data-keepout>
+        <span>ROLE <b>DESIGN SYSTEM ONLY</b></span>
+        <span>YEAR <b>2026</b></span>
+        <span>STATUS <b>LIVE</b></span>
+        <a class="case-hero__out" href="https://www.qutaifan.com/" target="_blank" rel="noopener noreferrer">
+          QUTAIFAN.COM
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </a>
+      </div>
+    </header>
+
+
+    <!-- ── 01 · THE BRIEF ────────────────────────────────────────────── -->
+    <section class="case-sec" aria-labelledby="briefT">
+      <div class="case-sec__head" data-keepout>
+        <span class="mono case-sec__num">01</span>
+        <h2 class="case-sec__title" id="briefT">The brief</h2>
+      </div>
+
+      <div class="brief" data-keepout data-reveal>
+        <div class="brief__c">
+          <span class="mono brief__h">Whose site it is</span>
+          <p class="brief__b">Not ours. THEHUB belongs to its editor, who writes every review on it and publishes the repository openly. The engagement was the design system and nothing else &mdash; changes proposed against a clone, handed back to be merged by the person who owns the site.</p>
+        </div>
+        <div class="brief__c">
+          <span class="mono brief__h">What was wrong</span>
+          <p class="brief__b">Nothing a reader could name, and everything an editor could feel. Every page carried its own copy of its own stylesheet, so the site had drifted into two palettes, two grounds, two container widths and two navigations &mdash; each internally consistent, and neither aware of the other.</p>
+        </div>
+        <div class="brief__c">
+          <span class="mono brief__h">What could not move</span>
+          <p class="brief__b">The words. It is an editorial property that earns from its traffic, so the copy, the rankings and the ad placements were fixed points. A design system that requires the content to be rewritten is not a design system, it is a relaunch.</p>
+        </div>
+      </div>
+
+      <figure class="pull vit" data-keepout data-reveal>
+        <blockquote class="pull__q">Every page had its own stylesheet, so every page was its own brand.</blockquote>
+        <figcaption class="mono pull__src">THE CONDITION ON ARRIVAL &mdash; 180 OF 180 PAGES</figcaption>
+      </figure>
+    </section>
+
+
+    <!-- ── 02 · BEFORE / AFTER ───────────────────────────────────────────
+         The signature. Three pages, each one wiped between the design that
+         was live and the design that is live now. Both halves of every pair
+         were captured from a local server at the same viewport, the same
+         scroll position and the same second — the BEFORE is `git archive
+         HEAD` of the clone, the AFTER is the working tree, verified
+         byte-identical to what qutaifan.com serves today. See wipe.js. -->
+    <section class="wp__track" id="wpTrack" aria-label="Before and after">
+      <div class="wp__stage">
+
+        <div class="rk__head">
+          <span class="mono rk__cap" id="wpCap">THE HOME PAGE &mdash; THE ONE SURFACE THAT WAS ALREADY CYAN</span>
+          <span class="mono rk__meta">
+            <span id="wpIdx">01 / 03</span>
+            <span class="rk__dots" id="wpDots" aria-hidden="true"></span>
+            <span><span id="wpPct">000</span>%</span>
+          </span>
+        </div>
+
+        <div class="wp" id="wp" aria-hidden="true">
+          <div class="wp__desk">
+            <div class="rk__bar">
+              <span class="rk__dot"></span><span class="rk__dot"></span><span class="rk__dot"></span>
+              <span class="mono rk__url" id="wpUrl">qutaifan.com</span>
+            </div>
+            <div class="wp__win" id="wpWin">
+              <span class="wp__seam" aria-hidden="true"></span>
+              <span class="mono wp__lbl wp__lbl--before" id="wpBefore">BEFORE</span>
+              <span class="mono wp__lbl wp__lbl--after" id="wpAfter">AFTER</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="wp__foot">
+          <p class="wp__note" id="wpNote">The palette was not the problem here; the structure was. The hero states what the site is, then hands over to a live count of what is actually in it &mdash; 38 AI &amp; automation, 54 online utilities, 32 apps, 18 open-source CLI, 138 reviews published &mdash; read from the index rather than typed into the page. Behind it, an ambient field that was not there before.</p>
+          <a class="rk__out mono" href="https://www.qutaifan.com/" target="_blank" rel="noopener noreferrer">
+            See the live one
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </a>
+        </div>
+
+        <p class="sr-only">A before-and-after comparison of three pages of qutaifan.com: the home page, a category pillar and an alternatives page, each shown in the design that was live and the design that replaced it.</p>
+      </div>
+    </section>
+
+
+    <!-- ── 03 · THE LIVE SITE ────────────────────────────────────────────
+         The same instrument lumina.html uses, over a different reel: a
+         screencast of the live www.qutaifan.com, scrubbed by scroll. -->
+    <section class="rk-sec" id="rkSec" aria-label="The live site">
+      <div class="rk__track" id="rkTrack">
+        <div class="rk__stage">
+
+          <div class="rk__head">
+            <span class="mono rk__cap" id="rkCap">THE DIRECTORY &mdash; WHAT IS ACTUALLY IN IT, COUNTED</span>
+            <span class="mono rk__meta">
+              <span id="rkIdx">01 / 05</span>
+              <span class="rk__dots" id="rkDots" aria-hidden="true"></span>
+              <span><span id="rkPct">000</span>%</span>
+            </span>
+          </div>
+
+          <div class="rk" id="rk" aria-hidden="true">
+            <div class="rk__desk">
+              <div class="rk__bar">
+                <span class="rk__dot"></span><span class="rk__dot"></span><span class="rk__dot"></span>
+                <span class="mono rk__url" id="rkUrl">qutaifan.com</span>
+              </div>
+              <div class="rk__win" id="rkWin">
+                <video class="rk__vid" id="rkVid"
+                       width="1120" height="700"
+                       poster="assets/media/work/hub-reel-poster.webp"
+                       muted playsinline disablepictureinpicture preload="none">
+                  <source src="assets/media/work/hub-reel.webm" type="video/webm">
+                  <source src="assets/media/work/hub-reel.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+
+          <div class="rk__foot">
+            <p class="rk__note" id="rkNote">The home page states what the site is and then hands over to a count of what is in it, read from the index rather than typed into the page. Underneath it, an ambient field and a constellation that were not there before.</p>
+            <a class="rk__out mono" href="https://www.qutaifan.com/" target="_blank" rel="noopener noreferrer">
+              Try it yourself
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+            </a>
+          </div>
+
+          <p class="sr-only">A screen recording of the live qutaifan.com, scrubbed by the scroll of this section: the home page, the tool grid, a category pillar, an alternatives page and a review.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── 04 · WHAT SHIPPED ─────────────────────────────────────────── -->
+    <section class="case-sec" aria-labelledby="numsT">
+      <div class="case-sec__head" data-keepout>
+        <span class="mono case-sec__num">04</span>
+        <h2 class="case-sec__title" id="numsT">What shipped</h2>
+      </div>
+
+      <div class="nums" data-keepout data-reveal>
+        <div class="num">
+          <span class="num__v">180</span>
+          <span class="mono num__l">Pages</span>
+          <p class="num__n">Hand-maintained static HTML, no build step and no framework &mdash; 138 reviews, 31 pillar and alternatives pages, and the rest.</p>
+        </div>
+        <div class="num">
+          <span class="num__v">157</span>
+          <span class="mono num__l">Stopped carrying their own stylesheet</span>
+          <p class="num__n">All 180 shipped a duplicated inline <span class="mono">&lt;style&gt;</span> block on arrival. Twenty-three still do, and each of those is a page with something genuinely local to say.</p>
+        </div>
+        <div class="num">
+          <span class="num__v">01</span>
+          <span class="mono num__l">Design system, where there were two</span>
+          <p class="num__n">146 pages on one accent, 31 on another, on different grounds at different widths. One palette now, in one stylesheet, read by every page.</p>
+        </div>
+        <div class="num">
+          <span class="num__v">179</span>
+          <span class="mono num__l">Pages whose word count did not move</span>
+          <p class="num__n">Counted, not asserted: tags stripped from both versions of all 180 pages and the rendered words compared. The one that moved is the home page, whose hero was in scope.</p>
+        </div>
+        <div class="num">
+          <span class="num__v">5,169</span>
+          <span class="mono num__l">Lines of HTML removed</span>
+          <p class="num__n">40,610 down to 35,441. Nothing was deleted from the site &mdash; that is the duplicated styling leaving, replaced by three shared files.</p>
+        </div>
+        <div class="num">
+          <span class="num__v">00</span>
+          <span class="mono num__l">Editorial decisions taken by us</span>
+          <p class="num__n">The reviews, the rankings and the ad placements are the editor&rsquo;s. We were there for the surface they arrive on.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ── 05 · HOW IT WAS HANDED OVER ───────────────────────────────── -->
+    <section class="case-sec" aria-labelledby="outroT">
+      <div class="case-sec__head" data-keepout>
+        <span class="mono case-sec__num">05</span>
+        <h2 class="case-sec__title" id="outroT">How it was handed over</h2>
+      </div>
+
+      <div class="outro" data-keepout data-reveal>
+        <div>
+          <h3 class="outro__t">Six scripts, and every one of them refuses to run by default.</h3>
+          <p class="outro__b">A hundred and eighty pages cannot be edited by hand and should not be edited by a script you have to trust. Each of the six that did this work is a dry run unless it is passed <span class="mono">--apply</span>, is safe to run twice, and ends in a check that can fail &mdash; so the person merging it can see exactly what it intends to do to their live site before it does any of it.</p>
+          <p class="outro__b">That is the same argument as the readiness index, made on somebody else&rsquo;s repository: a change nobody can inspect is a change nobody can own. The site is theirs, the content is theirs, and the system is now something they can apply without asking us.</p>
+          <a class="btn btn--hairline" href="services/website-design.html">The website line</a>
+          <a class="btn btn--hairline" href="services/brand-kit.html">The brand kit line</a>
+        </div>
+
+        <aside class="outro__side">
+          <span class="mono outro__row"><span>Property</span><b>THEHUB &mdash; qutaifan.com</b></span>
+          <span class="mono outro__row"><span>Sector</span><b>Editorial &mdash; software directory</b></span>
+          <span class="mono outro__row"><span>Owner</span><b>The editor, not Zyrn</b></span>
+          <span class="mono outro__row"><span>Lines engaged</span><b>01 &mdash; website design</b></span>
+          <span class="mono outro__row"><span>Pages touched</span><b>182</b></span>
+          <span class="mono outro__row"><span>Status</span><b>Live</b></span>
+          <a class="case-hero__out" href="https://www.qutaifan.com/" target="_blank" rel="noopener noreferrer">
+            <span class="mono">VISIT QUTAIFAN.COM</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </a>
+        </aside>
+      </div>
+    </section>
+
+
+    <!-- ── FOOTER ────────────────────────────────────────────────────── -->
+    <footer class="sitefoot">
+      <div class="sitefoot__in" data-keepout>
+
+        <div class="sitefoot__top">
+          <div class="sitefoot__brand">
+            <span class="glitch">
+              <span class="shear shear--auto is-sheared" style="--shear-size:30px">
+                <span class="shear__half shear__half--top">ZYRN</span>
+                <span class="shear__half shear__half--bot">ZYRN</span>
+                <span class="shear__seam"></span>
+              </span>
+            </span>
+            <p class="sitefoot__line">Organizations, engineered.<br>The operating core of modern firms.</p>
+            <a class="sitefoot__mail" href="mailto:info@zyrn.org">info@zyrn.org</a>
+          </div>
+
+          <nav class="sitefoot__cols" aria-label="Footer">
+            <div class="fcol">
+              <span class="mono fcol__h">Lines</span>
+              <a href="services/website-design.html"><span class="mono">01</span> Website design</a>
+              <a href="services/brand-kit.html"><span class="mono">02</span> Brand kit</a>
+              <a href="services/business-structuring.html"><span class="mono">03</span> Business structuring</a>
+              <a href="services/ai-transformation.html"><span class="mono">04</span> AI adoption</a>
+            </div>
+            <div class="fcol">
+              <span class="mono fcol__h">The firm</span>
+              <a href="foundation.html">Foundation</a>
+              <a href="brand.html">Brand kit &mdash; the method</a>
+              <a href="lumina.html">Lumina &mdash; a case</a>
+              <a href="thehub.html" aria-current="page">THEHUB &mdash; a case</a>
+              <a href="axes.html">Axes &mdash; in service</a>
+              <a href="index.html#sys-04">Readiness index</a>
+              <a href="index.html#sys-05">Access</a>
+            </div>
+            <div class="fcol">
+              <span class="mono fcol__h">Intake</span>
+              <span class="fcol__stat">Q3 &mdash; 2026</span>
+              <span class="fcol__stat">01 of 04 seats open</span>
+              <span class="fcol__stat">By referral</span>
+              <span class="fcol__stat">Two quarters minimum</span>
+            </div>
+          </nav>
+        </div>
+
+        <div class="sitefoot__bar mono">
+          <span class="sitefoot__stamp">
+            <span class="mark" aria-hidden="true">
+              <svg class="mark__half mark__half--top" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+              <svg class="mark__half mark__half--bot" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+              <span class="mark__seam"></span>
+            </span>
+            ZYRN &mdash; EST. 2026
+          </span>
+          <span>AMM 31.95&deg;N / 35.93&deg;E</span>
+          <span class="sitefoot__clock">AMM <b id="footClock">--:--:--</b></span>
+          <span class="sitefoot__spacer"></span>
+          <span>SYS.08 &mdash; CASE 02</span>
+          <span>V.2.0 / EN</span>
+        </div>
+
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/ui.js"></script>
+<script src="assets/js/nav.js"></script>
+<script src="assets/js/cmdk.js"></script>
+<script src="assets/js/footer.js"></script>
+
+<script type="module">
+import { initField } from './assets/js/field.js';
+import { initWipe }  from './assets/js/modules/wipe.js';
+import { initRack }  from './assets/js/modules/rack.js';
+
+const roState = document.getElementById('readoutState');
+initField({
+  program: [
+    { at: 0.00, form: 'S2' },   // two systems, no agreement
+    { at: 0.34, form: 'S1' },   // structure — the comparison
+    { at: 0.68, form: 'S3' },   // one system
+    { at: 1.00, form: 'S4' },   // released — it is live, and it is theirs
+  ],
+  channel: { tilt: { S2: 12, S1: 44, S3: 24, S4: 30 },
+             spin: { S2: 90, S1: 150, S3: 190, S4: 220 } },
+  onState: (p, n) => { if (roState) roState.textContent = n; },
+});
+
+initWipe();
+
+/* The same instrument lumina.html runs, over this site's reel. Weights are
+   the concat durations the cut was built from; the boundaries are derived
+   from the video's own duration, so a re-encode needs no change here. */
+initRack({
+  host: 'qutaifan.com',
+  settled: 0,
+  scenes: [
+    { id: 'home', path: '/', w: 4.57,
+      cap: 'THE DIRECTORY — WHAT IS ACTUALLY IN IT, COUNTED',
+      note: 'The home page states what the site is and then hands over to a count of what is in it, read from the index rather than typed into the page. Underneath it, an ambient field and a constellation that were not there before.' },
+    { id: 'grid', path: '/', w: 4.24,
+      cap: 'THE GRID — ONE CARD PER TOOL',
+      note: 'Every tool is the same card: what it is, what tier it is free at, and a link that goes straight to the project, with no paid placement anywhere in the order. The cards tilt to the pointer, which is the only thing on the page that answers a mouse.' },
+    { id: 'pillar', path: '/best-free-ai-tools-2026', w: 3.93,
+      cap: 'A CATEGORY PILLAR — THE HALF THAT WAS VIOLET',
+      note: 'One of the thirty-one pages that ran a different brand. Same accent as everything else now, same ground, same width, same navigation — and not one word of the guide itself rewritten.' },
+    { id: 'alt', path: '/free-alternative-to-figma', w: 3.81,
+      cap: 'AN ALTERNATIVES PAGE — THE COMPARISON TABLE',
+      note: 'The table was already the most useful thing on the page. It now belongs to the same document as the page around it, which is all that was ever wrong with it.' },
+    { id: 'review', path: '/reviews/adobe-firefly', w: 3.47,
+      cap: 'A REVIEW — WHAT IT DOES WELL, AND WHAT IT DOES NOT',
+      note: 'A hundred and thirty-eight of these, each written by the editor. The design has one job here and it is to get out of the way of a long read.' },
+  ],
+});
+</script>
+</body>
+</html>

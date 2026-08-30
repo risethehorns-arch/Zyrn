@@ -342,11 +342,15 @@
     <div class="runway runway--short" aria-hidden="true"></div>
 
     <!-- ── IN PRODUCTION ────────────────────────────────────────────────
-         The band the nav's "In production" tab points at. Three cards, and
-         they are deliberately in three different states: one shipped and
-         running for a client, one running inside the firm, one being built
-         in the open. A portfolio that only shows finished work says nothing
-         about what a firm is currently betting on.
+         The band the nav's "In production" tab points at. FOUR cards as of
+         2026-08-30, deliberately in different states: two shipped and running
+         for clients, one running inside the firm, one being built in the open.
+         A portfolio that only shows finished work says nothing about what a
+         firm is currently betting on.
+
+         Two of the four are client work now, which was the thing the case for
+         this band was missing — see docs/roadmap.md. THEHUB went in when its
+         redesign went live; it is the editor's property, and the panel says so.
 
          No `data-sys-section` and no rail entry: the five-scene rhythm is
          capped at five (docs/strategy.md §4). This is evidence for SYS.03,
@@ -355,7 +359,7 @@
       <div class="row row--top">
         <div class="badge mono veil" data-reveal data-rdelay="100">SYS.03 &mdash; IN PRODUCTION</div>
         <p class="lede lede--wide veil" data-reveal data-rdelay="200" data-keepout id="proofT">
-          One system shipped and running for a client. One module running inside the firm. One being built in the open.
+          Two systems shipped and running for clients. One module running inside the firm. One being built in the open.
         </p>
       </div>
 
@@ -406,7 +410,45 @@
           </span>
         </a>
 
-        <a class="proof__card proof__card--axes" href="axes.html" data-reveal data-rdelay="380">
+        <a class="proof__card proof__card--hub" href="thehub.html" data-reveal data-rdelay="380">
+          <!-- Same treatment as Lumina, for the same reason: this site's
+               argument is a design system running across 180 pages, and one
+               screenshot shows one page. Three cuts of the live
+               www.qutaifan.com — the home page, the tool grid, a pillar. -->
+          <span class="proof__vis">
+            <video class="proof__vid" data-vid
+                   width="960" height="600"
+                   poster="assets/media/work/hub-card-poster.webp"
+                   muted loop playsinline disablepictureinpicture
+                   preload="none" aria-label="THEHUB, live">
+              <source src="assets/media/work/hub-card.webm" type="video/webm">
+              <source src="assets/media/work/hub-card.mp4" type="video/mp4">
+            </video>
+          </span>
+
+          <span class="proof__body">
+            <span class="proof__head">
+              <span class="proof__mark proof__mark--hub">
+                <img src="assets/media/thehub-logo.png" alt="THEHUB" width="367" height="104"
+                     loading="lazy" decoding="async">
+              </span>
+              <span class="mono proof__st proof__st--live">Live</span>
+            </span>
+            <span class="proof__t">A software directory, in two design systems</span>
+            <span class="proof__b">180 hand-built pages that had drifted into two brands &mdash; 146 on one accent, 31 on another, each page carrying its own stylesheet. One system now, applied without a word of the editorial being rewritten.</span>
+            <span class="proof__nums mono">
+              <span><b>180</b> pages</span>
+              <span><b>01</b> system</span>
+              <span><b>179</b> unchanged</span>
+            </span>
+            <span class="proof__go mono">
+              Before and after
+              <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </span>
+        </a>
+
+        <a class="proof__card proof__card--axes" href="axes.html" data-reveal data-rdelay="460">
           <span class="proof__vis proof__vis--axes">
             <!-- Axes has no interface to photograph, so this is the
                  module's behaviour drawn live rather than a mock-up of a
@@ -438,7 +480,7 @@
           </span>
         </a>
 
-        <a class="proof__card proof__card--duk" href="duk.html" data-reveal data-rdelay="460">
+        <a class="proof__card proof__card--duk" href="duk.html" data-reveal data-rdelay="540">
           <span class="proof__vis proof__vis--duk">
             <span class="dukfield" aria-hidden="true">
               <span class="dukmark">
@@ -599,6 +641,7 @@
               <a href="foundation.html">Foundation</a>
               <a href="brand.html">Brand kit &mdash; the method</a>
               <a href="lumina.html">Lumina &mdash; a case</a>
+              <a href="thehub.html">THEHUB &mdash; a case</a>
               <a href="axes.html">Axes &mdash; in service</a>
               <a href="index.html#sys-04">Readiness index</a>
               <a href="index.html#sys-05">Access</a>
@@ -665,31 +708,32 @@ const sCount  = document.getElementById('sCount');
 const pad = n => { const s = String(n).padStart(6, '0'); return s.slice(0, -3) + ',' + s.slice(-3); };
 
 initField({
-  // Anchored to where the scenes actually sit. RE-MEASURED 2026-08-19, when
-  // the proof band was inserted between SYS.03 and SYS.04 and pushed
-  // everything below it down the page. Section centres as scroll progress,
-  // desktop 1440x900 / phone 390x844:
+  // Anchored to where the scenes actually sit. RE-MEASURED 2026-08-30, when
+  // the proof band went from three cards to four and became a 2x2 block —
+  // it grew by ~640px on desktop and ~1,200px on a phone, which moved every
+  // scene below it. Measured with offsetTop/offsetHeight (never
+  // getBoundingClientRect: the rect includes the reveal transforms), section
+  // centres as scroll progress, desktop 1440x900 / phone 390x844:
   //
-  //   SYS.01 0.00 / 0.00   SYS.02 0.20 / 0.17   SYS.03 0.38 / 0.35
-  //   PROD   0.57 / 0.54   SYS.04 0.74 / 0.71   SYS.05 0.92 / 0.86
+  //   SYS.01 0.068 / 0.052   SYS.02 0.244 / 0.198   SYS.03 0.408 / 0.356
+  //   PROD   0.624 / 0.586   SYS.04 0.835 / 0.796   SYS.05 0.995 / 0.924
   //
-  // Re-measured again on 2026-08-19 when the band gained its second card
-  // (Duk) and grew. The two widths now agree within ~0.06 everywhere; they
-  // used to diverge badly at SYS.02, and a longer page is what closed that.
-  // The stops below are the mean, biased so each morph COMPLETES just
-  // before its section reaches the viewport centre rather than while it is
-  // still arriving.
+  // The two widths agree within 0.071 at worst. The stops below are the
+  // mean, biased so each morph COMPLETES just before its section reaches the
+  // viewport centre rather than while it is still arriving. Previous values,
+  // for the three-card band, were 0.22 / 0.35 / 0.62 / 0.74.
   //
   // If you add or remove a section here, re-measure — do not nudge these by
-  // eye. The runway spacers are part of the same measurement.
+  // eye. The runway spacers are part of the same measurement, and so is the
+  // number of cards in the band.
   program: [
     { at: 0.00, form: 'S3' },   // SYS.01 hero — the operating core, at rest
     { at: 0.22, form: 'S3' },   // SYS.02 "Built once. Runs itself." — it holds
-    { at: 0.35, form: 'S1' },   // SYS.03 — the core opens into four arms,
-    { at: 0.62, form: 'S1' },   //          and STAYS open across the "In
+    { at: 0.36, form: 'S1' },   // SYS.03 — the core opens into four arms,
+    { at: 0.70, form: 'S1' },   //          and STAYS open across the "In
                                 //          production" band, because that
                                 //          band is those same lines running
-    { at: 0.74, form: 'S3' },   // SYS.04 readiness — the ladder climbs back
+    { at: 0.82, form: 'S3' },   // SYS.04 readiness — the ladder climbs back
     { at: 1.00, form: 'S4' },   // SYS.05 access — released
   ],
   onState: (p, name) => { if (roState) roState.textContent = name; },

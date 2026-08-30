@@ -40,8 +40,11 @@ import { onTrack, swapText, pad3, REDUCED } from './_track.js';
    durations the cut was built from (3.78 / 4.98 / 4.17 / 4.14 / 3.51 /
    3.47s), kept as WEIGHTS rather than absolute seconds so the file can be
    re-encoded at a different length without touching this list — the
-   boundaries are always derived from the video's own reported duration. */
-const SCENES = [
+   boundaries are always derived from the video's own reported duration.
+
+   Exported, because thehub.html runs the same instrument over a different
+   reel. The module owns the BEHAVIOUR; a page owns its own footage. */
+export const LUMINA_SCENES = [
   {
     id: 'hero', path: '/', w: 3.78,
     cap: 'THE LANDING — A DESCENT, THEN THE LIGHT',
@@ -75,16 +78,27 @@ const SCENES = [
 ];
 
 /* cumulative start fraction of each scene within the reel */
-const TOTAL = SCENES.reduce((a, s) => a + s.w, 0);
-let acc = 0;
-for (const s of SCENES) { s.at = acc / TOTAL; acc += s.w; }
+function anchor(scenes) {
+  const total = scenes.reduce((a, s) => a + s.w, 0);
+  let acc = 0;
+  for (const s of scenes) { s.at = acc / total; acc += s.w; }
+  return scenes;
+}
 
 const ramp = (p, a, b) => {
   const t = Math.min(1, Math.max(0, (p - a) / Math.max(1e-5, b - a)));
   return t * t * (3 - 2 * t);
 };
 
-export function initRack() {
+/* `host` is the domain printed in the window's URL bar; `settled` is the
+   scene shown when motion is reduced — the one that most makes the case and
+   survives being still. */
+export function initRack(opts) {
+  const cfg = opts || {};
+  const SCENES = anchor(cfg.scenes || LUMINA_SCENES);
+  const HOST = cfg.host || 'www.lumina-jo.com';
+  const SETTLED = cfg.settled == null ? 1 : cfg.settled;
+
   const track = document.getElementById('rkTrack');
   const rack  = document.getElementById('rk');
   const win   = document.getElementById('rkWin');
@@ -130,7 +144,7 @@ export function initRack() {
     const s = SCENES[idx];
     swapText(capEl, s.cap);
     swapText(noteEl, s.note);
-    swapText(urlEl, 'www.lumina-jo.com' + (s.path === '/' ? '' : s.path));
+    swapText(urlEl, HOST + (s.path === '/' ? '' : s.path));
     if (idxEl) idxEl.textContent = String(idx + 1).padStart(2, '0') + ' / ' +
                                    String(N).padStart(2, '0');
     dots.forEach((d, i) => d.classList.toggle('is-on', i === idx));
@@ -232,7 +246,7 @@ export function initRack() {
     rack.style.setProperty('--in', '1');
     if (pctEl) pctEl.textContent = '000';
     shown = -1;
-    label(SCENES[1].at);
+    label(SCENES[SETTLED].at);
     return;
   }
   onTrack(track, draw);

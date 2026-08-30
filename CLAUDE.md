@@ -974,16 +974,46 @@ unreadable smudge.
   a dated subject line is stale the quarter after it ships.
 - Verify a deploy against `https://risethehorns-arch.github.io/Zyrn/`, not the
   custom domain — Pages serves a push immediately, DNS lags.
-- The "In production" band on `index.html` is THREE cards as of
-  2026-08-21: Lumina / Axes / Duk, in that order — shipped, running,
-  being built. Each panel is a different KIND of thing on purpose:
-  Lumina is a photograph (a real site exists), Duk is its mark on a
-  ruled ground (nothing is built yet), Axes is a live particle entity
-  (it is running, and it has no interface). None of the three is a
-  mock-up, and none should become one. `proof.css` is an explicit three-column grid, NOT
-  `auto-fit`: auto-fit drops to two tracks around 1000px and orphans the
-  third card at half width with a hole beside it. Below 1040 the cards go
-  to one column AND lay out horizontally; below 640 they stack.
+- The "In production" band on `index.html` is FOUR cards as of
+  2026-08-30: Lumina / THEHUB / Axes / Duk, in that order — the two
+  client cases first, then the two of ours. Each panel is a different
+  KIND of thing on purpose: Lumina and THEHUB are SCREEN RECORDINGS of
+  the live sites, Duk is its mark on a ruled ground (nothing is built
+  yet), Axes is a live particle entity (it is running, and it has no
+  interface). None of the four is a mock-up, and none should become one.
+  `proof.css` is an explicit **two**-column grid, NOT `auto-fit`: four
+  across at this container width gives each card 270px, narrower than
+  the third that was already too narrow to lay a card out sideways in,
+  and auto-fit drops tracks on its own schedule and orphans whatever is
+  left over. Below 1040 the cards go to one column AND lay out
+  horizontally; below 640 they stack.
+
+- **THE TWO CARD VIDEOS ARE FREE UNTIL THEY ARE LOOKED AT, AND THAT IS
+  THE ONLY REASON THEY ARE ALLOWED.** Both ship `preload="none"`, so
+  nothing is fetched during the page load — verified, not assumed.
+  `ui.js`'s `setupVideos()` upgrades `preload` and calls `play()` on an
+  IntersectionObserver, and pauses on the way out. `prefers-reduced-motion`
+  and `navigator.connection.saveData` never start them at all, and the
+  posters are real frames of the same footage so both degrade to the still
+  that used to be there. If you add a third video, keep every one of those
+  properties. Field re-measured after: 90,000 points, 2.66ms median,
+  p95 3.83, governor rung 0.
+
+- **Two headless traps that both look exactly like a bug in the page.**
+  Measured 2026-08-30, and neither is anything to do with the site:
+    1. **Headless Chrome with the hardware GPU decodes three frames of any
+       video and then reports `paused` with nobody having called `pause()`.**
+       A bare `<video autoplay muted loop>` on an otherwise empty page does
+       the same, which is how it was pinned down. Use
+       `--use-gl=swiftshader --enable-unsafe-swiftshader` to verify video;
+       use `--use-angle=d3d11 --enable-gpu` to measure the field. You cannot
+       have both in one run.
+    2. **`python -m http.server` has no HTTP Range support**, so a `<video>`
+       served by it reports `seekable` as `[0, 0]` and CANNOT BE SEEKED. The
+       scroll-scrubbed reels sit on frame zero and look precisely like a
+       poster that failed to load. GitHub Pages serves ranges, so this only
+       ever bites in preview. Use `serve.py` (in the job tmp dir), which
+       does. **Never hand the owner a preview link off the no-Range server.**
 - SYS.03's four lines now link to `services/*.html`, and `services.html`
   indexes them. The nav is Work / Foundation / System / Services /
   **In production** / Contact — the last one added 2026-08-19, pointing at
@@ -993,6 +1023,30 @@ unreadable smudge.
   out to both relevant lines and `brand.html` §04 links into it. The two
   service pages that Lumina evidences (website-design, brand-kit) do not
   yet link TO the case.
+- **`thehub.html` is SYS.08 / CASE 02, added 2026-08-30.** THEHUB
+  (qutaifan.com) is the owner's friend's live, ad-funded software
+  directory; Zyrn's engagement was the DESIGN SYSTEM ONLY and the page
+  says so in three places. Its signature is `modules/wipe.js` — the same
+  page in both designs with a scroll-driven seam, LEFT ALWAYS BEFORE and
+  RIGHT ALWAYS AFTER. Both halves of every pair were captured from a local
+  server at the same viewport, scroll position and second: BEFORE is
+  `git archive HEAD` of the clone, AFTER is the working tree, verified
+  byte-identical to what qutaifan.com serves. Do not re-shoot one half
+  from live and the other from disk — a comparison has to differ in the
+  design and nothing else.
+  Its numbers are all counted, and `words.py` is the one worth keeping:
+  it strips tags from both versions of all 180 pages and diffs the
+  rendered word counts. **179 of 180 identical.** That is what lets the
+  page say no editorial was touched.
+
+- **`modules/rack.js` is shared by `lumina.html` and `thehub.html`.**
+  `initRack(opts)` takes `{scenes, host, settled}`; the module owns the
+  behaviour and each page owns its own footage. `LUMINA_SCENES` is the
+  default export for the page that had it first. Scene `w` values are the
+  concat durations the cut was built from, used as WEIGHTS — boundaries
+  are derived from the video's own reported duration, so a re-encode at a
+  different length needs no change in the page.
+
 - ~~No proof anywhere on the site~~ **CLOSED 2026-08-19.** `lumina.html`
   (SYS.07 — CASE 01) is the case study, and the proof band on `index.html`
   between SYS.03 and SYS.04 is its entry point. Every number on both is

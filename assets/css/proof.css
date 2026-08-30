@@ -21,18 +21,23 @@
    none inside it — a nested reveal never fires (CLAUDE.md).
    ══════════════════════════════════════════════════════════════════════ */
 
-/* Three cards side by side, each stacked internally. v1 was one card laid
-   out horizontally (shot beside body); at a third of the width that
-   arrangement gives the copy about a dozen characters a line, so the
-   cards stack their own contents instead.
+/* FOUR cards, two by two. v1 was one card laid out horizontally (shot
+   beside body); at a third of the width that arrangement gives the copy
+   about a dozen characters a line, so the cards stack their own contents
+   instead. v2 was a three-column row.
 
-   Three is where an explicit column count has to replace `auto-fit`:
-   auto-fit at this container width drops to two tracks somewhere around
-   1000px and orphans the third card at half width with a hole beside it.
-   Below 1040 they go to a single column and the card that would have been
-   orphaned lays out horizontally instead — see the media queries. */
+   Four across does not work at this container width — a quarter of 1180px
+   is 270px, which is narrower than the third that was already too narrow to
+   lay a card out sideways in. So the band is a 2x2 block: each card keeps
+   roughly the width three had, and the row simply goes down instead of
+   along.
+
+   Still an explicit column count, never `auto-fit`: auto-fit drops a track
+   somewhere around 1000px on its own schedule and orphans whatever is left
+   over at half width with a hole beside it. Below 1040 these go to a single
+   column and lay out horizontally — see the media queries. */
 .proof__row{
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
   gap:clamp(16px,2.4vw,28px);
   margin-top:clamp(26px,4vh,44px);
 }
@@ -146,6 +151,15 @@
   display:block;height:17px;width:auto;
   filter:drop-shadow(0 2px 9px rgba(0,0,0,0.55))
          drop-shadow(0 0 20px rgba(255,178,90,0.32));
+}
+/* Their lockup is a wordmark beside a mark rather than a wordmark alone, so
+   it carries more width per unit of height and needs a little less of it.
+   The amber halo is Lumina's — this one gets a cyan cast of its own, because
+   the vitrine rule shows another firm's brand and never repaints it. */
+.proof__mark--hub img{
+  height:21px;
+  filter:drop-shadow(0 2px 9px rgba(0,0,0,0.55))
+         drop-shadow(0 0 20px rgba(74,196,255,0.28));
 }
 /* Duk is ours, so it is set in our own type rather than given a logotype */
 .proof__wm{

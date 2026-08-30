@@ -556,6 +556,128 @@
   .case-hero__title{max-width:none}
 }
 
+/* ══════════════════════════════════════════════════════════════════════
+   SIGNATURE · THE WIPE  (thehub.html — see modules/wipe.js)
+
+   Deliberately built from the rack's parts: the same stage, the same head
+   with its caption / index / dots / percent, the same window chrome. A
+   before-and-after is a different argument, not a different page, and giving
+   it its own visual language would say otherwise.
+
+   Everything below is opacity, clip-path and a custom property. Nothing here
+   can move a box.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* Three pairs, each wiping edge to edge: 400vh gives every pair about a
+   viewport and a third of scroll, which is slow enough to read a page in and
+   fast enough not to feel like being held. The rack next door runs 620vh for
+   five scenes, which is the same rate. */
+.wp__track{position:relative;height:400vh}
+/* Declared HERE, immediately after the base rule, and not up in the page's
+   other max-width block — that block comes earlier in the file, and two rules
+   of equal specificity are settled by order, not by which one has a media
+   query. A shorter track written up there would have been silently ignored,
+   which is the same mistake axes.css already paid for once. */
+@media (max-width:900px){ .wp__track{height:230vh} }
+.wp__stage{
+  position:sticky;top:0;min-height:100svh;
+  display:flex;flex-direction:column;justify-content:center;
+  gap:clamp(10px,1.6vh,18px);
+  padding:clamp(64px,9vh,100px) var(--gutter) clamp(22px,3.4vh,40px);
+}
+.wp{
+  --winh:min(66svh,748px);
+  --s:0%;
+  --in:0;
+  position:relative;width:100%;margin:0 auto;
+  display:flex;justify-content:center;
+  opacity:calc(0.2 + 0.8 * var(--in));
+  transform:translate3d(0,calc((1 - var(--in)) * 26px),0);
+  will-change:transform,opacity;
+}
+.wp__desk{
+  position:relative;flex:1 1 auto;min-width:0;
+  max-width:calc(var(--winh) * 1.6);
+  border:1px solid var(--hair-strong);border-radius:10px;
+  overflow:hidden;background:#05070B;
+  box-shadow:0 40px 110px rgba(0,0,0,0.62);
+}
+.wp__win{position:relative;overflow:hidden;aspect-ratio:16/10;background:#05070B}
+
+/* Both halves of a pair occupy the same box. The AFTER sits on top and is
+   clipped to the left `--s` of the window, so the seam is the clip edge —
+   there is no third element sliding around to get out of sync with it. */
+.wp__pair{
+  position:absolute;inset:0;display:block;
+  transition:opacity 320ms var(--ease-reveal,cubic-bezier(.16,1,.3,1));
+}
+.wp__im{
+  position:absolute;inset:0;width:100%;height:100%;display:block;
+  object-fit:cover;
+}
+/* OLD on top, clipped to the LEFT `--s` of the window. So the left of the
+   seam is always the design that was live and the right is always the one
+   that replaced it, at every position and in all three pairs. */
+.wp__im--old{clip-path:inset(0 calc(100% - var(--s)) 0 0)}
+
+/* The seam. Vapor, not Pulse: there is already one Pulse on this surface.
+   `--edge` fades it out over the six percent at each end of a pair, which is
+   where it has to jump back across the window to start the next one. */
+.wp__seam{
+  position:absolute;top:0;bottom:0;left:var(--s);width:1px;
+  background:rgba(242,243,245,0.85);
+  box-shadow:0 0 24px rgba(242,243,245,0.35);
+  opacity:var(--edge,1);
+  pointer-events:none;z-index:3;
+}
+.wp__seam::after{
+  content:'';position:absolute;left:50%;top:50%;
+  width:26px;height:26px;margin:-13px 0 0 -13px;
+  border:1px solid rgba(242,243,245,0.85);border-radius:50%;
+  background:rgba(14,15,18,0.72);
+}
+
+/* Two labels, one per side, and they never change sides. Each is faded out
+   by wipe.js before its own half gets narrower than the word in it — a
+   label standing in a 40px strip reads as a label for the other half. */
+.wp__lbl{
+  position:absolute;bottom:12px;z-index:4;
+  padding:5px 10px;border:1px solid var(--hair-strong);
+  background:rgba(14,15,18,0.82);
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
+  transition:opacity 260ms ease;
+  pointer-events:none;
+}
+.wp__lbl--before{left:14px;color:rgba(242,243,245,0.62)}
+.wp__lbl--after{right:14px;color:var(--vapor);border-color:rgba(242,243,245,0.4)}
+
+.wp__foot{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  gap:clamp(16px,3vw,40px);
+}
+.wp__note{
+  max-width:74ch;margin:0;font-size:13.5px;line-height:1.66;
+  color:rgba(242,243,245,0.66);transition:opacity 240ms;
+}
+.wp__note.is-swap{opacity:0}
+
+@media (max-width:900px){
+  .wp__foot{flex-direction:column;gap:12px}
+  .wp__lbl{bottom:9px;padding:4px 8px}
+  .wp__lbl--before{left:10px}
+  .wp__lbl--after{right:10px}
+}
+@media (max-height:620px){
+  .wp__stage{padding-top:52px;padding-bottom:12px;gap:6px}
+  .wp{--winh:min(58svh,420px)}
+  .wp__note{font-size:11px;line-height:1.5}
+}
+@media (prefers-reduced-motion:reduce){
+  .wp__track{height:auto}
+  .wp__stage{position:static;min-height:0}
+  .wp{opacity:1;transform:none}
+}
+
 /* ── SHORT VIEWPORTS ────────────────────────────────────────────────
    A pinned stage cannot be scrolled to reveal what does not fit in it, so on
    a short window everything below the fold of the stage is simply gone. The
