@@ -115,4 +115,52 @@
      Links that field.js does not claim (external, mailto, downloads, and
      any page without a field) fall through to the browser untouched. */
 
+
+  /* ── 3 · video that only exists when it is being looked at ───────
+     There is one video on the landing page — the Lumina card — and the
+     landing page also spends its GPU on a 90,000-point field measured at
+     2.78ms a frame. The card is affordable only because it costs nothing
+     until it is on screen:
+
+       · `preload="none"` in the markup, so the bytes are not in the load
+         at all. This observer is what upgrades it, and only on approach.
+       · paused the moment it leaves, so a reader who scrolls past is not
+         decoding video behind SYS.04.
+       · `prefers-reduced-motion` never starts it. The poster is a real
+         frame of the same footage, so the card is complete standing still —
+         it does not degrade to a gap.
+       · Save-Data is honoured for the same reason. A visitor who has asked
+         their browser to spend less gets the poster and no request.
+
+     The play() promise is caught rather than ignored: a browser that
+     refuses autoplay rejects it, and an uncaught rejection would print an
+     error on a page whose whole argument is that its console is clean. */
+  function setupVideos() {
+    var vids = document.querySelectorAll('video[data-vid]');
+    if (!vids.length || !('IntersectionObserver' in window)) return;
+
+    var conn = navigator.connection;
+    if (reduced || (conn && conn.saveData)) return;
+
+    var io = new IntersectionObserver(function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        var v = entries[i].target;
+        if (entries[i].isIntersecting) {
+          if (v.getAttribute('preload') !== 'auto') {
+            v.setAttribute('preload', 'auto');
+            v.load();
+          }
+          var p = v.play();
+          if (p && p.catch) p.catch(function () {});
+        } else if (!v.paused) {
+          v.pause();
+        }
+      }
+    }, { rootMargin: '200px 0px', threshold: 0.12 });
+
+    Array.prototype.forEach.call(vids, function (v) { io.observe(v); });
+  }
+
+  setupVideos();
+
 })();

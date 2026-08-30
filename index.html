@@ -362,9 +362,26 @@
       <div class="proof__row" data-keepout>
 
         <a class="proof__card" href="lumina.html" data-reveal data-rdelay="300">
+          <!-- Lumina's whole argument is that its pages MOVE — the hero is a
+               descent through cloud onto a residence, /room furnishes an empty
+               room as you scroll, /invest puts a building up floor by floor. A
+               still of any of that is a photograph of the one thing it is not.
+               So this is three cuts of the live www.lumina-jo.com, screencast
+               at 2x off a real GPU: the descent, the room, the building.
+
+               `preload="none"` — the bytes are not in the page load. ui.js
+               upgrades and plays it on approach and pauses it on the way out,
+               and never starts it under reduced motion or Save-Data, where the
+               poster (a real frame of the same footage) stands in. -->
           <span class="proof__vis">
-            <img src="assets/media/work/lumina-card.webp" alt="The Lumina website, live"
-                 width="1200" height="750" loading="lazy" decoding="async">
+            <video class="proof__vid" data-vid
+                   width="960" height="600"
+                   poster="assets/media/work/lumina-card-poster.webp"
+                   muted loop playsinline disablepictureinpicture
+                   preload="none" aria-label="The Lumina website, live">
+              <source src="assets/media/work/lumina-card.webm" type="video/webm">
+              <source src="assets/media/work/lumina-card.mp4" type="video/mp4">
+            </video>
           </span>
 
           <span class="proof__body">

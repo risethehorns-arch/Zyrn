@@ -134,7 +134,7 @@
   position:sticky;top:0;min-height:100svh;
   display:flex;flex-direction:column;justify-content:center;
   gap:clamp(10px,1.6vh,18px);
-  padding:clamp(70px,10vh,104px) var(--gutter) clamp(24px,4vh,44px);
+  padding:clamp(64px,9vh,100px) var(--gutter) clamp(22px,3.4vh,40px);
 }
 .rk__head{
   display:flex;justify-content:space-between;align-items:baseline;
@@ -165,7 +165,12 @@
      So: pick the height first, derive the width from the aspect ratio.
      At 900px tall that is a 1024x640 window; on a taller display it grows
      with the viewport instead of being capped at an arbitrary max-width. */
-  --winh:min(68svh,760px);
+  /* Trimmed from 68svh/760px on 2026-08-30. The stage is pinned, so
+     anything that does not fit inside 100svh is simply clipped and cannot be
+     scrolled to — measured, it ran 8px past the viewport at 1440x900 and 23px
+     at 1280x800, eating the bottom of the note. Three percent off the window
+     is not a size anyone can perceive; a clipped line is. */
+  --winh:min(66svh,748px);
   position:relative;width:100%;margin:0 auto;
   display:flex;align-items:flex-end;justify-content:center;
   opacity:calc(0.2 + 0.8 * var(--in));
@@ -194,10 +199,19 @@
 .rk__url.is-swap{opacity:0}
 
 .rk__win{position:relative;overflow:hidden;aspect-ratio:16/10;background:#05070B}
-/* every strip is stacked in the same box; rack.js fades between them */
-.rk__layer{
-  position:absolute;top:0;left:0;width:100%;height:auto;display:block;
-  will-change:transform,opacity;
+/* One screen recording of the live site, filling the window. rack.js binds
+   its currentTime to the section's scroll, so this element never plays — it
+   is seeked. `object-fit:cover` rather than `contain` because the capture and
+   the window are both 16:10 and a rounding difference should crop a pixel
+   rather than letterbox a black line down one edge.
+
+   Replaced `.rk__layer`, which was five stacked <img> strips cross-faded
+   between. That worked, and it went stale the moment Lumina was rebuilt. */
+.rk__vid{
+  position:absolute;top:0;left:0;width:100%;height:100%;display:block;
+  object-fit:cover;background:#05070B;
+  /* the card carries the link; the media is scenery, never a hit target */
+  pointer-events:none;
 }
 .rk__win--phone img{
   position:absolute;top:0;left:0;width:100%;height:auto;display:block;
@@ -206,7 +220,12 @@
 
 .rk__phone{
   position:relative;flex:0 0 auto;width:clamp(120px,13%,178px);
-  margin-left:clamp(-64px,-5vw,-40px);margin-bottom:-26px;
+  /* It still overlaps the desk sideways, which is the whole look. It no
+     longer hangs BELOW it: that 26px reached into the foot and sat on top of
+     "Try it yourself" at 1440x900, 1280x800 and 1100x900 — the three most
+     common desktop sizes. Measured overlap 9-16px vertical, up to 132px
+     horizontal. Predates the video work; fixed with it. */
+  margin-left:clamp(-64px,-5vw,-40px);margin-bottom:0;
   border:1px solid var(--hair-strong);border-radius:18px;
   overflow:hidden;background:#05070B;
   box-shadow:0 28px 70px rgba(0,0,0,0.68);
@@ -535,6 +554,34 @@
 @media (max-width:560px){
   .nums{grid-template-columns:1fr}
   .case-hero__title{max-width:none}
+}
+
+/* ── SHORT VIEWPORTS ────────────────────────────────────────────────
+   A pinned stage cannot be scrolled to reveal what does not fit in it, so on
+   a short window everything below the fold of the stage is simply gone. The
+   owner browses from a 2530x500 window, and at 500px tall every clamp on this
+   page is sitting on its FLOOR — 64px of top padding is 13% of that screen
+   spent on nothing, and `.rk__note`'s 7.2em min-height reserves a further
+   ~90px whether the note needs it or not. Measured before this block: 597px
+   of stage inside 500px of viewport, with the note cut off the bottom.
+
+   Floors do not shrink. They have to be replaced.
+
+   This block sits after everything it overrides and before the reduced-motion
+   block, because a media query that comes FIRST loses — the same mistake cost
+   an afternoon on axes.css. */
+@media (max-height:620px){
+  .rk__stage,.rb__stage{padding-top:52px;padding-bottom:12px;gap:6px}
+  .rk{--winh:min(58svh,420px)}
+  .rk__head,.rb__head{padding-bottom:6px}
+  .rk__foot{gap:14px}
+  /* On a SHORT WIDE window the phone becomes the tallest thing in the row and
+     starts driving the height of the whole rack: 178px wide at 390/844 is
+     385px tall, against a 325px desk. Measured at 2530x500 it alone kept the
+     stage 46px over after everything else had been trimmed. */
+  .rk__phone{width:clamp(84px,9%,116px)}
+  .rk__note{min-height:0;font-size:11px;line-height:1.5}
+  .rb__note{min-height:0}
 }
 
 /* Reduced motion: the instruments already draw their settled state, but

@@ -182,9 +182,9 @@
         <div class="rk__stage">
 
           <div class="rk__head">
-            <span class="mono rk__cap" id="rkCap">THE LANDING &mdash; WHERE LUXURY FINDS ITS LIGHT</span>
+            <span class="mono rk__cap" id="rkCap">THE LANDING &mdash; A DESCENT, THEN THE LIGHT</span>
             <span class="mono rk__meta">
-              <span id="rkIdx">01 / 05</span>
+              <span id="rkIdx">01 / 06</span>
               <span class="rk__dots" id="rkDots" aria-hidden="true"></span>
               <span><span id="rkPct">000</span>%</span>
             </span>
@@ -196,27 +196,40 @@
                 <span class="rk__dot"></span><span class="rk__dot"></span><span class="rk__dot"></span>
                 <span class="mono rk__url" id="rkUrl">www.lumina-jo.com</span>
               </div>
-              <div class="rk__win" id="rkWin"></div>
+              <!-- Not a screenshot and not a stitched strip: a screencast of
+                   the live site, scrubbed by the scroll of this section. See
+                   modules/rack.js. `preload="none"` keeps 4.3MB out of the
+                   page load; rack.js fetches it on approach and never fetches
+                   it at all under reduced motion, where the poster stands. -->
+              <div class="rk__win" id="rkWin">
+                <video class="rk__vid" id="rkVid"
+                       width="1120" height="700"
+                       poster="assets/media/work/lumina-reel-poster.webp"
+                       muted playsinline disablepictureinpicture preload="none">
+                  <source src="assets/media/work/lumina-reel.webm" type="video/webm">
+                  <source src="assets/media/work/lumina-reel.mp4" type="video/mp4">
+                </video>
+              </div>
             </div>
 
             <div class="rk__phone">
               <span class="rk__notch"></span>
               <div class="rk__win rk__win--phone">
                 <img id="rkMobImg" src="assets/media/work/lumina-mob.webp"
-                     alt="" width="560" height="3567" decoding="async" loading="lazy">
+                     alt="" width="560" height="6059" decoding="async" loading="lazy">
               </div>
             </div>
           </div>
 
           <div class="rk__foot">
-            <p class="rk__note" id="rkNote">The page opens on a residence at dusk with live Amman weather, the current listing count and the commission structure floating over it. Everything above the fold is a reason to keep reading rather than a headline about excellence.</p>
+            <p class="rk__note" id="rkNote">Opens above cloud and falls through it, the building drawing itself in wireframe on the way down before it resolves. Underneath: live Amman weather, the listing count and the commission structure, stated up front. Everything above the fold is a reason to keep reading rather than a headline about excellence.</p>
             <a class="rk__out mono" href="https://www.lumina-jo.com/" target="_blank" rel="noopener noreferrer">
               Try it yourself
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
             </a>
           </div>
 
-          <p class="sr-only">Screen captures of the live Lumina website: the landing page, the room furnisher, the investment build, the listings collection and the services page, at desktop and phone widths.</p>
+          <p class="sr-only">A screen recording of the live Lumina website, scrubbed by the scroll of this section: the landing page, the room furnisher, the investment build, the districts map, the listings collection and the services page &mdash; with the landing page beside it at phone width.</p>
         </div>
       </div>
     </section>
