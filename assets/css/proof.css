@@ -42,7 +42,12 @@
   margin-top:clamp(26px,4vh,44px);
 }
 
+/* The card is an <article> as of 2026-08-30, not an <a>. `.proof__go` is the
+   real link and stretches itself over the whole card, so the card is still
+   one hit target — and the visit tab can be a second, genuine link inside it,
+   which a nested anchor could never have been. */
 .proof__card{
+  position:relative;
   display:flex;flex-direction:column;
   padding:clamp(14px,1.6vw,20px);
   border:1px solid var(--hair);
@@ -76,7 +81,11 @@
   .proof__card--axes:hover .axfield{--spin:3}
   .proof__card--axes:hover .axfield__q{opacity:0.9;transform:none;letter-spacing:0.42em}
 }
-.proof__card:focus-visible{outline:2px solid var(--vapor);outline-offset:3px}
+/* the outline follows the link, and is drawn on the card it covers */
+.proof__card:focus-within{outline:2px solid var(--vapor);outline-offset:3px}
+.proof__go:focus-visible{outline:none}
+/* ...except for the visit tab, which is its own control and keeps its own */
+.proof__card:focus-within:has(.visit:focus-visible){outline:none}
 
 .proof__vis{
   display:block;overflow:hidden;border-radius:4px;
@@ -212,6 +221,12 @@
   transition:color 260ms ease;
 }
 .proof__go .arrow{transition:transform 320ms var(--ease-reveal,cubic-bezier(.16,1,.3,1))}
+/* This is what makes the card clickable. z-index 1 keeps it under the visit
+   tab, which sits at 3 — otherwise the stretched link would swallow the tap
+   and every card would go to its case study instead of the live site. */
+.proof__go::after{
+  content:'';position:absolute;inset:0;z-index:1;
+}
 
 /* One column below 1040. A full-width card with a 16:10 visual stacked on
    top of it is a 600px-tall image on a laptop, so from here down to phone

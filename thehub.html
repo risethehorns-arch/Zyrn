@@ -130,10 +130,13 @@
         <span>ROLE <b>DESIGN SYSTEM ONLY</b></span>
         <span>YEAR <b>2026</b></span>
         <span>STATUS <b>LIVE</b></span>
-        <a class="case-hero__out" href="https://www.qutaifan.com/" target="_blank" rel="noopener noreferrer">
-          QUTAIFAN.COM
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
-        </a>
+        <a class="visit visit--hub visit--inline" href="https://www.qutaifan.com/" target="_blank"
+             rel="noopener noreferrer" aria-label="Open qutaifan.com in a new tab">
+            <span class="visit__dot" aria-hidden="true"></span>
+            <span class="visit__mark"><img src="assets/media/thehub-logo.png" alt="" width="367" height="104" loading="lazy" decoding="async"></span>
+            <span class="visit__txt mono">QUTAIFAN.COM</span>
+            <svg class="visit__arw" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </a>
       </div>
     </header>
 
@@ -217,7 +220,7 @@
          The same instrument lumina.html uses, over a different reel: a
          screencast of the live www.qutaifan.com, scrubbed by scroll. -->
     <section class="rk-sec" id="rkSec" aria-label="The live site">
-      <div class="rk__track" id="rkTrack">
+      <div class="rk__track" id="rkTrack" style="--rktrack:850vh">
         <div class="rk__stage">
 
           <div class="rk__head">
@@ -237,6 +240,18 @@
               </div>
               <div class="rk__win" id="rkWin"></div>
             </div>
+
+            <!-- The same prop lumina.html carries. It runs the home page on
+                 the SAME linear clock as the window beside it, so the two
+                 devices agree about where the reader is — they used to
+                 disagree, and that was the whole complaint. -->
+            <div class="rk__phone">
+              <span class="rk__notch"></span>
+              <div class="rk__win rk__win--phone">
+                <img id="rkMobImg" src="assets/media/work/hub-mob.webp"
+                     alt="" width="560" height="6059" decoding="async" loading="lazy">
+              </div>
+            </div>
           </div>
 
           <div class="rk__foot">
@@ -247,7 +262,7 @@
             </a>
           </div>
 
-          <p class="sr-only">Screen captures of the live qutaifan.com inside a window you scroll: the home page, a category pillar, an alternatives page and a review.</p>
+          <p class="sr-only">Screen captures of the live qutaifan.com inside a window you scroll: the home page, a category pillar, an alternatives page and a review &mdash; with the home page beside it at phone width.</p>
         </div>
       </div>
     </section>

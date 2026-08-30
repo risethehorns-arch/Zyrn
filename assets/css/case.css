@@ -129,7 +129,13 @@
    step readout and the note stripped back so the SCREEN is the section
    rather than the furniture around it. */
 
-.rk__track{position:relative;height:620vh}
+/* The track length sets HOW FAST the window scrolls the site inside it, and
+   that is the whole feel of the instrument. Measured at 620vh the strip ran
+   5.5px for every 1px of page — the window was not being scrolled, it was
+   being fast-forwarded, and it read as unsynced even once the travel was
+   linear. Each page sets its own, from how much strip it actually carries:
+   Lumina holds six pages, THEHUB four. docs/sync.py prints the ratio. */
+.rk__track{position:relative;height:var(--rktrack,620vh)}
 .rk__stage{
   position:sticky;top:0;min-height:100svh;
   display:flex;flex-direction:column;justify-content:center;

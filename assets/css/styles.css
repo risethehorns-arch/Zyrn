@@ -750,3 +750,157 @@ h1,h2,h3,h4,blockquote,.mono,summary,figcaption,th{text-wrap:balance}
   .page-in{animation:none}
   .veil-swap{transition:none}
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   THE VISIT TAB
+
+   Every case on this site is a claim about a REAL SITE that is running
+   right now, and until this existed the only way to reach one was to read
+   a case study first and find a link at the bottom of it. The tab docks on
+   the work itself — on the card in the proof band, and again in the case
+   hero — and goes straight to the live thing.
+
+   It is the client's own mark, kept in the client's own colour under the
+   vitrine rule: another firm's brand is SHOWN, never repainted. The glow on
+   each one is theirs, not ours.
+
+   The motion is a hairline sweeping down the tab every few seconds and a
+   dot that breathes — enough to catch an eye on a page that is otherwise
+   holding still, and cheap enough to run four of them beside a 90,000-point
+   field. Two compositor properties, no layout, no gradient.
+
+   COLLAPSED to the mark where there is a pointer, and it opens on hover.
+   ALWAYS OPEN where there is not, because a tab that only reveals itself to
+   a mouse is invisible to half the traffic.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.visit{
+  --vs:30px;
+  position:absolute;top:10px;right:10px;z-index:3;
+  display:inline-flex;align-items:center;
+  height:var(--vs);padding:0 9px;
+  border:1px solid rgba(242,243,245,0.22);
+  background:rgba(8,9,12,0.84);
+  -webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);
+  overflow:hidden;text-decoration:none;
+  transition:border-color 340ms ease,background 340ms ease,
+             box-shadow 340ms ease;
+}
+.visit:hover,.visit:focus-visible{
+  border-color:rgba(242,243,245,0.5);
+  background:rgba(8,9,12,0.94);
+  box-shadow:0 8px 30px rgba(0,0,0,0.5);
+}
+.visit:focus-visible{outline:2px solid var(--vapor);outline-offset:2px}
+
+/* the live dot — it breathes rather than blinks, because a blink reads as
+   an alert and this is a status */
+.visit__dot{
+  position:relative;flex:0 0 auto;
+  width:5px;height:5px;border-radius:50%;
+  background:var(--vapor);
+  animation:visit-breathe 3.4s ease-in-out infinite;
+}
+.visit__mark{display:flex;align-items:center;line-height:0;margin-left:8px}
+/* `.visit .visit__mark img`, not `.visit__mark img`. The tab lives inside
+   `.proof__vis`, whose own `img` rule sets width:100% and aspect-ratio:16/10
+   for the card's poster — same specificity as a bare `.visit__mark img`, and
+   proof.css loads after this file, so it won. The Lumina mark computed to
+   0x0 and the tab was an empty box. THEHUB's happened to survive only
+   because its `--hub` filter rule carried one more class.
+   Every property that rule sets is reset here, by name. */
+.visit .visit__mark img{
+  display:block;
+  height:calc(var(--vs) * 0.43);
+  width:auto;max-width:none;
+  aspect-ratio:auto;object-fit:fill;
+}
+
+/* The domain and the arrow are the part that costs width, so they are the
+   part that opens. `max-width` rather than `width:auto` because auto cannot
+   be transitioned and this has to move. */
+.visit__txt{
+  max-width:0;opacity:0;overflow:hidden;white-space:nowrap;
+  font-size:8.5px;letter-spacing:0.2em;
+  color:rgba(242,243,245,0.86);
+  transition:max-width 560ms cubic-bezier(.16,1,.3,1),
+             opacity 300ms ease,margin 560ms cubic-bezier(.16,1,.3,1);
+}
+.visit__arw{
+  width:11px;height:11px;flex:0 0 auto;
+  max-width:0;opacity:0;overflow:hidden;
+  stroke:rgba(242,243,245,0.86);stroke-width:1.6;fill:none;
+  stroke-linecap:square;
+  transition:max-width 560ms cubic-bezier(.16,1,.3,1),
+             opacity 300ms ease,margin 560ms cubic-bezier(.16,1,.3,1),
+             transform 380ms cubic-bezier(.16,1,.3,1);
+}
+
+/* the sweep. One hairline, travelling. Solid Vapor at low alpha — not a
+   gradient, which the doctrine does not allow on a DOM element. */
+.visit::after{
+  content:'';position:absolute;left:0;right:0;top:0;height:1px;
+  background:rgba(242,243,245,0.55);
+  opacity:0;pointer-events:none;
+  animation:visit-sweep 5.6s cubic-bezier(.5,0,.5,1) infinite;
+}
+.visit:hover::after{animation-duration:2.2s}
+
+@keyframes visit-sweep{
+  0%   {transform:translateY(0);opacity:0}
+  6%   {opacity:0.9}
+  26%  {transform:translateY(var(--vs));opacity:0}
+  100% {transform:translateY(var(--vs));opacity:0}
+}
+@keyframes visit-breathe{
+  0%,100%{opacity:0.35;transform:scale(0.82)}
+  50%    {opacity:1;transform:scale(1)}
+}
+
+/* ── open ────────────────────────────────────────────────────────────
+   On a pointer device the tab is a mark until it is approached, and it
+   opens from the card as well as from itself — reaching for the card is
+   already the intent. Everywhere else it is simply open. */
+@media (hover:hover) and (pointer:fine){
+  .visit:hover .visit__txt,
+  .visit:focus-visible .visit__txt,
+  .proof__card:hover .visit__txt,
+  .case-hero:hover .visit__txt{max-width:190px;opacity:1;margin-left:9px}
+  .visit:hover .visit__arw,
+  .visit:focus-visible .visit__arw,
+  .proof__card:hover .visit__arw,
+  .case-hero:hover .visit__arw{max-width:14px;opacity:1;margin-left:7px}
+  .visit:hover .visit__arw{transform:translate(2px,-2px)}
+}
+@media not all and (hover:hover){
+  .visit__txt{max-width:190px;opacity:1;margin-left:9px}
+  .visit__arw{max-width:14px;opacity:1;margin-left:7px}
+}
+
+/* Their mark, their light. The vitrine rule: shown, never repainted. */
+.visit--lum .visit__mark img{
+  filter:drop-shadow(0 1px 6px rgba(0,0,0,0.6))
+         drop-shadow(0 0 14px rgba(255,178,90,0.42));
+}
+.visit--hub .visit__mark img{
+  height:calc(var(--vs) * 0.52);width:auto;
+  filter:drop-shadow(0 1px 6px rgba(0,0,0,0.6))
+         drop-shadow(0 0 14px rgba(74,196,255,0.38));
+}
+
+/* in the case hero it is not docked to anything — it sits in the meta row
+   with the rest of the metadata, and it is bigger */
+.visit--inline{
+  position:relative;top:auto;right:auto;
+  --vs:34px;
+}
+
+@media (prefers-reduced-motion:reduce){
+  .visit::after{animation:none;opacity:0}
+  .visit__dot{animation:none;opacity:0.9}
+  .visit__txt,.visit__arw{transition:none}
+}
+@media (max-width:640px){
+  .visit{--vs:27px;top:8px;right:8px}
+  .visit__txt{font-size:8px;letter-spacing:0.16em}
+}

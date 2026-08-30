@@ -1023,6 +1023,48 @@ unreadable smudge.
   out to both relevant lines and `brand.html` §04 links into it. The two
   service pages that Lumina evidences (website-design, brand-kit) do not
   yet link TO the case.
+- **THE TRAVEL IN THE CASE WINDOW IS LINEAR AND MUST STAY LINEAR.** This
+  window is a page being scrolled, and the one thing a reader checks without
+  knowing they are checking it is whether the thing under the wheel moves
+  WITH the wheel. Any easing there is a lie about how far they scrolled. Two
+  separate mistakes were reported as one:
+    1. travel was `ramp(local, 0.03, 1 - FADE)`, a smoothstep that SATURATES
+       at 0.86 — so for the last 14% of every scene the window stood still
+       while the phone strip beside it carried on. "My mouse scroll is synced
+       with the mobile look."
+    2. progress was clamped into 0.05..0.95, leaving 218px of scroll at the
+       top of the section where the page moved and the window did not.
+  Both gone: `q = p`, travel is `local` with nothing applied, and the phone
+  runs on the same clock so the two devices agree. `docs/sync.py` samples the
+  transform at 130 scroll positions and reports px-of-strip per 100px-of-page
+  per scene, in-scene variation, and any dead zone. **Run it after touching
+  rack.js.** Current: LINEAR, no dead zones, Lumina 2.4:1, THEHUB 1.7:1.
+
+- **Track length is what sets the FEEL, and it is per page.** `--rktrack` on
+  `#rkTrack`: Lumina 1200vh for six pages of strip, THEHUB 850vh for four. At
+  the old shared 620vh the strip ran 5.5px for every 1px of page — the window
+  was not being scrolled, it was being fast-forwarded, and it read as unsynced
+  even once the travel was linear.
+
+- **The proof cards are `<article>`, not `<a>`, as of 2026-08-30.** They carry
+  two destinations now: the card goes to the case study, and a VISIT TAB goes
+  to the live site. Nested anchors are invalid and browsers unnest them, which
+  would have thrown the tab out of the card — so `.proof__go` is the real link
+  and stretches over the card with `::after{inset:0;z-index:1}`, and `.visit`
+  sits at z-index 3 above it. That arrangement fails silently if the z-order
+  is wrong: every tap goes to the case study and nothing looks broken.
+  `docs/hits.py` hit-tests elementFromPoint at each card's body and at all
+  four corners of each tab, across four viewports. **Run it after touching
+  either.**
+
+- **`.visit` lives in styles.css and its image rule needs the extra class.**
+  `.visit .visit__mark img`, never `.visit__mark img`: the tab sits inside
+  `.proof__vis`, whose own `img` rule sets `width:100%` and
+  `aspect-ratio:16/10` for the card poster — equal specificity, and proof.css
+  loads later, so it won and the Lumina mark computed to 0x0. THEHUB's
+  survived only because its `--hub` filter rule happened to carry one more
+  class, which is exactly the kind of accident that hides a bug on one card.
+
 - **The case-page windows use STRIPS, not video. Do not go back.** A
   scroll-scrubbed `<video>` shipped on 2026-08-30 and was reported dead the
   same day: Safari and iOS will not reliably seek a `preload="none"` element

@@ -170,11 +170,29 @@ export function initRack(opts) {
     const inD = ramp(p, 0.00, 0.10) - 0.55 * ramp(p, 0.94, 1.00);
     rack.style.setProperty('--in', inD.toFixed(3));
 
-    /* Held clear of both ends, so the window is never both arriving and
-       scrolling. Scenes are weighted by tile count rather than split evenly,
-       so a ten-viewport page gets more of the track than a four-viewport one
-       and both scroll at about the same rate. */
-    const q = ramp(p, 0.05, 0.95);
+    /* ── THE TRAVEL IS LINEAR. IT MUST STAY LINEAR. ───────────────────
+       This window is a page being scrolled, and the one thing a reader
+       checks without knowing they are checking it is whether the thing under
+       the wheel moves WITH the wheel. Any easing here is a lie about how far
+       they scrolled.
+
+       The first build got this wrong twice over. `q` was a smoothstep, so
+       the whole section crawled at each end and ran in the middle; and the
+       travel was `ramp(local, 0.03, 1 - FADE)`, which SATURATES at
+       local = 0.86 — so for the last fourteen percent of every scene the
+       desktop window stood completely still while the phone strip beside it
+       carried on. Reported exactly that way: the mouse is synced to the
+       phone, not to the page.
+
+       So: `q` is a straight clamp, and travel is `local` with nothing
+       applied to it. The only easing left in this instrument is the frame's
+       arrival, which moves the frame and not its contents.
+       There is no head or tail on it either. Clamping the travel into
+       0.05..0.95 left 218px of scroll at the top of the section where the
+       page moved and the window did not — small, and exactly the thing being
+       complained about. The frame's arrival is allowed to overlap the first
+       few pixels of travel; a real page does the same. */
+    const q = p;
     let idx = 0;
     for (let i = 0; i < N; i++) if (q >= SCENES[i].at) idx = i;
     const local = Math.min(1, Math.max(0,
@@ -186,21 +204,23 @@ export function initRack(opts) {
       else if (i === idx + 1) a = ramp(local, 1 - FADE, 1);
       layers[i].style.opacity = a.toFixed(3);
 
-      /* Only the two scenes in play are worth moving. The rest keep their
-         last transform, which costs nothing and avoids a jump when they come
-         back into the fade. Travel is held clear of the hand-over at each
-         end, so a strip is never sliding while it is also fading — two
-         motions at once on one element reads as a glitch, not a scroll. */
+      /* Both scenes in play keep travelling — the outgoing one all the way
+         to the end of its strip while it fades, the incoming one from the
+         top of its own. Freezing either of them is what produced the stall.
+         The rest keep their last transform, which costs nothing. */
       if (i === idx || i === idx + 1) {
-        const t = i === idx ? ramp(local, 0.03, 1 - FADE) : 0;
+        const t = i === idx ? local : 0;
         layers[i].style.transform =
           'translate3d(0,' + (-runs[i] * t).toFixed(1) + 'px,0)';
       }
     }
 
+    /* The phone runs on the SAME linear clock, so the two devices agree
+       about where the reader is. It used to have a smoothstep of its own,
+       which is why the two disagreed at every scene boundary. */
     if (mobIm) {
-      const ms = ramp(p, 0.06, 0.94);
-      mobIm.style.transform = 'translate3d(0,' + (-mobRun * ms).toFixed(1) + 'px,0)';
+      mobIm.style.transform =
+        'translate3d(0,' + (-mobRun * q).toFixed(1) + 'px,0)';
     }
 
     if (idx !== shown) {
