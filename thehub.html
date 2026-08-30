@@ -223,7 +223,7 @@
           <div class="rk__head">
             <span class="mono rk__cap" id="rkCap">THE DIRECTORY &mdash; WHAT IS ACTUALLY IN IT, COUNTED</span>
             <span class="mono rk__meta">
-              <span id="rkIdx">01 / 05</span>
+              <span id="rkIdx">01 / 04</span>
               <span class="rk__dots" id="rkDots" aria-hidden="true"></span>
               <span><span id="rkPct">000</span>%</span>
             </span>
@@ -235,15 +235,7 @@
                 <span class="rk__dot"></span><span class="rk__dot"></span><span class="rk__dot"></span>
                 <span class="mono rk__url" id="rkUrl">qutaifan.com</span>
               </div>
-              <div class="rk__win" id="rkWin">
-                <video class="rk__vid" id="rkVid"
-                       width="1120" height="700"
-                       poster="assets/media/work/hub-reel-poster.webp"
-                       muted playsinline disablepictureinpicture preload="none">
-                  <source src="assets/media/work/hub-reel.webm" type="video/webm">
-                  <source src="assets/media/work/hub-reel.mp4" type="video/mp4">
-                </video>
-              </div>
+              <div class="rk__win" id="rkWin"></div>
             </div>
           </div>
 
@@ -255,7 +247,7 @@
             </a>
           </div>
 
-          <p class="sr-only">A screen recording of the live qutaifan.com, scrubbed by the scroll of this section: the home page, the tool grid, a category pillar, an alternatives page and a review.</p>
+          <p class="sr-only">Screen captures of the live qutaifan.com inside a window you scroll: the home page, a category pillar, an alternatives page and a review.</p>
         </div>
       </div>
     </section>
@@ -428,28 +420,25 @@ initField({
 
 initWipe();
 
-/* The same instrument lumina.html runs, over this site's reel. Weights are
-   the concat durations the cut was built from; the boundaries are derived
-   from the video's own duration, so a re-encode needs no change here. */
+/* The same instrument lumina.html runs, over this site's strips. `w` is the
+   tile count and `h` the strip's intrinsic height at 1120 wide — both come
+   straight out of docs/strips.py, so a re-shoot is a re-run and two numbers. */
 initRack({
   host: 'qutaifan.com',
-  settled: 0,
+  settled: 1,
   scenes: [
-    { id: 'home', path: '/', w: 4.57,
+    { id: 'hub-home', path: '/', w: 7, h: 4900,
       cap: 'THE DIRECTORY — WHAT IS ACTUALLY IN IT, COUNTED',
-      note: 'The home page states what the site is and then hands over to a count of what is in it, read from the index rather than typed into the page. Underneath it, an ambient field and a constellation that were not there before.' },
-    { id: 'grid', path: '/', w: 4.24,
-      cap: 'THE GRID — ONE CARD PER TOOL',
-      note: 'Every tool is the same card: what it is, what tier it is free at, and a link that goes straight to the project, with no paid placement anywhere in the order. The cards tilt to the pointer, which is the only thing on the page that answers a mouse.' },
-    { id: 'pillar', path: '/best-free-ai-tools-2026', w: 3.93,
+      note: 'The home page states what the site is and then hands over to a count of what is in it, read from the index rather than typed into the page. Below that, one card per tool — what it is, what tier it is free at, and a link straight to the project, with no paid placement anywhere in the order.' },
+    { id: 'hub-pillar', path: '/best-free-ai-tools-2026', w: 6, h: 4200,
       cap: 'A CATEGORY PILLAR — THE HALF THAT WAS VIOLET',
       note: 'One of the thirty-one pages that ran a different brand. Same accent as everything else now, same ground, same width, same navigation — and not one word of the guide itself rewritten.' },
-    { id: 'alt', path: '/free-alternative-to-figma', w: 3.81,
+    { id: 'hub-alt', path: '/free-alternative-to-figma', w: 6, h: 4200,
       cap: 'AN ALTERNATIVES PAGE — THE COMPARISON TABLE',
       note: 'The table was already the most useful thing on the page. It now belongs to the same document as the page around it, which is all that was ever wrong with it.' },
-    { id: 'review', path: '/reviews/adobe-firefly', w: 3.47,
+    { id: 'hub-review', path: '/reviews/adobe-firefly', w: 4, h: 2800,
       cap: 'A REVIEW — WHAT IT DOES WELL, AND WHAT IT DOES NOT',
-      note: 'A hundred and thirty-eight of these, each written by the editor. The design has one job here and it is to get out of the way of a long read.' },
+      note: 'The reviews are the site. The design has one job on this page and it is to get out of the way of a long read.' },
   ],
 });
 </script>

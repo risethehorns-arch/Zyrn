@@ -199,18 +199,13 @@
 .rk__url.is-swap{opacity:0}
 
 .rk__win{position:relative;overflow:hidden;aspect-ratio:16/10;background:#05070B}
-/* One screen recording of the live site, filling the window. rack.js binds
-   its currentTime to the section's scroll, so this element never plays — it
-   is seeked. `object-fit:cover` rather than `contain` because the capture and
-   the window are both 16:10 and a rounding difference should crop a pixel
-   rather than letterbox a black line down one edge.
-
-   Replaced `.rk__layer`, which was five stacked <img> strips cross-faded
-   between. That worked, and it went stale the moment Lumina was rebuilt. */
-.rk__vid{
-  position:absolute;top:0;left:0;width:100%;height:100%;display:block;
-  object-fit:cover;background:#05070B;
-  /* the card carries the link; the media is scenery, never a hit target */
+/* Every strip is stacked in the same box; rack.js fades between them and
+   translates whichever is in play. `height:auto` against a fixed intrinsic
+   width is what makes a strip taller than the window and therefore
+   scrollable inside it — the window's own overflow does the clipping. */
+.rk__layer{
+  position:absolute;top:0;left:0;width:100%;height:auto;display:block;
+  will-change:transform,opacity;
   pointer-events:none;
 }
 .rk__win--phone img{

@@ -196,20 +196,13 @@
                 <span class="rk__dot"></span><span class="rk__dot"></span><span class="rk__dot"></span>
                 <span class="mono rk__url" id="rkUrl">www.lumina-jo.com</span>
               </div>
-              <!-- Not a screenshot and not a stitched strip: a screencast of
-                   the live site, scrubbed by the scroll of this section. See
-                   modules/rack.js. `preload="none"` keeps 4.3MB out of the
-                   page load; rack.js fetches it on approach and never fetches
-                   it at all under reduced motion, where the poster stands. -->
-              <div class="rk__win" id="rkWin">
-                <video class="rk__vid" id="rkVid"
-                       width="1120" height="700"
-                       poster="assets/media/work/lumina-reel-poster.webp"
-                       muted playsinline disablepictureinpicture preload="none">
-                  <source src="assets/media/work/lumina-reel.webm" type="video/webm">
-                  <source src="assets/media/work/lumina-reel.mp4" type="video/mp4">
-                </video>
-              </div>
+              <!-- rack.js fills this with one tall strip per scene and
+                   translates them. It held a <video> scrubbed by currentTime
+                   for a day: that seeked perfectly in Chrome and did not move
+                   at all on Safari, because iOS wants a user gesture before it
+                   will seek and a scroll instrument has none to offer. An
+                   image that is translated has nothing to seek. -->
+              <div class="rk__win" id="rkWin"></div>
             </div>
 
             <div class="rk__phone">
@@ -229,7 +222,7 @@
             </a>
           </div>
 
-          <p class="sr-only">A screen recording of the live Lumina website, scrubbed by the scroll of this section: the landing page, the room furnisher, the investment build, the districts map, the listings collection and the services page &mdash; with the landing page beside it at phone width.</p>
+          <p class="sr-only">Screen captures of the live Lumina website, inside a window you scroll: the landing page, the room furnisher, the investment build, the districts map, the listings collection and the services page &mdash; with the landing page beside it at phone width.</p>
         </div>
       </div>
     </section>
