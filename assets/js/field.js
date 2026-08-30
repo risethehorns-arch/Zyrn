@@ -234,6 +234,8 @@ uniform float uMix;
 uniform mat3 uMatA, uMatB;
 uniform vec3 uRayOrigin, uRayDir;
 uniform float uPointerRadius, uRepel, uVortex, uPointerGain, uPointerMode, uPointerOn;
+uniform vec3  uShockOrigin;
+uniform float uShockT, uShockAmp, uShockSpeed, uShockWidth;
 
 void main(){
   vec2 uv = gl_FragCoord.xy / resolution.xy;
@@ -254,8 +256,30 @@ void main(){
 
   vec3 acc = (target - P.xyz) * uSpring;
   acc -= V.xyz * uDamping;
-  acc += curlFbm(P.xyz * uNoiseScale + vec3(0.13, 0.07, 0.21) * uTime * uNoiseSpeed, uOctaves) * uTurbulence;
+  // Turbulence is LAYERED BY DEPTH. One uniform noise field over the whole
+  // volume reads as fizz — every particle agitated the same amount, so the
+  // parallax has nothing to work against. Slower and broader at the back,
+  // tighter and quicker at the front, and the camera's own drift then reads
+  // as depth rather than as sliding.
+  float layer = smoothstep(-2.6, 2.6, P.z);
+  float lScale = mix(0.78, 1.34, layer);
+  float lTurb  = mix(0.84, 1.26, layer);
+  acc += curlFbm(P.xyz * uNoiseScale * lScale
+                 + vec3(0.13, 0.07, 0.21) * uTime * uNoiseSpeed, uOctaves)
+         * uTurbulence * lTurb;
   acc.y -= uGravity;
+
+  // THE SHOCK. A click sends a spherical shell of outward impulse through
+  // the field: the front travels at uShockSpeed, the gaussian gives it
+  // thickness, and uShockAmp decays to nothing in about a second. It is the
+  // only thing here that answers a deliberate act rather than presence.
+  if (uShockAmp > 0.001){
+    vec3 sd = P.xyz - uShockOrigin;
+    float sr = length(sd);
+    float front = uShockT * uShockSpeed;
+    float shell = exp(-pow((sr - front) / uShockWidth, 2.0));
+    acc += (sr > 1e-4 ? sd / sr : vec3(0.0, 1.0, 0.0)) * shell * uShockAmp;
+  }
 
   if (uPointerOn > 0.5){
     // distance to the pointer RAY, not to a point: a sphere of influence
@@ -280,13 +304,46 @@ void main(){
 
 const POSITION_FS = /* glsl */`
 uniform float uDt;
+uniform vec3  uRayOrigin, uRayDir, uShockOrigin;
+uniform float uPointerRadius, uPointerOn;
+uniform float uShockT, uShockHeat, uShockSpeed, uShockWidth;
+uniform float uHeatGain, uHeatDecay;
+
 void main(){
   vec2 uv = gl_FragCoord.xy / resolution.xy;
   vec4 P = texture2D(texturePosition, uv);
   vec4 V = texture2D(textureVelocity, uv);
   float dt = min(uDt, 0.0333);
   P.xyz += V.xyz * dt;
-  P.w = fract(P.w + dt * (0.05 + V.w * 0.2));
+
+  /* ── HEAT ──────────────────────────────────────────────────────────
+     P.w used to carry a rolling twinkle phase. Twinkle needs no memory —
+     it is a function of the clock and the particle's permanent seed — so
+     the only spare component in the whole simulation was being spent on
+     something stateless. It now carries EXCITATION: what this particle has
+     recently been through. The pointer heats what it passes; the shock
+     heats the shell it travels through; everything cools exponentially.
+
+     This is what makes the pointer leave a WAKE rather than just a dent.
+     A dent is geometry and disappears the moment the spring wins; a wake
+     is memory, and it is the difference between a field that reacts and a
+     field that remembers being touched. */
+  float heat = P.w;
+
+  if (uPointerOn > 0.5){
+    vec3 w = P.xyz - uRayOrigin;
+    float t = max(dot(w, uRayDir), 0.0);
+    float d = length(P.xyz - (uRayOrigin + uRayDir * t));
+    heat += (1.0 - smoothstep(0.0, uPointerRadius, d)) * uHeatGain * dt;
+  }
+
+  if (uShockHeat > 0.001){
+    float sr = distance(P.xyz, uShockOrigin);
+    float front = uShockT * uShockSpeed;
+    heat += exp(-pow((sr - front) / uShockWidth, 2.0)) * uShockHeat * 3.6 * dt;
+  }
+
+  P.w = clamp(heat - heat * uHeatDecay * dt, 0.0, 1.0);
   gl_FragColor = P;
 }
 `;
@@ -298,6 +355,7 @@ uniform float uSize, uMaxSize, uAlpha, uAttenuation, uPixelRatio;
 uniform float uFocal, uDofSpread, uDofFade;
 uniform vec3  uRamp0, uRamp1, uRamp2, uRamp3, uRampPos;
 uniform float uSpeedTint, uSpeedNorm, uGlobalAlpha, uIntensity;
+uniform float uTime, uHeatRamp, uHeatGlow, uHeatSize;
 uniform vec3  uDwellPoint;
 uniform float uDwellRadius, uDwellGlow;
 uniform vec4  uTextRects[6];
@@ -330,22 +388,37 @@ void main(){
   float dist = max(-mv.z, 0.001);
   float coc  = abs(dist - uFocal);
 
+  float heat = P.w;
+
+  // Twinkle is stateless now: the clock and the seed are enough, and each
+  // particle keeps its own rate so the field never pulses as one body.
+  // That is what freed P.w for heat.
   float jitter  = 0.72 + seed * 0.66;
-  float twinkle = 0.86 + 0.14 * sin(P.w * 6.2831853 + seed * 20.0);
+  float twinkle = 0.86 + 0.14 * sin(uTime * (0.7 + seed * 1.7) + seed * 20.0);
 
   float psize = uSize * jitter * twinkle * (uAttenuation / dist);
   psize *= 1.0 + coc * uDofSpread;
+  psize *= 1.0 + heat * uHeatSize;
   psize = min(psize, uMaxSize);
 
   float alpha = uAlpha / (1.0 + coc * coc * uDofFade);
+  alpha *= 1.0 + heat * 0.85;
 
   // the colour parameter rides in .w of the target textures, so colour
   // needs no texture of its own and morphs for free alongside position
   float m  = morphM(uMix, seed, uStaggerW);
   float cp = mix(texture2D(uTargetA, reference).w, texture2D(uTargetB, reference).w, m);
 
-  vec3 col = ramp(clamp(cp, 0.0, 1.0));
-  col += uSpeedTint * clamp(length(V.xyz) * uSpeedNorm, 0.0, 1.0);
+  // Speed and heat ride the RAMP rather than being added on top of it.
+  // The old line added a SCALAR to all three channels at once,
+  // which is a white wash — so the faster a particle moved, the further it
+  // left the palette. Travelling ALONG the ramp instead
+  // means motion reads as hue and every colour on screen is still one of
+  // the four stops.
+  float sp = clamp(length(V.xyz) * uSpeedNorm, 0.0, 1.0);
+  float cp2 = clamp(cp + sp * uSpeedTint + heat * uHeatRamp, 0.0, 1.0);
+  vec3 col = ramp(cp2);
+  col *= 1.0 + heat * uHeatGlow;
 
   if (uDwellGlow > 0.001){
     float dd = 1.0 - smoothstep(0.0, uDwellRadius, distance(P.xyz, uDwellPoint));
@@ -679,7 +752,7 @@ async function boot(canvas, cfg) {
           p[o + 1] = rr * Math.sin(ph) * Math.sin(th);
           p[o + 2] = rr * Math.cos(ph);
         }
-        p[o + 3] = r2();
+        p[o + 3] = 0;            // heat: every particle starts cold
         v[o] = v[o + 1] = v[o + 2] = 0;
         v[o + 3] = r2();                       // the permanent per-particle seed
       }
@@ -702,8 +775,20 @@ async function boot(canvas, cfg) {
       uRayOrigin:{value:new THREE.Vector3()}, uRayDir:{value:new THREE.Vector3(0,0,-1)},
       uPointerRadius:{value:0.9}, uRepel:{value:26.0}, uVortex:{value:15.0},
       uPointerGain:{value:1.0}, uPointerMode:{value:1.0}, uPointerOn:{value:0.0},
+      uShockOrigin:{value:new THREE.Vector3()}, uShockT:{value:0},
+      uShockAmp:{value:0}, uShockSpeed:{value:2.5}, uShockWidth:{value:0.40},
     });
-    posVar.material.uniforms.uDt = { value: 0 };
+    // The position pass needs the pointer and the shock too: heat lives in
+    // P.w, and only this pass can write it.
+    Object.assign(posVar.material.uniforms, {
+      uDt:{value:0},
+      uRayOrigin:uSim.uRayOrigin, uRayDir:uSim.uRayDir,
+      uShockOrigin:uSim.uShockOrigin,
+      uPointerRadius:uSim.uPointerRadius, uPointerOn:uSim.uPointerOn,
+      uShockT:uSim.uShockT, uShockHeat:{value:0},
+      uShockSpeed:uSim.uShockSpeed, uShockWidth:uSim.uShockWidth,
+      uHeatGain:{value:2.6}, uHeatDecay:{value:1.5},
+    });
 
     const err = gpu.init();
     if (err !== null) throw new Error('GPUComputationRenderer: ' + err);
@@ -742,7 +827,12 @@ async function boot(canvas, cfg) {
         uRamp3:{value:new THREE.Color(RAMP.stops[3])},
         uRampPos:{value:new THREE.Vector3(...(cfg.rampPos || RAMP.pos))},
         uIntensity:{value:cfg.intensity ?? RAMP.intensity},
-        uSpeedTint:{value:0.09}, uSpeedNorm:{value:0.35}, uGlobalAlpha:{value:1.0},
+        // uSpeedTint is a RAMP OFFSET now, not an additive tint, so the old
+        // 0.09 would have been imperceptible — it used to be added to every
+        // channel, it is now a distance travelled along a 0..1 palette.
+        uSpeedTint:{value:0.26}, uSpeedNorm:{value:0.35}, uGlobalAlpha:{value:1.0},
+        uTime:{value:0},
+        uHeatRamp:{value:0.52}, uHeatGlow:{value:0.58}, uHeatSize:{value:0.62},
         uDwellPoint:{value:new THREE.Vector3()}, uDwellRadius:{value:0.9}, uDwellGlow:{value:0},
         uTextRects:{value:Array.from({length:6}, () => new THREE.Vector4(0,0,-1,-1))},
         uKeepoutFloor:{value:0.22},
@@ -872,6 +962,18 @@ async function boot(canvas, cfg) {
   const ray = new THREE.Ray();
   let lastInput = performance.now();
 
+  /* THE SHOCK. One click, one expanding shell. `t` is seconds since it was
+     fired and drives the radius; `amp` decays to nothing over SHOCK_LIFE and
+     drives both the impulse and the heat. Firing again simply restarts it —
+     two overlapping shells would need two sets of uniforms and the second
+     one is never worth what it costs. */
+  // 0.95s and a narrow shell: the first build ran 1.15s at almost twice
+  // this amplitude and put a viewport-filling white ring over the hero.
+  // Doctrine rule 1 is that silence is the luxury — a click may disturb
+  // the field, it may not take the page over.
+  const SHOCK_LIFE = 0.95;
+  const shock = { t: 0, amp: 0, origin: new THREE.Vector3() };
+
   const onPointer = (x, y) => {
     ptr.ndc.set((x / vw) * 2 - 1, -(y / vh) * 2 + 1);
     ptr.active = true;
@@ -879,7 +981,17 @@ async function boot(canvas, cfg) {
     lastInput = ptr.lastMove;
   };
   addEventListener('pointermove',  e => onPointer(e.clientX, e.clientY), { passive: true });
-  addEventListener('pointerdown',  e => onPointer(e.clientX, e.clientY), { passive: true });
+  addEventListener('pointerdown',  e => {
+    onPointer(e.clientX, e.clientY);
+    // Reduced motion gets no shock: it is the largest single movement in the
+    // whole field and the one least defensible to somebody who asked for less.
+    if (REDUCED || !camera) return;
+    rc.setFromCamera(ptr.ndc, camera);
+    ray.copy(rc.ray);
+    ray.at(camera.position.length(), shock.origin);
+    shock.t = 0;
+    shock.amp = 1;
+  }, { passive: true });
   addEventListener('pointerleave', () => { ptr.active = false; }, { passive: true });
   addEventListener('keydown', () => { lastInput = performance.now(); }, { passive: true });
 
@@ -1045,6 +1157,13 @@ async function boot(canvas, cfg) {
       pt.add(uSim.uPointerRadius, 'value', 0.1, 3).name('radius');
       pt.add(uSim.uRepel,  'value', 0, 80).name('repel');
       pt.add(uSim.uVortex, 'value', 0, 60).name('vortex');
+      pt.add(uSim.uShockSpeed, 'value', 0.5, 9).name('shock speed');
+      pt.add(uSim.uShockWidth, 'value', 0.1, 2).name('shock width');
+      pt.add(posVar.material.uniforms.uHeatGain, 'value', 0, 8).name('heat gain');
+      pt.add(posVar.material.uniforms.uHeatDecay, 'value', 0.2, 6).name('heat decay');
+      pt.add(uPts.uHeatRamp, 'value', 0, 1).name('heat ramp');
+      pt.add(uPts.uHeatGlow, 'value', 0, 2.5).name('heat glow');
+      pt.add(uPts.uHeatSize, 'value', 0, 2.5).name('heat size');
       const cl = g.addFolder('COLOUR');
       ['uRamp0','uRamp1','uRamp2','uRamp3'].forEach(k =>
         cl.addColor({ c: '#' + uPts[k].value.getHexString() }, 'c').name(k)
@@ -1185,6 +1304,20 @@ async function boot(canvas, cfg) {
       );
     }
 
+    /* the shock: advance, decay, hand to both passes */
+    if (shock.amp > 0.0005) {
+      shock.t += dt;
+      shock.amp = Math.max(0, shock.amp - dt / SHOCK_LIFE);
+      uSim.uShockOrigin.value.copy(shock.origin);
+      uSim.uShockT.value = shock.t;
+      // squared so the impulse dies faster than the glow it leaves behind
+      uSim.uShockAmp.value = shock.amp * shock.amp * 21;
+      posVar.material.uniforms.uShockHeat.value = shock.amp;
+    } else if (uSim.uShockAmp.value !== 0) {
+      uSim.uShockAmp.value = 0;
+      posVar.material.uniforms.uShockHeat.value = 0;
+    }
+
     /* pointer ray → sim */
     if (ptr.active && !REDUCED) {
       rc.setFromCamera(ptr.ndc, camera);
@@ -1250,6 +1383,7 @@ async function boot(canvas, cfg) {
 
     bgMat.uniforms.uTime.value = simTime;
     uSim.uTime.value = simTime;
+    uPts.uTime.value = simTime;          // stateless twinkle rides this
 
     /* Capture mode steps on a FIXED dt with many substeps per rendered
        frame. Headless runs a page at roughly one frame per second of

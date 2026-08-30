@@ -1,0 +1,190 @@
+---
+paths:
+  - "assets/js/modules/**"
+  - "assets/js/*.js"
+  - "assets/css/svc-modules.css"
+  - "assets/css/case.css"
+---
+
+# ZYRN — the signature instruments
+
+Moved out of CLAUDE.md on 2026-08-30. Every one of these is a scroll
+instrument and its history — including the two that had to be deleted and
+what that cost. It loads automatically whenever Claude touches a module,
+a script, or one of the two stylesheets that carry them.
+
+## Signature instruments (added 2026-08-18)
+
+One per service line, all on the same shape: a 340vh track, a stage pinned with
+`position:sticky`, a mono step readout, and a note that swaps per stage.
+`_track.js` gives each one a 0..1 progress on rAF — not on a scroll event,
+because Lenis drives scrolling on rAF and a scroll listener would lag the field
+by a frame or two. One shared loop serves the page and parks when nothing is on
+screen.
+
+- **build** — five stages, driven by a single `[data-stage]` attribute on the
+  frame. CSS does the rest, so a stage change is one attribute write.
+- **specimen** — three cross-faded panels. The chips report the real hex and the
+  real rule, and the mark runs the actual shear component, not a picture of one.
+- **graph** — two authored layouts lerped by scroll. Deliberately NOT a force
+  simulation: a layout that settles differently every load is the wrong thing
+  for an argument you want to make twice.
+- **readiness** — five dimensions at authored rates, so the constraint is
+  obvious on sight. They converge over the last 40% because that is what the
+  engagement does. Without the convergence the index caps at the constraint's
+  rate and never reaches the Level 04 the copy promises.
+
+Two more on `lumina.html`, same shape:
+
+- **rack** — a TOUR OF FIVE PAGES of the live Lumina site in one window.
+  Scroll and the window scrolls the page it is showing; keep going and it
+  hands over to the next. Rebuilt 2026-08-19: v1 was one page in a small
+  frame, and the owner's note was that it was too small and showed too
+  little to make anyone want to go and look.
+  Two of the five are Lumina's own scroll instruments — `/room` furnishes
+  an empty wireframe room as you scroll, `/invest` puts a building up floor
+  by floor. Their frames were captured at even progress across each pinned
+  track (`.room-pin` 4140px, `.build-pin` 3420px), so the window REPLAYS
+  their animation rather than describing it. That is why those two strips
+  stack whole bands and the flat pages stack cropped ones.
+  **The window is sized by HEIGHT, not width** (`--winh`, then width from
+  the 16:10 ratio). A pinned stage cannot scroll, and a 16:10 box given the
+  full column width is ~840px tall on a 1440x900 screen and simply hangs
+  off the viewport. Height first is the only way it can be big.
+  **Lumina's instruments are desktop-only** — probing `/room` and `/invest`
+  at 390x844 returns no sticky element at all. So the desktop window leads
+  on phones too, bled to the screen edges, with the phone frame demoted to
+  an overlapping inset. An earlier pass had that backwards.
+- **rebase** — nine real tokens moving between two real Lumina palettes.
+  **Retimed 2026-08-19 because the pacing was wrong and the owner felt it:**
+  "scrolling but barely anything changing, and then it just goes to the one
+  below". v1 ran the sweep from 0.22 to 0.76 of a 400vh track, so 46% of it
+  — about 1800px of scrolling — was motionless. It is a 320vh track now,
+  the sweep occupies 0.05 to 0.86, and the two remaining ends do something:
+  the head brings both panels in, the tail locks the result with a dated
+  stamp. A scan line rides the wave down the column, and each chip lights
+  and scales on `t*(1-t)`, which peaks at the midpoint of that token's
+  travel and is zero at both ends — so a chip is lit exactly while it is
+  changing, with no keyframes and no timers.
+  **Interpolated in OKLab, and that is not decoration**: the headline move is
+  `#D6BF9E → #FFB25A`, a hue rotation as well as a saturation jump, and a
+  channel-wise sRGB lerp routes the midpoint through a dead khaki that was in
+  neither palette and reads as a bug. Every hex printed on screen comes from
+  the same interpolation that paints the swatch, so the readout cannot drift
+  from the colour.
+
+One on `duk.html`:
+
+- **interrogate** — twenty-two candidate causes for a stated problem, cut to
+  one by four questions. Authored, not simulated, for the same reason as
+  `graph.js`: a demo that lands somewhere different every load cannot make
+  an argument twice. It is also honest about what it is — this is what Duk
+  is DESIGNED to do, demonstrated, not a recording of a shipped product.
+  **Label collisions are solved by a relaxation pass, not by tuning the
+  seed.** Twenty-two labels 90–140px wide sit ~16 degrees apart on a ring;
+  banding the radii helped and did not finish it, and the field is a third
+  the size on a phone where every near-miss became a hit. So the seeded
+  angles are a starting point and a deterministic pass pushes overlapping
+  pairs apart until nothing intersects — once per resize, not per frame.
+  Two traps it cost: `flex-direction:row-reverse` does NOT make a box
+  extend leftward (the box still starts at `left:50%`; use `right:50%`), and
+  a node anchored by one edge does not land centred when it scales up — it
+  put the surviving label off the right of a phone screen until the target
+  position accounted for the box's own half-width.
+
+`axes.html` deliberately has NO signature instrument any more.
+
+- **§02 was `decompose.js`, a pinned scroll instrument, and it was
+  removed on 2026-08-21 at the owner's direction after being reported
+  broken from three different devices in a row.** Every report was a
+  real defect and every fix was correct, and a new one appeared
+  underneath it each time — clipped copy on a short window, the finding
+  printing through the artefact on a phone, the whole thing sprawling
+  edge to edge on an ultrawide, and finally a measurement that had
+  silently decayed to zero so the six axes had never once moved.
+  That is not a run of bad luck, it is the shape of the thing:
+
+    · a stage that must fit inside `100svh` clips what does not fit,
+      and a pinned stage cannot be scrolled to reveal it
+    · layers stacked by absolute position collide at heights nobody
+      authored, and no layout rule prevents it
+    · everything is a `clamp()`, and clamp FLOORS do not shrink
+    · nothing is visible until the reader reaches the exact progress
+      value that reveals it, so every beat is a chance to show nothing
+
+  The replacement is the same argument built the other way round:
+  everything in normal flow, everything always visible, all six axes and
+  their thirty questions legible AT ONCE as a six-card grid instead of one
+  at a time under a moving sweep. Motion lives in `assets/js/axsplit.js` — a canvas
+  drawing inside its own `aspect-ratio` box — and in CSS that animates
+  opacity only. Neither can move the layout, clip anything or collide
+  with anything. Verified with no horizontal overflow from 320px to
+  2530px wide and every block reaching full opacity at 393x610, 390x844,
+  2530x500, 1440x900 and 1920x1080.
+  The archived original is `_archive/decompose-pinned-instrument.js`
+  (gitignored, local only — it was never committed).
+
+  **Re-authored again, same day, and this one is a CONTENT rule.** The
+  flow rebuild was structurally sound and the owner still reported it as
+  looking broken — because the material was a bug report. §02 quoted a
+  real one-line brief about a broken link, printed forty-one log lines
+  (`[hidden] = true`, `display:flex wins`, `880 intercepted`), and ended
+  on a CSS declaration in a code panel. All of it was true, all of it was
+  well made, and on a PRODUCT page a visitor reads a quoted defect and a
+  rule dump as the site malfunctioning in front of them. "They look like
+  the site is bugging."
+
+  So the engineering incident is gone. The six axes now carry the
+  QUESTIONS each one opens, written for someone who runs an organisation
+  rather than a codebase — who actually decides, where a request waits,
+  which claim has a number behind it. The off-brief argument survives as
+  a principle instead of an anecdote, and the closing block states what
+  comes back rather than pasting it. There is no `<code>` element left on
+  the page and no line set in mono that is a sentence.
+
+  **The standing rule: never print a defect, a log line or a rule dump as
+  page copy on a product page.** Internal detail that reads as rigour in
+  a commit message reads as breakage on a website. Where a worked example
+  is wanted, it has to be work the buyer recognises, and it must not be
+  invented — which on this site means it comes from the Lumina case or it
+  is stated as method, never as a fabricated engagement.
+  The axis formerly called INPUT is ACCESS, for the same reason: "input"
+  reads as a keyboard.
+
+  **The lesson generalises and is the reason this is written down:** a
+  pinned instrument is a promise that the composition fits one viewport
+  height. Make that promise only where the content is genuinely fixed
+  and small. Where the content is a body of text, put it in flow.
+
+**Testing them headlessly:** do not scroll. Headless paints reliably at scroll 0
+and `window.scrollTo` fights Lenis. `_track.js` derives progress from the track's
+rect, so pulling the track up with a negative `margin-top` produces any progress
+value with the document still at scroll 0. **Hide the preceding siblings when you
+do** — the negative margin drags the track up over content still sitting at its
+natural position, and the overlap looks exactly like a layout bug that is not
+there.
+
+**The negative-margin trick does NOT move the field.** `sig.py` pulls the
+track up while the document stays at scroll 0, so the bed renders whatever
+formation page-progress 0 gives — every capture of an instrument shows it
+over the WRONG formation unless you also pass `?freeze=S1|S2|S3|S4`. This
+made the decomposition look unreadable against a torus it will never
+actually sit on.
+
+**A pinned stage cannot scroll.** Anything taller than `100svh` is unreachable,
+and the note under each instrument is the copy that says what the stage means.
+Measure the union of the stage's CHILDREN — `scrollHeight` lies here, because a
+flex column with `justify-content:center` reports its own height even when the
+content overflows past both edges.
+
+`axfit.py` (job tmp, not the repo) is that measurement, and it does two
+things because fitting turned out to be only half of it. It reports the
+children-union against the viewport at ten progress values across a
+spread of window sizes — **including short and ultrawide ones, which is
+what the owner actually runs and what nothing was being tested at** — and
+it reports every pair of VISIBLE boxes that intersect. Ancestor/descendant
+pairs are excluded; the individual lanes are included, because an
+absolutely-positioned payoff box sitting inside `.dc__field` is an
+ancestor pair with the field and a genuine collision with the lanes.
+Three real defects came out of it that every screenshot at 1440x900 had
+been hiding.

@@ -6,235 +6,31 @@ AI transformation, web & strategy). Amman, JO. Positioning: *Organizations, engi
 The full authored brief lives in `docs/build-spec.md`. **Read it before any visual
 change.** This file is the short operative version.
 
-## Layout
+## Where the rest of this lives
 
-```
-index.html              live landing page — plain HTML/CSS/JS, no build step
-                        five scenes: SYS.01 hero · SYS.02 capability · SYS.03 service
-                        lines · SYS.04 readiness index · SYS.05 access. Capped at five
-                        deliberately — see docs/strategy.md §4. It OPENS on the
-                        torus (S3 CORE) because the hero lede is "Zyrn builds the
-                        operating core" — then S3 → S1 (the core opens into four
-                        arms, one per line, as SYS.03 arrives) → S3 (SYS.04's
-                        ladder climbs from emergent back to engineered) → S4.
-                        Also carries the section index rail and the stats strip.
-assets/js/field.js      SYS.07 — THE BED, on every page. A 90k-point GPGPU particle
-                        simulation; there is no asset behind it. One shared engine,
-                        per-page `program` (which formations, at which scroll
-                        positions) and `channel` (tilt + spin), so moving between
-                        pages reads as one instrument changing channels.
-                        Spec: docs/spec-presence-field.md.
-                        Capture flags — headless verification only works with these,
-                        because a real-time sim is still mid-flight when a headless
-                        screenshot lands: ?freeze=S1|S2|S3|S4 · ?p=0.28 · ?probe=1 ·
-                        ?nogl=1 · ?particles=N · ?coarse=1 · ?debug
-assets/css/field.css    the page layer for the field: mounts the canvas, enforces
-                        Departure 4 site-wide, adds the stats strip and flat fallback.
-foundation.html         SYS.00 — what the firm is, the mission, who it is for, and
-                        the founder. Its motion is deliberately quieter than the
-                        service instruments: the mark's own language (a shear on
-                        the founder's name, one Pulse slice across the credential
-                        row) and nothing that pins the scroll.
-                        The founder is Yazan Tarawneh, set in the shear
-                        component — both .shear__half spans must carry identical
-                        text or the clip-and-offset breaks. Carries JSON-LD
-                        Organization + founder.
-services.html           SYS.03 — the index for the four lines, and the nav slot
-                        `Brand` used to hold. It has to belong to both
-                        neighbours: the landing page's scene rhythm above it,
-                        the service pages' hero/tabs/footer below it. Carries
-                        its own signature instrument (THE CORE), the four
-                        lines as full rows, and the combination matrix.
-                        Field program S3 → S1 → S1 → S3: one system, opened
-                        into four, recombined. It lives at the ROOT, not at
-                        services/index.html, because `routeFor()` keys on the
-                        last path segment and a directory URL yields '' —
-                        which is already the landing page's key.
-brand.html              SYS.06 — HOW WE PRESENT A BRAND KIT. Rewritten 2026-08-19
-                        at the owner's direction: it used to document Zyrn's
-                        OWN brand, which is inward-facing and makes no argument
-                        to a buyer. It now covers the deliverable generally —
-                        four properties, seven parts, the handover — with a
-                        worked example that is deliberately NOT Zyrn: Lumina's
-                        palette, type, mark, motion and layout, in vitrines.
-                        Still a document rather than an experience (legibility,
-                        not atmosphere), and still reachable from the footer's
-                        "The firm" column, labelled "Brand kit — the method" so
-                        it cannot be confused with the SERVICE line of the same
-                        name two columns over.
-                        The previous page survives in two places, and NOT in
-                        the repo working tree: `_archive/` is gitignored, so
-                        the local copy at
-                        _archive/brand-zyrn-doctrine-v2.html exists on this
-                        machine only. In a fresh clone, recover it with
-                        `git show 59ace3c:brand.html`. Either way nothing was
-                        lost — Zyrn's own doctrine is operative in THIS file,
-                        which is where it was always enforced from.
-axes.html               SYS.09 — AXES, our own assistant module, IN
-                        SERVICE. It runs on Claude Opus 5 and it is the
-                        thing that built this site, which is the whole
-                        argument of the page and the reason it can be
-                        evidenced rather than described: §04 is a ledger
-                        of numbers counted out of THIS repository at the
-                        moment the page was written.
-                        It is deliberately NOT the same object as Duk.
-                        Duk is the open one, built for a client's own
-                        operating core and given away; Axes is the one
-                        the firm runs in order to build things, and the
-                        soft ask in §06 is for a module of your own
-                        through line 04 — not for Axes.
-                        Identity: the plural of axis — the directions a
-                        problem can be worked along. The mark is three
-                        axes crossing at one origin inside the hexagon
-                        they describe, and it must stay that way: v1 drew
-                        them as RAYS inside a dashed circle and at card
-                        size that is a CLOCK. An axis extends both ways.
-                        No new hue, same as Duk. §02 tells one real
-                        engagement — a brief, six axes, forty-one
-                        operations, an off-brief finding and the artefact
-                        — as a READABLE grid rather than as a pinned
-                        instrument. It was a pinned instrument until
-                        2026-08-21; see "Signature instruments" for why
-                        that was removed and what it cost.
-duk.html                SYS.08 — DUK, our own open-source agent, IN
-                        DEVELOPMENT. It is NOT released, and the page is
-                        written to hold that line: status chip in the hero,
-                        a §06 that says plainly there is no public build, no
-                        launch date, no waiting-list counter. Ambition about
-                        DESIGN INTENT is fine and deliberate; claims about
-                        adoption, benchmarks or dates are not, and none are
-                        made. **The one soft number is the five-pip progress
-                        bar in §06, set to 2/5 — the owner should confirm or
-                        change it.**
-                        Identity: named for the rubber duck (explain the
-                        problem out loud and you find it yourself), and the
-                        whole product thesis is "it asks before it answers".
-                        The mark is a listening aperture, three arcs turning
-                        at different rates — deliberately NOT a picture of a
-                        duck. No new hue: Duk is ours, so it takes Obsidian,
-                        Vapor and mono like everything else, and gets its
-                        energy from motion. Its instrument is THE
-                        INTERROGATION (see below).
-lumina.html             SYS.07 — CASE 01. The site's first and only piece of
-                        proof. Lumina (private real-estate advisory, Amman) is
-                        a Zyrn client; this is their brand kit and website, and
-                        the fact that the whole palette was later replaced
-                        without a component being rebuilt. Root level, not
-                        work/lumina.html — `routeFor()` keys on the last path
-                        segment. Two instruments, see below.
-services/*.html         four service pages, one per line, in this order:
-                        01 website-design · 02 brand-kit · 03 business-structuring
-                        · 04 ai-transformation ("AI adoption & transformation").
-                        Generated from ONE template — keep them in sync; edit all
-                        four or none. Each carries the same field + grid, plus its
-                        own SIGNATURE INSTRUMENT (see below).
-                        Human capital and Web & strategy were retired 2026-08-18
-                        at the owner's direction; both are in
-                        _archive/retired-services/ and can be restored as a fifth
-                        and sixth line without rework.
-assets/js/modules/      the signature instruments, one per service page:
-                        _track.js    shared rAF scroll-progress plumbing
-                        build.js     01 — a surface assembling itself, five stages
-                        specimen.js  02 — the brand kit, operable
-                        graph.js     03 — decision rights, rewired on scroll
-                        readiness.js 04 — the index climbing 00 to 04
-                    core.js      services.html — the set's own instrument
-                    matrix.js    services.html — the combination matrix
-                    rack.js      lumina.html — two device frames with the real
-                                 Lumina site scrolling inside them, at
-                                 different rates
-                    rebase.js    lumina.html — nine real tokens moving between
-                                 two real palettes, interpolated in OKLab
-                    interrogate.js
-                                 duk.html — twenty-two candidate causes cut
-                                 down to one constraint by four questions
-                    (decompose.js was axes.html's pinned instrument and
-                                 was REMOVED 2026-08-21 — see below. Its
-                                 replacement is assets/js/axsplit.js, which
-                                 is not a scroll instrument at all)
-assets/css/svc-modules.css
-                        styling for all four instruments.
-assets/css/styles.css   all styling, tokens at :root (incl. the glass + glitch systems)
-assets/css/brand.css    brand-page-only document layout
-assets/css/service.css  service-page layer (hero, module cards, phases, signals)
-assets/css/services.css services.html only — the core diagram, the line rows
-                        and their four glyphs, the matrix
-assets/css/case.css     lumina.html — the case layout, both instruments, and
-                        THE VITRINE (see doctrine below)
-assets/css/proof.css    index.html only — the "In production" band. Split
-                        out of case.css so the landing page does not pull two
-                        pinned instruments and Lumina's two typefaces to
-                        style two cards
-assets/css/duk.css      Duk's mark and page. Loaded on duk.html AND on
-                        index.html, because the band carries the live mark
-                        and nothing else should own that component
-assets/css/axes.css     Axes' mark, its landing-band panel, its page and
-                        the decomposition. Loaded on axes.html AND on
-                        index.html, same arrangement as duk.css
-assets/js/axsplit.js    THE SPLITTER — the moving picture in axes.html §02.
-                        One brief opens into six parallel streams and
-                        resolves into one artefact, on a loop. It reads
-                        NOTHING about the page — not scroll, not viewport
-                        height, not any other element — and draws inside a
-                        box it is given by `aspect-ratio` in normal flow.
-                        That is deliberate: it replaced a pinned instrument
-                        whose every defect came from measuring the page.
-assets/js/axent.js      THE AXES ENTITY — the panel on the Axes card, index.html
-                        only. A 2D-canvas particle entity, ~330 circular points,
-                        cycling core → six arms → ring on a 14s loop. It is the
-                        card's cover BECAUSE Axes has no interface to photograph:
-                        a module has no window, and an invented screenshot of a
-                        product that is running right now is the one lie this
-                        site cannot afford. Deliberately NOT WebGL — the landing
-                        page already spends its GPU on a 90k-point field, and a
-                        second context for a 385x240 panel is not worth a card.
-                        Parks on IntersectionObserver, one still frame under
-                        reduced motion, `pointer-events:none` so the card stays
-                        one hit target.
-assets/js/cmdk.js       THE INDEX (⌘K) — on every page. See below.
-assets/css/cmdk.css     its housing
-assets/js/ui.js         shared on every page: irregular glitch scheduling + page
-                        transition veil
-assets/js/main.js       DOM runtime (hero shear · readout rail · reveals)
-                        — dt-based smoothing (k=5/s ≡ spec's 0.08@60Hz). The video
-                        scrub, frame cache and decoder handling that used to live
-                        here are GONE with the bed; this file no longer touches a
-                        canvas or a video element.
-                        NEVER pass desynchronized:true to getContext anywhere in
-                        this project — it hard-froze the renderer on this machine.
-assets/media/           icons, the share card, the Lumina mark.
-assets/media/work/      the case-study captures — five stitched strips of the
-                        LIVE www.lumina-jo.com (hero, room, invest, listings,
-                        services) plus a mobile strip and the landing-page
-                        card. Taken at 2x/3x and finished with a light
-                        contrast/saturation/unsharp pass so they survive
-                        being scaled into a device frame; the first pass was
-                        noticeably soft. ~1MB total, all lazy but the first.
-                        Rebuild with the capture scripts, not by hand — the
-                        instrument strips depend on the measured pinned-track
-                        ranges, and the flat ones on hiding fixed elements so
-                        the nav does not repeat once per band.
-design/                 source of record from Claude Design (.dc.html) — reference only, never served
-docs/build-spec.md      the authored brief (v1.0 — written for the video bed)
-docs/spec-presence-field.md
-                        the field's spec: formations, physics, the three departures,
-                        performance budget, acceptance list
-docs/strategy.md        positioning research, where each finding landed, and the
-                        sourced third-party stats awaiting sign-off before going public
-```
+Three sections moved out of this file on 2026-08-30 so that opening Claude
+Code inside this repo does not load 73,000 characters before you have asked
+anything. Nothing was deleted; each one loads when it is relevant.
 
-**Steel is a panel colour.** `#767E8C` disappears against the open field — mono
-metadata sitting directly on it takes Vapor at 0.6–0.9 alpha plus the veil shadow
-instead. Steel is correct inside panels, where the obsidian veil backs it. This
-still bites: `.lockup__live` and `.stats__l` are Vapor for exactly this reason.
+- **The pages** — what every .html file is, what it argues, and the
+  non-obvious reasons behind each: `.claude/rules/pages.md`. Loads
+  automatically whenever an .html file in this repo is touched. That includes
+  the one routing gotcha worth knowing up front: **`services.html` lives at
+  the ROOT, not at `services/index.html`**, because `routeFor()` keys on the
+  last path segment and a directory URL yields `''` — which is already the
+  landing page's key.
+- **The signature instruments** — every scroll instrument, how it is driven,
+  and the history of the ones that were deleted: `.claude/rules/instruments.md`.
+  Loads whenever a module, a script or `svc-modules.css` / `case.css` is
+  touched. Read it BEFORE building a new instrument; four of them have already
+  been rebuilt, and the reasons are all in there.
+- **Open items and settled questions** — `docs/decisions.md`. Not
+  auto-loaded. **Read it before re-opening a design question**: several
+  entries exist because something was tried, rejected, and would otherwise be
+  tried again.
 
-**Do not nest a `[data-reveal]` inside another one.** The parent's reveal
-clip-path is `inset(0 0 18% 0)`, which hides the bottom band of its own box — a
-nested observer target sitting in that band never registers as visible and never
-reveals. Let children inherit the parent's reveal instead.
-
-`design/*.dc.html` is Claude Design's own format (`<x-dc>`, `DCLogic`) and does not
-run standalone. `index.html` is the faithful vanilla port and is the thing we build on.
+The rules that follow in THIS file are the ones that apply everywhere, all the
+time — tokens, hard rules, doctrine, and the verification traps. Those stay.
 
 ## Preview
 
@@ -478,182 +274,6 @@ owns internal links now; `ui.js`'s obsidian veil is retired.
 the map is left to the browser and navigates normally — correct behaviour, but
 it will blink.
 
-## Signature instruments (added 2026-08-18)
-
-One per service line, all on the same shape: a 340vh track, a stage pinned with
-`position:sticky`, a mono step readout, and a note that swaps per stage.
-`_track.js` gives each one a 0..1 progress on rAF — not on a scroll event,
-because Lenis drives scrolling on rAF and a scroll listener would lag the field
-by a frame or two. One shared loop serves the page and parks when nothing is on
-screen.
-
-- **build** — five stages, driven by a single `[data-stage]` attribute on the
-  frame. CSS does the rest, so a stage change is one attribute write.
-- **specimen** — three cross-faded panels. The chips report the real hex and the
-  real rule, and the mark runs the actual shear component, not a picture of one.
-- **graph** — two authored layouts lerped by scroll. Deliberately NOT a force
-  simulation: a layout that settles differently every load is the wrong thing
-  for an argument you want to make twice.
-- **readiness** — five dimensions at authored rates, so the constraint is
-  obvious on sight. They converge over the last 40% because that is what the
-  engagement does. Without the convergence the index caps at the constraint's
-  rate and never reaches the Level 04 the copy promises.
-
-Two more on `lumina.html`, same shape:
-
-- **rack** — a TOUR OF FIVE PAGES of the live Lumina site in one window.
-  Scroll and the window scrolls the page it is showing; keep going and it
-  hands over to the next. Rebuilt 2026-08-19: v1 was one page in a small
-  frame, and the owner's note was that it was too small and showed too
-  little to make anyone want to go and look.
-  Two of the five are Lumina's own scroll instruments — `/room` furnishes
-  an empty wireframe room as you scroll, `/invest` puts a building up floor
-  by floor. Their frames were captured at even progress across each pinned
-  track (`.room-pin` 4140px, `.build-pin` 3420px), so the window REPLAYS
-  their animation rather than describing it. That is why those two strips
-  stack whole bands and the flat pages stack cropped ones.
-  **The window is sized by HEIGHT, not width** (`--winh`, then width from
-  the 16:10 ratio). A pinned stage cannot scroll, and a 16:10 box given the
-  full column width is ~840px tall on a 1440x900 screen and simply hangs
-  off the viewport. Height first is the only way it can be big.
-  **Lumina's instruments are desktop-only** — probing `/room` and `/invest`
-  at 390x844 returns no sticky element at all. So the desktop window leads
-  on phones too, bled to the screen edges, with the phone frame demoted to
-  an overlapping inset. An earlier pass had that backwards.
-- **rebase** — nine real tokens moving between two real Lumina palettes.
-  **Retimed 2026-08-19 because the pacing was wrong and the owner felt it:**
-  "scrolling but barely anything changing, and then it just goes to the one
-  below". v1 ran the sweep from 0.22 to 0.76 of a 400vh track, so 46% of it
-  — about 1800px of scrolling — was motionless. It is a 320vh track now,
-  the sweep occupies 0.05 to 0.86, and the two remaining ends do something:
-  the head brings both panels in, the tail locks the result with a dated
-  stamp. A scan line rides the wave down the column, and each chip lights
-  and scales on `t*(1-t)`, which peaks at the midpoint of that token's
-  travel and is zero at both ends — so a chip is lit exactly while it is
-  changing, with no keyframes and no timers.
-  **Interpolated in OKLab, and that is not decoration**: the headline move is
-  `#D6BF9E → #FFB25A`, a hue rotation as well as a saturation jump, and a
-  channel-wise sRGB lerp routes the midpoint through a dead khaki that was in
-  neither palette and reads as a bug. Every hex printed on screen comes from
-  the same interpolation that paints the swatch, so the readout cannot drift
-  from the colour.
-
-One on `duk.html`:
-
-- **interrogate** — twenty-two candidate causes for a stated problem, cut to
-  one by four questions. Authored, not simulated, for the same reason as
-  `graph.js`: a demo that lands somewhere different every load cannot make
-  an argument twice. It is also honest about what it is — this is what Duk
-  is DESIGNED to do, demonstrated, not a recording of a shipped product.
-  **Label collisions are solved by a relaxation pass, not by tuning the
-  seed.** Twenty-two labels 90–140px wide sit ~16 degrees apart on a ring;
-  banding the radii helped and did not finish it, and the field is a third
-  the size on a phone where every near-miss became a hit. So the seeded
-  angles are a starting point and a deterministic pass pushes overlapping
-  pairs apart until nothing intersects — once per resize, not per frame.
-  Two traps it cost: `flex-direction:row-reverse` does NOT make a box
-  extend leftward (the box still starts at `left:50%`; use `right:50%`), and
-  a node anchored by one edge does not land centred when it scales up — it
-  put the surviving label off the right of a phone screen until the target
-  position accounted for the box's own half-width.
-
-`axes.html` deliberately has NO signature instrument any more.
-
-- **§02 was `decompose.js`, a pinned scroll instrument, and it was
-  removed on 2026-08-21 at the owner's direction after being reported
-  broken from three different devices in a row.** Every report was a
-  real defect and every fix was correct, and a new one appeared
-  underneath it each time — clipped copy on a short window, the finding
-  printing through the artefact on a phone, the whole thing sprawling
-  edge to edge on an ultrawide, and finally a measurement that had
-  silently decayed to zero so the six axes had never once moved.
-  That is not a run of bad luck, it is the shape of the thing:
-
-    · a stage that must fit inside `100svh` clips what does not fit,
-      and a pinned stage cannot be scrolled to reveal it
-    · layers stacked by absolute position collide at heights nobody
-      authored, and no layout rule prevents it
-    · everything is a `clamp()`, and clamp FLOORS do not shrink
-    · nothing is visible until the reader reaches the exact progress
-      value that reveals it, so every beat is a chance to show nothing
-
-  The replacement is the same account built the other way round:
-  everything in normal flow, everything always visible, all forty-one
-  operations legible AT ONCE as a six-card grid instead of one at a time
-  under a moving sweep. Motion lives in `assets/js/axsplit.js` — a canvas
-  drawing inside its own `aspect-ratio` box — and in CSS that animates
-  opacity only. Neither can move the layout, clip anything or collide
-  with anything. Verified with no horizontal overflow from 320px to
-  2530px wide and every block reaching full opacity at 393x610, 390x844,
-  2530x500, 1440x900 and 1920x1080.
-  The archived original is `_archive/decompose-pinned-instrument.js`
-  (gitignored, local only — it was never committed).
-
-  **Re-authored again, same day, and this one is a CONTENT rule.** The
-  flow rebuild was structurally sound and the owner still reported it as
-  looking broken — because the material was a bug report. §02 quoted a
-  real one-line brief about a broken link, printed forty-one log lines
-  (`[hidden] = true`, `display:flex wins`, `880 intercepted`), and ended
-  on a CSS declaration in a code panel. All of it was true, all of it was
-  well made, and on a PRODUCT page a visitor reads a quoted defect and a
-  rule dump as the site malfunctioning in front of them. "They look like
-  the site is bugging."
-
-  So the engineering incident is gone. The six axes now carry the
-  QUESTIONS each one opens, written for someone who runs an organisation
-  rather than a codebase — who actually decides, where a request waits,
-  which claim has a number behind it. The off-brief argument survives as
-  a principle instead of an anecdote, and the closing block states what
-  comes back rather than pasting it. There is no `<code>` element left on
-  the page and no line set in mono that is a sentence.
-
-  **The standing rule: never print a defect, a log line or a rule dump as
-  page copy on a product page.** Internal detail that reads as rigour in
-  a commit message reads as breakage on a website. Where a worked example
-  is wanted, it has to be work the buyer recognises, and it must not be
-  invented — which on this site means it comes from the Lumina case or it
-  is stated as method, never as a fabricated engagement.
-  The axis formerly called INPUT is ACCESS, for the same reason: "input"
-  reads as a keyboard.
-
-  **The lesson generalises and is the reason this is written down:** a
-  pinned instrument is a promise that the composition fits one viewport
-  height. Make that promise only where the content is genuinely fixed
-  and small. Where the content is a body of text, put it in flow.
-
-**Testing them headlessly:** do not scroll. Headless paints reliably at scroll 0
-and `window.scrollTo` fights Lenis. `_track.js` derives progress from the track's
-rect, so pulling the track up with a negative `margin-top` produces any progress
-value with the document still at scroll 0. **Hide the preceding siblings when you
-do** — the negative margin drags the track up over content still sitting at its
-natural position, and the overlap looks exactly like a layout bug that is not
-there.
-
-**The negative-margin trick does NOT move the field.** `sig.py` pulls the
-track up while the document stays at scroll 0, so the bed renders whatever
-formation page-progress 0 gives — every capture of an instrument shows it
-over the WRONG formation unless you also pass `?freeze=S1|S2|S3|S4`. This
-made the decomposition look unreadable against a torus it will never
-actually sit on.
-
-**A pinned stage cannot scroll.** Anything taller than `100svh` is unreachable,
-and the note under each instrument is the copy that says what the stage means.
-Measure the union of the stage's CHILDREN — `scrollHeight` lies here, because a
-flex column with `justify-content:center` reports its own height even when the
-content overflows past both edges.
-
-`axfit.py` (job tmp, not the repo) is that measurement, and it does two
-things because fitting turned out to be only half of it. It reports the
-children-union against the viewport at ten progress values across a
-spread of window sizes — **including short and ultrawide ones, which is
-what the owner actually runs and what nothing was being tested at** — and
-it reports every pair of VISIBLE boxes that intersect. Ancestor/descendant
-pairs are excluded; the individual lanes are included, because an
-absolutely-positioned payoff box sitting inside `.dc__field` is an
-ancestor pair with the field and a genuine collision with the lanes.
-Three real defects came out of it that every screenshot at 1440x900 had
-been hiding.
-
 ## The footer (added 2026-08-18)
 
 `assets/css/footer.css` + `assets/js/footer.js`, on all seven pages. Three
@@ -771,6 +391,44 @@ single-word widows on any page.
 
 Numbers and their units are not sentences: `.proof__nums > span` takes
 `white-space:nowrap` so "00 build steps" cannot break after "build".
+
+## A backtick inside a shader comment ends the JavaScript string
+
+The GLSL in `field.js` lives in template literals. A backtick anywhere inside
+one — including inside a `//` comment written for a human — CLOSES the string,
+and everything after it is parsed as JavaScript until the next backtick
+reopens it. The file's backtick count stays EVEN, so it looks balanced; what
+you get is a runtime `SyntaxError` naming some innocent identifier in the
+middle of the shader, and `node --check` does not catch it.
+
+Cost one cycle on 2026-08-30, from a comment reading ``the old line was `col
++= ...` `` inside POINTS_VS. Quote shader identifiers with plain words or
+single quotes in those comments. Never a backtick.
+
+## The field answers presence, scroll, AND acts — v2.1, 2026-08-30
+
+Three behaviours were added and one was corrected. Full account in
+`docs/spec-presence-field.md` §6b; the parts that constrain future work:
+
+- **`P.w` is HEAT, not a twinkle phase.** Twinkle is stateless now (clock +
+  seed). If you need another per-particle channel, this one is taken — the
+  simulation has no other spare component and adding a third GPGPU variable
+  costs a texture and a pass.
+- **Only the POSITION pass can write `P.w`**, so the pointer and shock
+  uniforms are shared INTO it from the velocity pass by reference. They are
+  the same uniform objects, not copies. Do not duplicate them; two sources of
+  truth for the pointer ray is a bug waiting for a frame where they disagree.
+- **The shock is deliberately small.** It was tuned DOWN from a build that
+  worked and looked wrong — a viewport-filling white ring over the hero. If
+  you make it bigger, re-read doctrine rule 1 first.
+- **`uSpeedTint` is a RAMP OFFSET now, not an additive tint.** The old 0.09
+  and the new 0.26 are not comparable numbers; one was added to every channel,
+  the other is a distance along a 0..1 palette.
+- Everything above was measured: 90,000 points, 2.71ms median, p95 3.99,
+  governor rung 0, unchanged across all nine pages that carry a field.
+  `docs/gpuprobe.py` and `docs/play.py` are how — the second drives real
+  pointer input over CDP and photographs the wake and the shell, because none
+  of this exists in a static screenshot.
 
 ## Kill stale headless Chrome before you believe a probe
 
@@ -948,238 +606,3 @@ unreadable smudge.
   the card is ever recomposed. WhatsApp also caches the whole preview per
   page URL — sharing `zyrn.org/?v=2` once forces a fresh scrape.
 
-## Open
-
-- ~~`TODO(asset)` — hero video~~ **CLOSED 2026-08-17.** There is no video anywhere
-  on the site. The field renders its own subject, so there is nothing to source.
-- ~~No favicon yet~~ CLOSED 2026-08-18 — `assets/media/icons/`, built by
-  `icons.py` from the same `M4 5h12L4 15h12` path, seam dropped at 16px.
-- Nav below `sm` should swap the full wordmark for the Z monogram.
-- ~~`Journal` unrouted~~ RESOLVED 2026-08-18: the nav slot now goes to
-  `foundation.html`. Journal is no longer in the nav at all. Per docs/strategy.md it is the credibility
-  engine for a referral-only firm — strongest candidate after the readiness assessment.
-- Domain is **zyrn.org**, registered at Spaceship. `CNAME` in the repo root binds
-  GitHub Pages to the apex; canonicals, `og:url` and `sitemap.xml` all point at
-  `https://zyrn.org`. If the host ever changes, those three plus `robots.txt`
-  and the `mailto:info@zyrn.org` in SYS.05 all need updating together.
-  **The address is `info@zyrn.org`** — the firm's formal address, set
-  2026-08-21. It replaced `access@zyrn.org`, which was a placeholder
-  from the design source and was never a real mailbox. It appears in
-  three places and they are kept deliberately distinct: the FOOTER on
-  all eleven pages carries a bare `mailto:` with no preset subject and
-  prints lowercase (it is a formal address, not a campaign); the CTAs
-  carry a contextual `?subject=`; and `foundation.html`'s Organization
-  JSON-LD carries `email` plus a `contactPoint`, which is what machines
-  read. The old `Q3 2026` in the request-access subject went with it —
-  a dated subject line is stale the quarter after it ships.
-- Verify a deploy against `https://risethehorns-arch.github.io/Zyrn/`, not the
-  custom domain — Pages serves a push immediately, DNS lags.
-- The "In production" band on `index.html` is FOUR cards as of
-  2026-08-30: Lumina / THEHUB / Axes / Duk, in that order — the two
-  client cases first, then the two of ours. Each panel is a different
-  KIND of thing on purpose: Lumina and THEHUB are SCREEN RECORDINGS of
-  the live sites, Duk is its mark on a ruled ground (nothing is built
-  yet), Axes is a live particle entity (it is running, and it has no
-  interface). None of the four is a mock-up, and none should become one.
-  `proof.css` is an explicit **two**-column grid, NOT `auto-fit`: four
-  across at this container width gives each card 270px, narrower than
-  the third that was already too narrow to lay a card out sideways in,
-  and auto-fit drops tracks on its own schedule and orphans whatever is
-  left over. Below 1040 the cards go to one column AND lay out
-  horizontally; below 640 they stack.
-
-- **THE TWO CARD VIDEOS ARE FREE UNTIL THEY ARE LOOKED AT, AND THAT IS
-  THE ONLY REASON THEY ARE ALLOWED.** Both ship `preload="none"`, so
-  nothing is fetched during the page load — verified, not assumed.
-  `ui.js`'s `setupVideos()` upgrades `preload` and calls `play()` on an
-  IntersectionObserver, and pauses on the way out. `prefers-reduced-motion`
-  and `navigator.connection.saveData` never start them at all, and the
-  posters are real frames of the same footage so both degrade to the still
-  that used to be there. If you add a third video, keep every one of those
-  properties. Field re-measured after: 90,000 points, 2.66ms median,
-  p95 3.83, governor rung 0.
-
-- **Two headless traps that both look exactly like a bug in the page.**
-  Measured 2026-08-30, and neither is anything to do with the site:
-    1. **Headless Chrome with the hardware GPU decodes three frames of any
-       video and then reports `paused` with nobody having called `pause()`.**
-       A bare `<video autoplay muted loop>` on an otherwise empty page does
-       the same, which is how it was pinned down. Use
-       `--use-gl=swiftshader --enable-unsafe-swiftshader` to verify video;
-       use `--use-angle=d3d11 --enable-gpu` to measure the field. You cannot
-       have both in one run.
-    2. **`python -m http.server` has no HTTP Range support**, so a `<video>`
-       served by it reports `seekable` as `[0, 0]` and CANNOT BE SEEKED. The
-       scroll-scrubbed reels sit on frame zero and look precisely like a
-       poster that failed to load. GitHub Pages serves ranges, so this only
-       ever bites in preview. Use `serve.py` (in the job tmp dir), which
-       does. **Never hand the owner a preview link off the no-Range server.**
-- SYS.03's four lines now link to `services/*.html`, and `services.html`
-  indexes them. The nav is Work / Foundation / System / Services /
-  **In production** / Contact — the last one added 2026-08-19, pointing at
-  `index.html#production`. `nav.js` clones `.nav__links` for the phone
-  sheet, so it appeared there on its own.
-- Service pages still have no per-service proof, but `lumina.html` closes
-  out to both relevant lines and `brand.html` §04 links into it. The two
-  service pages that Lumina evidences (website-design, brand-kit) do not
-  yet link TO the case.
-- **THE TRAVEL IN THE CASE WINDOW IS LINEAR AND MUST STAY LINEAR.** This
-  window is a page being scrolled, and the one thing a reader checks without
-  knowing they are checking it is whether the thing under the wheel moves
-  WITH the wheel. Any easing there is a lie about how far they scrolled. Two
-  separate mistakes were reported as one:
-    1. travel was `ramp(local, 0.03, 1 - FADE)`, a smoothstep that SATURATES
-       at 0.86 — so for the last 14% of every scene the window stood still
-       while the phone strip beside it carried on. "My mouse scroll is synced
-       with the mobile look."
-    2. progress was clamped into 0.05..0.95, leaving 218px of scroll at the
-       top of the section where the page moved and the window did not.
-  Both gone: `q = p`, travel is `local` with nothing applied, and the phone
-  runs on the same clock so the two devices agree. `docs/sync.py` samples the
-  transform at 130 scroll positions and reports px-of-strip per 100px-of-page
-  per scene, in-scene variation, and any dead zone. **Run it after touching
-  rack.js.** Current: LINEAR, no dead zones, Lumina 2.4:1, THEHUB 1.7:1.
-
-- **Track length is what sets the FEEL, and it is per page.** `--rktrack` on
-  `#rkTrack`: Lumina 1200vh for six pages of strip, THEHUB 850vh for four. At
-  the old shared 620vh the strip ran 5.5px for every 1px of page — the window
-  was not being scrolled, it was being fast-forwarded, and it read as unsynced
-  even once the travel was linear.
-
-- **The proof cards are `<article>`, not `<a>`, as of 2026-08-30.** They carry
-  two destinations now: the card goes to the case study, and a VISIT TAB goes
-  to the live site. Nested anchors are invalid and browsers unnest them, which
-  would have thrown the tab out of the card — so `.proof__go` is the real link
-  and stretches over the card with `::after{inset:0;z-index:1}`, and `.visit`
-  sits at z-index 3 above it. That arrangement fails silently if the z-order
-  is wrong: every tap goes to the case study and nothing looks broken.
-  `docs/hits.py` hit-tests elementFromPoint at each card's body and at all
-  four corners of each tab, across four viewports. **Run it after touching
-  either.**
-
-- **`.visit` lives in styles.css and its image rule needs the extra class.**
-  `.visit .visit__mark img`, never `.visit__mark img`: the tab sits inside
-  `.proof__vis`, whose own `img` rule sets `width:100%` and
-  `aspect-ratio:16/10` for the card poster — equal specificity, and proof.css
-  loads later, so it won and the Lumina mark computed to 0x0. THEHUB's
-  survived only because its `--hub` filter rule happened to carry one more
-  class, which is exactly the kind of accident that hides a bug on one card.
-
-- **The case-page windows use STRIPS, not video. Do not go back.** A
-  scroll-scrubbed `<video>` shipped on 2026-08-30 and was reported dead the
-  same day: Safari and iOS will not reliably seek a `preload="none"` element
-  without a user gesture, and a scroll instrument has none to offer. It seeked
-  perfectly in Chrome, which is why it shipped. The tell was already on the
-  page — the PHONE STRIP beside the window scrolled, and it is driven by the
-  same draw() callback, so only the seeking was ever in question. Both
-  windows are back to tall strips translated by scroll, regenerated by
-  `docs/strips.py` at eight to ten tiles a scene. Hide the sticky header
-  after the first tile of every scene or a nav bar prints across every join.
-  The four card videos on the landing page are fine and stay: autoplay-muted-
-  loop needs no seeking.
-
-- **`services/website-design.html`'s signature is THE STACK**
-  (`modules/stack.js`), added 2026-08-30, replacing the `build.js` wireframe
-  which is deleted along with its 109 lines of CSS. Six layers of one page —
-  grid, structure, type, colour, motion, surface — in a `preserve-3d` scene,
-  tipped into an isometric and pulled apart on scroll, with the layer being
-  named PULLED OUT OF THE DECK to the front. Three things about it:
-    1. **A 3D explode overflows its own layout box.** The layers are pushed
-       in Z and the perspective magnifies them, so the box the browser
-       reserved is not the box you see. The first build was tuned by eye and
-       hit the step readout on all seven test viewports and ran off both
-       edges of a phone. `docs/stkfit.py` reads the projected union back out
-       of getBoundingClientRect and checks it against the head, the note and
-       the key — worst case being the bottom layer pulled fully forward.
-       Every geometry number (`--zstep --tilt --spin --lift --shrink`) is a
-       CSS variable so it can be tuned against that probe. Re-run it after
-       ANY change to those.
-    2. **Never dim most of the stack to highlight one layer.** The first
-       build dropped the five unlit layers to 0.34 and the whole instrument
-       went to a ghost. The naming is carried by the lit layer gaining an
-       edge, a shadow and forward travel — not by the others being removed.
-    3. **No `filter` on the layers.** A filter on a transformed child
-       flattens `preserve-3d` in some engines and the stack collapses into a
-       flat pile with no warning. Opacity via a `--lit` variable instead.
-  Its MEASUREMENT row is not typed: `field.js` writes into `#sMs` and `#sFps`
-  wherever it finds them, so that row measures the page you are reading.
-  Measured after: 90,000 points, 2.42ms median, p95 3.9, governor rung 0.
-
-- **`thehub.html` is SYS.08 / CASE 02, added 2026-08-30.** THEHUB
-  (qutaifan.com) is the owner's friend's live, ad-funded software
-  directory; Zyrn's engagement was the DESIGN SYSTEM ONLY and the page
-  says so in three places. Its signature is `modules/wipe.js` — the same
-  page in both designs with a scroll-driven seam, LEFT ALWAYS BEFORE and
-  RIGHT ALWAYS AFTER. Both halves of every pair were captured from a local
-  server at the same viewport, scroll position and second: BEFORE is
-  `git archive HEAD` of the clone, AFTER is the working tree, verified
-  byte-identical to what qutaifan.com serves. Do not re-shoot one half
-  from live and the other from disk — a comparison has to differ in the
-  design and nothing else.
-  Its numbers are all counted, and `words.py` is the one worth keeping:
-  it strips tags from both versions of all 180 pages and diffs the
-  rendered word counts. **179 of 180 identical.** That is what lets the
-  page say no editorial was touched.
-
-- **`modules/rack.js` is shared by `lumina.html` and `thehub.html`.**
-  `initRack(opts)` takes `{scenes, host, settled}`; the module owns the
-  behaviour and each page owns its own footage. `LUMINA_SCENES` is the
-  default export for the page that had it first. Scene `w` values are the
-  concat durations the cut was built from, used as WEIGHTS — boundaries
-  are derived from the video's own reported duration, so a re-encode at a
-  different length needs no change in the page.
-
-- ~~No proof anywhere on the site~~ **CLOSED 2026-08-19.** `lumina.html`
-  (SYS.07 — CASE 01) is the case study, and the proof band on `index.html`
-  between SYS.03 and SYS.04 is its entry point. Every number on both is
-  counted from the Lumina repo rather than asserted: 14 pages, 5,461 lines
-  of CSS, 7,228 of JS, 3 self-hosted faces, a CSP pinned to `'self'`, and
-  the 8-replaced/1-added token re-base of 2026-07-28. The screenshots are
-  stitched captures of the LIVE www.lumina-jo.com, not mockups.
-  Still true that this is ONE CLIENT case. The band is a row of three
-  now — Lumina (live), Axes (in service), Duk (in development) — but two
-  of those three are ours, so a second client case is still the thing
-  that would change the argument.
-- ~~Real 60fps at 90k has NOT been measured on hardware~~ **CLOSED
-  2026-08-21.** Measured, on an NVIDIA RTX 3050 via ANGLE/D3D11 at
-  1440x900:
-
-  | page | points | median GPU ms | p95 ms | fps | governor |
-  |------|--------|---------------|--------|-----|----------|
-  | index.html | 90,000 | **2.78** | 3.87 | 144 (vsync) | rung 0 |
-  | axes.html  | 90,000 | **2.69** | 3.69 | 144 (vsync) | rung 0 |
-  | 393x610 `?coarse=1` | 14,400 | 2.81 | 4.03 | 144 | rung 0 |
-
-  144fps is the display refresh, not a ceiling — the number that matters
-  is 2.78ms median, which is 17% of a 60Hz frame budget and 40% of a
-  144Hz one. The governor never stepped down, GPU timer queries resolved
-  (120 samples), cold start 2.5s. The two 2D canvases added on the same
-  day (`axent.js`, `axsplit.js`) cost nothing measurable — axes.html is
-  the FASTER of the two pages.
-
-  **The old note here said "headless is useless as an fps oracle". That
-  was wrong, and it is worth knowing why:** the one-frame-per-second
-  behaviour is a property of `--virtual-time-budget`, not of headless.
-  Drop that flag, pass `--use-angle=d3d11 --enable-gpu`, wait in
-  WALL-CLOCK seconds, and `--headless=new` renders on the real adapter at
-  real speed. `gpuprobe.py` (job tmp) does exactly that and reads the
-  result off `document.title`, which `field.js` sets alongside the console
-  line — more reliable than console capture, which misses anything logged
-  before `Runtime.enable` lands. Still true: a virtual-time capture cannot
-  judge frame rate, and this measures THIS machine's GPU, not a phone's.
-
-- Duk's §06 no longer carries a progress bar. It was two pips of five and
-  the stage was invented — the one asserted number on a page written
-  specifically to refuse invented numbers. A bar needs a denominator, and
-  there is no drawn finish line to count toward. The paragraph beside it
-  now says so. Every remaining row in that panel is checkable: status,
-  stage in words, licence, hosting, public build, early access.
-
-- The three `.cap__row` items in SYS.02 are no longer links. They are the
-  PHASES of an engagement, not products, and there is no page per phase;
-  they carried an arrow and `href="#"`, so three controls read as links
-  and jumped the reader to the top. Rather than invent three destinations
-  the affordance is gone, and one real one sits under the panel — "The
-  four lines that carry them", to `services.html`. `.cap__arrow` and its
-  hover rule are kept in `styles.css` for the day the method gets a page
-  of its own; nothing renders them today.

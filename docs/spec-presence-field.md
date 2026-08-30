@@ -552,6 +552,62 @@ rebuilt on layout change. Do not raise the loop bound.
 
 ---
 
+## 6b. Heat, and the shock — v2.1, 2026-08-30
+
+The field answered PRESENCE (a pointer near it) and SCROLL (which formation)
+but never an ACT. It also had no memory: every disturbance vanished the moment
+the spring won, so touching it left a dent and not a mark. Both are fixed by
+one channel and one event.
+
+**HEAT lives in `P.w`.** That component used to carry a rolling twinkle phase,
+which needs no memory at all — twinkle is a function of the clock and the
+particle's permanent seed — so the only spare component in the whole
+simulation was being spent on something stateless. It now carries excitation:
+
+- the pointer heats what its ray passes, at `uHeatGain` per second
+- the shock heats the shell it travels through
+- everything cools exponentially at `uHeatDecay` (1.5 → about a two-thirds-
+  second half-life)
+
+Only the POSITION pass can write `P.w`, so the pointer and shock uniforms are
+shared into that pass as well. They are the same uniform objects, not copies —
+one source of truth per value.
+
+Heat then does three things in the point shader: it rides the colour up the
+ramp (`uHeatRamp`), brightens (`uHeatGlow`) and swells (`uHeatSize`). The
+result is a WAKE rather than a dent, and the difference is the whole point: a
+dent is geometry and disappears; a wake is memory, and reads as a field that
+remembers being touched.
+
+**THE SHOCK is a click.** A spherical shell of outward impulse fires from the
+pointer at the camera's focal distance, expands at `uShockSpeed`, and dies over
+`SHOCK_LIFE` (0.95s). The impulse decays as the SQUARE of the remaining
+amplitude so the force dies faster than the glow it leaves behind.
+
+It is deliberately small. The first build ran 1.15s at nearly twice the
+amplitude with a shell half again as thick, and put a viewport-filling white
+ring across the hero — measured legible, and still wrong: doctrine rule 1 is
+that silence is the luxury. A click may disturb the field. It may not take the
+page over.
+
+Reduced motion never fires it, and never accumulates heat either — `uPointerOn`
+is already gated on `!REDUCED`, so the channel simply stays at zero.
+
+**Speed rides the ramp.** `uSpeedTint` used to be a scalar added to all three
+channels, which is a white wash: the faster a particle moved, the further it
+left the palette. It is now a distance travelled ALONG the ramp, so motion
+reads as hue and every colour on screen is still one of the four stops.
+
+**Turbulence is layered by depth.** One uniform noise field over the whole
+volume reads as fizz — every particle agitated equally, so the camera's
+parallax has nothing to work against. Noise scale and turbulence now both
+ramp with `P.z`, so the back is slower and broader and the front tighter and
+quicker.
+
+Measured after all of it, on an RTX 3050 at 1440x900: 90,000 points, **2.71ms
+median, p95 3.99, governor rung 0** — inside the same noise band as before, on
+every page. The phone path is unchanged at 14,400 points / 2.69ms.
+
 ## 7. Accessibility
 
 **`prefers-reduced-motion: reduce`** — the narrative survives, the violence does not:
