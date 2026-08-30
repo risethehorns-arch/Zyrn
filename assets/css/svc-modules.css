@@ -46,115 +46,6 @@
 }
 
 
-/* ── 01 · THE BUILD ─────────────────────────────────────────────────
-   A surface assembling itself: structure, hierarchy, type, system, live.
-   Everything is one element set styled by [data-stage] on the frame, so a
-   stage change is a single attribute write and the rest is transitions. */
-
-.bld{
-  position:relative;width:min(940px,100%);margin:0 auto;
-  aspect-ratio:16/9;max-height:50vh;
-  border:1px solid var(--hair);border-radius:10px;overflow:hidden;
-  background:rgba(14,15,18,0.55);
-  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
-}
-.bld__win{
-  height:32px;display:flex;align-items:center;gap:6px;padding:0 12px;
-  border-bottom:1px solid var(--hair);
-}
-.bld__dot{width:7px;height:7px;border-radius:50%;background:rgba(242,243,245,0.16)}
-.bld__url{
-  margin-left:12px;font-size:10px;color:var(--steel);
-  opacity:0;transition:opacity 400ms;
-}
-.bld__body{
-  position:relative;height:calc(100% - 32px);
-  padding:clamp(10px,1.6vh,18px) clamp(12px,2vw,22px);
-  display:flex;flex-direction:column;gap:clamp(6px,1.1vh,12px);
-}
-
-.bld__el{
-  border:1px dashed rgba(242,243,245,0.20);
-  border-radius:4px;
-  display:flex;align-items:center;padding:0 10px;
-  transition:height 620ms cubic-bezier(.16,1,.3,1),
-             border-color 480ms ease, background 480ms ease,
-             opacity 480ms ease, flex 620ms cubic-bezier(.16,1,.3,1);
-  opacity:0.55;
-}
-.bld__el span,.bld__el b{opacity:0;transition:opacity 420ms ease}
-.bld__el span{
-  font-size:clamp(9px,1.05vw,12px);line-height:1.25;
-  color:rgba(242,243,245,0.86);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-
-.bld__nav{height:26px;justify-content:space-between}
-.bld__mark{font-weight:500;letter-spacing:0.06em;font-size:11px !important}
-.bld__navlinks{display:flex;gap:8px;opacity:0;transition:opacity 420ms}
-.bld__navlinks i{display:block;width:22px;height:4px;border-radius:2px;background:rgba(242,243,245,0.22)}
-.bld__h1{height:22px}
-.bld__h1 span{font-size:clamp(15px,2.1vw,26px) !important;letter-spacing:-0.02em;white-space:normal}
-.bld__lede{height:22px}
-.bld__cta{height:22px;width:132px;justify-content:center}
-.bld__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(6px,1vw,10px);flex:1;min-height:0}
-.bld__card{flex-direction:column;align-items:flex-start;justify-content:center;gap:6px;height:100%}
-.bld__card b{display:block;width:26px;height:2px;background:var(--pulse-mark,#6E56F8)}
-.bld__foot{height:20px;justify-content:space-between}
-.bld__foot span{font-family:var(--font-mono);font-size:8px !important;color:var(--steel)}
-
-/* stage 1 — structure only: uniform blocks, no hierarchy, no content */
-.bld[data-stage="1"] .bld__el{height:20px}
-.bld[data-stage="1"] .bld__grid{flex:0 0 20px}
-.bld[data-stage="1"] .bld__cta{width:100%}
-
-/* stage 2 — hierarchy: real proportions arrive, still unset */
-.bld[data-stage="2"] .bld__h1{height:clamp(30px,5vh,52px)}
-.bld[data-stage="2"] .bld__lede{height:clamp(22px,3.4vh,34px)}
-
-/* stage 3 — type: the content lands */
-.bld[data-stage="3"] .bld__h1,.bld[data-stage="4"] .bld__h1,.bld[data-stage="5"] .bld__h1{height:clamp(30px,5vh,52px)}
-.bld[data-stage="3"] .bld__lede,.bld[data-stage="4"] .bld__lede,.bld[data-stage="5"] .bld__lede{height:clamp(22px,3.4vh,34px)}
-.bld[data-stage="3"] .bld__el span,
-.bld[data-stage="4"] .bld__el span,
-.bld[data-stage="5"] .bld__el span{opacity:1}
-.bld[data-stage="3"] .bld__el,
-.bld[data-stage="4"] .bld__el,
-.bld[data-stage="5"] .bld__el{opacity:1}
-
-/* stage 4 — system: hairlines, tokens, metadata */
-.bld[data-stage="4"] .bld__el,.bld[data-stage="5"] .bld__el{
-  border-style:solid;border-color:var(--hair);
-}
-.bld[data-stage="4"] .bld__card,.bld[data-stage="5"] .bld__card{
-  background:rgba(242,243,245,0.022);
-}
-.bld[data-stage="4"] .bld__card b,.bld[data-stage="5"] .bld__card b{opacity:1}
-.bld[data-stage="4"] .bld__url,.bld[data-stage="5"] .bld__url{opacity:1}
-.bld[data-stage="4"] .bld__navlinks,.bld[data-stage="5"] .bld__navlinks{opacity:1}
-.bld[data-stage="4"] .bld__h1,.bld[data-stage="5"] .bld__h1{border-color:transparent}
-.bld[data-stage="4"] .bld__lede,.bld[data-stage="5"] .bld__lede{border-color:transparent}
-.bld[data-stage="4"] .bld__nav,.bld[data-stage="5"] .bld__nav{border-color:transparent;border-bottom-color:var(--hair)}
-.bld[data-stage="4"] .bld__foot,.bld[data-stage="5"] .bld__foot{border-color:transparent;border-top-color:var(--hair)}
-
-/* stage 5 — live */
-.bld[data-stage="5"] .bld__cta{
-  background:var(--vapor);border-color:var(--vapor);
-}
-.bld[data-stage="5"] .bld__cta span{color:var(--obsidian);font-weight:500}
-.bld__scan{
-  position:absolute;left:0;right:0;top:-2px;height:2px;
-  background:linear-gradient(90deg,transparent,var(--pulse-mark,#6E56F8),transparent);
-  opacity:0;pointer-events:none;
-}
-.bld[data-stage="5"] .bld__scan{animation:bld-scan 1400ms cubic-bezier(.4,0,.2,1) 1 both}
-@keyframes bld-scan{
-  0%{opacity:0;transform:translateY(0)}
-  12%{opacity:1}
-  88%{opacity:1}
-  100%{opacity:0;transform:translateY(52vh)}
-}
-
-
 /* ── 02 · LIVING SPECIMEN ───────────────────────────────────────────── */
 
 .spec{position:relative;min-height:clamp(240px,42vh,380px)}
@@ -270,8 +161,318 @@
 
 
 /* ── reduced motion ─────────────────────────────────────────────────── */
+
+/* This page's note is three lines, not four, and the stack is the reason
+   anyone is on the page — so it gets the vertical the shared floor was
+   reserving. Scoped to .sig--stack so the other three service pages keep
+   the taller floor their notes actually need. */
+.sig--stack .sig__note{min-height:4.4em;max-width:56ch}
+.sig--stack .sig__stage{padding-top:clamp(64px,8vh,96px)}
+
+/* ══════════════════════════════════════════════════════════════════════
+   SIGNATURE · THE STACK   (services/website-design.html — modules/stack.js)
+
+   Six layers of one page, in depth. `--open` runs 0..1 and every property
+   below is derived from it, so the tip, the separation, the edge lighting
+   and the shadow cannot disagree with each other — there is one number to
+   get right rather than five to keep in step.
+
+   The scene is six absolutely-positioned siblings inside one `preserve-3d`
+   parent. A frame is six compositor transforms and no layout: nothing in
+   this instrument is able to change the size of anything, which is the rule
+   that came out of the pinned instrument deleted from axes.html.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.sig__track--long{height:620vh}
+
+.stk{
+  --open:0;
+  --drift:0;
+  /* The stack is sized by HEIGHT and derives its width, for the same reason
+     the case-page window is: this stage is pinned, so anything that does not
+     fit inside 100svh is clipped and cannot be scrolled to.
+
+     Everything about the explode is a variable, because a 3D explode
+     OVERFLOWS ITS OWN LAYOUT BOX by definition — the layers are pushed in Z
+     and the perspective magnifies them, so the box the browser reserved is
+     not the box you see. The first build was tuned by eye and hit the step
+     readout on all seven test viewports and ran off both edges of a phone.
+     These are tuned against stkfit.py, which reads the projected union of
+     the six layers back out of getBoundingClientRect. */
+  --stkh:min(56svh,520px);
+  --zstep:38px;      /* separation between layers, in Z */
+  --tilt:50deg;      /* rotateX at full open */
+  --spin:-26deg;     /* rotateZ at full open */
+  --lift:50px;       /* +Z reads as UP on screen once tilted; this recentres */
+  --shrink:0.32;     /* and this pays for the perspective magnification */
+  display:grid;
+  grid-template-columns:minmax(0,1fr) clamp(210px,24%,280px);
+  align-items:center;gap:clamp(18px,3vw,44px);
+  width:100%;
+}
+
+/* ── the scene ───────────────────────────────────────────────────────── */
+
+.stk__view{
+  position:relative;
+  height:var(--stkh);
+  perspective:1500px;
+  perspective-origin:50% 46%;
+}
+.stk__scene{
+  position:absolute;left:50%;top:50%;
+  width:calc(var(--stkh) * 1.5);
+  height:var(--stkh);
+  margin:calc(var(--stkh) / -2) 0 0 calc(var(--stkh) * -0.75);
+  transform-style:preserve-3d;
+  /* Flat-on when closed, tipped into an isometric when open. Order matters:
+     the lift and the shrink are OUTSIDE the rotations so they act in screen
+     space — a translateY written after rotateX would travel along the tilted
+     plane and go backwards into the scene instead of down the page. */
+  transform:
+    translateY(calc(var(--open) * var(--lift)))
+    scale(calc(1 - var(--open) * var(--shrink)))
+    rotateX(calc(var(--open) * var(--tilt)))
+    rotateZ(calc(var(--open) * var(--spin) + var(--drift) * 1deg));
+  will-change:transform;
+}
+
+.stk__l{
+  --lit:1;
+  --out:0;
+  position:absolute;inset:0;
+  border:1px solid var(--hair);
+  /* Opaque, not translucent. The field runs an S1 formation straight
+     through this section and a 0.95 panel let it bleed into every layer, so
+     six panels of content read as one grey smear. These are objects. */
+  background:#0B0D11;
+  overflow:hidden;
+  /* The named layer is PULLED OUT OF THE DECK, all the way to the front —
+     `(5 - var(--i))` is how many steps it has to climb to clear the layer
+     above it, plus a margin. Without this the walk lights the grid and the
+     structure first, and those are the two at the BACK of the stack: the
+     instrument spent its first two beats pointing at something the reader
+     could not see. */
+  transform:translate3d(0,0,
+    calc(var(--i) * var(--open) * var(--zstep)
+         + var(--out) * var(--open) * (5 - var(--i)) * var(--zstep)
+         + var(--out) * var(--open) * 46px));
+  /* Closed, only the top layer should be readable — the five underneath it
+     are the same box and would print through its hairlines. Open, they all
+     come up together, and then whichever is being NAMED stays at full while
+     the rest fall back. `--lit` rather than a filter: a filter on a
+     transformed child flattens preserve-3d in some engines and the stack
+     collapses into a flat pile with no warning. */
+  opacity:calc((var(--base) + (1 - var(--base)) * var(--open)) * var(--lit));
+  transition:opacity 460ms var(--ease-reveal,cubic-bezier(.16,1,.3,1)),
+             border-color 460ms ease,
+             transform 620ms var(--ease-reveal,cubic-bezier(.16,1,.3,1));
+  will-change:transform,opacity;
+}
+/* `--base` is the layer's opacity when the stack is CLOSED. Only the
+   finished surface is visible then; the five underneath are the same box and
+   would print through its hairlines. It has to be a variable inside the same
+   expression rather than a flat `opacity:1` override, which is what the
+   first build had — that override also beat the `--lit` dimming, so the top
+   layer stayed bright while the layer actually being named sat at a third
+   and the instrument pointed at the wrong thing. */
+.stk__l{--base:0.06}
+.stk__l--top{--base:1}
+/* the edge catches the light as the stack opens */
+.stk__l::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  border:1px solid rgba(242,243,245,0.34);
+  opacity:calc(var(--open) * 0.5);
+}
+/* Once a layer is being named the others fall back, and the named one comes
+   forward out of the stack. `--out` is the only thing that moves it, so it
+   can never disagree with the separation the rest of the stack is holding. */
+/* Barely dimmed. The first build dropped the five unlit layers to 0.34 and
+   the whole stack went to a ghost — five sixths of the picture is not
+   spare. The naming is carried by the LIT layer gaining an edge, a shadow
+   and 34px of forward travel, not by the others being taken away. */
+.stk[data-act]:not([data-act="-1"]) .stk__l{--lit:0.84}
+.stk__l.is-lit{
+  --lit:1;--out:1;
+  border-color:rgba(242,243,245,0.55);
+  box-shadow:0 0 0 1px rgba(242,243,245,0.14),
+             0 26px 70px rgba(0,0,0,0.66);
+}
+.stk__l.is-lit::after{opacity:calc(var(--open) * 1)}
+.stk__l.is-lit .stk__cap{color:var(--vapor);letter-spacing:0.34em}
+.stk__cap{transition:color 400ms ease,letter-spacing 620ms cubic-bezier(.16,1,.3,1)}
+
+.stk__cap{
+  position:absolute;left:9px;bottom:7px;
+  font-family:var(--font-mono);font-size:8.5px;letter-spacing:0.24em;
+  color:rgba(242,243,245,0.46);
+  opacity:var(--open);
+}
+
+/* ── layer 0 · the grid ──────────────────────────────────────────────── */
+.stk__cols{position:absolute;inset:0;display:flex;gap:0;padding:0 6%}
+.stk__cols i{flex:1 1 0;border-left:1px solid rgba(242,243,245,0.22)}
+.stk__cols i:last-child{border-right:1px solid rgba(242,243,245,0.22)}
+/* the column rules alone are almost nothing to look at when this is
+   the layer being named, so the measurement is drawn on it */
+.stk__gm{
+  position:absolute;left:6%;right:6%;top:50%;height:1px;
+  background:rgba(242,243,245,0.28);
+}
+.stk__gm::before,.stk__gm::after{
+  content:'';position:absolute;top:-3px;width:1px;height:7px;
+  background:rgba(242,243,245,0.5);
+}
+.stk__gm::before{left:0}
+.stk__gm::after{right:0}
+.stk__gl{
+  position:absolute;left:50%;top:calc(50% + 9px);transform:translateX(-50%);
+  font-family:var(--font-mono);font-size:7.5px;letter-spacing:0.22em;
+  color:rgba(242,243,245,0.5);white-space:nowrap;
+}
+
+/* ── layer 1 · the structure ─────────────────────────────────────────── */
+.stk__blocks{position:absolute;inset:0;padding:9% 8%;display:flex;
+  flex-direction:column;gap:5%}
+.stk__blocks b{display:block;background:rgba(242,243,245,0.20);border-radius:1px}
+.stk__blocks b:nth-child(1){height:7%;width:100%}
+.stk__blocks b:nth-child(2){height:19%;width:74%}
+.stk__blocks b:nth-child(3){height:9%;width:52%}
+.stk__blocks b:nth-child(4){height:8%;width:24%;background:rgba(242,243,245,0.34)}
+.stk__row{display:flex;gap:4%;height:24%}
+.stk__row b{flex:1 1 0;height:100%}
+
+/* ── layer 2 · the type ──────────────────────────────────────────────── */
+.stk__type{position:absolute;inset:0;padding:10% 8%;display:flex;
+  flex-direction:column;justify-content:center;gap:6px}
+.stk__type h4{
+  margin:0;font-size:clamp(15px,3.4cqw,30px);line-height:1.03;font-weight:400;
+  letter-spacing:-0.035em;color:var(--vapor);
+}
+.stk__type p{
+  margin:0;font-size:clamp(7px,1.35cqw,11px);line-height:1.6;
+  color:rgba(242,243,245,0.72);max-width:34ch;
+}
+.stk__scale{display:flex;align-items:baseline;gap:8px;margin-top:8px;
+  font-family:var(--font-mono);font-size:8px;letter-spacing:0.2em;
+  color:rgba(242,243,245,0.34)}
+
+/* ── layer 3 · the colour ────────────────────────────────────────────── */
+.stk__tokens{position:absolute;inset:0;padding:12% 8%;display:flex;
+  align-items:center;gap:5%}
+.stk__tokens span{
+  flex:1 1 0;height:46%;border:1px solid var(--hair);position:relative;
+}
+.stk__tokens span::after{
+  content:attr(data-t);position:absolute;left:0;top:calc(100% + 5px);
+  font-family:var(--font-mono);font-size:7px;letter-spacing:0.18em;
+  color:rgba(242,243,245,0.4);white-space:nowrap;
+}
+/* THE one Pulse on this surface. Doctrine rule 3 — it appears exactly once
+   per viewport, and this is where it is spent on this page. */
+.stk__tokens .is-pulse{background:var(--pulse-mark);border-color:transparent}
+
+/* ── layer 4 · the motion ────────────────────────────────────────────── */
+.stk__motion{position:absolute;inset:0;padding:11% 8%;display:flex;
+  align-items:center;justify-content:center}
+.stk__motion svg{width:100%;height:76%;overflow:visible}
+.stk__motion path{fill:none;stroke:rgba(242,243,245,0.5);stroke-width:1.25}
+.stk__motion .stk__axis{stroke:rgba(242,243,245,0.14);stroke-width:1}
+.stk__motion circle{fill:var(--vapor)}
+.stk__ease{
+  position:absolute;right:8%;bottom:11%;
+  font-family:var(--font-mono);font-size:7.5px;letter-spacing:0.16em;
+  color:rgba(242,243,245,0.4);
+}
+
+/* ── layer 5 · the surface ───────────────────────────────────────────── */
+.stk__surf{position:absolute;inset:0;padding:7% 7%;display:flex;
+  flex-direction:column;gap:4%;container-type:inline-size}
+.stk__nav{display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--hair);padding-bottom:5px}
+.stk__nav b{font-size:clamp(8px,1.5cqw,12px);letter-spacing:-0.03em;
+  color:var(--vapor);font-weight:500}
+.stk__nav i{display:inline-block;width:14px;height:2px;
+  background:rgba(242,243,245,0.2);margin-left:6px}
+.stk__surf h4{
+  margin:0;font-size:clamp(13px,3cqw,26px);line-height:1.05;font-weight:400;
+  letter-spacing:-0.035em;color:var(--vapor);
+}
+.stk__surf p{margin:0;font-size:clamp(6.5px,1.25cqw,10px);line-height:1.55;
+  color:rgba(242,243,245,0.58);max-width:38ch}
+.stk__cards{display:flex;gap:4%;flex:1 1 auto;min-height:0}
+.stk__cards span{
+  flex:1 1 0;border:1px solid var(--hair);background:rgba(14,15,18,0.5);
+}
+.stk__surf .stk__foot{
+  display:flex;justify-content:space-between;
+  border-top:1px solid var(--hair);padding-top:5px;
+  font-family:var(--font-mono);font-size:7px;letter-spacing:0.2em;
+  color:rgba(242,243,245,0.34);
+}
+
+/* ── the key ─────────────────────────────────────────────────────────── */
+
+.stk__key{
+  list-style:none;margin:0;padding:0;
+  display:flex;flex-direction:column;gap:1px;
+  background:var(--hair);border:1px solid var(--hair);
+}
+.stk__key li{
+  background:rgba(14,15,18,0.62);
+  padding:clamp(7px,1.1vh,11px) clamp(9px,1vw,13px);
+  display:grid;grid-template-columns:auto 1fr;gap:2px 9px;
+  align-items:baseline;
+  transition:background 300ms ease,color 300ms ease;
+}
+.stk__key .k__n{
+  font-family:var(--font-mono);font-size:9px;letter-spacing:0.16em;
+  color:rgba(242,243,245,0.34);grid-row:1 / span 2;
+}
+.stk__key .k__t{
+  font-size:clamp(11px,1.05vw,13px);letter-spacing:-0.01em;
+  color:rgba(242,243,245,0.66);
+}
+.stk__key .k__v{
+  font-family:var(--font-mono);font-size:8.5px;letter-spacing:0.14em;
+  color:rgba(242,243,245,0.34);
+}
+.stk__key li.is-on{background:rgba(14,15,18,0.92)}
+.stk__key li.is-on .k__t{color:var(--vapor)}
+.stk__key li.is-on .k__n,
+.stk__key li.is-on .k__v{color:rgba(242,243,245,0.72)}
+
+/* ── responsive ──────────────────────────────────────────────────────── */
+
+@media (max-width:900px){
+  .stk{
+    grid-template-columns:1fr;gap:clamp(12px,2vh,18px);
+    --stkh:min(26svh,208px);
+    --zstep:21px;--tilt:46deg;--spin:-20deg;--lift:32px;--shrink:0.30;
+  }
+  .stk__key li{padding:6px 9px}
+  .stk__key .k__t{font-size:11px}
+}
+/* A pinned stage cannot be scrolled to reveal what does not fit. At 500px
+   tall every clamp on this page sits on its floor, so the floors have to be
+   replaced rather than relied on. */
+@media (max-height:620px){
+  .stk{
+    --stkh:min(32svh,168px);
+    --zstep:17px;--tilt:46deg;--spin:-22deg;--lift:26px;--shrink:0.30;
+  }
+  .sig__stage{padding-top:56px;padding-bottom:14px;gap:8px}
+  .sig__note{min-height:0;font-size:11.5px;line-height:1.55}
+  .stk__key li{padding:4px 8px}
+  .stk__key .k__t{font-size:10.5px}
+  .stk__key .k__v{font-size:7.5px}
+}
+
 @media (prefers-reduced-motion:reduce){
-  .bld__el,.bld__el span,.bld__url,.bld__navlinks,
   .spec__panel,.chip,.dim__bar i,.sig__note{transition:none}
-  .bld[data-stage="5"] .bld__scan{animation:none;opacity:0}
+  /* stack.js already parks it open and stops the drift; this stills the
+     per-layer transitions so nothing eases on the way to that resting
+     state either, and drops the compositor hints it no longer needs. */
+  .stk__scene,.stk__l{will-change:auto}
+  .stk__l,.stk__cap,.stk__key li{transition:none}
 }

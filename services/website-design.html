@@ -138,38 +138,114 @@
     <!-- SIGNATURE · THE BUILD ─────────────────────────────────────────
          A surface assembling itself as you scroll: structure, then
          hierarchy, then type, then system, then live. -->
-    <section class="sig sig--build" id="sigBuild" aria-label="A surface being built">
-      <div class="sig__track">
+    <!-- ── SIGNATURE · THE STACK ────────────────────────────────────────
+         A finished page taken apart into the six layers it is made of, held
+         apart while each one is named, and put back together. Replaced the
+         `sig--build` wireframe on 2026-08-30: that showed blocks arriving in
+         an order, which is the right argument made small. The argument this
+         page makes is that a surface is a SYSTEM, so the instrument shows
+         all six layers at once, in depth, and prints what each one costs.
+
+         Six absolutely-positioned siblings in one preserve-3d scene. A frame
+         is six compositor transforms and no layout — nothing here can change
+         the size of anything. See modules/stack.js. -->
+    <section class="sig sig--stack" id="sigStack" aria-label="A surface, taken apart">
+      <div class="sig__track sig__track--long">
         <div class="sig__stage">
           <div class="sig__head">
-            <span class="mono sig__step" id="buildStep">01 &mdash; STRUCTURE</span>
-            <span class="mono sig__pct"><span id="buildPct">000</span>%</span>
+            <span class="mono sig__step" id="stkStep">00 &mdash; THE SURFACE</span>
+            <span class="mono sig__pct"><span id="stkPct">000</span>%</span>
           </div>
 
-          <div class="bld" id="bld" aria-hidden="true">
-            <div class="bld__win">
-              <span class="bld__dot"></span><span class="bld__dot"></span><span class="bld__dot"></span>
-              <span class="mono bld__url">zyrn.org</span>
-            </div>
-            <div class="bld__body">
-              <div class="bld__el bld__nav">
-                <span class="bld__mark">ZYRN</span>
-                <span class="bld__navlinks"><i></i><i></i><i></i><i></i></span>
+          <div class="stk" id="stk" data-act="-1" aria-hidden="true">
+            <div class="stk__view">
+              <div class="stk__scene" id="stkScene">
+
+                <!-- 0 · the grid -->
+                <div class="stk__l" style="--i:0">
+                  <span class="stk__cols"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                  <span class="stk__gm"></span>
+                  <span class="stk__gl">12 COLUMNS &middot; 24PX GUTTER</span>
+                  <span class="stk__cap">GRID</span>
+                </div>
+
+                <!-- 1 · the structure -->
+                <div class="stk__l" style="--i:1">
+                  <span class="stk__blocks">
+                    <b></b><b></b><b></b><b></b>
+                    <span class="stk__row"><b></b><b></b><b></b></span>
+                  </span>
+                  <span class="stk__cap">STRUCTURE</span>
+                </div>
+
+                <!-- 2 · the type -->
+                <div class="stk__l" style="--i:2">
+                  <span class="stk__type">
+                    <h4>Organizations,<br>engineered.</h4>
+                    <p>The operating core of modern firms &mdash; people, structure, and intelligence as one system.</p>
+                    <span class="stk__scale">SPACE GROTESK 400/500 &middot; IBM PLEX MONO 400/500</span>
+                  </span>
+                  <span class="stk__cap">TYPE</span>
+                </div>
+
+                <!-- 3 · the colour. The one Pulse on this surface. -->
+                <div class="stk__l" style="--i:3">
+                  <span class="stk__tokens">
+                    <span data-t="OBSIDIAN" style="background:#0E0F12"></span>
+                    <span data-t="VAPOR" style="background:#F2F3F5"></span>
+                    <span data-t="STEEL" style="background:#767E8C"></span>
+                    <span data-t="HAIRLINE" style="background:rgba(242,243,245,0.08)"></span>
+                    <span data-t="PULSE" class="is-pulse"></span>
+                  </span>
+                  <span class="stk__cap">COLOUR</span>
+                </div>
+
+                <!-- 4 · the motion. The site's real reveal curve, drawn. -->
+                <div class="stk__l" style="--i:4">
+                  <span class="stk__motion">
+                    <svg viewBox="0 0 100 60" preserveAspectRatio="none" aria-hidden="true">
+                      <path class="stk__axis" d="M0 60 H100 M0 0 V60"></path>
+                      <path d="M0 60 C16 60 24 4.8 50 2.4 C70 0.6 84 0 100 0"></path>
+                      <circle cx="50" cy="2.4" r="1.6"></circle>
+                    </svg>
+                    <span class="stk__ease">CUBIC-BEZIER(.16, 1, .3, 1) &middot; 320MS</span>
+                  </span>
+                  <span class="stk__cap">MOTION</span>
+                </div>
+
+                <!-- 5 · the finished surface, and the only one visible closed -->
+                <div class="stk__l stk__l--top" style="--i:5">
+                  <span class="stk__surf">
+                    <span class="stk__nav">
+                      <b>ZYRN</b>
+                      <span><i></i><i></i><i></i><i></i></span>
+                    </span>
+                    <h4>Organizations,<br>engineered.</h4>
+                    <p>The operating core of modern firms &mdash; people, structure, and intelligence as one system.</p>
+                    <span class="stk__cards"><span></span><span></span><span></span></span>
+                    <span class="stk__foot"><span>ZYRN &mdash; EST. 2026</span><span>AMM 31.95&deg;N</span></span>
+                  </span>
+                  <span class="stk__cap">SURFACE</span>
+                </div>
+
               </div>
-              <div class="bld__el bld__h1"><span>Organizations, engineered.</span></div>
-              <div class="bld__el bld__lede"><span>The operating core of modern firms &mdash; people, structure, and intelligence as one system.</span></div>
-              <div class="bld__el bld__cta"><span>Request access</span></div>
-              <div class="bld__grid">
-                <div class="bld__el bld__card"><b></b><span>Diagnostic core</span></div>
-                <div class="bld__el bld__card"><b></b><span>Structural rebuild</span></div>
-                <div class="bld__el bld__card"><b></b><span>Live calibration</span></div>
-              </div>
-              <div class="bld__el bld__foot"><span>ZYRN &mdash; EST. 2026</span><span>AMM 31.95&deg;N</span></div>
             </div>
-            <div class="bld__scan"></div>
+
+            <!-- The key. Every value on it is counted, and the last row is
+                 not typed at all — field.js writes the live median frame time
+                 and fps into #sMs and #sFps wherever it finds them, so that
+                 row is measuring the page you are reading. -->
+            <ol class="stk__key" id="stkKey">
+              <li><span class="mono k__n">01</span><span class="k__t">Grid</span><span class="mono k__v">12 COL &middot; 24PX GUTTER</span></li>
+              <li><span class="mono k__n">02</span><span class="k__t">Structure</span><span class="mono k__v">07 BLOCKS</span></li>
+              <li><span class="mono k__n">03</span><span class="k__t">Type</span><span class="mono k__v">02 FAMILIES &middot; 04 WEIGHTS</span></li>
+              <li><span class="mono k__n">04</span><span class="k__t">Colour</span><span class="mono k__v">05 TOKENS &middot; 01 PULSE</span></li>
+              <li><span class="mono k__n">05</span><span class="k__t">Motion</span><span class="mono k__v">01 CURVE &middot; 320MS</span></li>
+              <li><span class="mono k__n">06</span><span class="k__t">Measurement</span><span class="mono k__v"><span id="sMs">&mdash;</span> MS &middot; <span id="sFps">00</span> FPS &mdash; LIVE</span></li>
+            </ol>
           </div>
 
-          <p class="sig__note" id="buildNote">Architecture before layout. Blocks are placed by what the page has to prove, in the order it has to prove it.</p>
+          <p class="sig__note" id="stkNote">This is the page as anyone arrives at it. Everything after this is what it is made of, and every one of those things is written down somewhere a developer can read.</p>
         </div>
       </div>
     </section>
@@ -353,7 +429,7 @@
 
 <script type="module">
 import { initField } from '../assets/js/field.js';
-import { initBuild } from '../assets/js/modules/build.js';
+import { initStack } from '../assets/js/modules/stack.js';
 
 const roState = document.getElementById('readoutState');
 initField({
@@ -366,7 +442,7 @@ initField({
   onState: (p, n) => { if (roState) roState.textContent = n; },
 });
 
-initBuild();
+initStack();
 </script>
 </body>
 </html>
