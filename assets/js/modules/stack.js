@@ -115,6 +115,15 @@ export function initStack() {
     const drift = Math.sin(t * 0.36) * 2.6 * open;
     stk.style.setProperty('--drift', drift.toFixed(3));
 
+    /* THE PAGE SWITCHES ON. Handed over is not the same box the reader
+       met at the top — it is that box SHIPPED: the mark takes its seam,
+       the ask takes the surface's one Pulse, the mini field blooms
+       behind the hero and the cards catch the ramp's light. Gated on
+       progress rather than on the beat, because beat 7 begins at 0.84
+       while the stack is still airborne — a page lighting up mid-flight
+       reads as a glitch, one lighting as it LANDS reads as power-on. */
+    stk.classList.toggle('is-live', p >= 0.935);
+
     /* Which layer is being named. The walk runs bottom to top — grid first,
        finished surface last — because that is the order it was built in. */
     if (p < OPEN_A) beat(0);

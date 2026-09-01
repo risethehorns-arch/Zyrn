@@ -73,6 +73,19 @@ geometry. `docs/rigshot.py` photographs one at chosen progress values.
   The last row of its key is not typed: `field.js` writes the live median
   frame time and fps into `#sMs` / `#sFps`, so the MEASUREMENT row is
   measuring the page you are reading.
+  **The surface SWITCHES ON when the stack lands** (owner-requested
+  2026-09-01: the closing frame was “just a black box”). `stack.js` adds
+  `.is-live` at p ≥ 0.935 — progress-gated, not beat-gated, because
+  beat 7 begins at 0.84 while the stack is still airborne and a page
+  lighting mid-flight reads as a glitch. What lights: the mini mark's
+  seam (`--pulse-mark`, the mark's own token), the ask filling Pulse
+  (the surface's one Pulse, same as the real page), two blurred-colour
+  blooms as the mini page's field, one ramp-hue top edge per card, and
+  a screen bloom off the box. The bloom RECTS stay inside the layer —
+  rigfit measures rects, and a box hanging past the stage flags the
+  head; the corner spill comes from the BLUR, which paints beyond the
+  rect without widening it. The opening beat keeps the quiet version:
+  the bookend — same box, arrives dark, leaves lit — is the argument.
 - **fold** (`services/brand-kit.html`) — one sheet that unfolds into five
   panels and folds back. **Panel n is a CHILD of panel n-1**, pinned at
   `left:100%` with `transform-origin:left center`: that nesting IS the
