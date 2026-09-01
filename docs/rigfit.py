@@ -55,6 +55,21 @@ STEP = """(function(p){
   return 1;
 })(%s)"""
 
+# The parallax and the lean are driven by a POINTER, and headless never
+# moves one — so a plain run measures the scene at rest and says nothing
+# about the state a reader actually puts it in. PARALLAX=1 pins --px/--py/
+# --lean to a corner so the widest deflection is what gets measured.
+PIN = """(function(v){
+  var t = ['.rig','.stk','.fld__scene','.wll__scene','.prs__prism','.pln__svg'];
+  for (var i=0;i<t.length;i++){
+    var e=document.querySelector(t[i]); if(!e) continue;
+    e.style.setProperty('--px', v);
+    e.style.setProperty('--py', v);
+    e.style.setProperty('--lean', v);
+  }
+  return 1;
+})('%s')"""
+
 MEASURE = """(function(){
   var view = document.querySelector('.rig__view');
   var rig  = document.querySelector('.rig');
@@ -204,6 +219,8 @@ async def main():
                 worst, flags = None, []
                 for p in STEPS:
                     await ev(STEP % p)
+                    if os.environ.get("PARALLAX"):
+                        await ev(PIN % os.environ["PARALLAX"])
                     # LONGER THAN THE LONGEST TRANSITION ON THE PAGE.
                     # The modules write custom properties and the CSS
                     # transitions the transforms that read them, so a

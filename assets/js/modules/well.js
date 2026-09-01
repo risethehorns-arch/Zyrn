@@ -23,7 +23,7 @@
    derived from it, no layout.
    ══════════════════════════════════════════════════════════════════════ */
 
-import { onTrack, swapText, pad3, REDUCED } from './_track.js';
+import { onTrack, onNear, swapText, pad3, REDUCED } from './_track.js';
 
 const LEVELS = [
   ['LEVEL 00 — EXPLORATORY',
@@ -164,4 +164,14 @@ export function initWell() {
     return;
   }
   onTrack(track, draw);
+  /* ── THE ROOM ────────────────────────────────────────────────────
+     Runs every frame while the section is near, whether or not the page
+     moved — the lean has to keep easing while the reader holds still,
+     which is exactly when a progress-only callback stops being called. */
+  onNear(track, (p, room) => {
+    const live = 1;
+    scene.style.setProperty('--px', (room.px * live).toFixed(4));
+    scene.style.setProperty('--py', (room.py * live).toFixed(4));
+    scene.style.setProperty('--lean', (room.vel * live).toFixed(4));
+  });
 }

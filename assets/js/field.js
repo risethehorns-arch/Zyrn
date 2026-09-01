@@ -936,6 +936,18 @@ async function boot(canvas, cfg) {
 
   /* ── scroll ───────────────────────────────────────────────────────── */
   let progress = 0, scrollVel = 0, scrollVelSm = 0, lenis = null;
+
+  /* THE ONE WAY ANYTHING ON THIS SITE MOVES THE PAGE.
+     `html{scroll-behavior}` is `auto` — it has to be, because a browser-owned
+     smooth scroll cancels and restarts on every call and swallows programmatic
+     movement entirely. So Lenis owns scrolling when it is present and this is
+     the door to it; without Lenis it falls back to a native smooth scroll, and
+     under reduced motion it jumps. Anything that wants to move the reader
+     calls this rather than reaching for scrollTo itself. */
+  window.__zyrnScrollTo = function (top, ms) {
+    if (lenis) { lenis.scrollTo(top, { duration: (ms || 1050) / 1000 }); return; }
+    window.scrollTo({ top: top, behavior: REDUCED ? 'auto' : 'smooth' });
+  };
   const nativeProgress = () => {
     const lim = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
     return Math.min(1, Math.max(0, window.scrollY / lim));

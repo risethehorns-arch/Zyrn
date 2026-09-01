@@ -24,7 +24,7 @@
    Doctrine rule 2 — the only decoration is real information.
    ══════════════════════════════════════════════════════════════════════ */
 
-import { onTrack, swapText, pad3, REDUCED } from './_track.js';
+import { onTrack, onNear, swapText, pad3, REDUCED } from './_track.js';
 
 /* Eight beats. The six middle ones are the layers, bottom to top, so the
    sequence reads as the order the thing was actually built in. */
@@ -136,4 +136,14 @@ export function initStack() {
     return;
   }
   onTrack(track, draw);
+  /* ── THE ROOM ────────────────────────────────────────────────────
+     Runs every frame while the section is near, whether or not the page
+     moved — the lean has to keep easing while the reader holds still,
+     which is exactly when a progress-only callback stops being called. */
+  onNear(track, (p, room) => {
+    const live = Math.min(1, Number(stk.style.getPropertyValue('--open')) || 0);
+    stk.style.setProperty('--px', (room.px * live).toFixed(4));
+    stk.style.setProperty('--py', (room.py * live).toFixed(4));
+    stk.style.setProperty('--lean', (room.vel * live).toFixed(4));
+  });
 }

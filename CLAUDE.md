@@ -576,6 +576,73 @@ sheet's `cssRules.length`. A sheet that failed shows `-1` or is absent
 entirely, and one that parsed shows its real rule count — which
 distinguishes "did not arrive" from "arrived and is wrong" in one read.
 
+## Every pinned track has an exit — 2026-09-01
+
+Nine tracks across six pages hold a reader for six to twelve viewport
+heights. That is the point of them, for a reader who wants it. Someone who
+came for the pricing and met a 1200vh rack had no way out but to keep
+wheeling, and **a scroll section you cannot leave is a toll booth rather
+than an experience.**
+
+`modules/skip.js` injects one control into every pinned stage —
+`.sig__track, .rk__track, .wp__track, .rb__track, .in__track` — visible
+only while its track is on screen, and it puts you past it. **If you add
+an instrument with a new track class, add it to that selector**; a control
+that exists on eight pages and silently does nothing on the ninth is the
+exact class of bug this site has been bitten by before, which is also why
+it is injected once rather than authored nine times.
+
+It routes through `window.__zyrnScrollTo`, published by `field.js`, which
+is now **the only sanctioned way anything moves the page**. `scroll-behavior`
+is `auto` here on purpose, so a bare `window.scrollTo` would jump instantly
+on a site whose whole argument is the quality of its scrolling.
+
+`docs/skiptest.py` verifies it with REAL mouse events at the button's own
+centre plus a hit test — `el.click()` would happily pass on a button buried
+under an overlay, which is how the ghost sheet survived a day.
+
+## The room: pointer and scroll velocity, measured once
+
+`_track.js` now measures two signals per frame for the whole page, because
+both are properties of the READER rather than of any instrument:
+
+- **`px, py`** — the pointer, -1..1 from the viewport centre, eased
+- **`vel`** — page speed, smoothed and clamped
+
+`onNear(track, cb)` fires EVERY frame while a track is near — as opposed
+to `onTrack`, which only fires when progress changes. The lean has to keep
+easing while the reader holds still, which is precisely when a
+progress-only callback stops being called.
+
+Every 3D scene adds `--px / --py / --lean` as the LAST terms of its
+transform, so they modify a composition that is already correct rather
+than being part of how it is built. **Two and a half degrees is the whole
+budget.** Inert under reduced motion, and inert on a coarse pointer, where
+reading the last touch point would leave a scene stuck wherever a finger
+landed.
+
+**`PARALLAX=1 python docs/rigfit.py …` is how the fit is checked**, and it
+matters: headless never moves a pointer, so a plain run measures the scene
+at rest and says nothing about the state a reader puts it in. Pinned to a
+corner at every viewport: ALL CLEAR.
+
+## The beam, v2 — and where it may not go
+
+Brighter on the owner's note: the lit sweep runs 170 degrees rather than
+124, it carries a **Vapor core** at its head so there is a specular hot
+point instead of an even wash, and `filter: drop-shadow` blooms it. That
+filter works on the alpha RESULT of the mask, so the glow comes off the
+visible arc rather than off the box — which is the whole difference
+between light and a coloured border.
+
+Worn by `.nav__link`, `.btn--hairline`, `.cmdkbtn`, `.rk__out` and
+`.skip`. **`.tab` and `.visit` are deliberately excluded**: the tab already
+has its Pulse marker and lives inside an `overflow:hidden` housing that
+clips the bloom into a hard edge, and `.visit` has its own travelling
+hairline. Never two arcs at full strength on one screen — the live tab is
+the page's statement of where you are, everything else answers the pointer
+at a third.
+
 ## Kill stale headless Chrome before you believe a probe
 
 Every tool here launches Chrome on a FIXED `--remote-debugging-port` and

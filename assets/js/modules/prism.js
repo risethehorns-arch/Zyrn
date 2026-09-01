@@ -22,7 +22,7 @@
    decoration. Each face is still for most of its station.
    ══════════════════════════════════════════════════════════════════════ */
 
-import { onTrack, swapText, pad3, REDUCED } from './_track.js';
+import { onTrack, onNear, swapText, pad3, REDUCED } from './_track.js';
 
 const STATIONS = 5;          // face 0, 1, 2, 3, and face 0 again
 
@@ -177,4 +177,14 @@ export function initPrism() {
     return;
   }
   onTrack(track, draw);
+  /* ── THE ROOM ────────────────────────────────────────────────────
+     Runs every frame while the section is near, whether or not the page
+     moved — the lean has to keep easing while the reader holds still,
+     which is exactly when a progress-only callback stops being called. */
+  onNear(track, (p, room) => {
+    const live = 1;
+    prism.style.setProperty('--px', (room.px * live).toFixed(4));
+    prism.style.setProperty('--py', (room.py * live).toFixed(4));
+    prism.style.setProperty('--lean', (room.vel * live).toFixed(4));
+  });
 }

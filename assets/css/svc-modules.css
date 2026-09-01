@@ -193,11 +193,19 @@
      measured 14px into the note. Pulling the camera back before the tip
      removes the transient entirely, and it reads better: the stack draws
      back to be taken in, then comes apart. */
+  /* The pointer and the travel are the last two terms, and they are
+     deliberately last: they modify a composition that is already correct
+     rather than being part of how it is built. Two and a half degrees of
+     parallax and one and a half of lean — the projected union grows by
+     under two percent, which rigfit confirms rather than assumes. */
   transform:
     translateY(calc(var(--open) * var(--lift)))
     scale(calc(1 - var(--squeeze,0) * var(--shrink)))
-    rotateX(calc(var(--open) * var(--tilt)))
-    rotateZ(calc(var(--open) * var(--spin) + var(--drift) * 1deg));
+    rotateX(calc(var(--open) * var(--tilt)
+                 + var(--py,0) * -2.4deg
+                 + var(--lean,0) * 1.6deg))
+    rotateZ(calc(var(--open) * var(--spin) + var(--drift) * 1deg))
+    rotateY(calc(var(--px,0) * 2.5deg));
   will-change:transform;
 }
 
@@ -261,6 +269,23 @@
 }
 .stk__l.is-lit::after{opacity:calc(var(--open) * 1)}
 .stk__l.is-lit .stk__cap{color:var(--vapor);letter-spacing:0.34em}
+/* THE SPECULAR. One solid hairline crossing the layer being named — the
+   same device `.visit` uses, and the only shine the doctrine allows on a
+   DOM element: a line at low alpha, travelling, never a gradient. It says
+   "this one" a beat after the layer arrives, which is when the reader has
+   finished moving their eye to it. */
+.stk__l.is-lit::before{
+  content:'';position:absolute;left:0;right:0;top:0;height:1px;
+  background:rgba(242,243,245,0.62);
+  opacity:0;pointer-events:none;
+  animation:stkspec 3.8s cubic-bezier(.4,0,.5,1) infinite;
+}
+@keyframes stkspec{
+  0%   {transform:translateY(0);opacity:0}
+  8%   {opacity:0.85}
+  38%  {transform:translateY(var(--righ));opacity:0}
+  100% {transform:translateY(var(--righ));opacity:0}
+}
 
 .stk__cap{
   position:absolute;left:11px;bottom:9px;
@@ -424,8 +449,9 @@
      overshoots by a factor of two at the far end. */
   transform:translateX(var(--tx,0px))
             scale(var(--zoom,1))
-            rotateX(var(--rx,0deg))
-            rotateY(var(--ry,0deg));
+            rotateX(calc(var(--rx,0deg) + var(--py,0) * -2.2deg
+                                        + var(--lean,0) * 1.4deg))
+            rotateY(calc(var(--ry,0deg) + var(--px,0) * 2.6deg));
   will-change:transform;
 }
 
@@ -632,6 +658,14 @@
 .pln__svg{
   position:absolute;inset:0;width:100%;height:100%;
   display:block;
+  /* A LEAN, NOT A CAMERA MOVE. The node positions carry the hop counts
+     the key rail prints, so the projection is never touched — the whole
+     drawing tips instead, which is what a physical plan on a table does
+     when you move your head. */
+  transform:perspective(1600px)
+            rotateX(calc(var(--py,0) * -1.6deg + var(--lean,0) * 1.1deg))
+            rotateY(calc(var(--px,0) * 1.8deg));
+  transform-origin:50% 50%;
   /* The geometry is authored to stay inside the viewBox at both ends of
      the rotation, and this is the guarantee that a future tweak to the
      pitch or the ring cannot quietly break it: nothing paints outside the
@@ -711,7 +745,9 @@
   margin-left:calc(-0.5 * var(--wellw));
   transform-style:preserve-3d;
   transform-origin:50% 100%;
-  transform:rotateX(var(--rx,8deg)) rotateY(var(--ry,-20deg));
+  transform:rotateX(calc(var(--rx,8deg) + var(--py,0) * -2.2deg
+                                          + var(--lean,0) * 1.5deg))
+            rotateY(calc(var(--ry,-20deg) + var(--px,0) * 2.8deg));
   will-change:transform;
 }
 
@@ -902,8 +938,9 @@
   margin-top:calc(var(--prh) / -2);
   transform-style:preserve-3d;
   transform:translateZ(calc(var(--prw) * -0.5))
-            rotateX(var(--rx,4deg))
-            rotateY(var(--spin,0deg));
+            rotateX(calc(var(--rx,4deg) + var(--py,0) * -2.0deg
+                                        + var(--lean,0) * 1.3deg))
+            rotateY(calc(var(--spin,0deg) + var(--px,0) * 2.2deg));
   will-change:transform;
 }
 
@@ -1167,4 +1204,13 @@
     transition:none;
     will-change:auto;
   }
+}
+
+
+/* ── reduced motion: the room goes quiet ─────────────────────────────
+   `onNear` never registers under reduced motion so --px/--py/--lean stay
+   at their 0 fallbacks and every transform above collapses to what it was
+   before. This only has to still the two things CSS drives on its own. */
+@media (prefers-reduced-motion:reduce){
+  .stk__l.is-lit::before{animation:none;opacity:0}
 }

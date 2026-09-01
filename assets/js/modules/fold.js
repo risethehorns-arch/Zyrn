@@ -37,7 +37,7 @@
    stage width and the panel width — are taken on resize and cached.
    ══════════════════════════════════════════════════════════════════════ */
 
-import { onTrack, swapText, pad3, REDUCED } from './_track.js';
+import { onTrack, onNear, swapText, pad3, REDUCED } from './_track.js';
 
 const PANELS = 5;
 
@@ -211,4 +211,14 @@ export function initFold() {
     return;
   }
   onTrack(track, draw);
+  /* ── THE ROOM ────────────────────────────────────────────────────
+     Runs every frame while the section is near, whether or not the page
+     moved — the lean has to keep easing while the reader holds still,
+     which is exactly when a progress-only callback stops being called. */
+  onNear(track, (p, room) => {
+    const live = Math.min(1, Number(rig.style.getPropertyValue('--open')) || 0);
+    rig.style.setProperty('--px', (room.px * live).toFixed(4));
+    rig.style.setProperty('--py', (room.py * live).toFixed(4));
+    rig.style.setProperty('--lean', (room.vel * live).toFixed(4));
+  });
 }

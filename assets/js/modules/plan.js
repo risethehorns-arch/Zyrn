@@ -28,7 +28,7 @@
    travelling, exactly two elements are written.
    ══════════════════════════════════════════════════════════════════════ */
 
-import { onTrack, swapText, pad3, REDUCED } from './_track.js';
+import { onTrack, onNear, swapText, pad3, REDUCED } from './_track.js';
 
 const NS = 'http://www.w3.org/2000/svg';
 
@@ -388,6 +388,16 @@ export function initPlan() {
 
   layout();
   onTrack(track, draw);
+
+  /* The lattice is a PROJECTION, not a DOM scene, so its parallax is a
+     transform on the svg itself rather than a change to the camera — the
+     node positions have to stay exactly where the hop counts say they
+     are. */
+  onNear(track, (p, room) => {
+    svg.style.setProperty('--px', room.px.toFixed(4));
+    svg.style.setProperty('--py', room.py.toFixed(4));
+    svg.style.setProperty('--lean', room.vel.toFixed(4));
+  });
 }
 
 /* Counted off the arrays above rather than typed into the markup, so the

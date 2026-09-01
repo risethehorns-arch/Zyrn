@@ -400,40 +400,136 @@ h1,h2,h3,h4,blockquote,.mono,summary,figcaption,th{text-wrap:balance}
   --fld-1:#33C9DE;
   --fld-2:#6E56F8;
   --fld-3:#F2F3F5;
+
+  /* THE ARC, defined once and worn by every control that takes one.
+
+     Brighter than v1 on the owner's note that it should be shinier and
+     more noticeable: the lit sweep runs 170 degrees instead of 124, it
+     carries a VAPOR CORE at its head so there is a specular hot point
+     rather than an even wash, and it falls away through the field's own
+     ramp behind it rather than cutting to nothing. The two colour stops
+     are `--fld-1/2`, which field.js writes from the ramp it is emitting
+     at this scroll position — so the light is the field's, not a tint
+     chosen to look like it. */
+  --beam-arc:conic-gradient(from var(--beam),
+    transparent 0deg 190deg,
+    var(--fld-1) 268deg,
+    var(--fld-2) 316deg,
+    var(--vapor) 342deg,
+    var(--fld-3) 350deg,
+    var(--fld-1) 356deg,
+    transparent 360deg);
 }
 
-.nav__link::before{
+/* ── the hosts ──────────────────────────────────────────────────────
+   `.tab` keeps its Pulse top bar and is deliberately absent: it already
+   has a marker, and it lives inside an `overflow:hidden` housing that
+   would clip the bloom into a hard edge. `.visit` is absent for the same
+   kind of reason — it has its own travelling hairline. */
+.nav__link,.btn--hairline,.cmdkbtn,.rk__out,.skip{
+  position:relative;isolation:isolate;
+}
+.nav__link::before,
+.btn--hairline::before,
+.cmdkbtn::before,
+.rk__out::before,
+.skip::before{
   content:'';position:absolute;inset:0;border-radius:inherit;
-  padding:1px;
-  background:conic-gradient(from var(--beam),
-    transparent 0deg 236deg,
-    var(--fld-1) 296deg,
-    var(--fld-2) 332deg,
-    var(--fld-3) 352deg,
-    transparent 360deg);
+  /* 1.4px, not 1: at one pixel the bloom below is brighter than the line
+     casting it, which reads as a smudge rather than as a lit edge. */
+  padding:1.4px;
+  background:var(--beam-arc);
+  /* Paint the whole box, then cut the middle out, so only the rim
+     survives. `xor` is the WebKit spelling of `exclude` and both are
+     needed — dropping either leaves a solid block of colour. */
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
           mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
   -webkit-mask-composite:xor;mask-composite:exclude;
+  /* THE SHINE. drop-shadow works on the alpha RESULT of the mask, so it
+     blooms from the visible arc alone rather than from the box — which is
+     what makes this read as light rather than as a coloured border. Two
+     passes: a tight specular and a wide halo. */
+  filter:drop-shadow(0 0 4px var(--fld-2))
+         drop-shadow(0 0 12px var(--fld-1));
   opacity:0;pointer-events:none;
-  transition:opacity 520ms var(--ease-reveal);
-}
-.nav__link.is-here{
-  color:var(--vapor);
-  background:rgba(242,243,245,0.05);
-  box-shadow:0 0 0 1px rgba(242,243,245,0.05),
-             0 0 22px -6px var(--fld-2);
-}
-.nav__link.is-here::before{
-  opacity:1;
-  animation:navbeam 5.2s linear infinite;
+  transition:opacity 460ms var(--ease-reveal);
 }
 @keyframes navbeam{ to{ --beam:360deg } }
 
-/* A tab that is being hovered but is not the live one gets the arc at a
-   whisper, so the bar answers the pointer without ever showing two lights
-   at the same strength. */
-.nav__link:hover::before{opacity:0.34}
+/* ── who is lit, and how much ───────────────────────────────────────
+   Never two at full strength. The live tab is the page's own statement of
+   where you are; everything else answers the pointer at a third of it. */
+.nav__link.is-here{
+  color:var(--vapor);
+  background:rgba(242,243,245,0.055);
+  box-shadow:0 0 0 1px rgba(242,243,245,0.06),
+             0 0 26px -5px var(--fld-2);
+}
+.nav__link.is-here::before{opacity:1;animation:navbeam 5.2s linear infinite}
+.nav__link:hover::before{opacity:0.38}
 .nav__link.is-here:hover::before{opacity:1}
+
+/* An action lights on INTENT — reaching for it is the moment it should
+   answer, and it is the only one on screen doing so. */
+.btn--hairline:hover::before,
+.btn--hairline:focus-visible::before,
+.cmdkbtn:hover::before,
+.cmdkbtn:focus-visible::before,
+.rk__out:hover::before,
+.rk__out:focus-visible::before{
+  opacity:1;animation:navbeam 3.6s linear infinite;
+}
+.btn--hairline:hover,.cmdkbtn:hover,.rk__out:hover{
+  box-shadow:0 0 24px -8px var(--fld-2);
+}
+
+
+/* ══ SKIP THE SCROLL EXPERIENCE ═══════════════════════════════════════
+   Injected into every pinned stage by modules/skip.js. A reader who did
+   not come for a 1200vh rack needs a way past it, and a scroll section
+   with no exit is a toll booth rather than an experience.
+
+   It is the one control on the site whose arc runs unprompted, because it
+   has to be FOUND rather than discovered — but it only exists while a
+   track is on screen, so it is never competing with anything. */
+
+.skip{
+  position:absolute;z-index:4;
+  right:clamp(16px,2.6vw,34px);bottom:clamp(14px,2.4vh,30px);
+  display:inline-flex;align-items:center;gap:9px;
+  padding:11px 15px;border-radius:9px;
+  border:1px solid var(--hair);
+  background:rgba(14,15,18,0.66);
+  backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+  font-size:10px;letter-spacing:0.2em;line-height:1;
+  color:rgba(242,243,245,0.74);
+  cursor:pointer;
+  opacity:0;transform:translateY(8px);pointer-events:none;
+  transition:opacity 460ms var(--ease-reveal),
+             transform 460ms var(--ease-reveal),
+             color 260ms,border-color 260ms;
+}
+.skip.is-on{opacity:1;transform:none;pointer-events:auto}
+.skip:hover,.skip:focus-visible{color:var(--vapor);border-color:var(--hair-strong)}
+.skip::before{opacity:0.85;animation:navbeam 4.2s linear infinite}
+.skip:hover::before,.skip:focus-visible::before{opacity:1;animation-duration:2.4s}
+.skip__a{
+  width:13px;height:13px;flex:none;
+  fill:none;stroke:currentColor;stroke-width:1.7;
+  stroke-linecap:round;stroke-linejoin:round;
+  animation:skipnudge 3.4s var(--ease-reveal) infinite;
+}
+/* the nudge says which way it goes without spending a word on it */
+@keyframes skipnudge{
+  0%,66%,100%{transform:translateY(0)}
+  78%{transform:translateY(3px)}
+  88%{transform:translateY(0)}
+}
+@media (max-width:720px){
+  .skip{padding:10px 12px;font-size:9px;letter-spacing:0.16em;gap:7px}
+  .skip__l{display:none}
+  .skip::after{content:'SKIP';letter-spacing:0.16em}
+}
 
 
 /* ── sections ───────────────────────────────────────────────────────── */
