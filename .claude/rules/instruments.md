@@ -40,7 +40,7 @@ nothing is on screen.
 
 Every geometry inside every instrument is a RATIO of `--righ`. The stack's
 Z separation, the fold's panel width, the well's shaft and depth, the
-prism's face width, and — the one that was missed first time — **the
+swarm's chip width, and — the one that was missed first time — **the
 camera**. Before this rebuild each instrument carried hand-tuned pixel
 constants, which is why the four were four different sizes and all four
 were smaller than the space around them: you could not make one bigger
@@ -95,11 +95,37 @@ geometry. `docs/rigshot.py` photographs one at chosen progress values.
   over verbatim from `readiness.js`; only the size and the form changed.
   **Nothing changes a height**: the fill is a full-height box scaled from
   its base and the cap and readout are translated to meet it.
-- **prism** (`services/crm.html`) — one record set, four faces, and a
-  fifth station that is the first face again with somebody else's columns
-  on it. **The prism carries `translateZ(-W/2)`** so the front face sits
-  at z = 0; without it every face swells by about a third as it arrives
-  and the reader is trying to read a moving target.
+- **swarm** (`services/crm.html`) — forty-eight record chips
+  choreographed through six formations: chaos, the book, the pipeline,
+  the ledger, somebody else's grouping, one handed-over deck. Replaced
+  the prism 2026-09-01 at the owner's direction (“this is super
+  basic”): a turning box SHOWED four screens of a product, which any
+  competitor can also show — what no rented system can show is the same
+  records picked up and reorganised live with none lost. Seeded RNG, so
+  the choreography is identical on every load; the record count on the
+  rail is COUNTED off the DOM; per-transition shuffled stagger ranks so
+  each move reads as a flock rather than a lockstep.
+  Three rules it now carries:
+    · **a resize must redraw** — every chip position is an inline
+      transform with W×H baked in, and the track only calls back when
+      PROGRESS changes, so without an explicit redraw a rotated phone
+      keeps the previous geometry until the next scroll tick. The
+      CSS-ratio instruments get this from the cascade; a JS-positioned
+      one has to do it itself.
+    · **depth is a ratio too** — formation z was authored in px against
+      the full-size stage and is scaled by `H/700` at draw time. On a
+      500px-tall window the perspective (itself righ×3.2) is small, and
+      unscaled z magnified edge chips by a quarter, straight through the
+      key rail. Same lesson as the camera, one level further down.
+    · **the spread budgets for the chip's own body** — ±0.47-unit
+      formations are mapped through XS, which subtracts half a chip plus
+      rotation slack (and divides out worst-case projection, a constant
+      ~1.08 once z scales) so the chaos cloud fits a phone and an
+      ultrawide alike.
+  During dwells the flock breathes a few px of per-chip z — driven by
+  PROGRESS, not a clock — so a moving wheel always answers with motion
+  (rigmotion: 40/40 steps, 0 dead) while a still reader gets a still
+  formation.
 
 - **orbit** (`services.html`) — five things riding a tilted ring around one
   core, and a scroll that takes you round it once. Replaced `core.js`, a
@@ -119,7 +145,13 @@ lines only — see `docs/decisions.md`.
 
 ### The three that were replaced
 
-`specimen.js`, `graph.js` and `readiness.js` were deleted on 2026-09-01.
+`specimen.js`, `graph.js` and `readiness.js` were deleted on 2026-09-01,
+and `prism.js` followed the same day — built that morning, replaced by
+the swarm that evening at the owner's direction. Its one recorded trap
+(`translateZ` rejects percentages — a `--prw:min(…,70%)` invalidates the
+whole transform SILENTLY and every face stacks at z=0) is preserved here
+because it will bite any 3D instrument: keep every translateZ in
+JS-measured px.
 None of them was broken and none of the arguments they made was wrong;
 all three were roughly a quarter the size of the space they sat in, and
 two of them made their point in a caption rather than in the picture. The

@@ -591,8 +591,8 @@ h1,h2,h3,h4,blockquote,.mono,summary,figcaption,th{text-wrap:balance}
 .skip{
   position:absolute;z-index:4;
   right:clamp(16px,2.6vw,34px);bottom:clamp(14px,2.4vh,30px);
-  display:inline-flex;align-items:center;gap:9px;
-  padding:11px 15px;border-radius:9px;
+  display:inline-flex;align-items:center;gap:2px;
+  padding:5px 6px;border-radius:9px;
   border:1px solid var(--hair);
   background:rgba(14,15,18,0.66);
   backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
@@ -605,29 +605,56 @@ h1,h2,h3,h4,blockquote,.mono,summary,figcaption,th{text-wrap:balance}
              color 260ms,border-color 260ms;
 }
 .skip.is-on{opacity:1;transform:none;pointer-events:auto}
-.skip:hover,.skip:focus-visible{color:var(--vapor);border-color:var(--hair-strong)}
+.skip:hover,.skip:focus-within{color:var(--vapor);border-color:var(--hair-strong)}
+.skip__l{padding:0 5px;letter-spacing:0.2em}
+
+/* the two exits. Real buttons, real 34px targets, and the arrows carry
+   the same light the field gives a gathered pointer: a Vapor core
+   blooming through the glint violets. */
+.skip__d{
+  display:inline-grid;place-items:center;
+  width:34px;height:34px;border-radius:7px;
+  border:1px solid transparent;background:transparent;
+  color:var(--glint-2);cursor:pointer;padding:0;
+  transition:color 240ms,background 240ms,border-color 240ms;
+}
+.skip__d:hover,.skip__d:focus-visible{
+  color:var(--vapor);
+  background:rgba(110,86,248,0.12);
+  border-color:rgba(165,148,251,0.34);
+}
 .skip .gl{opacity:0.92}
 .skip .gl__b{animation-duration:4.2s}
 .skip:hover .gl,.skip:focus-visible .gl{opacity:1}
 .skip:hover .gl__b,.skip:focus-visible .gl__b{animation-duration:2.2s}
 .skip.is-on:hover{box-shadow:0 0 26px -9px var(--glint-1)}
 .skip__a{
-  width:13px;height:13px;flex:none;
+  width:14px;height:14px;flex:none;
   fill:none;stroke:currentColor;stroke-width:1.7;
   stroke-linecap:round;stroke-linejoin:round;
-  animation:skipnudge 3.4s var(--ease-reveal) infinite;
+  /* the gathered-pointer light: a hot core through violet, matching the
+     field's pointer glow and the button glint exactly — same variables,
+     so the three cannot drift apart */
+  filter:drop-shadow(0 0 2px var(--vapor))
+         drop-shadow(0 0 6px var(--glint-1));
 }
-/* the nudge says which way it goes without spending a word on it */
-@keyframes skipnudge{
+/* each nudge says which way its own door opens */
+.skip__d--dn .skip__a{animation:skipdn 3.4s var(--ease-reveal) infinite}
+.skip__d--up .skip__a{animation:skipup 3.4s var(--ease-reveal) 1.7s infinite}
+@keyframes skipdn{
   0%,66%,100%{transform:translateY(0)}
   78%{transform:translateY(3px)}
   88%{transform:translateY(0)}
 }
+@keyframes skipup{
+  0%,66%,100%{transform:translateY(0)}
+  78%{transform:translateY(-3px)}
+  88%{transform:translateY(0)}
+}
 @media (max-width:720px){
-  /* The label stays and shrinks. It used to be swapped for a shorter one
-     through `::after`, and that pseudo now carries the strike ring — a
-     control cannot spend the same element on a word and on a light. */
-  .skip{padding:10px 11px;font-size:8.5px;letter-spacing:0.14em;gap:6px}
+  .skip{padding:4px 4px;font-size:8.5px;gap:0}
+  .skip__l{letter-spacing:0.14em;padding:0 3px}
+  .skip__d{width:32px;height:32px}
 }
 
 

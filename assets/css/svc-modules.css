@@ -685,12 +685,25 @@
    arbitrates after everything else has been handed down. */
 .pln__edges path.is-arb{stroke:var(--pulse-mark);stroke-width:1.5;stroke-dasharray:none}
 
+/* THE DECISION BURNS THE WAY THE FIELD DOES. When the pointer gathers
+   the particles they go Vapor-hot inside a violet bloom; the buttons'
+   glint does the same; and this token is the third instance of that one
+   light — same variables, so the three cannot drift apart. The filter is
+   on three SMALL elements that already repaint every frame the token
+   moves, so the raster cost is the pixels under the glow and no more. */
 .pln__trail{
-  fill:none;stroke:var(--vapor);stroke-width:2.2;
+  fill:none;stroke:var(--glint-3);stroke-width:2.2;
   stroke-linecap:round;stroke-linejoin:round;
+  filter:drop-shadow(0 0 3px var(--vapor))
+         drop-shadow(0 0 9px var(--glint-1));
 }
-.pln__tok{fill:var(--vapor)}
-.pln__halo{fill:none;stroke:rgba(242,243,245,0.42);stroke-width:1}
+.pln__tok{
+  fill:var(--vapor);
+  filter:drop-shadow(0 0 3px var(--vapor))
+         drop-shadow(0 0 9px var(--glint-2))
+         drop-shadow(0 0 20px var(--glint-1));
+}
+.pln__halo{fill:none;stroke:rgba(165,148,251,0.55);stroke-width:1}
 
 .pln__nodes circle{
   fill:#0B0D11;stroke:rgba(242,243,245,0.62);stroke-width:1.2;
@@ -906,272 +919,71 @@
 }
 
 
+
 /* ══════════════════════════════════════════════════════════════════════
-   SIGNATURE · THE PRISM   (services/crm.html — modules/prism.js)
+   SIGNATURE · THE SWARM   (services/crm.html — modules/swarm.js)
 
-   One record set, four faces. The prism turns and the same data is a
-   table, a pipeline, a ledger, and the rules that hold it together — then
-   it turns once more and the table is somebody else's firm.
-
-   That last quarter-turn is the product. Everything a buyer worries about
-   with a custom system is whether it is a bespoke thing built once and
-   then stranded. A prism that returns to the first face with different
-   columns on it says the opposite: one core, configured, and the
-   guarantees do not move when the fields do.
-
-   ── THE FRONT FACE IS ALWAYS AT Z = 0 ───────────────────────────────
-   A four-sided prism of width W puts its front face at +W/2, which under
-   perspective magnifies it by about a third — so every face would swell
-   as it arrived and shrink as it left, and the reader would be trying to
-   read a moving target. The prism carries a translateZ(-W/2) that cancels
-   it exactly. Take that line out and the instrument still works and looks
-   wrong, which is the hardest kind of bug to find later.
+   Forty-eight record chips choreographed through six formations. The
+   chips are absolutely positioned at the stage's centre and everything
+   about where they are is a transform written by the module — this sheet
+   owns only what a chip IS: a small solid object with a reference number
+   on it, lit from the front of the pile.
    ══════════════════════════════════════════════════════════════════════ */
 
-.prs{
-  /* --prw IS A LENGTH, ALWAYS, AND IT IS WRITTEN BY prism.js.
+.swm .rig__view{perspective:calc(var(--righ) * 3.2)}
 
-     It cannot be `min(<length>, 70%)` here, and that mistake cost the
-     whole instrument: translateZ does NOT accept a percentage, so the
-     moment the 70% branch won, BOTH transforms below became invalid
-     declarations and were dropped entirely. The prism did not turn, the
-     faces did not separate, and all four stacked on top of each other —
-     so the page showed whichever face came last in the markup while the
-     readout confidently named a different one. Nothing threw, nothing
-     logged, and it looked like a beat-sequencing bug rather than a units
-     bug. See the identical note on `.glyph--sys`.
-
-     The 70% itself is not a margin, it is THE DIAGONAL: a square prism
-     halfway through a quarter-turn presents its corner, and a corner is
-     the face width times root two. Sized to the stage at rest it spills
-     over the key rail every time it moves.
-
-     This value is the pre-script fallback; prism.js replaces it on load
-     and on resize with min(stage height, stage width * 0.7) in pixels. */
-  --prw:calc(var(--righ) * 0.7);
-  /* Shorter than the rig, because a face is a screen and a screen is
-     wider than it is tall. At 0.92 the content sat in the top four
-     tenths with half the face empty under it. */
-  --prh:calc(var(--righ) * 0.72);
-}
-/* Deeper than the shared 1500: at this size a 1500px camera puts a hard
-   keystone on the two side faces mid-turn. */
-.prs .rig__view{perspective:calc(var(--righ) * 4.4);perspective-origin:50% 48%}
-
-.prs__prism{
-  position:absolute;left:50%;top:50%;
-  width:var(--prw);height:var(--prh);
-  margin-left:calc(-0.5 * var(--prw));
-  margin-top:calc(var(--prh) / -2);
+.swm__stage{
+  position:absolute;left:50%;top:50%;width:0;height:0;
   transform-style:preserve-3d;
-  transform:translateZ(calc(var(--prw) * -0.5))
-            rotateX(calc(var(--rx,4deg) + var(--py,0) * -2.0deg
-                                        + var(--lean,0) * 1.3deg))
-            rotateY(calc(var(--spin,0deg) + var(--px,0) * 2.2deg));
+  transform:rotateX(calc(var(--py,0) * -2.6deg + var(--lean,0) * 1.8deg))
+            rotateY(calc(var(--px,0) * 3.2deg));
   will-change:transform;
 }
 
-.prs__f{
-  position:absolute;inset:0;
-  background:#0B0D11;
-  border:1px solid var(--hair);
-  overflow:hidden;
-  backface-visibility:hidden;
-  container-type:inline-size;
-  transform:rotateY(calc(var(--i) * 90deg)) translateZ(calc(var(--prw) * 0.5));
-  transition:border-color 460ms ease,box-shadow 620ms var(--ease-reveal,cubic-bezier(.16,1,.3,1));
+.swm__c{
+  position:absolute;left:0;top:0;
+  width:clamp(58px,calc(var(--righ) * 0.135),92px);
+  height:clamp(19px,calc(var(--righ) * 0.044),29px);
+  margin-left:calc(clamp(58px,calc(var(--righ) * 0.135),92px) / -2);
+  margin-top:calc(clamp(19px,calc(var(--righ) * 0.044),29px) / -2);
+  display:flex;align-items:center;gap:7%;
+  padding:0 7%;
+  border:1px solid rgba(242,243,245,0.16);border-radius:4px;
+  /* OPAQUE. Forty-eight translucent chips over a 90k-particle field is
+     not a swarm, it is fog — the same lesson the fold and the stack each
+     paid for once already. */
+  background:#0C0E12;
+  box-shadow:0 6px 18px -8px rgba(0,0,0,0.8);
+  will-change:transform,opacity;
 }
-.prs__f.is-front{
-  border-color:rgba(242,243,245,0.5);
-  box-shadow:0 0 0 1px rgba(242,243,245,0.10),0 34px 90px rgba(0,0,0,0.72);
-}
-.prs__f::after{
-  content:'';position:absolute;left:0;right:0;top:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(242,243,245,0.28) 30%,
-             rgba(242,243,245,0.28) 70%,transparent);
-  pointer-events:none;
-}
-
-.prs__body{
-  position:absolute;inset:0;padding:5.5% 6% 7%;
-  display:flex;flex-direction:column;gap:clamp(6px,1.8cqw,16px);
-}
-.prs__hd{
-  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
-  border-bottom:1px solid var(--hair);padding-bottom:clamp(4px,1.2cqw,9px);
-  font-size:clamp(6.5px,1.5cqw,10px);letter-spacing:0.2em;
-  color:rgba(242,243,245,0.44);
-}
-.prs__hd b{font-weight:400;color:rgba(242,243,245,0.86)}
-.prs__cap{
-  position:absolute;left:11px;bottom:9px;
-  font-family:var(--font-mono);font-size:9.5px;letter-spacing:0.24em;
-  color:rgba(242,243,245,0.46);
-  transition:color 400ms ease,letter-spacing 620ms cubic-bezier(.16,1,.3,1);
-}
-.prs__f.is-front .prs__cap{color:var(--vapor);letter-spacing:0.34em}
-
-/* ── face 01 · the table ─────────────────────────────────────────────── */
-.prs__tbl{
-  position:relative;
-  display:flex;flex-direction:column;
-  gap:clamp(4px,1.3cqw,11px);flex:1 1 auto;min-height:0;
-  padding-top:clamp(3px,1cqw,8px);
-}
-/* THE SCAN. One hairline crossing the table on a slow loop — a system
-   being read rather than a screenshot of one. Solid Vapor at low alpha,
-   never a gradient, which is the only shine the doctrine allows on a DOM
-   element. */
-.prs__tbl::after{
-  content:'';position:absolute;left:0;right:0;top:0;height:1px;
-  background:rgba(242,243,245,0.44);
-  box-shadow:0 0 12px -2px var(--glint-1);
-  opacity:0;pointer-events:none;
-  animation:prsscan 5.4s cubic-bezier(.45,0,.5,1) infinite;
-}
-@keyframes prsscan{
-  0%   {transform:translateY(0);opacity:0}
-  7%   {opacity:0.9}
-  46%  {transform:translateY(var(--prh));opacity:0}
-  100% {transform:translateY(var(--prh));opacity:0}
-}
-.prs__hr,.prs__row{display:flex;gap:2.4%;align-items:center}
-/* ── INNER PARALLAX ──────────────────────────────────────────────────
-   A face CANNOT hold real depth: `overflow:hidden` flattens a
-   preserve-3d subtree, and the face has to clip or its rows escape the
-   prism. So the depth is computed instead — prism.js writes `--pl`, how
-   far off-centre the turn currently is, and each row carries its own
-   `--d` and shifts by a multiple of it. Parallax either way; only the
-   arithmetic moved. */
-.prs__row{
-  transform:translateX(calc(var(--pl,0px) * var(--d,0)));
-  will-change:transform;
-}
-.prs__row:nth-child(2){--d:0.18}
-.prs__row:nth-child(3){--d:0.42}
-.prs__row:nth-child(4){--d:0.66}
-.prs__row:nth-child(5){--d:0.88}
-.prs__row:nth-child(6){--d:1.12}
-.prs__row:nth-child(9){--d:1.78}
-.prs__row:nth-child(8){--d:1.56}
-.prs__row:nth-child(7){--d:1.34}
-.prs__hr span,.prs__row span{
-  position:relative;flex:1 1 0;min-width:0;overflow:hidden;
-  transition:flex 540ms var(--ease-reveal,cubic-bezier(.16,1,.3,1)),
-             opacity 420ms ease;
-}
-.prs__hr{
-  border-bottom:1px solid var(--hair);
-  padding-bottom:clamp(3px,1cqw,7px);
-  font-family:var(--font-mono);font-size:clamp(6px,1.35cqw,9.5px);
-  letter-spacing:0.16em;color:rgba(242,243,245,0.40);
-}
-/* The two labels for one column, cross-faded. Both are in the DOM the
-   whole time: an instrument that rewrites its own text on a class change
-   flickers, and the point being made is that the COLUMN is the same
-   column with a different name on it. */
-.prs__hr b,.prs__hr i{font-weight:400;font-style:normal;white-space:nowrap;
-  transition:opacity 380ms ease}
-.prs__hr i{position:absolute;left:0;top:0;opacity:0}
-.prs__row{
-  font-family:var(--font-mono);font-size:clamp(6px,1.3cqw,9px);
-  letter-spacing:0.12em;color:rgba(242,243,245,0.60);
-}
-.prs__row em{font-style:normal;color:rgba(242,243,245,0.88)}
-/* a cell with a value in it that is not worth printing at this size */
-.prs__row s{
-  display:block;height:clamp(4px,1.1cqw,8px);text-decoration:none;
-  background:rgba(242,243,245,0.13);
-}
-/* A status that is all one grey is a placeholder. These are the real
-   enum values the desk stores, and they read at a glance because the two
-   that mean "moving" are lit and the two that mean "stopped" are not. */
-.prs__row u{
-  text-decoration:none;color:rgba(242,243,245,0.52);
-  border:1px solid var(--hair);padding:1px 5px;display:inline-block;
-  white-space:nowrap;
-}
-.prs__row u[data-s="live"]{
-  color:var(--glint-3);border-color:rgba(165,148,251,0.44);
-  background:rgba(110,86,248,0.10);
-}
-.prs__row u[data-s="hold"]{
-  color:rgba(242,243,245,0.78);border-color:rgba(242,243,245,0.22);
-}
-.prs__row u[data-s="off"]{
-  color:rgba(242,243,245,0.34);border-color:rgba(242,243,245,0.09);
-}
-
-/* the reconfiguration: one column leaves, another arrives, the rest stay */
-.prs__tbl.is-alt .prs__hr b{opacity:0}
-.prs__tbl.is-alt .prs__hr i{opacity:1}
-.prs__hr span[data-add],.prs__row span[data-add]{flex:0 0 0;opacity:0}
-.prs__tbl.is-alt span[data-add]{flex:0 0 15%;opacity:1}
-.prs__tbl.is-alt span[data-drop]{flex:0 0 0;opacity:0}
-
-/* ── face 02 · the pipeline ──────────────────────────────────────────── */
-.prs__board{display:flex;gap:3%;flex:1 1 auto;min-height:0}
-.prs__lane{
-  flex:1 1 0;display:flex;flex-direction:column;gap:clamp(4px,1.2cqw,9px);
-  border-top:1px solid var(--hair);padding-top:clamp(5px,1.4cqw,10px);
-}
-.prs__lane > span{
-  font-family:var(--font-mono);font-size:clamp(6px,1.35cqw,9.5px);
-  letter-spacing:0.16em;color:rgba(242,243,245,0.42);
-}
-.prs__card{
-  border:1px solid var(--hair);background:rgba(242,243,245,0.035);
-  padding:clamp(5px,1.5cqw,11px) clamp(6px,1.6cqw,12px);
-  display:flex;flex-direction:column;gap:clamp(3px,0.9cqw,7px);
-}
-.prs__card em{
+.swm__c em{
   font-style:normal;font-family:var(--font-mono);
-  font-size:clamp(6px,1.3cqw,9px);letter-spacing:0.14em;
-  color:rgba(242,243,245,0.82);
+  font-size:clamp(7px,calc(var(--righ) * 0.0155),10px);
+  letter-spacing:0.12em;color:rgba(242,243,245,0.82);
+  flex:0 0 auto;
 }
-.prs__card s{display:block;height:clamp(3px,0.9cqw,6px);text-decoration:none;
-  background:rgba(242,243,245,0.12)}
-/* THE one Pulse on this surface: the file that has not moved inside the
-   working-day window the desk actually enforces. */
-.prs__card.is-flag{border-color:var(--pulse-mark)}
-.prs__card.is-flag em{color:var(--vapor)}
-.prs__flag{
-  align-self:flex-start;
-  font-family:var(--font-mono);font-size:clamp(5.5px,1.1cqw,8px);
-  letter-spacing:0.16em;color:var(--pulse-mark);
+.swm__c s{
+  display:block;height:3px;text-decoration:none;
+  background:rgba(242,243,245,0.20);border-radius:1px;
 }
+/* THE one Pulse on this surface: the file the 07-day rule has caught.
+   Lit only while the pipeline formation is on screen — a flag with no
+   pipeline around it is a red light in an empty room. */
+.swm__c.is-flag{transition:border-color 400ms,box-shadow 400ms}
+.swm.is-pipe .swm__c.is-flag{
+  border-color:var(--pulse-mark);
+  box-shadow:0 0 22px -6px var(--pulse-mark),0 6px 18px -8px rgba(0,0,0,0.8);
+}
+.swm.is-pipe .swm__c.is-flag em{color:var(--vapor)}
 
-/* ── face 03 · the ledger ────────────────────────────────────────────── */
-.prs__log{
-  list-style:none;margin:0;padding:0;flex:1 1 auto;min-height:0;
-  display:flex;flex-direction:column;gap:clamp(3px,1cqw,8px);
+@media (max-width:900px){
+  .swm__c{border-radius:3px}
+  .swm__c s{height:2px}
 }
-.prs__log li{
-  display:grid;grid-template-columns:clamp(34px,13cqw,74px) 1fr auto;
-  gap:clamp(6px,2cqw,14px);align-items:baseline;
-  font-family:var(--font-mono);font-size:clamp(6px,1.3cqw,9px);
-  letter-spacing:0.12em;color:rgba(242,243,245,0.56);
-  border-bottom:1px solid rgba(242,243,245,0.05);
-  padding-bottom:clamp(2px,0.8cqw,6px);
+@media (prefers-reduced-motion:reduce){
+  .swm__stage,.swm__c{will-change:auto}
+  .swm__c.is-flag{transition:none}
 }
-.prs__log b{font-weight:400;color:rgba(242,243,245,0.88)}
-.prs__log span:last-child{color:rgba(242,243,245,0.34)}
-
-/* ── face 04 · the rules ─────────────────────────────────────────────── */
-.prs__rules{list-style:none;margin:0;padding:0;flex:1 1 auto;
-  display:flex;flex-direction:column;justify-content:center;
-  gap:clamp(6px,2cqw,16px)}
-.prs__rules li{
-  display:grid;grid-template-columns:auto 1fr;gap:clamp(7px,2.2cqw,14px);
-  align-items:baseline;
-  font-size:clamp(7.5px,2cqw,14px);line-height:1.45;
-  color:rgba(242,243,245,0.80);
-}
-.prs__rules li span{
-  font-family:var(--font-mono);font-size:clamp(6px,1.4cqw,10px);
-  letter-spacing:0.16em;color:rgba(242,243,245,0.34);
-}
-
 
 /* ══════════════════════════════════════════════════════════════════════
    RESPONSIVE — one block for all five, because they are one shell now
@@ -1249,7 +1061,7 @@
   .rig__key li{padding:3px 8px}
   .rig__key .k__t{font-size:10.5px}
   .rig__key .k__v{font-size:7.5px}
-  .fld__cap,.prs__cap,.stk__cap{font-size:8px}
+  .fld__cap,.stk__cap{font-size:8px}
   .wll__ix b{font-size:clamp(15px,calc(var(--righ) * 0.09),30px)}
 }
 
@@ -1279,8 +1091,6 @@
   .fld__scene,.fld__p--h,.fld__face,.fld__cap,
   .wll__scene,.wll__fill,.wll__side,.wll__cap,.wll__val,.wll__plane,.wll__ix,
   .wll__gate,.wll__gate span,
-  .prs__prism,.prs__f,.prs__cap,
-  .prs__hr span,.prs__row span,.prs__hr b,.prs__hr i,
   .rig__key li{
     transition:none;
     will-change:auto;
@@ -1299,6 +1109,5 @@
 
 /* the two new loops stop under reduced motion like everything else */
 @media (prefers-reduced-motion:reduce){
-  .prs__tbl::after,.wll__fill::after,.wll__gate.is-hit{animation:none}
-  .prs__row{transform:none}
-}
+  .wll__fill::after,.wll__gate.is-hit{animation:none}
+  }

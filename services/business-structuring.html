@@ -50,12 +50,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/styles.css?v=1c608369">
-<link rel="stylesheet" href="../assets/css/service.css?v=d0676abf">
+<link rel="stylesheet" href="../assets/css/styles.css?v=26bb47c2">
+<link rel="stylesheet" href="../assets/css/service.css?v=50db01e5">
 <link rel="stylesheet" href="../assets/css/field.css?v=0539fb2e">
 <link rel="stylesheet" href="../assets/css/footer.css?v=9cd9eb26">
 <link rel="stylesheet" href="../assets/css/cmdk.css?v=2b54249d">
-<link rel="stylesheet" href="../assets/css/svc-modules.css?v=448fa2e3">
+<link rel="stylesheet" href="../assets/css/svc-modules.css?v=2283b6a6">
 
 </head>
 <body>
@@ -200,32 +200,32 @@
         <p class="svc-sec__note" data-keepout>Six modules. Authority is mapped before any box is moved.</p>
       </div>
       <div class="mods" data-keepout>
-        <article class="mod" data-reveal data-rdelay="120">
+        <article class="mod" data-reveal data-rdelay="120" data-viz="split" data-more="Per decision, not per title: the threshold, the deciding name, and who is merely informed. Most delay lives in the gap between people who may decide and people who must be told — this writes the gap down and then closes it.">
           <span class="mono mod__idx">03a</span>
           <h3 class="mod__title">Decision rights</h3>
           <p class="mod__body">Who decides what, at what threshold, and who only needs to be told. Written per decision, not per title.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="190">
+        <article class="mod" data-reveal data-rdelay="190" data-viz="curve" data-more="What the current structure actually pays for, measured against what the strategy asks for. Where the two diverge, people follow the pay — reliably, reasonably, and regardless of the values poster.">
           <span class="mono mod__idx">03b</span>
           <h3 class="mod__title">Incentives</h3>
           <p class="mod__body">What the current structure actually rewards, which is rarely what the strategy asks for.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="260">
+        <article class="mod" data-reveal data-rdelay="260" data-viz="flow" data-more="Work traced as it actually crosses the firm: every handoff, every queue, every place a request waits for someone who does not know it is waiting. The map is drawn from real cases, not from the org chart.">
           <span class="mono mod__idx">03c</span>
           <h3 class="mod__title">Operating model</h3>
           <p class="mod__body">How work crosses the firm: handoffs, queues, and the places load silently accumulates.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="330">
+        <article class="mod" data-reveal data-rdelay="330" data-viz="tiers" data-more="The forums that decide, their cadence, and the standing meetings that are minuted theatre. Roughly a third of recurring forums in a mid-size firm can be deleted outright once decision rights are written per decision.">
           <span class="mono mod__idx">03d</span>
           <h3 class="mod__title">Governance</h3>
           <p class="mod__body">The forums that decide, their cadence, and the ones that can be deleted outright.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="400">
+        <article class="mod" data-reveal data-rdelay="400" data-viz="ledger" data-more="A named owner per outcome, recorded where everyone can read it. Shared ownership is treated as unassigned — because when two people own a result, what is actually true is that nobody does.">
           <span class="mono mod__idx">03e</span>
           <h3 class="mod__title">Accountability</h3>
           <p class="mod__body">A named owner per outcome. Shared ownership is treated as an unassigned outcome.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="470">
+        <article class="mod" data-reveal data-rdelay="470" data-viz="bars" data-more="Where the structure carries more than it was designed for, measured before it is redesigned. The constraint is usually not where the complaints are — complaints cluster where load is visible, not where it is highest.">
           <span class="mono mod__idx">03f</span>
           <h3 class="mod__title">Load</h3>
           <p class="mod__body">Where the structure is carrying more than it was designed for, measured before it is redesigned.</p>
@@ -375,6 +375,7 @@
 import { initField } from '../assets/js/field.js';
 import { initPlan } from '../assets/js/modules/plan.js';
 import { initSkip } from '../assets/js/modules/skip.js';
+import { initMods } from '../assets/js/modules/mods.js';
 
 const roState = document.getElementById('readoutState');
 initField({
@@ -389,6 +390,7 @@ initField({
 
 initPlan();
 initSkip();
+initMods();
 </script>
 </body>
 </html>

@@ -10,3 +10,6 @@ desktop.ini
 
 # Local probe/scratch files (regenerated on demand, never shipped)
 _probe_*.html
+
+# Probe screenshots (docs/rigshot.py and friends write here)
+shot/

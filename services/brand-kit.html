@@ -50,12 +50,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/styles.css?v=1c608369">
-<link rel="stylesheet" href="../assets/css/service.css?v=d0676abf">
+<link rel="stylesheet" href="../assets/css/styles.css?v=26bb47c2">
+<link rel="stylesheet" href="../assets/css/service.css?v=50db01e5">
 <link rel="stylesheet" href="../assets/css/field.css?v=0539fb2e">
 <link rel="stylesheet" href="../assets/css/footer.css?v=9cd9eb26">
 <link rel="stylesheet" href="../assets/css/cmdk.css?v=2b54249d">
-<link rel="stylesheet" href="../assets/css/svc-modules.css?v=448fa2e3">
+<link rel="stylesheet" href="../assets/css/svc-modules.css?v=2283b6a6">
 
 </head>
 <body>
@@ -286,32 +286,32 @@
         <p class="svc-sec__note" data-keepout>Six modules. Every value is a number or a rule, never an adjective.</p>
       </div>
       <div class="mods" data-keepout>
-        <article class="mod" data-reveal data-rdelay="120">
+        <article class="mod" data-reveal data-rdelay="120" data-viz="ring" data-more="Four values and a hairline, each with a hex code and a written job. A fifth colour has to argue its way in, and the argument is recorded — so the palette a year from now is a decision trail, not an accretion.">
           <span class="mono mod__idx">02a</span>
           <h3 class="mod__title">Palette</h3>
           <p class="mod__body">Four values and a hairline. Each one with a stated job, so a fifth colour has to argue for itself.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="190">
+        <article class="mod" data-reveal data-rdelay="190" data-viz="blocks" data-more="Two families, four weights, and a scale with numbers instead of adjectives. Sizes are steps on the scale, so any new page a junior lays out lands on the same rhythm as the one a founder made.">
           <span class="mono mod__idx">02b</span>
           <h3 class="mod__title">Type</h3>
           <p class="mod__body">Two families, four weights. A scale with sizes, tracking, and line-height, not a mood board.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="260">
+        <article class="mod" data-reveal data-rdelay="260" data-viz="tiers" data-more="One construction with the shear written as law: offset, direction, seam. It latches one way, which means nobody redraws it slightly differently — the commonest way a mark dies.">
           <span class="mono mod__idx">02c</span>
           <h3 class="mod__title">The mark</h3>
           <p class="mod__body">Construction, clear space, minimum size, and the one motion it is allowed to make.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="330">
+        <article class="mod" data-reveal data-rdelay="330" data-viz="curve" data-more="One curve and three durations, written down like any other token. Motion that is specified can be reviewed, reused and switched off; motion improvised per component can only be argued about.">
           <span class="mono mod__idx">02d</span>
           <h3 class="mod__title">Motion law</h3>
           <p class="mod__body">Durations, easings, and what is forbidden. Motion is specified like spacing.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="400">
+        <article class="mod" data-reveal data-rdelay="400" data-viz="split" data-more="The half nobody documents: what the firm will not say. No superlatives, no unverifiable claims, no adjective doing a verb's work — rules that are checkable, which a page of brand adjectives never is.">
           <span class="mono mod__idx">02e</span>
           <h3 class="mod__title">Voice</h3>
           <p class="mod__body">How the firm states terms. Includes the list of things it does not say.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="470">
+        <article class="mod" data-reveal data-rdelay="470" data-viz="sheet" data-more="The kit applied to the surfaces the firm actually uses — deck, invoice, signage, site — so the first real document is not the first test of the system. Every example in the kit is built from the tokens, not drawn to look like them.">
           <span class="mono mod__idx">02f</span>
           <h3 class="mod__title">Application</h3>
           <p class="mod__body">The kit applied across surface, deck, and document, so the rules survive contact with real work.</p>
@@ -461,6 +461,7 @@
 import { initField } from '../assets/js/field.js';
 import { initFold } from '../assets/js/modules/fold.js';
 import { initSkip } from '../assets/js/modules/skip.js';
+import { initMods } from '../assets/js/modules/mods.js';
 
 const roState = document.getElementById('readoutState');
 initField({
@@ -475,6 +476,7 @@ initField({
 
 initFold();
 initSkip();
+initMods();
 </script>
 </body>
 </html>

@@ -467,9 +467,19 @@ and a fifth service page was added. The parts that constrain future work:
   that media query ONLY; adding it globally parks every desktop marker at
   x = 0.
 - Everything the CRM page prints about the product was counted out of the
-  repository or read out of its sync code. The four guarantees on the
-  prism's fourth face are the four that `website-sync.ts` actually
-  enforces, not four written for the page.
+  repository or read out of its sync code. The four guarantees in the
+  Feed module's brief are the four that `website-sync.ts` actually
+  enforces, not four written for the page. (They sat on the prism's
+  fourth face until the prism was replaced by THE SWARM the same day —
+  see `.claude/rules/instruments.md`.)
+- **Every “What it covers” card is a disclosure now** — `modules/mods.js`
+  reads `data-more` (an authored second paragraph, never generated) and
+  `data-viz` (one of twelve mechanism drawings) off each `.mod` and adds
+  the open/close mechanics: one open per grid, Enter/Space, dash draw-in,
+  one glint-lit point per drawing. A card WITHOUT `data-more` stays a
+  plain card, so the enhancer is safe on any future page. Twelve drawings
+  cover thirty modules on purpose — most modules ARE one of a dozen
+  shapes, and the repetition is the argument.
 
 ## An entrance is not a scroll animation — 2026-09-01
 
@@ -586,7 +596,12 @@ than an experience.**
 
 `modules/skip.js` injects one control into every pinned stage —
 `.sig__track, .rk__track, .wp__track, .rb__track, .in__track` — visible
-only while its track is on screen, and it puts you past it. **If you add
+only while its track is on screen, and it has TWO exits since 2026-09-01
+(owner-requested): down puts you just past the track, up puts you a
+SCREEN ABOVE it — landing at the track's own start would walk the reader
+back in the door of the thing they are leaving. The pill is a `div`
+holding two real `<button>`s, because a button may not contain a button;
+its arrows carry the glint's own light. **If you add
 an instrument with a new track class, add it to that selector**; a control
 that exists on eight pages and silently does nothing on the ninth is the
 exact class of bug this site has been bitten by before, which is also why
@@ -597,9 +612,11 @@ is now **the only sanctioned way anything moves the page**. `scroll-behavior`
 is `auto` here on purpose, so a bare `window.scrollTo` would jump instantly
 on a site whose whole argument is the quality of its scrolling.
 
-`docs/skiptest.py` verifies it with REAL mouse events at the button's own
-centre plus a hit test — `el.click()` would happily pass on a button buried
-under an overlay, which is how the ghost sheet survived a day.
+`docs/skiptest.py` verifies BOTH directions with REAL mouse events at
+each button's own centre plus a hit test — down must land past the
+track's end, up must land above its start. Real events, because
+`el.click()` would happily pass on a button buried under an overlay,
+which is how the ghost sheet survived a day.
 
 ## The room: pointer and scroll velocity, measured once
 

@@ -28,17 +28,23 @@ PARK = """(function(){
   var top=0,n=t; while(n){top+=n.offsetTop;n=n.offsetParent;}
   window.scrollTo(0, top + t.offsetHeight*0.45);
   return JSON.stringify({y:Math.round(window.scrollY),
+                         start:Math.round(top),
                          end:Math.round(top+t.offsetHeight)});
 })()"""
 
+# Which exit is under test — the pill is a DIV holding two BUTTONS now,
+# and its own centre lands on the label between them, where there is no
+# handler. Click the centre of the actual control, per direction.
 WHERE = """(function(){
-  var b=document.querySelector('.skip');
+  var b=document.querySelector('%s');
   if(!b) return JSON.stringify({none:1});
   var r=b.getBoundingClientRect();
   var cx=Math.round(r.left+r.width/2), cy=Math.round(r.top+r.height/2);
   var hit=document.elementFromPoint(cx,cy);
   return JSON.stringify({
-    x:cx, y:cy, on:b.classList.contains('is-on'),
+    x:cx, y:cy,
+    // is-on lives on the PILL; b is one of the two buttons inside it
+    on:!!(b.closest('.skip')&&b.closest('.skip').classList.contains('is-on')),
     w:Math.round(r.width), h:Math.round(r.height),
     // the element the pointer would actually land on: the button or a child
     reach: !!(hit && (hit===b || b.contains(hit))),
@@ -94,39 +100,50 @@ async def main():
             await send("Page.navigate", {"url": url})
             await asyncio.sleep(6.0)
             c = await ev(COUNT)
-            parked = await ev(PARK)
-            await asyncio.sleep(1.4)
-            w = await ev(WHERE)
             flags = []
             if c["skips"] != c["tracks"]:
                 flags.append("%d skip(s) for %d track(s)" % (c["skips"], c["tracks"]))
-            if w.get("none"):
-                flags.append("NO BUTTON")
-            else:
+            report = {}
+            # Both exits, from the same mid-track park. DOWN must land past
+            # the track's end; UP must land a screen above its start — not
+            # AT its start, which walks the reader back in the door.
+            for direction, sel in (("dn", ".skip__d--dn"), ("up", ".skip__d--up")):
+                parked = await ev(PARK)
+                await asyncio.sleep(1.4)
+                w = await ev(WHERE % sel)
+                if w.get("none"):
+                    flags.append("NO %s BUTTON" % direction.upper())
+                    continue
                 if not w["on"]:
-                    flags.append("not visible mid-track")
+                    flags.append("%s not visible mid-track" % direction)
                 if not w["reach"]:
-                    flags.append("BURIED — a real tap would not reach it")
+                    flags.append("%s BURIED — a real tap would not reach it" % direction)
                 if w["h"] < 30:
-                    flags.append("tap %dpx" % w["h"])
-                # the real press
+                    flags.append("%s tap %dpx" % (direction, w["h"]))
                 for kind in ("mousePressed", "mouseReleased"):
                     await send("Input.dispatchMouseEvent",
                                {"type": kind, "x": w["x"], "y": w["y"],
                                 "button": "left", "clickCount": 1,
                                 "pointerType": "mouse"})
                 await asyncio.sleep(2.6)
-                after = await ev(WHERE)
+                after = await ev(WHERE % sel)
                 moved = after["scroll"] - w["scroll"]
-                if moved < 200:
-                    flags.append("CLICK MOVED %dpx" % moved)
-                if after["scroll"] < parked["end"] - 1000:
-                    flags.append("landed short of the track end")
-                w["moved"] = moved
+                report[direction] = moved
+                if direction == "dn":
+                    if moved < 200:
+                        flags.append("DOWN MOVED %+dpx" % moved)
+                    if after["scroll"] < parked["end"] - 1000:
+                        flags.append("down landed short of the track end")
+                else:
+                    if moved > -200:
+                        flags.append("UP MOVED %+dpx" % moved)
+                    if after["scroll"] > parked["start"] - 100:
+                        flags.append("up landed inside the track")
             bad += 0 if not flags else 1
-            print("  %-34s tracks %d  skips %d  %dx%d  moved %+5dpx  %s"
-                  % (name, c["tracks"], c["skips"], w.get("w", 0), w.get("h", 0),
-                     w.get("moved", 0), "ok" if not flags else "<-- " + "; ".join(flags)),
+            print("  %-34s tracks %d  skips %d  dn %+6dpx  up %+6dpx  %s"
+                  % (name, c["tracks"], c["skips"],
+                     report.get("dn", 0), report.get("up", 0),
+                     "ok" if not flags else "<-- " + "; ".join(flags)),
                   flush=True)
     proc.kill()
     print("\n%s" % ("ALL CLEAR" if bad == 0 else "%d page(s) failing" % bad))

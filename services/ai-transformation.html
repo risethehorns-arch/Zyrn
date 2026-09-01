@@ -50,12 +50,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/styles.css?v=1c608369">
-<link rel="stylesheet" href="../assets/css/service.css?v=d0676abf">
+<link rel="stylesheet" href="../assets/css/styles.css?v=26bb47c2">
+<link rel="stylesheet" href="../assets/css/service.css?v=50db01e5">
 <link rel="stylesheet" href="../assets/css/field.css?v=0539fb2e">
 <link rel="stylesheet" href="../assets/css/footer.css?v=9cd9eb26">
 <link rel="stylesheet" href="../assets/css/cmdk.css?v=2b54249d">
-<link rel="stylesheet" href="../assets/css/svc-modules.css?v=448fa2e3">
+<link rel="stylesheet" href="../assets/css/svc-modules.css?v=2283b6a6">
 
 </head>
 <body>
@@ -248,32 +248,32 @@
         <p class="svc-sec__note" data-keepout>Six modules. The readiness number is set before any tool is chosen.</p>
       </div>
       <div class="mods" data-keepout>
-        <article class="mod" data-reveal data-rdelay="120">
+        <article class="mod" data-reveal data-rdelay="120" data-viz="gate" data-more="A number across five dimensions — strategy, workforce, workflow, governance, data — taken before the first pilot and again after. The index is the LOWEST dimension, never the average, because a firm cannot do what its weakest dimension will not allow.">
           <span class="mono mod__idx">04a</span>
           <h3 class="mod__title">Readiness</h3>
           <p class="mod__body">A number across five dimensions, taken before the first pilot and again after it.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="190">
+        <article class="mod" data-reveal data-rdelay="190" data-viz="flow" data-more="The work redesigned around what the model is genuinely good at, instead of a model bolted onto work shaped for people. Bolted-on tooling is why most pilots demo well and change nothing.">
           <span class="mono mod__idx">04b</span>
           <h3 class="mod__title">Workflow rebuild</h3>
           <p class="mod__body">The work redesigned around what the model is actually good at, rather than bolted onto it.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="260">
+        <article class="mod" data-reveal data-rdelay="260" data-viz="tiers" data-more="What the system may decide alone, what it must escalate, and who signs. Being wrong is not the failure mode — being wrong silently is, and the escalation line is what makes the difference auditable.">
           <span class="mono mod__idx">04c</span>
           <h3 class="mod__title">Governance</h3>
           <p class="mod__body">What the system is allowed to decide alone, what it must escalate, and who signs.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="330">
+        <article class="mod" data-reveal data-rdelay="330" data-viz="ledger" data-more="What exists, what is actually trustworthy, and what has to be built before anything can rely on it. Most firms discover here that the asset they planned to train on is a folder of exports nobody has opened since the migration.">
           <span class="mono mod__idx">04d</span>
           <h3 class="mod__title">Data</h3>
           <p class="mod__body">What exists, what is trustworthy, and what has to be built before anything can rely on it.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="400">
+        <article class="mod" data-reveal data-rdelay="400" data-viz="split" data-more="The internal skill to run the system after we leave, built during the engagement rather than promised after it. Dependence on the consultant is a failure state, and it is measured like one.">
           <span class="mono mod__idx">04e</span>
           <h3 class="mod__title">Capability</h3>
           <p class="mod__body">The internal skill to run it after we leave, built during the engagement rather than after.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="470">
+        <article class="mod" data-reveal data-rdelay="470" data-viz="bars" data-more="Measured by use under load — the Thursday deadline, not the Tuesday demo. Licences issued is a procurement number; the only adoption number that matters is what people reach for when they are busy.">
           <span class="mono mod__idx">04f</span>
           <h3 class="mod__title">Adoption</h3>
           <p class="mod__body">Measured by use under load, not by licences issued.</p>
@@ -423,6 +423,7 @@
 import { initField } from '../assets/js/field.js';
 import { initWell } from '../assets/js/modules/well.js';
 import { initSkip } from '../assets/js/modules/skip.js';
+import { initMods } from '../assets/js/modules/mods.js';
 
 const roState = document.getElementById('readoutState');
 initField({
@@ -438,6 +439,7 @@ initField({
 
 initWell();
 initSkip();
+initMods();
 </script>
 </body>
 </html>

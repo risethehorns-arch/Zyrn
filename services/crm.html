@@ -50,12 +50,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/styles.css?v=1c608369">
-<link rel="stylesheet" href="../assets/css/service.css?v=d0676abf">
+<link rel="stylesheet" href="../assets/css/styles.css?v=26bb47c2">
+<link rel="stylesheet" href="../assets/css/service.css?v=50db01e5">
 <link rel="stylesheet" href="../assets/css/field.css?v=0539fb2e">
 <link rel="stylesheet" href="../assets/css/footer.css?v=9cd9eb26">
 <link rel="stylesheet" href="../assets/css/cmdk.css?v=2b54249d">
-<link rel="stylesheet" href="../assets/css/svc-modules.css?v=448fa2e3">
+<link rel="stylesheet" href="../assets/css/svc-modules.css?v=2283b6a6">
 
 </head>
 <body>
@@ -139,131 +139,46 @@
     </div>
 
 
-    <!-- ── SIGNATURE · THE PRISM ────────────────────────────────────────
-         One record set, four faces: the book, the pipeline, the ledger, and
-         the four guarantees underneath them. Then a fifth station, which is
-         the first face again with somebody else's columns on it — because
-         the objection to a custom system is that it is stranded, and a
-         prism that comes back reconfigured with the same rules behind it
-         answers that in one move.
+    <!-- ── SIGNATURE · THE SWARM ────────────────────────────────────────
+         Forty-eight records, and every organisation of them you scroll
+         through is the same forty-eight: chaos, the book, the pipeline,
+         the ledger, somebody else's grouping, one handed-over stack.
 
-         The prism carries a translateZ(-W/2) so the front face sits at
-         z = 0 and no face swells as it arrives. The four rules on face 04
-         are the ones the sync code actually enforces; they were read out of
-         it, not written for the page. See modules/prism.js. -->
-    <section class="sig sig--prism" id="sigPrism" aria-label="One record set, four faces">
+         Replaced the prism on 2026-09-01 at the owner's direction — a
+         turning box SHOWED four screens of a product, and a competitor
+         can show four screens of theirs. What no rented system can show
+         is the records themselves picked up and reorganised live without
+         one being lost, renamed or re-entered. That is what customizable
+         means when it is true.
+
+         The chips are built by swarm.js (one seeded RNG, deterministic on
+         every load), the record count on the rail is COUNTED off the DOM,
+         and every frame is 48 transforms and 48 opacities — no layout.
+         See modules/swarm.js. -->
+    <section class="sig sig--swarm" id="sigSwarm" aria-label="The same records, reorganised live">
       <div class="sig__track">
         <div class="sig__stage">
           <div class="sig__head">
-            <span class="mono sig__step" id="prsStep">00 &mdash; ONE RECORD SET</span>
-            <span class="mono sig__pct"><span id="prsPct">000</span>%</span>
+            <span class="mono sig__step" id="swmStep">00 &mdash; AS FOUND</span>
+            <span class="mono sig__pct"><span id="swmPct">000</span>%</span>
           </div>
 
-          <div class="rig prs" id="prs">
+          <div class="rig swm" id="swm" data-act="0">
             <div class="rig__view" aria-hidden="true">
-              <div class="prs__prism" id="prsPrism">
-
-                <!-- 00 · the book. Two labels per column, both in the DOM
-                     the whole time — the point is that it is the same
-                     column with a different name on it. -->
-                <div class="prs__f is-front" style="--i:0">
-                  <div class="prs__body">
-                    <div class="prs__hd"><b>THE BOOK</b><span class="mono" id="prsSrc">SCHEMA &mdash; AS INSTALLED</span></div>
-                    <div class="prs__tbl" id="prsTbl">
-                      <div class="prs__hr">
-                        <span><b>REF</b><i>REF</i></span>
-                        <span><b>TYPE</b><i>SERVICE</i></span>
-                        <span><b>LOCATION</b><i>ROOM</i></span>
-                        <span data-drop><b>AREA</b><i></i></span>
-                        <span><b>STATUS</b><i>STATUS</i></span>
-                        <span data-add><b></b><i>CONSENT</i></span>
-                        <span><b>OWNER</b><i>PRACTITIONER</i></span>
-                      </div>
-                      <div class="prs__row"><span><em>015</em></span><span><s></s></span><span><s></s></span><span data-drop><s></s></span><span><u data-s="live">AVAILABLE</u></span><span data-add><s></s></span><span><s></s></span></div>
-                      <div class="prs__row"><span><em>016</em></span><span><s></s></span><span><s></s></span><span data-drop><s></s></span><span><u data-s="hold">RESERVED</u></span><span data-add><s></s></span><span><s></s></span></div>
-                      <div class="prs__row"><span><em>017</em></span><span><s></s></span><span><s></s></span><span data-drop><s></s></span><span><u data-s="live">AVAILABLE</u></span><span data-add><s></s></span><span><s></s></span></div>
-                      <div class="prs__row"><span><em>018</em></span><span><s></s></span><span><s></s></span><span data-drop><s></s></span><span><u data-s="hold">UNDER OFFER</u></span><span data-add><s></s></span><span><s></s></span></div>
-                      <div class="prs__row"><span><em>019</em></span><span><s></s></span><span><s></s></span><span data-drop><s></s></span><span><u data-s="off">WITHDRAWN</u></span><span data-add><s></s></span><span><s></s></span></div>
-                      <div class="prs__row"><span><em>020</em></span><span><s></s></span><span><s></s></span><span data-drop><s></s></span><span><u data-s="live">AVAILABLE</u></span><span data-add><s></s></span><span><s></s></span></div>
-                      <div class="prs__row"><span><em>021</em></span><span><s></s></span><span><s></s></span><span data-drop><s></s></span><span><u data-s="hold">RESERVED</u></span><span data-add><s></s></span><span><s></s></span></div>
-                      <div class="prs__row"><span><em>022</em></span><span><s></s></span><span><s></s></span><span data-drop><s></s></span><span><u data-s="live">AVAILABLE</u></span><span data-add><s></s></span><span><s></s></span></div>
-                    </div>
-                  </div>
-                  <span class="prs__cap">TABLE</span>
-                </div>
-
-                <!-- 01 · the pipeline. The flag is the working-day SLA the
-                     desk actually enforces, not a decorative badge. -->
-                <div class="prs__f" style="--i:1">
-                  <div class="prs__body">
-                    <div class="prs__hd"><b>IN PROGRESS</b><span class="mono">FLAGGED AT 07 WORKING DAYS</span></div>
-                    <div class="prs__board">
-                      <div class="prs__lane">
-                        <span>QUALIFIED</span>
-                        <div class="prs__card"><em>0441</em><s></s><s></s></div>
-                        <div class="prs__card"><em>0446</em><s></s><s></s></div>
-                        <div class="prs__card"><em>0448</em><s></s><s></s></div>
-                      </div>
-                      <div class="prs__lane">
-                        <span>VIEWING</span>
-                        <div class="prs__card"><em>0439</em><s></s><s></s></div>
-                        <div class="prs__card is-flag"><em>0431</em><s></s><span class="prs__flag">NO MOVE &mdash; 09D</span></div>
-                      </div>
-                      <div class="prs__lane">
-                        <span>CLOSING</span>
-                        <div class="prs__card"><em>0447</em><s></s><s></s></div>
-                        <div class="prs__card"><em>0428</em><s></s><s></s></div>
-                      </div>
-                    </div>
-                  </div>
-                  <span class="prs__cap">PIPELINE</span>
-                </div>
-
-                <!-- 02 · the ledger -->
-                <div class="prs__f" style="--i:2">
-                  <div class="prs__body">
-                    <div class="prs__hd"><b>ACTIVITY</b><span class="mono">EVERY CHANGE, ATTRIBUTED</span></div>
-                    <ul class="prs__log">
-                      <li><b>09:14</b><span>LISTING 016 &mdash; PRICE CHANGED</span><span>ADVISOR 02</span></li>
-                      <li><b>09:41</b><span>FEED PULLED &mdash; 03 ADDED, 01 ARCHIVED</span><span>SYSTEM</span></li>
-                      <li><b>10:02</b><span>DEAL 0447 &mdash; STAGE MOVED</span><span>ADVISOR 01</span></li>
-                      <li><b>11:20</b><span>LISTING 021 &mdash; SENT FOR REVIEW</span><span>ADVISOR 03</span></li>
-                      <li><b>11:58</b><span>LISTING 021 &mdash; APPROVED</span><span>MANAGER</span></li>
-                      <li><b>14:35</b><span>REF 009 &mdash; ARCHIVED, NOT DELETED</span><span>SYSTEM</span></li>
-                    </ul>
-                  </div>
-                  <span class="prs__cap">LEDGER</span>
-                </div>
-
-                <!-- 03 · the rules. Read out of the sync code, not written
-                     for this page. -->
-                <div class="prs__f" style="--i:3">
-                  <div class="prs__body">
-                    <div class="prs__hd"><b>GUARANTEES</b><span class="mono">ENFORCED AT THE DATA</span></div>
-                    <ul class="prs__rules">
-                      <li><span>01</span>A reference that drops out of the feed is archived, never deleted &mdash; its photos, its showings and its deals survive it.</li>
-                      <li><span>02</span>A photo added on the desk survives the next sync. The feed adds; it does not overwrite what the desk put there.</li>
-                      <li><span>03</span>The feed runs one way. The public site is never written to from the desk.</li>
-                      <li><span>04</span>A record created on the desk is never touched by the feed, whatever the feed says.</li>
-                    </ul>
-                  </div>
-                  <span class="prs__cap">RULES</span>
-                </div>
-
-              </div>
+              <div class="swm__stage" id="swmStage"></div>
             </div>
 
-            <ol class="rig__key" id="prsKey">
-              <li><span class="mono k__n">01</span><span class="k__t">The book</span><span class="mono k__v"><span data-c="cols">&mdash;</span> FIELDS &middot; YOUR REFS</span></li>
+            <ol class="rig__key" id="swmKey">
+              <li><span class="mono k__n">00</span><span class="k__t">As found</span><span class="mono k__v"><span data-c="records">&mdash;</span> RECORDS &middot; 00 LOST</span></li>
+              <li><span class="mono k__n">01</span><span class="k__t">The book</span><span class="mono k__v">YOUR REFS &middot; NOTHING RE-ENTERED</span></li>
               <li><span class="mono k__n">02</span><span class="k__t">The pipeline</span><span class="mono k__v">03 STAGES &middot; 07-DAY FLAG</span></li>
               <li><span class="mono k__n">03</span><span class="k__t">The ledger</span><span class="mono k__v">EVERY CHANGE, ATTRIBUTED</span></li>
-              <li><span class="mono k__n">04</span><span class="k__t">The rules</span><span class="mono k__v">04 GUARANTEES</span></li>
-              <li><span class="mono k__n">05</span><span class="k__t">Reconfigured</span><span class="mono k__v">01 CORE &middot; 02 SCHEMAS</span></li>
-              <li><span class="mono k__n">06</span><span class="k__t">Handed over</span><span class="mono k__v">SOURCE &middot; DATA &middot; HOSTING</span></li>
+              <li><span class="mono k__n">04</span><span class="k__t">Reconfigured</span><span class="mono k__v">01 CORE &middot; 02 SCHEMAS</span></li>
+              <li><span class="mono k__n">05</span><span class="k__t">Handed over</span><span class="mono k__v">SOURCE &middot; DATA &middot; HOSTING</span></li>
             </ol>
           </div>
 
-          <p class="sig__note" id="prsNote">A desk system for a real firm, running in production. What follows is the same data four times over &mdash; not four modules, four faces of one object, which is the difference between a product and a bundle.</p>
+          <p class="sig__note" id="swmNote">Forty-eight records, which is how they actually live before there is a system: some in a spreadsheet, some in a notebook, some in whoever answered the phone. Everything after this is the same forty-eight &mdash; count them out, none will be added and none lost.</p>
         </div>
       </div>
     </section>
@@ -275,32 +190,32 @@
         <p class="svc-sec__note" data-keepout>Six modules. The schema is agreed before a screen is drawn.</p>
       </div>
       <div class="mods" data-keepout>
-        <article class="mod" data-reveal data-rdelay="120">
+        <article class="mod" data-reveal data-rdelay="120" data-viz="ring" data-more="The objects your firm already talks in, with the field names it already uses. Twenty declared types carrying a hundred and thirty typed fields in the system running today — every one argued for before it was added, none renamed to suit the software.">
           <span class="mono mod__idx">05a</span>
           <h3 class="mod__title">Schema</h3>
           <p class="mod__body">The objects the firm already talks in, with the field names it already uses. Nothing is renamed to suit the software.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="190">
+        <article class="mod" data-reveal data-rdelay="190" data-viz="flow" data-more="Stages that match how the desk actually works, and a stall rule counted in working days — a file untouched for seven of them is flagged, because a Thursday-to-Sunday gap is not a stalled deal.">
           <span class="mono mod__idx">05b</span>
           <h3 class="mod__title">Pipeline</h3>
           <p class="mod__body">Stages that match how the desk really works, and a stall rule counted in working days rather than calendar ones.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="260">
+        <article class="mod" data-reveal data-rdelay="260" data-viz="ledger" data-more="Every change, attributed and timestamped, kept where the data is. The question a desk actually asks is not whether the price changed but who changed it — and that answer cannot be reconstructed later if it was not kept from the start.">
           <span class="mono mod__idx">05c</span>
           <h3 class="mod__title">Ledger</h3>
           <p class="mod__body">Every change attributed and timestamped, because the question that gets asked is who changed it, not whether it changed.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="330">
+        <article class="mod" data-reveal data-rdelay="330" data-viz="split" data-more="Who may see, who may edit, who may delete — enforced at the data, not by hiding a button. In the running system, deletion is manager-only and a reset password must be changed at next sign-in.">
           <span class="mono mod__idx">05d</span>
           <h3 class="mod__title">Roles</h3>
           <p class="mod__body">Who may see, who may edit, and who may delete &mdash; enforced at the data rather than by hiding a button.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="400">
+        <article class="mod" data-reveal data-rdelay="400" data-viz="sync" data-more="One-way, from whatever is already the source of truth. A reference that drops out of the feed is archived with its photos, showings and deals intact — never deleted — and nothing the desk writes ever flows back to the public site.">
           <span class="mono mod__idx">05e</span>
           <h3 class="mod__title">Feed</h3>
           <p class="mod__body">A one-way sync from whatever is already the source of truth, with archiving instead of deletion when a record leaves it.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="470">
+        <article class="mod" data-reveal data-rdelay="470" data-viz="sheet" data-more="The repository, the database and the hosting move into the firm's accounts, and changes ship from inside the firm after that. No seat count, nothing to renew — the exit is that there is nothing to exit from.">
           <span class="mono mod__idx">05f</span>
           <h3 class="mod__title">Handover</h3>
           <p class="mod__body">The source, the data and the hosting, in the firm&rsquo;s name. There is no seat count and nothing to renew.</p>
@@ -473,8 +388,9 @@
 
 <script type="module">
 import { initField } from '../assets/js/field.js';
-import { initPrism } from '../assets/js/modules/prism.js';
+import { initSwarm } from '../assets/js/modules/swarm.js';
 import { initSkip } from '../assets/js/modules/skip.js';
+import { initMods } from '../assets/js/modules/mods.js';
 
 const roState = document.getElementById('readoutState');
 initField({
@@ -488,8 +404,9 @@ initField({
   onState: (p, n) => { if (roState) roState.textContent = n; },
 });
 
-initPrism();
+initSwarm();
 initSkip();
+initMods();
 </script>
 </body>
 </html>

@@ -35,9 +35,12 @@ import { REDUCED } from './_track.js';
    this file exists to prevent. */
 const TRACKS = '.sig__track,.rk__track,.wp__track,.rb__track,.in__track';
 
-const ARROW =
+const AR_DN =
   '<svg class="skip__a" viewBox="0 0 24 24" aria-hidden="true">' +
   '<path d="M12 4v15M5.5 12.5 12 19l6.5-6.5"/></svg>';
+const AR_UP =
+  '<svg class="skip__a" viewBox="0 0 24 24" aria-hidden="true">' +
+  '<path d="M12 20V5M5.5 11.5 12 5l6.5 6.5"/></svg>';
 
 /** Distance from the document top, immune to transforms.
  *  `getBoundingClientRect` would include every reveal transform on the way
@@ -59,22 +62,33 @@ export function initSkip() {
     const stage = track.firstElementChild;
     if (!stage) return;
 
-    const btn = document.createElement('button');
-    btn.type = 'button';
+    /* One pill, TWO exits. A div, not a button — it holds two real
+       buttons, and a button may not contain a button. */
+    const btn = document.createElement('div');
     btn.className = 'skip mono';
-    btn.setAttribute('aria-label', 'Skip this scroll section and continue down the page');
-    btn.innerHTML = '<span class="skip__l">SKIP SCROLL</span>' + ARROW;
+    btn.innerHTML =
+      '<button type="button" class="skip__d skip__d--up" ' +
+      'aria-label="Skip back above this scroll section">' + AR_UP + '</button>' +
+      '<span class="skip__l">SKIP SCROLL</span>' +
+      '<button type="button" class="skip__d skip__d--dn" ' +
+      'aria-label="Skip past this scroll section">' + AR_DN + '</button>';
 
-    btn.addEventListener('click', () => {
-      /* Land just past the pinned stretch, at the top of whatever comes
-         next — not at the very end of the track, which is the same view
-         the reader is already looking at. */
-      const to = docTop(track) + track.offsetHeight - Math.round(innerHeight * 0.06);
+    function go(to) {
       if (typeof window.__zyrnScrollTo === 'function') {
         window.__zyrnScrollTo(to, 900);
       } else {
         window.scrollTo({ top: to, behavior: REDUCED ? 'auto' : 'smooth' });
       }
+    }
+    btn.querySelector('.skip__d--dn').addEventListener('click', () => {
+      /* just past the pinned stretch, at the top of whatever comes next */
+      go(docTop(track) + track.offsetHeight - Math.round(innerHeight * 0.06));
+    });
+    btn.querySelector('.skip__d--up').addEventListener('click', () => {
+      /* a screen ABOVE the track — landing at the track's own start would
+         put the reader at the beginning of the very thing they are
+         leaving, which is an exit that walks you back in the door */
+      go(Math.max(0, docTop(track) - Math.round(innerHeight * 0.92)));
     });
 
     stage.appendChild(btn);

@@ -50,12 +50,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/styles.css?v=1c608369">
-<link rel="stylesheet" href="../assets/css/service.css?v=d0676abf">
+<link rel="stylesheet" href="../assets/css/styles.css?v=26bb47c2">
+<link rel="stylesheet" href="../assets/css/service.css?v=50db01e5">
 <link rel="stylesheet" href="../assets/css/field.css?v=0539fb2e">
 <link rel="stylesheet" href="../assets/css/footer.css?v=9cd9eb26">
 <link rel="stylesheet" href="../assets/css/cmdk.css?v=2b54249d">
-<link rel="stylesheet" href="../assets/css/svc-modules.css?v=448fa2e3">
+<link rel="stylesheet" href="../assets/css/svc-modules.css?v=2283b6a6">
 
 </head>
 <body>
@@ -261,32 +261,32 @@
         <p class="svc-sec__note" data-keepout>Six modules. Structure is settled before a pixel is drawn.</p>
       </div>
       <div class="mods" data-keepout>
-        <article class="mod" data-reveal data-rdelay="120">
+        <article class="mod" data-reveal data-rdelay="120" data-viz="blocks" data-more="The page is planned as blocks with jobs — what must be proved, in what order — before any visual exists. Copy is then written to the structure, which is why nothing on the site reads as filler: there is no slot that exists without a reason.">
           <span class="mono mod__idx">01a</span>
           <h3 class="mod__title">Structure</h3>
           <p class="mod__body">What the firm is claiming, in what order, and which claims have to be provable. Architecture before layout.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="190">
+        <article class="mod" data-reveal data-rdelay="190" data-viz="ring" data-more="Five colour tokens, two typefaces, one motion curve, all named. A component reads the tokens and carries nothing of its own, which is why a whole palette can be replaced in one commit — it has been, on a live client site.">
           <span class="mono mod__idx">01b</span>
           <h3 class="mod__title">Design system</h3>
           <p class="mod__body">Tokens, type scale, spacing, motion law. Written down, so the surface can be extended without a redesign.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="260">
+        <article class="mod" data-reveal data-rdelay="260" data-viz="grid" data-more="Static files on a twelve-column grid, no framework and no build step. What ships is what was written, and the team can read every line of it — which is the difference between owning a site and hosting one.">
           <span class="mono mod__idx">01c</span>
           <h3 class="mod__title">Build</h3>
           <p class="mod__body">Static where static is correct, dynamic where it earns it. No framework the firm cannot maintain itself.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="330">
+        <article class="mod" data-reveal data-rdelay="330" data-viz="curve" data-more="A frame budget is agreed before the design starts and measured on the hardware the audience actually uses, not on ours. The number on this page's own footer is read off the running site as you scroll it.">
           <span class="mono mod__idx">01d</span>
           <h3 class="mod__title">Performance</h3>
           <p class="mod__body">Frame time and payload are acceptance criteria, not a pass at the end. A budget, not a hope.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="400">
+        <article class="mod" data-reveal data-rdelay="400" data-viz="split" data-more="Keyboard order, contrast on real backgrounds, reduced-motion states for every animation, and 44px touch targets — verified by hit-testing with real tap events, because a screenshot cannot see a buried control.">
           <span class="mono mod__idx">01e</span>
           <h3 class="mod__title">Accessibility</h3>
           <p class="mod__body">Contrast, motion preference, and keyboard paths are part of the build. Not an audit afterwards.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="470">
+        <article class="mod" data-reveal data-rdelay="470" data-viz="sheet" data-more="The repository, the deploy pipeline and a written doctrine of why every decision was made. The measure of a handover is whether the team ships a change without calling us — the doctrine exists so they can.">
           <span class="mono mod__idx">01f</span>
           <h3 class="mod__title">Handover</h3>
           <p class="mod__body">The team ships a new page without asking how. That is the exit condition, and it is written into the engagement.</p>
@@ -436,6 +436,7 @@
 import { initField } from '../assets/js/field.js';
 import { initStack } from '../assets/js/modules/stack.js';
 import { initSkip } from '../assets/js/modules/skip.js';
+import { initMods } from '../assets/js/modules/mods.js';
 
 const roState = document.getElementById('readoutState');
 initField({
@@ -450,6 +451,7 @@ initField({
 
 initStack();
 initSkip();
+initMods();
 </script>
 </body>
 </html>

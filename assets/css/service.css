@@ -105,6 +105,80 @@
   font-size:14px;line-height:1.65;color:rgba(242,243,245,0.66);
 }
 
+/* ── module disclosure (modules/mods.js) ────────────────────────────────
+   Every card with a `data-more` opens: a second paragraph and a line
+   drawing of the module's mechanism, drawn in with the dash trick when
+   the card opens. The height animates on the card's own inner grid,
+   0fr -> 1fr — a layout change, but a CLICK-TIME one, never per-frame.
+   The one light in the drawing is the glint's — the same stops the
+   buttons and the plan token wear, so the whole site has one light. */
+
+.mod[data-more]{cursor:pointer}
+.mod:focus-visible{outline:1px solid rgba(242,243,245,0.35);outline-offset:2px}
+
+/* the + that says there is more, top-right, turning × when open */
+.mod__plus{
+  position:absolute;top:24px;right:20px;width:12px;height:12px;
+  transition:transform 520ms var(--ease-reveal),opacity 400ms;
+  opacity:0.45;pointer-events:none;
+}
+.mod:hover .mod__plus{opacity:0.85}
+.mod__plus::before,.mod__plus::after{
+  content:'';position:absolute;left:0;top:50%;width:12px;height:1px;
+  background:var(--vapor);
+}
+.mod__plus::after{transform:rotate(90deg)}
+.mod.is-open .mod__plus{transform:rotate(45deg);opacity:0.85}
+
+.mod__more{
+  display:grid;grid-template-rows:0fr;
+  transition:grid-template-rows 640ms var(--ease-reveal);
+}
+.mod.is-open .mod__more{grid-template-rows:1fr}
+.mod__morein{overflow:hidden;min-height:0}
+
+.mod__brief{
+  margin:12px 0 2px;
+  font-size:13.5px;line-height:1.65;color:rgba(242,243,245,0.6);
+}
+
+/* the mechanism drawing */
+.vz{display:block;width:100%;max-width:236px;height:auto;margin-top:18px}
+.vz__ghost{
+  fill:none;stroke:rgba(242,243,245,0.13);stroke-width:1;
+}
+.vz__main{
+  fill:none;stroke:rgba(242,243,245,0.55);stroke-width:1.5;
+  stroke-linecap:round;stroke-linejoin:round;
+  /* hidden state sits at 1.02, not 1.00 — at exactly 1.0 the round cap
+     paints a dot at the path's start point */
+  stroke-dasharray:1;stroke-dashoffset:1.02;
+}
+.mod.is-open .vz__main{
+  stroke-dashoffset:0;
+  transition:stroke-dashoffset 950ms cubic-bezier(0.3,0,0.2,1) 180ms;
+}
+/* the lit point — the field's own light, same stops as the buttons */
+.vz__lit{
+  fill:var(--vapor);opacity:0;
+  filter:drop-shadow(0 0 2.5px var(--vapor)) drop-shadow(0 0 7px var(--glint-1,#6E56F8));
+  transition:opacity 500ms;
+}
+.mod.is-open .vz__lit{
+  opacity:1;transition:opacity 600ms 950ms;
+  animation:vzlit 3.2s ease-in-out 1550ms infinite;
+}
+@keyframes vzlit{
+  0%,100%{opacity:1}
+  50%{opacity:0.55}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .mod__more,.mod__plus{transition:none}
+  .vz__main{stroke-dashoffset:0;transition:none}
+  .mod.is-open .vz__lit{opacity:1;transition:none;animation:none}
+}
+
 /* ── phase track ────────────────────────────────────────────────────── */
 
 .phases{
