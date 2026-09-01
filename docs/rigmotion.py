@@ -49,6 +49,13 @@ STATE = """(function(){
       out.push(e.getAttribute('d') || '');
       out.push((e.getAttribute('cx') || '') + ',' + (e.getAttribute('cy') || ''));
       out.push(e.style.opacity || '');
+      /* The dash pair is how a comet trail shortens, and leaving it out of
+         the state made a trail that was visibly settling read as three
+         dead steps. A probe that cannot see a change reports it as
+         absent — which is worse than not measuring, because it is
+         actionable and wrong. */
+      out.push((e.getAttribute('stroke-dasharray') || '') + '/' +
+               (e.getAttribute('stroke-dashoffset') || ''));
     }
     if (!e.children.length && e.textContent && e.textContent.length < 60){
       out.push(e.textContent);

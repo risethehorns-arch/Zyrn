@@ -121,13 +121,26 @@ export function initPrism() {
        a constant rotation that never lets anything settle. */
     const w = clamp01((p - TURN_A) / (TURN_B - TURN_A)) * (STATIONS - 1);
     const k = Math.min(STATIONS - 2, Math.floor(w));
-    const g = clamp01((w - k - 0.34) / 0.46);
+    /* Dwell, then travel. The dwell was 34% of each station and the settle
+       another 20, which left the prism completely still for more than half
+       of every station — docs/rigmotion.py measured 17 of 40 sampled
+       positions with nothing changing at all, and a 10% run of that is a
+       whole viewport of scrolling that does nothing. A face still needs to
+       be STILL while it is read, so the dwell shrank rather than went. */
+    const g = clamp01((w - k - 0.20) / 0.70);
     const station = k + g * g * (3 - 2 * g);
 
-    prism.style.setProperty('--spin', (-90 * station).toFixed(3) + 'deg');
-    /* a small tilt that opens as it turns, so the prism reads as an object
-       with a top rather than as four flat cards swapping places */
-    prism.style.setProperty('--rx', (3 + 3 * Math.sin(station * Math.PI / 2)).toFixed(2) + 'deg');
+    /* A sway of under two degrees, driven by the track rather than by the
+       station, so the prism is never absolutely parked. It is the same
+       idea as the stack's drift: an object holding still and an object
+       that has stopped existing look identical in a screenshot and quite
+       different to someone scrolling. */
+    const sway = 1.7 * Math.sin(p * Math.PI * 3.0);
+    prism.style.setProperty('--spin', (-90 * station + sway).toFixed(3) + 'deg');
+    /* a tilt that opens as it turns, so the prism reads as an object with
+       a top rather than as four flat cards swapping places */
+    prism.style.setProperty('--rx',
+      (3 + 3 * Math.sin(station * Math.PI / 2) + 0.6 * Math.cos(p * Math.PI * 4)).toFixed(2) + 'deg');
 
     /* which face the reader is actually looking at */
     const front = Math.round(station) % 4;

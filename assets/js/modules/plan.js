@@ -108,7 +108,10 @@ const BEATS = [
 ];
 
 /* the score */
-const ESC_A  = 0.10, ESC_B = 0.36;   // the decision climbs and is answered
+/* 0.06, not 0.10: rigmotion measured three consecutive sampled positions
+   with nothing changing at the head of the track, which is where a reader
+   is deciding whether the thing is worth scrolling at all. */
+const ESC_A  = 0.06, ESC_B = 0.34;   // the decision climbs and is answered
 const HOLD_B = 0.46;                 // held, while the cost is stated
 const ROT_A  = 0.46, ROT_B = 0.68;   // the chart lies down
 const SHT_A  = 0.72, SHT_B = 0.88;   // the short path
@@ -341,7 +344,14 @@ export function initPlan() {
 
     /* the decision itself */
     if (p >= ESC_A && p < HOLD_B) {
-      route(LONG, (p - ESC_A) / (ESC_B - ESC_A), 150);
+      /* The trail SHORTENS through the hold rather than freezing at full
+         length. The hold is a deliberate beat — the readout is stating
+         what the escalation cost — but rigmotion measured three sampled
+         positions with nothing moving at all, and a decision that has
+         arrived and is settling is both truer and cheaper than a frozen
+         comet. */
+      const settle = clamp01((p - ESC_B) / (HOLD_B - ESC_B));
+      route(LONG, (p - ESC_A) / (ESC_B - ESC_A), 150 - 96 * settle);
     } else if (p >= SHT_A && p < ARB_A + 0.06) {
       route(SHORT, (p - SHT_A) / (SHT_B - SHT_A), 110);
     } else {
