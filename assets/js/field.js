@@ -1486,11 +1486,17 @@ async function boot(canvas, cfg) {
        :root invalidate style for the whole document, and at 60fps that is
        a cost for a colour nobody can see changing that fast. */
     if (frames % 20 === 0) {
-      const base = 0.10 + 0.62 * (FLAGS.pin !== null ? FLAGS.pin : progress);
+      /* Sampled from the TOP of the ramp, 0.62 upward, because that is
+         where it runs Pulse -> Vapor: violet with a white top. Across the
+         whole ramp the light started green-teal, which was honest and was
+         not what the mark should be lending a button. It still drifts with
+         the page, just inside a narrower and warmer band. */
+      const base = 0.62 + 0.12 * (FLAGS.pin !== null ? FLAGS.pin : progress);
       const root = document.documentElement.style;
-      root.setProperty('--fld-1', rampHex(base));
-      root.setProperty('--fld-2', rampHex(base + 0.20));
-      root.setProperty('--fld-3', rampHex(base + 0.40));
+      root.setProperty('--glint-0', rampHex(base - 0.12));
+      root.setProperty('--glint-1', rampHex(base));
+      root.setProperty('--glint-2', rampHex(base + 0.14));
+      root.setProperty('--glint-3', rampHex(base + 0.30));
     }
 
     /* readouts */

@@ -46,8 +46,8 @@ JS = """(function(){
     links: all.length, lit: lit.length,
     litName: lit.length ? lit[0].textContent.trim().slice(0, 18) : '-',
     tapH: Math.round(minH),
-    f1: cs.getPropertyValue('--fld-1').trim(),
-    f2: cs.getPropertyValue('--fld-2').trim()
+    f1: cs.getPropertyValue('--glint-1').trim(),
+    f2: cs.getPropertyValue('--glint-2').trim()
   });
 })()"""
 

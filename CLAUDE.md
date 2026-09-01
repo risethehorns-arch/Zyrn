@@ -626,7 +626,40 @@ matters: headless never moves a pointer, so a plain run measures the scene
 at rest and says nothing about the state a reader puts it in. Pinned to a
 corner at every viewport: ALL CLEAR.
 
-## The beam, v2 — and where it may not go
+## THE GLINT — the light on every control, v3
+
+Owner-requested twice and widened each time. The current shape:
+
+- **Violet with a white core, and it is still the field's own light.**
+  `field.js` samples ITS OWN RAMP — the same array the shader reads — from
+  the TOP end, `0.62 + 0.12 * progress`, which is where that ramp runs
+  Pulse → Vapor. Published as `--glint-0/1/2/3` on `:root` every twentieth
+  frame. Sampling the whole ramp (what v2 did) started the light
+  green-teal, which was honest and was not what a mark should lend a
+  button.
+- **Four states and they are the interaction.** Rest: nothing, unless it
+  is the live nav tab or a live skip pill. Hover: the arc appears and
+  LOOPS for as long as the pointer is inside, plus a one-pixel lift.
+  Press: 620ms of hyper-motion — the arc at seven times its dwell rate, a
+  ring off the edge, the control dips and springs. Leave: it stops.
+- **`.is-struck` must be REMOVED on `animationend`.** `main.js` adds it on
+  `pointerdown` and takes it off when `glintbody` ends. A class that
+  latches gives you the burst once and a dead button for the rest of the
+  session. The forced reflow between remove and add is what lets a second
+  press inside the animation restart it rather than be swallowed.
+- **`pointerdown`, not `click`** — the light answers the press. A control
+  that waits for mouseup feels slow in a way nobody can name. Delegated,
+  so it also covers the skip pills and the palette chip, which do not
+  exist when `main.js` runs.
+- Worn by `.nav__link`, `.btn` (every variant), `.cmdkbtn`, `.rk__out`,
+  `.skip`, `.mx__line`.
+
+`docs/glintshot.py` photographs rest / hover / dwell / strike with REAL
+pointer events, and `strikeprobe` reads the running animations off the
+element — pixels at 160ms cannot tell a missed frame from a missed
+listener.
+
+## The beam — and where it may not go
 
 Brighter on the owner's note: the lit sweep runs 170 degrees rather than
 124, it carries a **Vapor core** at its head so there is a specular hot
@@ -635,13 +668,17 @@ filter works on the alpha RESULT of the mask, so the glow comes off the
 visible arc rather than off the box — which is the whole difference
 between light and a coloured border.
 
-Worn by `.nav__link`, `.btn--hairline`, `.cmdkbtn`, `.rk__out` and
-`.skip`. **`.tab` and `.visit` are deliberately excluded**: the tab already
-has its Pulse marker and lives inside an `overflow:hidden` housing that
-clips the bloom into a hard edge, and `.visit` has its own travelling
-hairline. Never two arcs at full strength on one screen — the live tab is
-the page's statement of where you are, everything else answers the pointer
-at a third.
+**`.tab` CANNOT take the glint without moving its marker first**, and
+this is a hard blocker rather than a taste call: `.tab.is-active::before`
+is the Pulse top bar, positioned against `.tabs` and stepped by whole
+multiples of its own width. Giving `.tab` a containing block would park
+every one of those at x = 0 — the same bug the mobile strip already cost.
+`.visit` is excluded because it has its own travelling hairline.
+
+Never two arcs at full strength on one screen. The live nav tab is the
+page's statement of where you are; everything else waits to be reached
+for. That constraint is what keeps a site-wide glow from becoming noise,
+and it is the reason this departure is survivable at all.
 
 ## Kill stale headless Chrome before you believe a probe
 

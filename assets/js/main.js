@@ -195,6 +195,35 @@
      A page link wins over a section link, and it is settled once at load —
      otherwise `services.html` would light "Services" AND whatever section
      happens to be mid-viewport. */
+  /* ── THE STRIKE ──────────────────────────────────────────────────
+     A press on any control that carries the light fires a short
+     hyper-motion, defined entirely in CSS. All this does is add the class
+     and take it off again when the animation ends, which is what makes it
+     RETRIGGER — a class that latches gives you the burst once and then a
+     dead button for the rest of the session.
+
+     `pointerdown`, not `click`: the light should answer the press, not
+     the release, and a control that waits for mouseup feels slow in a way
+     nobody can name. Delegated, so it covers controls injected later —
+     the skip pills and the palette chip do not exist when this runs. */
+  function setupStrike() {
+    if (reduced) return;
+    var SEL = '.nav__link,.btn,.cmdkbtn,.rk__out,.skip,.mx__line';
+    document.addEventListener('pointerdown', function (e) {
+      var el = e.target.closest && e.target.closest(SEL);
+      if (!el) return;
+      el.classList.remove('is-struck');
+      // one forced reflow, so a second press inside the animation restarts
+      // it rather than being swallowed
+      void el.offsetWidth;
+      el.classList.add('is-struck');
+    }, { passive: true });
+
+    document.addEventListener('animationend', function (e) {
+      if (e.animationName === 'glintbody') e.target.classList.remove('is-struck');
+    });
+  }
+
   function setupNavHere() {
     var links = Array.prototype.slice.call(
       document.querySelectorAll('.nav__link'));
@@ -366,6 +395,7 @@
   shearMarks();
   setupSysNav();
   setupNavHere();
+  setupStrike();
 
   document.addEventListener('visibilitychange', function () {
     if (!document.hidden) schedule();
