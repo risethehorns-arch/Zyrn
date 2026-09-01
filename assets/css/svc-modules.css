@@ -920,69 +920,284 @@
 
 
 
-/* ══════════════════════════════════════════════════════════════════════
-   SIGNATURE · THE SWARM   (services/crm.html — modules/swarm.js)
 
-   Forty-eight record chips choreographed through six formations. The
-   chips are absolutely positioned at the stage's centre and everything
-   about where they are is a transform written by the module — this sheet
-   owns only what a chip IS: a small solid object with a reference number
-   on it, lit from the front of the pile.
-   ══════════════════════════════════════════════════════════════════════ */
+/* \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550
+   SIGNATURE \u00b7 THE LATTICE   (services/crm.html \u2014 modules/lattice.js)
 
-.swm .rig__view{perspective:calc(var(--righ) * 3.2)}
+   Forty-eight sparks of light and the structures drawn through them.
+   The module owns every position (inline transforms); this sheet owns
+   what a spark IS \u2014 a Vapor-ish core with a bloom in the beat's colour
+   \u2014 and how the light changes as the beats pass. The bloom colours ride
+   two custom properties per beat and TRANSITION, so the whole
+   constellation warms through the field's ramp as you scroll.
 
-.swm__stage{
+   The cold ramp hues print here as LIGHT (drop-shadow off a tiny core),
+   the same standing the glitch's cyan slices and the beam already have.
+   Never as ink on a surface.
+   \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550 */
+
+.lat .rig__view{perspective:calc(var(--righ) * 3.2)}
+
+/* the beat's light \u2014 core tint and bloom, transitioned */
+.lat{--lta:#B7BDCB;--ltb:rgba(118,126,140,0.55)}
+.lat[data-act="1"]{--lta:#D9F6EA;--ltb:#5FE3B0}
+.lat[data-act="2"]{--lta:#D9F1F6;--ltb:#33C9DE}
+.lat[data-act="3"]{--lta:#DFE8FF;--ltb:#5E8CEC}  /* blue, NOT Pulse — the flag owns Pulse here */
+.lat[data-act="4"]{--lta:#EEEAFF;--ltb:#A594FB}
+.lat[data-act="5"]{--lta:#FFFFFF;--ltb:#CFC6FF}
+
+.lat__stage{
   position:absolute;left:50%;top:50%;width:0;height:0;
   transform-style:preserve-3d;
-  transform:rotateX(calc(var(--py,0) * -2.6deg + var(--lean,0) * 1.8deg))
-            rotateY(calc(var(--px,0) * 3.2deg));
+  transform:rotateX(calc(var(--py,0) * -2.4deg + var(--lean,0) * 1.6deg))
+            rotateY(calc(var(--px,0) * 3.0deg));
   will-change:transform;
 }
 
-.swm__c{
-  position:absolute;left:0;top:0;
-  width:clamp(58px,calc(var(--righ) * 0.135),92px);
-  height:clamp(19px,calc(var(--righ) * 0.044),29px);
-  margin-left:calc(clamp(58px,calc(var(--righ) * 0.135),92px) / -2);
-  margin-top:calc(clamp(19px,calc(var(--righ) * 0.044),29px) / -2);
-  display:flex;align-items:center;gap:7%;
-  padding:0 7%;
-  border:1px solid rgba(242,243,245,0.16);border-radius:4px;
-  /* OPAQUE. Forty-eight translucent chips over a 90k-particle field is
-     not a swarm, it is fog — the same lesson the fold and the stack each
-     paid for once already. */
-  background:#0C0E12;
-  box-shadow:0 6px 18px -8px rgba(0,0,0,0.8);
+.lat__p{
+  position:absolute;left:0;top:0;width:0;height:0;
   will-change:transform,opacity;
 }
-.swm__c em{
-  font-style:normal;font-family:var(--font-mono);
-  font-size:clamp(7px,calc(var(--righ) * 0.0155),10px);
-  letter-spacing:0.12em;color:rgba(242,243,245,0.82);
-  flex:0 0 auto;
+.lat__c{
+  position:absolute;left:0;top:0;
+  --spk:clamp(4px,calc(var(--righ) * 0.011),7px);
+  width:var(--spk);height:var(--spk);
+  margin-left:calc(var(--spk) / -2);margin-top:calc(var(--spk) / -2);
+  border-radius:50%;
+  background:var(--lta);
+  filter:drop-shadow(0 0 3px var(--lta)) drop-shadow(0 0 9px var(--ltb));
+  transition:background 600ms,filter 600ms,transform 300ms;
+  animation:latpulse 2.6s ease-in-out infinite;
 }
-.swm__c s{
-  display:block;height:3px;text-decoration:none;
-  background:rgba(242,243,245,0.20);border-radius:1px;
+@keyframes latpulse{
+  0%,100%{opacity:1}
+  50%{opacity:0.72}
 }
-/* THE one Pulse on this surface: the file the 07-day rule has caught.
-   Lit only while the pipeline formation is on screen — a flag with no
-   pipeline around it is a red light in an empty room. */
-.swm__c.is-flag{transition:border-color 400ms,box-shadow 400ms}
-.swm.is-pipe .swm__c.is-flag{
-  border-color:var(--pulse-mark);
-  box-shadow:0 0 22px -6px var(--pulse-mark),0 6px 18px -8px rgba(0,0,0,0.8);
+
+/* the reference beside each spark: on for the NAMED beat, for the
+   pointer's nearest, and for the counted one */
+.lat__t{
+  position:absolute;left:10px;top:0;transform:translateY(-50%);
+  font-style:normal;
+  font-size:clamp(8px,calc(var(--righ) * 0.0135),10px);
+  letter-spacing:0.14em;color:rgba(242,243,245,0.62);
+  white-space:nowrap;opacity:0;transition:opacity 400ms,color 400ms;
+  pointer-events:none;
 }
-.swm.is-pipe .swm__c.is-flag em{color:var(--vapor)}
+.lat__p.is-r .lat__t{left:auto;right:10px}
+.lat[data-act="1"].is-set .lat__t{opacity:1}
+.lat__p.is-hot .lat__t,.lat__p.is-cnt .lat__t{opacity:1;color:var(--vapor)}
+
+/* flares: the pointer's nearest, and the running count */
+.lat__p.is-hot .lat__c,.lat__p.is-cnt .lat__c{
+  transform:scale(1.9);
+  filter:drop-shadow(0 0 4px var(--vapor)) drop-shadow(0 0 14px var(--ltb)) drop-shadow(0 0 26px var(--ltb));
+}
+
+/* THE one Pulse on this surface: the file the 07-day rule caught,
+   burning only while the pipeline is standing */
+.lat[data-act="3"].is-set .lat__p.is-flag .lat__c{
+  background:var(--vapor);
+  filter:drop-shadow(0 0 4px var(--vapor)) drop-shadow(0 0 12px var(--pulse-mark)) drop-shadow(0 0 26px var(--pulse-mark));
+  animation:latflag 1.1s ease-in-out infinite;
+}
+.lat[data-act="3"].is-set .lat__p.is-flag .lat__t{opacity:1;color:var(--vapor)}
+.lat__fd{display:none}
+.lat[data-act="3"].is-set .lat__p.is-flag .lat__fd{display:inline}
+@keyframes latflag{
+  0%,100%{opacity:1}
+  50%{opacity:0.6}
+}
+
+/* the luminous structure \u2014 drawn in when a formation lands */
+.lat__net{
+  position:absolute;inset:0;width:100%;height:100%;overflow:visible;
+  pointer-events:none;
+}
+.lat__ln{
+  stroke:var(--ltb);stroke-width:1;fill:none;opacity:0.62;
+  stroke-dasharray:1;stroke-dashoffset:1.02;
+  transition:stroke-dashoffset 700ms cubic-bezier(0.3,0,0.2,1),stroke 600ms;
+}
+.lat__ln--ring{opacity:0.8;stroke-width:1.4}
+.lat__ln--rail{opacity:0.85;stroke-width:1.4;
+  filter:drop-shadow(0 0 6px var(--ltb))}
+.lat__net.is-in .lat__ln{stroke-dashoffset:0}
+.lat__net:not(.is-in) .lat__ln{transition:stroke-dashoffset 200ms,opacity 200ms;opacity:0}
+
+.lat__lbs{position:absolute;inset:0;pointer-events:none}
+.lat__lb{
+  position:absolute;left:0;top:0;
+  font-size:clamp(8px,calc(var(--righ) * 0.0135),10px);
+  letter-spacing:0.16em;color:rgba(242,243,245,0.6);white-space:nowrap;
+  font-style:normal;
+  opacity:0;transition:opacity 500ms 300ms;
+}
+.lat__lb--hub{color:rgba(242,243,245,0.78)}
+.lat__lbs.is-in .lat__lb{opacity:1}
+
+/* 04 \u00b7 the sweep is the scroll */
+.lat__cur{
+  position:absolute;left:50%;top:26%;height:48%;width:1px;
+  background:var(--vapor);opacity:0;
+  filter:drop-shadow(0 0 4px var(--vapor)) drop-shadow(0 0 12px var(--ltb));
+  transition:opacity 400ms;will-change:transform;
+}
+.lat__cur.is-on{opacity:0.9}
+
+@media (prefers-reduced-motion:reduce){
+  .lat__stage,.lat__p,.lat__cur{will-change:auto}
+  .lat__c{animation:none;transition:none}
+  .lat__ln{transition:none;stroke-dashoffset:0}
+  .lat__lb{transition:none}
+}
+
+
+/* ════════════════════════════════════════════════════════════════════
+   THE SHAPE   (all five service pages — modules/shape.js)
+
+   Three decisions and a diagram of the engagement that recomposes
+   around them. Everything that moves, moves at CLICK time — dash
+   draw-ins, one gliding lit point — never per scroll frame. The lit
+   point wears the glint's own stops, so the light that answers the
+   reader's hand here is the same light on every control of the site.
+   ════════════════════════════════════════════════════════════════════ */
+
+.shape{
+  display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);
+  gap:clamp(28px,4vw,56px);margin-top:48px;align-items:start;
+}
+
+/* ── the questions ──────────────────────────────────────── */
+.shape__q{margin-bottom:30px}
+.shape__ql{display:block;margin-bottom:12px;color:var(--steel)}
+
+.shape__chips{display:grid;gap:8px}
+.shape__chip{
+  display:block;width:100%;text-align:left;cursor:pointer;
+  padding:12px 14px;border-radius:8px;
+  border:1px solid rgba(242,243,245,0.12);
+  background:rgba(14,15,18,0.5);color:var(--vapor);
+  font:inherit;
+  transition:border-color 300ms,background 300ms,transform 300ms;
+}
+.shape__chip:hover{border-color:rgba(242,243,245,0.28);transform:translateY(-1px)}
+.shape__chip:focus-visible{outline:1px solid rgba(242,243,245,0.4);outline-offset:2px}
+.shape__chip.is-on{
+  border-color:rgba(242,243,245,0.4);
+  background:rgba(14,15,18,0.78);
+  box-shadow:0 0 18px -8px var(--glint-1,#6E56F8);
+}
+.shape__cht{display:block;font-size:14.5px;font-weight:500}
+.shape__chh{
+  display:block;margin-top:3px;font-size:12px;line-height:1.5;
+  color:rgba(242,243,245,0.52);
+}
+.shape__chip.is-on .shape__chh{color:rgba(242,243,245,0.72)}
+
+/* ── the drag ─────────────────────────────────────────────── */
+.shape__sl{
+  position:relative;height:34px;cursor:pointer;
+  touch-action:none;margin:4px 8px 2px;
+}
+.shape__sl:focus-visible{outline:1px solid rgba(242,243,245,0.4);outline-offset:4px;border-radius:4px}
+.shape__slt,.shape__slf{
+  position:absolute;left:0;right:0;top:50%;height:1px;
+}
+.shape__slt{background:rgba(242,243,245,0.16)}
+.shape__slf{
+  background:var(--glint-2,#A594FB);transform-origin:left center;
+  transition:transform 300ms var(--ease-reveal);
+  filter:drop-shadow(0 0 4px var(--glint-1,#6E56F8));
+}
+.shape__sls{
+  position:absolute;top:50%;width:1px;height:9px;margin-top:-4.5px;
+  background:rgba(242,243,245,0.3);
+}
+.shape__slk{
+  position:absolute;top:50%;left:0;width:13px;height:13px;
+  margin:-6.5px 0 0 -6.5px;border-radius:50%;
+  background:var(--vapor);
+  filter:drop-shadow(0 0 3px var(--vapor)) drop-shadow(0 0 10px var(--glint-1,#6E56F8));
+  transition:left 300ms var(--ease-reveal),transform 200ms;
+}
+.shape__sl.is-drag .shape__slk{transform:scale(1.35)}
+.shape__sl.is-drag .shape__slk,.shape__sl.is-drag .shape__slf{transition:none}
+.shape__sll{
+  display:flex;justify-content:space-between;margin-top:10px;
+}
+.shape__sll span{
+  font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--steel);cursor:pointer;transition:color 300ms;
+}
+.shape__sll span.is-on{color:var(--vapor)}
+.shape__sll span:first-child{text-align:left}
+.shape__sll span:last-child{text-align:right}
+
+/* ── the figure ───────────────────────────────────────────── */
+.shape__fig{display:block;width:100%;height:auto}
+.sh__ghost{fill:none;stroke:rgba(242,243,245,0.13);stroke-width:1}
+.sh__p{
+  fill:none;stroke:rgba(242,243,245,0.6);stroke-width:1.4;
+  stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:1;stroke-dashoffset:1.02;
+}
+.is-in .sh__p{
+  stroke-dashoffset:0;
+  transition:stroke-dashoffset 620ms cubic-bezier(0.3,0,0.2,1);
+}
+.sh__out .sh__p{transition:opacity 220ms;opacity:0;stroke-dashoffset:0}
+.sh__out .sh__t{transition:opacity 180ms;opacity:0}
+.sh__thin{stroke:rgba(242,243,245,0.34);stroke-width:1}
+.sh__strong{stroke:rgba(242,243,245,0.85);stroke-width:1.7}
+.sh__dash{stroke-dasharray:0.02 0.012!important;stroke-width:1.1}
+.is-in .sh__dash{transition:none;stroke-dashoffset:0}
+.sh__t{
+  font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;
+  fill:rgba(242,243,245,0.55);text-anchor:middle;
+  opacity:0;transition:opacity 400ms 260ms;
+}
+.is-in .sh__t{opacity:1}
+.sh__tl{text-anchor:start;fill:var(--steel);font-size:9.5px}
+.sh__tc{fill:rgba(242,243,245,0.6)}
+.sh__big{font-family:var(--font-sans);font-size:44px;letter-spacing:0;fill:var(--vapor);opacity:0.9}
+.sh__d{
+  fill:rgba(242,243,245,0.85);
+  transition:transform 560ms var(--ease-reveal);
+}
+/* THE lit point — the same light every control wears */
+.sh__lit{
+  fill:var(--vapor);
+  filter:drop-shadow(0 0 3px var(--vapor)) drop-shadow(0 0 9px var(--glint-1,#6E56F8)) drop-shadow(0 0 20px var(--glint-2,#A594FB));
+  transition:transform 640ms var(--ease-reveal);
+  animation:shlit 3s ease-in-out infinite;
+}
+@keyframes shlit{
+  0%,100%{opacity:1}
+  50%{opacity:0.62}
+}
+
+/* ── the manifest and the request ────────────────────────── */
+.shape__man{margin-top:18px;border-top:1px solid rgba(242,243,245,0.1)}
+.shape__mr{
+  display:flex;justify-content:space-between;gap:18px;
+  padding:9px 2px;border-bottom:1px solid rgba(242,243,245,0.07);
+}
+.shape__mk{color:var(--steel)}
+.shape__mv{color:rgba(242,243,245,0.85);text-align:right}
+.shape__cta{margin-top:22px}
+.shape__ctan{
+  margin:10px 0 0;font-size:9.5px;letter-spacing:0.14em;
+  color:rgba(118,126,140,0.75);
+}
 
 @media (max-width:900px){
-  .swm__c{border-radius:3px}
-  .swm__c s{height:2px}
+  .shape{grid-template-columns:minmax(0,1fr);gap:34px}
+  .shape__out{order:-1}
 }
 @media (prefers-reduced-motion:reduce){
-  .swm__stage,.swm__c{will-change:auto}
-  .swm__c.is-flag{transition:none}
+  .sh__p{stroke-dashoffset:0}
+  .is-in .sh__p,.sh__d,.sh__lit,.shape__slf,.shape__slk{transition:none;animation:none}
 }
 
 /* ══════════════════════════════════════════════════════════════════════

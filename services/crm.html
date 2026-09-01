@@ -55,7 +55,7 @@
 <link rel="stylesheet" href="../assets/css/field.css?v=0539fb2e">
 <link rel="stylesheet" href="../assets/css/footer.css?v=9cd9eb26">
 <link rel="stylesheet" href="../assets/css/cmdk.css?v=2b54249d">
-<link rel="stylesheet" href="../assets/css/svc-modules.css?v=2283b6a6">
+<link rel="stylesheet" href="../assets/css/svc-modules.css?v=8f158825">
 
 </head>
 <body>
@@ -139,46 +139,49 @@
     </div>
 
 
-    <!-- ── SIGNATURE · THE SWARM ────────────────────────────────────────
-         Forty-eight records, and every organisation of them you scroll
-         through is the same forty-eight: chaos, the book, the pipeline,
-         the ledger, somebody else's grouping, one handed-over stack.
+    <!-- ── SIGNATURE · THE LATTICE ──────────────────────────────
+         The third CRM signature, and the concept the owner kept from the
+         second: scattered data becoming a system. The medium changed —
+         the records are LIGHT now, and every organising act is drawn as
+         labelled luminous structure through them: named, linked into the
+         schema, run down the pipeline, laid on the ledger's spine, and
+         handed over as one core made of all forty-eight.
 
-         Replaced the prism on 2026-09-01 at the owner's direction — a
-         turning box SHOWED four screens of a product, and a competitor
-         can show four screens of theirs. What no rented system can show
-         is the records themselves picked up and reorganised live without
-         one being lost, renamed or re-entered. That is what customizable
-         means when it is true.
+         The reader's pointer is part of the instrument: near any spark,
+         at any beat, it flares and says its reference. Every dwell is
+         wheel-driven — the count, the ring's turn, the lane flow, the
+         ledger sweep — so scroll always answers with motion.
 
-         The chips are built by swarm.js (one seeded RNG, deterministic on
-         every load), the record count on the rail is COUNTED off the DOM,
-         and every frame is 48 transforms and 48 opacities — no layout.
-         See modules/swarm.js. -->
-    <section class="sig sig--swarm" id="sigSwarm" aria-label="The same records, reorganised live">
+         Built by modules/lattice.js; the spark count on the rail is
+         COUNTED off the DOM; the type and field counts were counted out
+         of the running system's schema. -->
+    <section class="sig sig--lat" id="sigLat" aria-label="Scattered records drawn into one system of light">
       <div class="sig__track">
         <div class="sig__stage">
           <div class="sig__head">
-            <span class="mono sig__step" id="swmStep">00 &mdash; AS FOUND</span>
-            <span class="mono sig__pct"><span id="swmPct">000</span>%</span>
+            <span class="mono sig__step" id="latStep">00 &mdash; AS FOUND</span>
+            <span class="mono sig__pct"><span id="latPct">000</span>%</span>
           </div>
 
-          <div class="rig swm" id="swm" data-act="0">
+          <div class="rig lat" id="lat" data-act="0">
             <div class="rig__view" aria-hidden="true">
-              <div class="swm__stage" id="swmStage"></div>
+              <svg class="lat__net" id="latNet" aria-hidden="true"></svg>
+              <div class="lat__stage" id="latStage"></div>
+              <div class="lat__lbs" id="latLbs"></div>
+              <i class="lat__cur" id="latCur"></i>
             </div>
 
-            <ol class="rig__key" id="swmKey">
-              <li><span class="mono k__n">00</span><span class="k__t">As found</span><span class="mono k__v"><span data-c="records">&mdash;</span> RECORDS &middot; 00 LOST</span></li>
-              <li><span class="mono k__n">01</span><span class="k__t">The book</span><span class="mono k__v">YOUR REFS &middot; NOTHING RE-ENTERED</span></li>
-              <li><span class="mono k__n">02</span><span class="k__t">The pipeline</span><span class="mono k__v">03 STAGES &middot; 07-DAY FLAG</span></li>
-              <li><span class="mono k__n">03</span><span class="k__t">The ledger</span><span class="mono k__v">EVERY CHANGE, ATTRIBUTED</span></li>
-              <li><span class="mono k__n">04</span><span class="k__t">Reconfigured</span><span class="mono k__v">01 CORE &middot; 02 SCHEMAS</span></li>
+            <ol class="rig__key" id="latKey">
+              <li><span class="mono k__n">00</span><span class="k__t">As found</span><span class="mono k__v"><span data-c="records">&mdash;</span> RECORDS &middot; UNLINKED</span></li>
+              <li><span class="mono k__n">01</span><span class="k__t">Named</span><span class="mono k__v">YOUR REFS &middot; NOTHING RE-ENTERED</span></li>
+              <li><span class="mono k__n">02</span><span class="k__t">The schema</span><span class="mono k__v">20 TYPES &middot; 130 FIELDS</span></li>
+              <li><span class="mono k__n">03</span><span class="k__t">The pipeline</span><span class="mono k__v">03 STAGES &middot; 07-DAY FLAG</span></li>
+              <li><span class="mono k__n">04</span><span class="k__t">The ledger</span><span class="mono k__v">EVERY CHANGE, ATTRIBUTED</span></li>
               <li><span class="mono k__n">05</span><span class="k__t">Handed over</span><span class="mono k__v">SOURCE &middot; DATA &middot; HOSTING</span></li>
             </ol>
           </div>
 
-          <p class="sig__note" id="swmNote">Forty-eight records, which is how they actually live before there is a system: some in a spreadsheet, some in a notebook, some in whoever answered the phone. Everything after this is the same forty-eight &mdash; count them out, none will be added and none lost.</p>
+          <p class="sig__note" id="latNote">Forty-eight records adrift, which is how they actually live before there is a system: some in a spreadsheet, some in a notebook, some in whoever answered the phone. Everything after this is the same forty-eight points of light &mdash; none will be added, none lost.</p>
         </div>
       </div>
     </section>
@@ -297,6 +300,20 @@
       </ul>
     </section>
 
+
+    <!-- ── THE SHAPE — three decisions, and the service recomposes ────
+         Owner-requested 2026-09-01: a real interaction on every service
+         page — choose or drag, and the engagement reshapes to fit. The
+         diagram, the manifest and the request subject all derive from
+         one state object, so they cannot disagree. modules/shape.js. -->
+    <section class="svc-sec" id="shapeSec">
+      <div class="svc-sec__head" data-keepout>
+        <h2 class="svc-sec__title">Shape the desk</h2>
+        <p class="svc-sec__note" data-keepout>What you trade, where truth lives today, who works in it. The schema recomposes in your own vocabulary — then send exactly that.</p>
+      </div>
+      <div class="shape" data-shape="desk" data-keepout></div>
+    </section>
+
     <section class="svc-end">
       <h2 class="svc-end__title" data-keepout data-reveal data-kinetic>Built to the firm.<br>Not rented to it.</h2>
       <p class="body veil" style="margin-top:24px">The engagement closes when the repository is in your account and the team is shipping from it.</p>
@@ -388,25 +405,32 @@
 
 <script type="module">
 import { initField } from '../assets/js/field.js';
-import { initSwarm } from '../assets/js/modules/swarm.js';
+import { initLattice } from '../assets/js/modules/lattice.js';
 import { initSkip } from '../assets/js/modules/skip.js';
 import { initMods } from '../assets/js/modules/mods.js';
+import { initShape } from '../assets/js/modules/shape.js';
 
 const roState = document.getElementById('readoutState');
 initField({
+  /* The lattice pins from 0.11 to 0.63 of the page (measured 1440x900),
+     and its sparks are LIGHT — they cannot compete with S1's blazing
+     core. So the bed converges into the torus DURING the first two beats
+     (scatter gathering, same sentence the instrument is saying) and the
+     schema onward plays inside the torus's dark centre. */
   program: [
     { at: 0.00, form: 'S1' },   // the record set, as parts
-    { at: 0.42, form: 'S1' },
-    { at: 0.78, form: 'S3' },   // turned into one object
+    { at: 0.10, form: 'S1' },
+    { at: 0.26, form: 'S3' },   // one object — before the schema stands
     { at: 1.00, form: 'S3' },
   ],
   channel: { tilt: { S1: 34, S3: 16 }, spin: { S1: 120, S3: 168 } },
   onState: (p, n) => { if (roState) roState.textContent = n; },
 });
 
-initSwarm();
+initLattice();
 initSkip();
 initMods();
+initShape();
 </script>
 </body>
 </html>

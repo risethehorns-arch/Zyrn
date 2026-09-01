@@ -55,7 +55,7 @@
 <link rel="stylesheet" href="../assets/css/field.css?v=0539fb2e">
 <link rel="stylesheet" href="../assets/css/footer.css?v=9cd9eb26">
 <link rel="stylesheet" href="../assets/css/cmdk.css?v=2b54249d">
-<link rel="stylesheet" href="../assets/css/svc-modules.css?v=2283b6a6">
+<link rel="stylesheet" href="../assets/css/svc-modules.css?v=8f158825">
 
 </head>
 <body>
@@ -330,6 +330,20 @@
       </ul>
     </section>
 
+
+    <!-- ── THE SHAPE — three decisions, and the service recomposes ────
+         Owner-requested 2026-09-01: a real interaction on every service
+         page — choose or drag, and the engagement reshapes to fit. The
+         diagram, the manifest and the request subject all derive from
+         one state object, so they cannot disagree. modules/shape.js. -->
+    <section class="svc-sec" id="shapeSec">
+      <div class="svc-sec__head" data-keepout>
+        <h2 class="svc-sec__title">Shape the pilot</h2>
+        <p class="svc-sec__note" data-keepout>Where the system lands first, what it may do alone, what feeds it. The lane redraws as you decide — the gate is yours to set.</p>
+      </div>
+      <div class="shape" data-shape="ai" data-keepout></div>
+    </section>
+
     <section class="svc-end">
       <h2 class="svc-end__title" data-keepout data-reveal data-kinetic>The model first.<br>The tooling after.</h2>
       <p class="body veil" style="margin-top:24px">The engagement closes on a higher readiness number than it opened on.</p>
@@ -424,6 +438,7 @@ import { initField } from '../assets/js/field.js';
 import { initWell } from '../assets/js/modules/well.js';
 import { initSkip } from '../assets/js/modules/skip.js';
 import { initMods } from '../assets/js/modules/mods.js';
+import { initShape } from '../assets/js/modules/shape.js';
 
 const roState = document.getElementById('readoutState');
 initField({
@@ -440,6 +455,7 @@ initField({
 initWell();
 initSkip();
 initMods();
+initShape();
 </script>
 </body>
 </html>

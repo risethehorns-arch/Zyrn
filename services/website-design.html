@@ -55,7 +55,7 @@
 <link rel="stylesheet" href="../assets/css/field.css?v=0539fb2e">
 <link rel="stylesheet" href="../assets/css/footer.css?v=9cd9eb26">
 <link rel="stylesheet" href="../assets/css/cmdk.css?v=2b54249d">
-<link rel="stylesheet" href="../assets/css/svc-modules.css?v=2283b6a6">
+<link rel="stylesheet" href="../assets/css/svc-modules.css?v=8f158825">
 
 </head>
 <body>
@@ -343,6 +343,20 @@
       </ul>
     </section>
 
+
+    <!-- ── THE SHAPE — three decisions, and the service recomposes ────
+         Owner-requested 2026-09-01: a real interaction on every service
+         page — choose or drag, and the engagement reshapes to fit. The
+         diagram, the manifest and the request subject all derive from
+         one state object, so they cannot disagree. modules/shape.js. -->
+    <section class="svc-sec" id="shapeSec">
+      <div class="svc-sec__head" data-keepout>
+        <h2 class="svc-sec__title">Shape the build</h2>
+        <p class="svc-sec__note" data-keepout>Three decisions before anyone writes a proposal: what the site must do, how much it may move, what it starts from. The diagram is the engagement, redrawn as you answer.</p>
+      </div>
+      <div class="shape" data-shape="web" data-keepout></div>
+    </section>
+
     <section class="svc-end">
       <h2 class="svc-end__title" data-keepout data-reveal data-kinetic>The surface,<br>as instrument.</h2>
       <p class="body veil" style="margin-top:24px">The engagement closes when the firm can extend its own system without asking how.</p>
@@ -437,6 +451,7 @@ import { initField } from '../assets/js/field.js';
 import { initStack } from '../assets/js/modules/stack.js';
 import { initSkip } from '../assets/js/modules/skip.js';
 import { initMods } from '../assets/js/modules/mods.js';
+import { initShape } from '../assets/js/modules/shape.js';
 
 const roState = document.getElementById('readoutState');
 initField({
@@ -452,6 +467,7 @@ initField({
 initStack();
 initSkip();
 initMods();
+initShape();
 </script>
 </body>
 </html>

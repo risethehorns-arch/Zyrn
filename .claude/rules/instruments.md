@@ -95,38 +95,48 @@ geometry. `docs/rigshot.py` photographs one at chosen progress values.
   over verbatim from `readiness.js`; only the size and the form changed.
   **Nothing changes a height**: the fill is a full-height box scaled from
   its base and the cap and readout are translated to meet it.
-- **swarm** (`services/crm.html`) — forty-eight record chips
-  choreographed through six formations: chaos, the book, the pipeline,
-  the ledger, somebody else's grouping, one handed-over deck. Replaced
-  the prism 2026-09-01 at the owner's direction (“this is super
-  basic”): a turning box SHOWED four screens of a product, which any
-  competitor can also show — what no rented system can show is the same
-  records picked up and reorganised live with none lost. Seeded RNG, so
-  the choreography is identical on every load; the record count on the
-  rail is COUNTED off the DOM; per-transition shuffled stagger ranks so
-  each move reads as a flock rather than a lockstep.
-  Three rules it now carries:
-    · **a resize must redraw** — every chip position is an inline
-      transform with W×H baked in, and the track only calls back when
-      PROGRESS changes, so without an explicit redraw a rotated phone
-      keeps the previous geometry until the next scroll tick. The
-      CSS-ratio instruments get this from the cascade; a JS-positioned
-      one has to do it itself.
-    · **depth is a ratio too** — formation z was authored in px against
-      the full-size stage and is scaled by `H/700` at draw time. On a
-      500px-tall window the perspective (itself righ×3.2) is small, and
-      unscaled z magnified edge chips by a quarter, straight through the
-      key rail. Same lesson as the camera, one level further down.
-    · **the spread budgets for the chip's own body** — ±0.47-unit
-      formations are mapped through XS, which subtracts half a chip plus
-      rotation slack (and divides out worst-case projection, a constant
-      ~1.08 once z scales) so the chaos cloud fits a phone and an
-      ultrawide alike.
-  During dwells the flock breathes a few px of per-chip z — driven by
-  PROGRESS, not a clock — so a moving wheel always answers with motion
-  (rigmotion: 40/40 steps, 0 dead) while a still reader gets a still
-  formation.
+- **lattice** (`services/crm.html`) — the THIRD CRM signature, and the
+  one that stood. Forty-eight records as SPARKS OF LIGHT, and every
+  organising act drawn as labelled luminous structure through them:
+  named (the count runs the field as you scroll), the schema (five
+  labelled hubs, every record tied to its object), the pipeline (three
+  labelled rails, the 07-day file burning in Pulse), the ledger (a time
+  spine whose sweep IS the scroll), handed over (all forty-eight
+  converge into one core — the core is literally the records). The
+  reader's pointer flares the nearest spark and prints its reference at
+  any beat. The light travels the field's vivid ramp beat by beat — the
+  cold hues print as LIGHT (drop-shadow bloom), the glitch's standing,
+  never as ink.
+  What it keeps from the swarm's post-mortem: resize must redraw;
+  depth scales `H/700`; the spread budgets for the body plus a constant
+  ~1.08 worst-case projection. What it adds:
+    · **every dwell motion is windowed by sin(dT·π) or runs an exact
+      whole cycle**, so it is zero at the dwell's entry AND exit —
+      otherwise the flight that follows starts from a position the
+      formation never authored, and the whole flock snaps.
+    · **structure never tracks moving endpoints** — lines and labels
+      exist only while a formation is settled (drawn in on landing,
+      faded on departure), so per-frame work is transforms only.
+    · **the hover mapping refreshes its view rect in onNear, not in
+      draw** — draw only runs when progress CHANGES, and a parked
+      reader still moves the pointer.
+    · **a light instrument needs a dark ground.** The crm field program
+      now completes S1→S3 at page 0.10–0.26, BEFORE the track pins at
+      0.11–0.63 — sparks over S1's blazing core were invisible. If an
+      instrument is made of light, check what the bed is doing behind
+      it at the pin, not at scroll 0.
 
+- **swarm** — DELETED 2026-09-01, same day it shipped. Forty-eight dark
+  chips flying between six formations. The owner: “the motion now looks
+  off … low quality and not easy to understand. and there is also no
+  light or designing unique effects on the scattered data”. The
+  diagnosis, recorded because it is a DESIGN rule and not a tuning
+  matter: opaque chips against a 90k-particle light field read as
+  texture, not as records; formations without labels ask the reader to
+  infer what each shape means; and a closing stack is a blob. The
+  concept (scattered data becoming a system) survived into the lattice;
+  the medium did not. Its resize/depth/spread rules were correct and
+  moved to the lattice. Git history has the module.
 - **orbit** (`services.html`) — five things riding a tilted ring around one
   core, and a scroll that takes you round it once. Replaced `core.js`, a
   flat four-arm diagram, on 2026-09-01: two dimensions could carry the

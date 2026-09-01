@@ -481,6 +481,34 @@ and a fifth service page was added. The parts that constrain future work:
   cover thirty modules on purpose — most modules ARE one of a dozen
   shapes, and the repetition is the argument.
 
+## THE SHAPE — the reader configures the service — 2026-09-01
+
+Owner-requested: “each of those 5 services … the user can choose or drag
+… and the service will shape itself to fit the user's choices.”
+`modules/shape.js`, one module, five authored configurations, injected
+into `.shape[data-shape]` on every service page before the closing CTA.
+
+- **Three decisions per page** — two chip radiogroups (roving tabindex,
+  arrow keys) and one REAL slider (pointer capture, live snap while
+  dragging, Home/End). Options carry a one-line consequence each.
+- **One state object drives everything**: the SVG diagram of the
+  engagement, the three-row manifest, and the mailto subject — derived
+  together so they cannot disagree. The CTA is “Request exactly this”
+  and the subject line carries the reader's three answers verbatim,
+  which is what makes it a brief rather than a toy.
+- **All recomposition is click-time paint** — dash draw-ins, one lit
+  point in the glint's stops gliding (by transitioned transform) to
+  whatever the LAST answer reshaped. Nothing here animates per scroll
+  frame.
+- **Nothing is promised that is not ours to state**: no prices, no
+  weeks, no invented outcomes. The answers reshape what we would build.
+- The CTA is `.btn--hairline`, not `--pulse` — the svc-end section a
+  viewport below already carries the page's Pulse.
+- Verified with real events on all five pages (`shapetest` pattern in
+  the job tmp): click selects, a real drag lands on the far stop,
+  arrows move the group, subject/manifest/figure/lit all change; phone
+  pass at 390px — no overflow, every control ≥34px.
+
 ## An entrance is not a scroll animation — 2026-09-01
 
 `.rk` and `.wp` — the case windows on `lumina.html` and `thehub.html` —

@@ -55,7 +55,7 @@
 <link rel="stylesheet" href="../assets/css/field.css?v=0539fb2e">
 <link rel="stylesheet" href="../assets/css/footer.css?v=9cd9eb26">
 <link rel="stylesheet" href="../assets/css/cmdk.css?v=2b54249d">
-<link rel="stylesheet" href="../assets/css/svc-modules.css?v=2283b6a6">
+<link rel="stylesheet" href="../assets/css/svc-modules.css?v=8f158825">
 
 </head>
 <body>
@@ -282,6 +282,20 @@
       </ul>
     </section>
 
+
+    <!-- ── THE SHAPE — three decisions, and the service recomposes ────
+         Owner-requested 2026-09-01: a real interaction on every service
+         page — choose or drag, and the engagement reshapes to fit. The
+         diagram, the manifest and the request subject all derive from
+         one state object, so they cannot disagree. modules/shape.js. -->
+    <section class="svc-sec" id="shapeSec">
+      <div class="svc-sec__head" data-keepout>
+        <h2 class="svc-sec__title">Shape the mandate</h2>
+        <p class="svc-sec__note" data-keepout>Where it hurts, how deep we may cut, the size of the firm. The chart redraws to your answers before anyone is asked to commit to anything.</p>
+      </div>
+      <div class="shape" data-shape="org" data-keepout></div>
+    </section>
+
     <section class="svc-end">
       <h2 class="svc-end__title" data-keepout data-reveal data-kinetic>Authority,<br>where the work is.</h2>
       <p class="body veil" style="margin-top:24px">The engagement closes when decisions stop travelling up to be made.</p>
@@ -376,6 +390,7 @@ import { initField } from '../assets/js/field.js';
 import { initPlan } from '../assets/js/modules/plan.js';
 import { initSkip } from '../assets/js/modules/skip.js';
 import { initMods } from '../assets/js/modules/mods.js';
+import { initShape } from '../assets/js/modules/shape.js';
 
 const roState = document.getElementById('readoutState');
 initField({
@@ -391,6 +406,7 @@ initField({
 initPlan();
 initSkip();
 initMods();
+initShape();
 </script>
 </body>
 </html>
