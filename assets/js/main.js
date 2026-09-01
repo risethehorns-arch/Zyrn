@@ -195,26 +195,65 @@
      A page link wins over a section link, and it is settled once at load —
      otherwise `services.html` would light "Services" AND whatever section
      happens to be mid-viewport. */
-  /* ── THE STRIKE ──────────────────────────────────────────────────
-     A press on any control that carries the light fires a short
-     hyper-motion, defined entirely in CSS. All this does is add the class
-     and take it off again when the animation ends, which is what makes it
-     RETRIGGER — a class that latches gives you the burst once and then a
-     dead button for the rest of the session.
+  /* ── THE GLINT ───────────────────────────────────────────────────
+     Injects the light into every control that takes one, and fires the
+     strike on press.
 
-     `pointerdown`, not `click`: the light should answer the press, not
-     the release, and a control that waits for mouseup feels slow in a way
-     nobody can name. Delegated, so it covers controls injected later —
-     the skip pills and the palette chip do not exist when this runs. */
-  function setupStrike() {
+     The light is THREE ELEMENTS, not a pseudo, because it has to move on
+     a TRANSFORM: `.gl` is the masked rim, `.gl__b` is an oversized square
+     carrying a static conic gradient that ROTATES inside it, and `.gl__s`
+     / `.gl__r` are the click's face-sweep and edge-ring. The first build
+     animated a custom property into the gradient itself — measured
+     correct in one browser, visually frozen on the owner's machine,
+     because that forces a repaint every frame and a repaint is the one
+     thing a compositor may cache. A transform cannot be got wrong that
+     way.
+
+     Injected rather than authored so it reaches controls that do not
+     exist yet — the skip pills and the palette chip are both built after
+     this runs. */
+  var GLINT_SEL = '.nav__link,.btn,.cmdkbtn,.rk__out,.skip,.mx__line';
+
+  function lightUp(el) {
+    if (!el || el.querySelector(':scope > .gl')) return;
+    var gl = document.createElement('i');
+    gl.className = 'gl';
+    gl.setAttribute('aria-hidden', 'true');
+    gl.innerHTML = '<i class="gl__b"></i>';
+    var sweep = document.createElement('i');
+    sweep.className = 'gl__s';
+    sweep.setAttribute('aria-hidden', 'true');
+    var ring = document.createElement('i');
+    ring.className = 'gl__r';
+    ring.setAttribute('aria-hidden', 'true');
+    el.appendChild(gl);
+    el.appendChild(sweep);
+    el.appendChild(ring);
+  }
+
+  function setupGlint() {
     if (reduced) return;
-    var SEL = '.nav__link,.btn,.cmdkbtn,.rk__out,.skip,.mx__line';
+    var all = document.querySelectorAll(GLINT_SEL);
+    for (var i = 0; i < all.length; i++) lightUp(all[i]);
+
+    /* Controls appear later — skip.js injects six of them and cmdk.js one
+       — so anything that turns up gets lit on first contact rather than
+       being missed by a one-shot pass at load. */
+    document.addEventListener('pointerover', function (e) {
+      var el = e.target.closest && e.target.closest(GLINT_SEL);
+      if (el) lightUp(el);
+    }, { passive: true });
+
+    /* `pointerdown`, not `click`: the light answers the PRESS. A control
+       that waits for mouseup feels slow in a way nobody can name — and on
+       an anchor, click has already started a navigation by then. */
     document.addEventListener('pointerdown', function (e) {
-      var el = e.target.closest && e.target.closest(SEL);
+      var el = e.target.closest && e.target.closest(GLINT_SEL);
       if (!el) return;
+      lightUp(el);
       el.classList.remove('is-struck');
-      // one forced reflow, so a second press inside the animation restarts
-      // it rather than being swallowed
+      // one forced reflow, so a second press inside the animation
+      // restarts it rather than being swallowed
       void el.offsetWidth;
       el.classList.add('is-struck');
     }, { passive: true });
@@ -395,7 +434,7 @@
   shearMarks();
   setupSysNav();
   setupNavHere();
-  setupStrike();
+  setupGlint();
 
   document.addEventListener('visibilitychange', function () {
     if (!document.hidden) schedule();

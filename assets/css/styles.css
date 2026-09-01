@@ -405,24 +405,72 @@ h1,h2,h3,h4,blockquote,.mono,summary,figcaption,th{text-wrap:balance}
    arc simply sits still, which is a degraded look rather than a broken
    one. The mask pair is the standard border-only trick: paint the whole
    box, then cut the middle out so only the 1px rim survives. */
-@property --beam{syntax:'<angle>';inherits:false;initial-value:0deg}
-
+/* ── the palette ────────────────────────────────────────────────────
+   Written by field.js off the TOP of its own ramp (0.62 upward), which is
+   where that ramp runs Pulse -> Vapor: violet with a white core. These
+   are the fallbacks for the frames before the field boots. */
 :root{
-  /* Written by field.js off the top of its own ramp — violet through to
-     Vapor. These are fallbacks for the frames before the field boots and
-     for a page where it never does. */
   --glint-0:#4E6BEE;
   --glint-1:#6E56F8;
   --glint-2:#A594FB;
   --glint-3:#E4E0FF;
+}
 
-  /* THE ARC. One definition, worn by every control that takes one.
+/* ══ THE GLINT ═══════════════════════════════════════════════════════
+   A violet-and-white light that travels the outline of every control.
 
-     A 190-degree lit sweep that runs deep violet -> Pulse -> pale violet
-     -> a VAPOR CORE and falls away again. The core is what makes it read
-     as a glint travelling a wire rather than as a coloured edge; without
-     it the arc is evenly bright and looks printed on. */
-  --beam-arc:conic-gradient(from var(--beam),
+   IT MOVES ON A TRANSFORM, AND THAT IS THE WHOLE POINT. The first build
+   animated a registered `<angle>` into `conic-gradient(from var(--beam))`.
+   Measured in one browser it interpolated perfectly; on the owner's
+   machine it never moved a pixel — because animating a custom property
+   that feeds `background-image` forces a full REPAINT every frame, and a
+   repaint is the one thing a compositor is free to cache or defer,
+   especially on an element carrying `filter`. Correct, expensive, and
+   unreliable.
+
+   So the gradient is now STATIC and the element carrying it SPINS. A
+   transform runs on the compositor, cannot be cached wrongly, and needs
+   no @property registration to interpolate. Same picture, moves
+   everywhere.
+
+     .gl      the rim: inset:0, masked so only the 1.4px edge survives
+     .gl__b   a square twice the host, carrying the gradient, rotating
+
+   `main.js` injects both into every host. */
+
+.nav__link,.btn,.cmdkbtn,.rk__out,.skip,.mx__line{
+  position:relative;isolation:isolate;
+  transition:background var(--t-ui),color var(--t-ui),
+             transform 240ms var(--ease-reveal),
+             box-shadow 380ms var(--ease-reveal);
+}
+
+.gl{
+  position:absolute;inset:0;border-radius:inherit;
+  padding:1.4px;                       /* the rim thickness */
+  overflow:hidden;
+  /* Paint the box, cut the middle out, keep the rim. `xor` is the WebKit
+     spelling of `exclude` and both are needed or the control fills solid. */
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+          mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  /* THE GLISTEN — three stages, tight to wide. drop-shadow works on the
+     alpha RESULT of the mask, so each blooms off the visible arc rather
+     than off the box. That is the difference between light and a
+     coloured border. */
+  filter:drop-shadow(0 0 2px var(--vapor))
+         drop-shadow(0 0 7px var(--glint-2))
+         drop-shadow(0 0 16px var(--glint-1));
+  opacity:0;pointer-events:none;
+  transition:opacity 420ms var(--ease-reveal);
+}
+.gl__b{
+  position:absolute;top:50%;left:50%;
+  /* Twice the diagonal, so a rotating square always covers the rim at
+     every angle. Anything less and the corners sweep empty. */
+  width:260%;aspect-ratio:1;
+  margin:-130% 0 0 -130%;
+  background:conic-gradient(from 0deg,
     transparent 0deg 170deg,
     var(--glint-0) 228deg,
     var(--glint-1) 282deg,
@@ -431,123 +479,104 @@ h1,h2,h3,h4,blockquote,.mono,summary,figcaption,th{text-wrap:balance}
     var(--glint-3) 346deg,
     var(--glint-1) 354deg,
     transparent 360deg);
+  animation:glintspin 3.4s linear infinite;
+  animation-play-state:paused;         /* runs only while the host is live */
+  will-change:transform;
 }
+@keyframes glintspin{ to{ transform:rotate(360deg) } }
 
-/* ── the hosts ──────────────────────────────────────────────────────
-   `.tab` is ABSENT and cannot be added without moving its marker first:
-   `.tab.is-active::before` is the Pulse top bar, and it is positioned
-   against `.tabs` and stepped by whole multiples of its own width. Giving
-   `.tab` a containing block would park every one of those at x = 0 — the
-   same bug the mobile strip already cost. `.visit` is absent because it
-   has its own travelling hairline. */
-.nav__link,.btn,.cmdkbtn,.rk__out,.skip,.mx__line{
-  position:relative;isolation:isolate;
+/* the sweep a click throws across the FACE, and the ring off the edge */
+.gl__s{
+  position:absolute;left:0;top:0;bottom:0;width:38%;
+  background:linear-gradient(90deg,transparent,
+             rgba(242,243,245,0.30) 44%,var(--vapor) 52%,
+             rgba(242,243,245,0.30) 60%,transparent);
+  opacity:0;transform:translateX(-140%);
+  pointer-events:none;mix-blend-mode:screen;
 }
-.nav__link::before,
-.btn::before,
-.cmdkbtn::before,
-.rk__out::before,
-.skip::before,
-.mx__line::before{
-  content:'';position:absolute;inset:0;border-radius:inherit;
-  /* 1.4px, not 1: at one pixel the bloom is brighter than the line
-     casting it, which reads as a smudge rather than as a lit edge. */
-  padding:1.4px;
-  background:var(--beam-arc);
-  /* Paint the whole box, then cut the middle out so only the rim
-     survives. `xor` is the WebKit spelling of `exclude`; both are needed
-     or the control fills with solid colour. */
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-          mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude;
-  /* THE GLISTEN. Three stages, tight to wide. drop-shadow works on the
-     alpha RESULT of the mask, so every one of them blooms off the visible
-     arc rather than off the box — which is the whole difference between
-     light and a coloured border. */
-  filter:drop-shadow(0 0 2px var(--vapor))
-         drop-shadow(0 0 7px var(--glint-2))
-         drop-shadow(0 0 17px var(--glint-1));
-  opacity:0;pointer-events:none;
-  transition:opacity 420ms var(--ease-reveal);
-}
-
-/* the ring a click throws off the edge */
-.nav__link::after,
-.btn::after,
-.cmdkbtn::after,
-.rk__out::after,
-.skip::after,
-.mx__line::after{
-  content:'';position:absolute;inset:-1px;border-radius:inherit;
+.gl__r{
+  position:absolute;inset:-1px;border-radius:inherit;
   border:1px solid var(--glint-2);
   opacity:0;pointer-events:none;
 }
 
-@keyframes navbeam{ to{ --beam:360deg } }
-
 /* ── hover: minimal, and only an acknowledgement ────────────────────
-   The arc is the statement. This has one job — say that the pointer
-   arrived — so it is one pixel and one percent. */
+   The arc is the statement; this has one job, which is to say the pointer
+   arrived. One pixel and one percent. */
 .nav__link:hover,.btn:hover,.cmdkbtn:hover,.rk__out:hover,.mx__line:hover,
 .skip.is-on:hover{
   transform:translateY(-1px) scale(1.012);
 }
-.nav__link,.btn,.cmdkbtn,.rk__out,.mx__line{
-  transition:background var(--t-ui),color var(--t-ui),
-             transform 240ms var(--ease-reveal),
-             box-shadow 380ms var(--ease-reveal);
-}
 
 /* ── the dwell ──────────────────────────────────────────────────────
-   The arc runs for as long as the pointer is inside and stops when it
-   leaves. A one-shot on entry would be a flourish; a loop is a control
-   reporting that it is live. */
-.nav__link:hover::before,.nav__link:focus-visible::before,
-.btn:hover::before,.btn:focus-visible::before,
-.cmdkbtn:hover::before,.cmdkbtn:focus-visible::before,
-.rk__out:hover::before,.rk__out:focus-visible::before,
-.mx__line:hover::before,.mx__line:focus-visible::before{
-  opacity:1;animation:navbeam 3.4s linear infinite;
-}
+   The arc runs for exactly as long as the pointer is inside. A one-shot
+   on entry is a flourish; a loop is a control reporting that it is live. */
+.nav__link:hover  .gl,.nav__link:focus-visible  .gl,
+.btn:hover        .gl,.btn:focus-visible        .gl,
+.cmdkbtn:hover    .gl,.cmdkbtn:focus-visible    .gl,
+.rk__out:hover    .gl,.rk__out:focus-visible    .gl,
+.mx__line:hover   .gl,.mx__line:focus-visible   .gl{ opacity:1 }
+
+.nav__link:hover  .gl__b,.nav__link:focus-visible  .gl__b,
+.btn:hover        .gl__b,.btn:focus-visible        .gl__b,
+.cmdkbtn:hover    .gl__b,.cmdkbtn:focus-visible    .gl__b,
+.rk__out:hover    .gl__b,.rk__out:focus-visible    .gl__b,
+.mx__line:hover   .gl__b,.mx__line:focus-visible   .gl__b,
+.nav__link.is-here .gl__b,
+.skip .gl__b{ animation-play-state:running }
+
 .btn:hover,.cmdkbtn:hover,.rk__out:hover,.mx__line:hover{
   box-shadow:0 0 26px -9px var(--glint-1);
 }
 
 /* ── the strike ─────────────────────────────────────────────────────
-   A click, and the light goes hard for six hundred milliseconds: the arc
-   runs at seven times its dwell rate, a ring throws off the edge, and the
-   control dips and springs back. `main.js` adds `.is-struck` on
-   pointerdown and takes it off when the animation ends, so it retriggers
-   on every press rather than firing once and latching. */
-.is-struck::before{opacity:1 !important;animation:navbeam 480ms linear infinite !important}
-.is-struck::after{animation:glintring 620ms cubic-bezier(.16,.9,.28,1) forwards}
+   A press, and the light goes hard for six hundred milliseconds: the arc
+   spins at four times its dwell rate, a sweep crosses the face, a ring
+   throws off the edge, and the control dips and springs.
+
+   The face sweep exists because half of "nothing happened" is a rim flash
+   that fired while the page was already scrolling somewhere else. A band
+   of light crossing the button itself cannot be missed that way.
+
+   `main.js` adds `.is-struck` on pointerdown and removes it on
+   animationend — a class that latches gives you the burst once and a dead
+   control for the rest of the session. */
+.is-struck .gl{opacity:1}
+.is-struck .gl__b{animation-play-state:running;animation-duration:820ms}
+.is-struck .gl__s{animation:glintsweep 620ms cubic-bezier(.3,.7,.3,1)}
+.is-struck .gl__r{animation:glintring 620ms cubic-bezier(.16,.9,.28,1)}
 .is-struck{animation:glintbody 460ms cubic-bezier(.2,.9,.25,1)}
 
+@keyframes glintsweep{
+  0%   {opacity:0;transform:translateX(-140%)}
+  18%  {opacity:1}
+  100% {opacity:0;transform:translateX(360%)}
+}
 @keyframes glintring{
   0%   {opacity:0.95;transform:scale(1);border-color:var(--vapor)}
-  55%  {opacity:0.42}
-  100% {opacity:0;transform:scale(1.3);border-color:var(--glint-1)}
+  55%  {opacity:0.40}
+  100% {opacity:0;transform:scale(1.32);border-color:var(--glint-1)}
 }
 @keyframes glintbody{
   0%   {transform:translateY(0) scale(1)}
-  20%  {transform:translateY(1px) scale(0.975)}
-  58%  {transform:translateY(-2px) scale(1.026)}
+  20%  {transform:translateY(1px) scale(0.974)}
+  58%  {transform:translateY(-2px) scale(1.028)}
   100% {transform:translateY(0) scale(1)}
 }
 
 /* ── who is lit unprompted ──────────────────────────────────────────
-   Exactly one thing, ever: the nav tab that says where you are, and the
-   skip pill while a track it belongs to is on screen. Everything else
-   waits to be reached for. */
+   Exactly one thing: the nav tab that says where you are, and the skip
+   pill while a track it belongs to is on screen. */
 .nav__link.is-here{
   color:var(--vapor);
   background:rgba(242,243,245,0.055);
   box-shadow:0 0 0 1px rgba(242,243,245,0.06),
              0 0 28px -5px var(--glint-1);
 }
-.nav__link.is-here::before{opacity:1;animation:navbeam 5.2s linear infinite}
-.nav__link:hover::before{opacity:0.42}
-.nav__link.is-here:hover::before{opacity:1}
+.nav__link.is-here .gl{opacity:1}
+.nav__link.is-here .gl__b{animation-duration:5.2s}
+.nav__link:hover .gl{opacity:0.46}
+.nav__link.is-here:hover .gl{opacity:1}
 
 
 /* ══ SKIP THE SCROLL EXPERIENCE ═══════════════════════════════════════
@@ -577,8 +606,10 @@ h1,h2,h3,h4,blockquote,.mono,summary,figcaption,th{text-wrap:balance}
 }
 .skip.is-on{opacity:1;transform:none;pointer-events:auto}
 .skip:hover,.skip:focus-visible{color:var(--vapor);border-color:var(--hair-strong)}
-.skip::before{opacity:0.9;animation:navbeam 4.2s linear infinite}
-.skip:hover::before,.skip:focus-visible::before{opacity:1;animation-duration:2.2s}
+.skip .gl{opacity:0.92}
+.skip .gl__b{animation-duration:4.2s}
+.skip:hover .gl,.skip:focus-visible .gl{opacity:1}
+.skip:hover .gl__b,.skip:focus-visible .gl__b{animation-duration:2.2s}
 .skip.is-on:hover{box-shadow:0 0 26px -9px var(--glint-1)}
 .skip__a{
   width:13px;height:13px;flex:none;

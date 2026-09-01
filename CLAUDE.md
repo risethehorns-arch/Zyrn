@@ -680,6 +680,34 @@ page's statement of where you are; everything else waits to be reached
 for. That constraint is what keeps a site-wide glow from becoming noise,
 and it is the reason this departure is survivable at all.
 
+## Animating a custom property is not the same as moving something
+
+2026-09-01, and it cost a full build. The button light travelled by
+animating `--beam`, a registered `<angle>`, into
+`conic-gradient(from var(--beam), …)`. Measured here it was perfect —
+`CSSPropertyRule: syntax=<angle>`, six distinct values over 1.75s. On the
+owner's machine it never moved a pixel.
+
+**Animating a custom property that feeds `background-image` forces a
+REPAINT every frame, and a repaint is the one thing a compositor is free
+to cache, defer or skip** — especially on an element that also carries
+`filter`, which promotes it to its own layer. It is correct, it is
+expensive, and it is not reliable.
+
+**A transform is none of those things.** The light is now a real element
+carrying a STATIC conic gradient, rotating inside a rim-shaped mask:
+`.gl` is the masked rim, `.gl__b` is an oversized square that spins. Same
+picture, runs on the compositor, needs no `@property` at all.
+
+**The general rule: if something must be seen to move, move it with a
+transform.** Custom-property animation is for values nobody is watching
+frame by frame.
+
+And the corollary for probes: `getAnimations()` reporting `running`
+proves an animation EXISTS, not that anything moves. `docs/glintprobe.py`
+reads the rotating element's actual matrix over time instead, which is
+the thing a reader sees.
+
 ## Kill stale headless Chrome before you believe a probe
 
 Every tool here launches Chrome on a FIXED `--remote-debugging-port` and

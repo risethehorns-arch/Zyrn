@@ -142,6 +142,14 @@ export function initPrism() {
     prism.style.setProperty('--rx',
       (3 + 3 * Math.sin(station * Math.PI / 2) + 0.6 * Math.cos(p * Math.PI * 4)).toFixed(2) + 'deg');
 
+    /* ── INNER PARALLAX ─────────────────────────────────────────────
+       How far the turn is off a settled face, -0.5..0.5. The rows on the
+       front face shift by a multiple of it, which gives the face depth it
+       cannot get from Z — `overflow:hidden` flattens a preserve-3d
+       subtree and the face has to clip. */
+    const off = station - Math.round(station);
+    if (tbl) tbl.style.setProperty('--pl', (off * 34).toFixed(2) + 'px');
+
     /* which face the reader is actually looking at */
     const front = Math.round(station) % 4;
     faces.forEach((f, i) => f.classList.toggle('is-front', i === front));

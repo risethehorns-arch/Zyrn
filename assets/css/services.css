@@ -451,3 +451,196 @@
 
 /* the same distinction on the landing page's SYS.03 list */
 .line--sys .line__idx{color:rgba(242,243,245,0.30)}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   SIGNATURE · THE ORBIT   (services.html — modules/orbit.js)
+
+   Five things riding a tilted ring around one core, and a scroll that
+   takes you round it once. Replaced the flat four-arm diagram on
+   2026-09-01: two dimensions could carry four lines and had nowhere to
+   put the fifth thing, which is not a line at all but the artefact the
+   lines ship — and "it comes from the middle" is a sentence only depth
+   can say.
+
+   THE SCENE CARRIES THE TILT, THE NODES CARRY THE SPIN. A node has to
+   undo both to keep its label facing the reader, so the spin lives on the
+   node where it can be reversed in the same transform list. Put it on the
+   scene and every label rotates away from you at the back of the ring.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.orb{
+  --open:0; --out:0; --home:0;
+  --spin:0deg; --tilt:8deg;
+  /* The ring is sized off the shared rig height like everything else, so
+     this section is the same scale as the five instruments it introduces. */
+  --rad:calc(var(--righ) * 0.415);
+  --hub:calc(var(--righ) * 0.13);
+}
+.orb .rig__view{perspective:calc(var(--righ) * 2.6);perspective-origin:50% 50%}
+
+.orb__scene{
+  /* 54%, not 50%. Every node stands UP out of the tilted plane, so the
+     composition's mass sits above its own centre — anchoring the ring on
+     the stage's midline pushed the top row of cards into the step
+     readout. Four percent is the whole correction. */
+  position:absolute;left:50%;top:54%;
+  width:0;height:0;
+  transform-style:preserve-3d;
+  /* the tilt, plus the room — the pointer lean and the travel lean are
+     the last terms, modifying a composition that is already correct */
+  transform:
+    rotateX(calc(var(--tilt) + var(--py,0) * -3deg + var(--lean,0) * 2deg))
+    rotateY(calc(var(--px,0) * 3.4deg));
+  will-change:transform;
+}
+
+/* ── the ring itself ─────────────────────────────────────────────────
+   A circle laid flat into the tilted plane. It is one element and it does
+   not rotate — the things ON it do, which is what makes the turn read as
+   an orbit rather than as a spinning picture. */
+.orb__ring{
+  position:absolute;left:50%;top:50%;
+  width:calc(var(--rad) * 2);height:calc(var(--rad) * 2);
+  margin:calc(var(--rad) * -1) 0 0 calc(var(--rad) * -1);
+  border-radius:50%;
+  border:1px solid rgba(242,243,245,0.30);
+  transform:rotateX(90deg) scale(calc(0.28 + 0.72 * var(--open)));
+  opacity:var(--open);
+  box-shadow:0 0 34px -12px var(--glint-1);
+}
+/* a second, brighter ring that only arrives at the end — the lines being
+   carried rather than merely drawn */
+.orb__ring--laden{
+  border-color:var(--glint-2);
+  border-width:1.6px;
+  opacity:calc(var(--home) * 0.85);
+  box-shadow:0 0 44px -8px var(--glint-1);
+}
+
+/* ── the spokes ──────────────────────────────────────────────────────
+   A bar from the centre out along each ray, lying in the ring's own
+   plane. rotateX(90deg) puts the element into that plane; rotateZ then
+   turns it within it. */
+.orb__sp{
+  position:absolute;left:0;top:0;
+  width:var(--rad);height:1px;
+  transform-origin:0 50%;
+  transform:rotateX(90deg)
+            rotateZ(calc(var(--a) + var(--spin)))
+            scaleX(var(--out));
+  /* 2px, and brighter at the rim end. At one pixel and 34% these lie
+     almost edge-on inside a tilted plane and disappear entirely — a spoke
+     you cannot see is not a spoke, it is a comment in the stylesheet. */
+  height:2px;
+  background:linear-gradient(90deg,
+    rgba(242,243,245,0.06),var(--glint-1) 62%,var(--glint-2));
+  opacity:calc(var(--out) * 0.75);
+  box-shadow:0 0 10px -2px var(--glint-1);
+  will-change:transform;
+}
+
+/* ── the hub ─────────────────────────────────────────────────────────
+   The mark, at the centre of everything, standing up out of the tilted
+   plane so it faces the reader. */
+.orb__hub{
+  position:absolute;left:0;top:0;
+  width:var(--hub);height:var(--hub);
+  margin:calc(var(--hub) / -2) 0 0 calc(var(--hub) / -2);
+  display:grid;place-items:center;
+  border:1px solid var(--hair-strong);border-radius:50%;
+  background:rgba(14,15,18,0.86);
+  transform:rotateX(calc(-1 * var(--tilt)))
+            scale(calc(1 + var(--home) * 0.34));
+  box-shadow:0 0 40px -6px var(--glint-1),
+             inset 0 0 22px -10px var(--glint-2);
+  z-index:2;
+}
+.orb__hub .mark{transform:scale(1.35)}
+
+/* ── the five ────────────────────────────────────────────────────────
+   Out to its angle, along the ray, then turned back to face the camera
+   and stood up out of the tilt. Four rotations and one translate, and
+   the last two are what keep the label readable at the back of the ring. */
+.orb__n{
+  --z:1;
+  position:absolute;left:0;top:0;
+  width:clamp(132px,15vw,186px);
+  margin:0;padding:11px 13px 12px;
+  display:block;text-align:left;
+  border:1px solid var(--hair);border-radius:9px;
+  background:rgba(14,15,18,0.78);
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  transform:
+    translate(-50%,-50%)
+    rotateY(calc(var(--a) + var(--spin)))
+    translateZ(calc(var(--rad) * var(--out)))
+    rotateY(calc(-1 * (var(--a) + var(--spin))))
+    rotateX(calc(-1 * var(--tilt)))
+    /* depth read: a little smaller at the back, a little larger in front */
+    scale(calc(0.84 + 0.16 * ((var(--z) + 1) / 2)));
+  /* CSS cannot compute a child's Z, so `--z` is written by orbit.js and
+     every depth cue on this element is derived from it here. */
+  opacity:calc(var(--out) * (0.30 + 0.70 * ((var(--z) + 1) / 2)));
+  transition:border-color 300ms,background-color 300ms,box-shadow 420ms;
+  will-change:transform,opacity;
+}
+.orb__n.is-front{
+  border-color:rgba(242,243,245,0.5);
+  background:rgba(14,15,18,0.9);
+  box-shadow:0 0 30px -10px var(--glint-1);
+}
+.orb__n:hover,.orb__n:focus-visible{
+  border-color:var(--hair-strong);
+  background:rgba(14,15,18,0.92);
+}
+.orb__n__i{display:block;color:rgba(242,243,245,0.55);font-size:10px}
+.orb__n__t{display:block;margin-top:4px;font-size:14px;line-height:1.24;color:var(--vapor)}
+.orb__n__m{
+  display:block;margin-top:5px;
+  font-size:9.5px;letter-spacing:0.14em;
+  color:rgba(242,243,245,0.5);
+}
+
+/* THE FIFTH LEAVES THE RING. It is not a line, it is what the lines
+   ship, so at the closing beat it travels to the centre and sits in the
+   hub — which is the only thing on this page that says where it comes
+   from without a sentence. */
+.orb__n--sys{
+  transform:
+    translate(-50%,-50%)
+    rotateY(calc(var(--a) + var(--spin)))
+    translateZ(calc(var(--rad) * var(--out) * (1 - var(--home))))
+    rotateY(calc(-1 * (var(--a) + var(--spin))))
+    rotateX(calc(-1 * var(--tilt)))
+    /* TOWARD THE READER, not downward. The first version translated it
+       down the screen, which reads as the card falling off the ring — the
+       opposite of the point. Pushed forward in screen space it arrives in
+       front of the hub, which is where the argument says it comes from. */
+    translateZ(calc(var(--home) * var(--righ) * 0.20))
+    scale(calc((0.84 + 0.16 * ((var(--z) + 1) / 2)) * (1 + var(--home) * 0.16)));
+}
+/* It keeps its opacity on the way in regardless of where the ring left
+   it — a card travelling to the centre that fades because its old angle
+   is at the back is a card that vanishes mid-sentence. */
+.orb__n--sys{
+  border-color:rgba(165,148,251,0.40);
+  opacity:calc(max(var(--out) * (0.30 + 0.70 * ((var(--z) + 1) / 2)), var(--home)));
+  z-index:3;
+}
+.orb__n--sys.is-front{box-shadow:0 0 36px -8px var(--glint-2)}
+
+@media (max-width:860px){
+  /* The ring's horizontal extent is 2*rad PLUS a card width, because each
+     card is centred on its node. At 0.415 of a 374px rig that came to
+     448px inside a 358px stage — measured 40px over the left edge at
+     390x844. Both numbers had to come down, not one. */
+  .orb{--rad:calc(var(--righ) * 0.30)}
+  .orb__n{width:clamp(88px,26vw,116px);padding:7px 9px 8px}
+  .orb__n__t{font-size:12px}
+  .orb__n__m{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .orb__scene,.orb__n,.orb__sp{will-change:auto}
+  .orb__n{transition:none}
+}

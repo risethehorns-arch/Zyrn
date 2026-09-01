@@ -526,16 +526,15 @@ body.is-navopen .nav{background:rgba(8,9,11,0.94)}
    The arc stops travelling and becomes a still rim. The point of the mark
    is WHICH tab is live, and that survives being stationary. */
 @media (prefers-reduced-motion:reduce){
-  /* The arcs stop travelling and become still rims; the strike becomes a
-     change of state rather than a motion. The point of the mark is WHICH
-     control is live, and that survives being stationary. */
-  .nav__link.is-here::before,
-  .btn:hover::before,.cmdkbtn:hover::before,.rk__out:hover::before,
-  .mx__line:hover::before,.skip::before,.skip__a,
-  .is-struck,.is-struck::before,.is-struck::after{animation:none}
-  .nav__link::before,.skip{transition:none}
+  /* The arc stops travelling and becomes a still rim; the strike becomes
+     a change of state rather than a motion. The point of the mark is
+     WHICH control is live, and that survives being stationary. */
+  .gl__b{animation:none !important}
+  .is-struck,.is-struck .gl__s,.is-struck .gl__r,.skip__a{animation:none}
   .nav__link:hover,.btn:hover,.cmdkbtn:hover,.rk__out:hover,
   .mx__line:hover,.skip.is-on:hover{transform:none}
+  .gl,.skip{transition:none}
   .skip{opacity:1;transform:none;pointer-events:auto}
+}
 }
 }

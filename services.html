@@ -50,13 +50,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css?v=24aa70ef">
+<link rel="stylesheet" href="assets/css/styles.css?v=1c608369">
 <link rel="stylesheet" href="assets/css/service.css?v=d0676abf">
-<link rel="stylesheet" href="assets/css/field.css?v=d2f33dcc">
+<link rel="stylesheet" href="assets/css/field.css?v=0539fb2e">
 <link rel="stylesheet" href="assets/css/footer.css?v=9cd9eb26">
 <link rel="stylesheet" href="assets/css/cmdk.css?v=2b54249d">
-<link rel="stylesheet" href="assets/css/svc-modules.css?v=2995c32f">
-<link rel="stylesheet" href="assets/css/services.css?v=e69d1018">
+<link rel="stylesheet" href="assets/css/svc-modules.css?v=448fa2e3">
+<link rel="stylesheet" href="assets/css/services.css?v=105e5b15">
 
 
 <script type="application/ld+json">
@@ -136,69 +136,87 @@
     </header>
 
 
-    <!-- SIGNATURE · THE CORE ─────────────────────────────────────────
-         The set's own instrument: a closed core partitions into four
-         lines, extends them far enough to be engaged separately, then
-         holds them against a rim they now share. Same three-beat move
-         the field makes on this page, told twice at once. -->
-    <section class="sig sig--core" id="sigCore" aria-label="How the four lines relate">
+    <!-- ── SIGNATURE · THE ORBIT ────────────────────────────────────────
+         Five things riding a tilted ring around one core, and a scroll
+         that takes you round it once. Replaced the flat four-arm diagram
+         on 2026-09-01: two dimensions could carry the four lines and had
+         nowhere to put the fifth, which is not a line at all but the
+         artefact the lines ship — and at the closing beat it leaves the
+         ring for the centre, which is a sentence only depth can say.
+
+         The scene carries the TILT and each node carries the SPIN,
+         because a node has to undo both to keep its label facing the
+         reader. Depth cueing is written by the module as `--z`, since
+         nothing in a stylesheet can read a computed Z.
+         See modules/orbit.js. -->
+    <section class="sig sig--orbit" id="sigOrbit" aria-label="How the five relate">
       <div class="sig__track">
         <div class="sig__stage">
           <div class="sig__head" data-keepout>
-            <span class="mono sig__step" id="coreStep">01 &mdash; CORE</span>
-            <span class="mono sig__pct"><span id="corePct">000</span>%</span>
+            <span class="mono sig__step" id="orbStep">00 &mdash; ONE CORE</span>
+            <span class="mono sig__pct"><span id="orbPct">000</span>%</span>
           </div>
 
-          <div class="core" data-stage="1">
-            <div class="core__ring" aria-hidden="true">
-              <!-- r=70 on a 200 box. The dashed set is four 80-degree arcs
-                   with 16-degree gaps, rotated -37 so the gaps land exactly
-                   on the diagonals the four lines run along. -->
-              <svg viewBox="0 0 200 200" aria-hidden="true">
-                <circle class="core__whole" cx="100" cy="100" r="70"></circle>
-                <circle class="core__split" cx="100" cy="100" r="70"
-                        stroke-dasharray="90.41 19.55" transform="rotate(-37 100 100)"></circle>
-                <circle class="core__laden" cx="100" cy="100" r="70"
-                        stroke-dasharray="90.41 19.55" transform="rotate(-37 100 100)"></circle>
-              </svg>
+          <div class="rig orb" id="orb" data-act="-1">
+            <div class="rig__view">
+              <div class="orb__scene" id="orbScene">
+
+                <span class="orb__ring" aria-hidden="true"></span>
+                <span class="orb__ring orb__ring--laden" aria-hidden="true"></span>
+
+                <span class="orb__sp" aria-hidden="true"></span>
+                <span class="orb__sp" aria-hidden="true"></span>
+                <span class="orb__sp" aria-hidden="true"></span>
+                <span class="orb__sp" aria-hidden="true"></span>
+                <span class="orb__sp" aria-hidden="true"></span>
+
+                <div class="orb__hub" aria-hidden="true">
+                  <span class="mark">
+                    <svg class="mark__half mark__half--top" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+                    <svg class="mark__half mark__half--bot" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+                    <span class="mark__seam"></span>
+                  </span>
+                </div>
+
+                <a class="orb__n" href="services/website-design.html">
+                  <span class="mono orb__n__i">01</span>
+                  <span class="orb__n__t">Website design</span>
+                  <span class="mono orb__n__m">STRUCTURE / BUILD / MEASUREMENT</span>
+                </a>
+                <a class="orb__n" href="services/brand-kit.html">
+                  <span class="mono orb__n__i">02</span>
+                  <span class="orb__n__t">Brand kit</span>
+                  <span class="mono orb__n__m">PALETTE / TYPE / MOTION / VOICE</span>
+                </a>
+                <a class="orb__n" href="services/business-structuring.html">
+                  <span class="mono orb__n__i">03</span>
+                  <span class="orb__n__t">Business structuring</span>
+                  <span class="mono orb__n__m">DECISION RIGHTS / INCENTIVES</span>
+                </a>
+                <a class="orb__n" href="services/ai-transformation.html">
+                  <span class="mono orb__n__i">04</span>
+                  <span class="orb__n__t">AI adoption</span>
+                  <span class="mono orb__n__m">READINESS / WORKFLOW / GOVERNANCE</span>
+                </a>
+                <a class="orb__n orb__n--sys" href="services/crm.html">
+                  <span class="mono orb__n__i">05</span>
+                  <span class="orb__n__t">Customizable CRM</span>
+                  <span class="mono orb__n__m">SCHEMA / PIPELINE / LEDGER</span>
+                </a>
+
+              </div>
             </div>
 
-            <span class="corearm" style="--a:315deg" aria-hidden="true"></span>
-            <span class="corearm" style="--a:45deg"  aria-hidden="true"></span>
-            <span class="corearm" style="--a:135deg" aria-hidden="true"></span>
-            <span class="corearm" style="--a:225deg" aria-hidden="true"></span>
-
-            <a class="corenode" style="--a:315deg" href="services/website-design.html">
-              <span class="mono corenode__idx">01</span>
-              <span class="corenode__name">Website design</span>
-              <span class="mono corenode__meta">STRUCTURE / BUILD / MEASUREMENT</span>
-            </a>
-            <a class="corenode" style="--a:45deg" href="services/brand-kit.html">
-              <span class="mono corenode__idx">02</span>
-              <span class="corenode__name">Brand kit</span>
-              <span class="mono corenode__meta">PALETTE / TYPE / MOTION / VOICE</span>
-            </a>
-            <a class="corenode" style="--a:135deg" href="services/business-structuring.html">
-              <span class="mono corenode__idx">03</span>
-              <span class="corenode__name">Business structuring</span>
-              <span class="mono corenode__meta">DECISION RIGHTS / INCENTIVES</span>
-            </a>
-            <a class="corenode" style="--a:225deg" href="services/ai-transformation.html">
-              <span class="mono corenode__idx">04</span>
-              <span class="corenode__name">AI adoption</span>
-              <span class="mono corenode__meta">READINESS / WORKFLOW / GOVERNANCE</span>
-            </a>
-
-            <div class="core__hub" aria-hidden="true">
-              <span class="mark">
-                <svg class="mark__half mark__half--top" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
-                <svg class="mark__half mark__half--bot" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
-                <span class="mark__seam"></span>
-              </span>
-            </div>
+            <ol class="rig__key" id="orbKey">
+              <li><span class="mono k__n">01</span><span class="k__t">Website design</span><span class="mono k__v">STRUCTURE / BUILD / MEASUREMENT</span></li>
+              <li><span class="mono k__n">02</span><span class="k__t">Brand kit</span><span class="mono k__v">PALETTE / TYPE / MOTION / VOICE</span></li>
+              <li><span class="mono k__n">03</span><span class="k__t">Business structuring</span><span class="mono k__v">DECISION RIGHTS / INCENTIVES</span></li>
+              <li><span class="mono k__n">04</span><span class="k__t">AI adoption</span><span class="mono k__v">READINESS / WORKFLOW / GOVERNANCE</span></li>
+              <li><span class="mono k__n">05</span><span class="k__t">Customizable CRM</span><span class="mono k__v">SCHEMA / PIPELINE / LEDGER</span></li>
+            </ol>
           </div>
 
-          <p class="sig__note" id="coreNote" data-keepout>One system, before it is four lines. Everything Zyrn runs is a partition of the same operating core, which is why the lines share a diagnostic, a vocabulary, and a measurement layer.</p>
+          <p class="sig__note" id="orbNote" data-keepout>Everything Zyrn runs is a partition of the same operating core. That is not a tidy way of describing four services; it is why they share a diagnostic, a vocabulary and a measurement layer, and why running two of them costs less than twice one.</p>
         </div>
       </div>
     </section>
@@ -475,7 +493,7 @@
   </main>
 </div>
 
-<script src="assets/js/main.js?v=8ab57bd5"></script>
+<script src="assets/js/main.js?v=db0ab441"></script>
 <script src="assets/js/ui.js?v=a021cfb8"></script>
 <script src="assets/js/nav.js?v=193af980"></script>
 <script src="assets/js/cmdk.js?v=1c463638"></script>
@@ -483,7 +501,7 @@
 
 <script type="module">
 import { initField } from './assets/js/field.js';
-import { initCore }   from './assets/js/modules/core.js';
+import { initOrbit }  from './assets/js/modules/orbit.js';
 import { initSkip } from './assets/js/modules/skip.js';
 import { initMatrix } from './assets/js/modules/matrix.js';
 
@@ -499,7 +517,7 @@ initField({
   onState: (p, n) => { if (roState) roState.textContent = n; },
 });
 
-initCore();
+initOrbit();
 initMatrix();
 initSkip();
 </script>

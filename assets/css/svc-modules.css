@@ -771,6 +771,33 @@
 }
 .wll__gate.is-on{background:rgba(242,243,245,0.36)}
 .wll__gate.is-on span{color:rgba(242,243,245,0.72)}
+/* THE FLASH. A gate that is passed should announce it — the index
+   clearing a level is the only event in this instrument, and before this
+   it happened silently. One 620ms burst, fired by well.js adding the
+   class, and it fires again on the way back down. */
+.wll__gate.is-hit{animation:wllgate 620ms cubic-bezier(.16,.9,.3,1)}
+@keyframes wllgate{
+  0%   {background:var(--vapor);box-shadow:0 0 26px -2px var(--glint-1)}
+  100% {background:rgba(242,243,245,0.36);box-shadow:none}
+}
+
+/* Light rising inside the filled part of a column — what makes a shaft
+   read as carrying something rather than as a bar that got taller. */
+.wll__fill::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:26%;
+  background:linear-gradient(180deg,transparent,rgba(242,243,245,0.30));
+  opacity:0.55;pointer-events:none;
+  animation:wllrise 3.6s cubic-bezier(.4,0,.5,1) infinite;
+}
+@keyframes wllrise{
+  0%   {transform:translateY(0);opacity:0}
+  12%  {opacity:0.6}
+  72%  {transform:translateY(-300%);opacity:0}
+  100% {transform:translateY(-300%);opacity:0}
+}
+.wll__col.is-constraint .wll__fill::after{
+  background:linear-gradient(180deg,transparent,rgba(165,148,251,0.5));
+}
 
 /* ── the ground ──────────────────────────────────────────────────────── */
 .wll__ground{
@@ -925,7 +952,7 @@
   /* Shorter than the rig, because a face is a screen and a screen is
      wider than it is tall. At 0.92 the content sat in the top four
      tenths with half the face empty under it. */
-  --prh:calc(var(--righ) * 0.78);
+  --prh:calc(var(--righ) * 0.72);
 }
 /* Deeper than the shared 1500: at this size a 1500px camera puts a hard
    keystone on the two side faces mid-turn. */
@@ -985,9 +1012,49 @@
 .prs__f.is-front .prs__cap{color:var(--vapor);letter-spacing:0.34em}
 
 /* ── face 01 · the table ─────────────────────────────────────────────── */
-.prs__tbl{display:flex;flex-direction:column;justify-content:space-between;
-  gap:clamp(3px,1cqw,8px);flex:1 1 auto;min-height:0}
+.prs__tbl{
+  position:relative;
+  display:flex;flex-direction:column;
+  gap:clamp(4px,1.3cqw,11px);flex:1 1 auto;min-height:0;
+  padding-top:clamp(3px,1cqw,8px);
+}
+/* THE SCAN. One hairline crossing the table on a slow loop — a system
+   being read rather than a screenshot of one. Solid Vapor at low alpha,
+   never a gradient, which is the only shine the doctrine allows on a DOM
+   element. */
+.prs__tbl::after{
+  content:'';position:absolute;left:0;right:0;top:0;height:1px;
+  background:rgba(242,243,245,0.44);
+  box-shadow:0 0 12px -2px var(--glint-1);
+  opacity:0;pointer-events:none;
+  animation:prsscan 5.4s cubic-bezier(.45,0,.5,1) infinite;
+}
+@keyframes prsscan{
+  0%   {transform:translateY(0);opacity:0}
+  7%   {opacity:0.9}
+  46%  {transform:translateY(var(--prh));opacity:0}
+  100% {transform:translateY(var(--prh));opacity:0}
+}
 .prs__hr,.prs__row{display:flex;gap:2.4%;align-items:center}
+/* ── INNER PARALLAX ──────────────────────────────────────────────────
+   A face CANNOT hold real depth: `overflow:hidden` flattens a
+   preserve-3d subtree, and the face has to clip or its rows escape the
+   prism. So the depth is computed instead — prism.js writes `--pl`, how
+   far off-centre the turn currently is, and each row carries its own
+   `--d` and shifts by a multiple of it. Parallax either way; only the
+   arithmetic moved. */
+.prs__row{
+  transform:translateX(calc(var(--pl,0px) * var(--d,0)));
+  will-change:transform;
+}
+.prs__row:nth-child(2){--d:0.18}
+.prs__row:nth-child(3){--d:0.42}
+.prs__row:nth-child(4){--d:0.66}
+.prs__row:nth-child(5){--d:0.88}
+.prs__row:nth-child(6){--d:1.12}
+.prs__row:nth-child(9){--d:1.78}
+.prs__row:nth-child(8){--d:1.56}
+.prs__row:nth-child(7){--d:1.34}
 .prs__hr span,.prs__row span{
   position:relative;flex:1 1 0;min-width:0;overflow:hidden;
   transition:flex 540ms var(--ease-reveal,cubic-bezier(.16,1,.3,1)),
@@ -1016,9 +1083,23 @@
   display:block;height:clamp(4px,1.1cqw,8px);text-decoration:none;
   background:rgba(242,243,245,0.13);
 }
+/* A status that is all one grey is a placeholder. These are the real
+   enum values the desk stores, and they read at a glance because the two
+   that mean "moving" are lit and the two that mean "stopped" are not. */
 .prs__row u{
-  text-decoration:none;color:rgba(242,243,245,0.5);
-  border:1px solid var(--hair);padding:1px 4px;display:inline-block;
+  text-decoration:none;color:rgba(242,243,245,0.52);
+  border:1px solid var(--hair);padding:1px 5px;display:inline-block;
+  white-space:nowrap;
+}
+.prs__row u[data-s="live"]{
+  color:var(--glint-3);border-color:rgba(165,148,251,0.44);
+  background:rgba(110,86,248,0.10);
+}
+.prs__row u[data-s="hold"]{
+  color:rgba(242,243,245,0.78);border-color:rgba(242,243,245,0.22);
+}
+.prs__row u[data-s="off"]{
+  color:rgba(242,243,245,0.34);border-color:rgba(242,243,245,0.09);
 }
 
 /* the reconfiguration: one column leaves, another arrives, the rest stay */
@@ -1213,4 +1294,11 @@
    before. This only has to still the two things CSS drives on its own. */
 @media (prefers-reduced-motion:reduce){
   .stk__l.is-lit::before{animation:none;opacity:0}
+}
+
+
+/* the two new loops stop under reduced motion like everything else */
+@media (prefers-reduced-motion:reduce){
+  .prs__tbl::after,.wll__fill::after,.wll__gate.is-hit{animation:none}
+  .prs__row{transform:none}
 }

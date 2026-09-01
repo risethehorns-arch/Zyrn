@@ -126,8 +126,19 @@ export function initWell() {
     }
 
     /* a gate is passed when the INDEX passes it, not when the fastest
-       column does — same reason the plane is where it is */
-    gates.forEach((g, i) => g.classList.toggle('is-on', lowest >= (i + 1) * 0.25 - 0.001));
+       column does — same reason the plane is where it is. Crossing one is
+       the only EVENT this instrument has, so it gets a flash: the class
+       goes on, and comes off again on animationend so it can fire on the
+       way back down too. */
+    gates.forEach((g, i) => {
+      const on = lowest >= (i + 1) * 0.25 - 0.001;
+      if (on !== g.classList.contains('is-on')) {
+        g.classList.toggle('is-on', on);
+        g.classList.remove('is-hit');
+        void g.offsetWidth;
+        g.classList.add('is-hit');
+      }
+    });
 
     /* the camera opens out across the climb, so the well is a little more
        side-on at the bottom and a little more head-on at the top. Small:
@@ -163,6 +174,10 @@ export function initWell() {
     beat(5);
     return;
   }
+  gates.forEach((g) => g.addEventListener('animationend', () => {
+    g.classList.remove('is-hit');
+  }));
+
   onTrack(track, draw);
   /* ── THE ROOM ────────────────────────────────────────────────────
      Runs every frame while the section is near, whether or not the page

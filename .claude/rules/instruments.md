@@ -101,8 +101,21 @@ geometry. `docs/rigshot.py` photographs one at chosen progress values.
   at z = 0; without it every face swells by about a third as it arrives
   and the reader is trying to read a moving target.
 
-`services.html` keeps **core** (four arcs partitioning and extending) and
-**matrix**. Both were left alone deliberately — see `docs/decisions.md`.
+- **orbit** (`services.html`) — five things riding a tilted ring around one
+  core, and a scroll that takes you round it once. Replaced `core.js`, a
+  flat four-arm diagram, on 2026-09-01: two dimensions could carry the
+  four lines and had nowhere to put the fifth, which is not a line but the
+  artefact the lines ship — and at the closing beat it leaves the ring for
+  the centre, which is a sentence only depth can say.
+  **The scene carries the TILT and each node carries the SPIN**, because a
+  node has to undo both to keep its label facing the reader; put the spin
+  on the scene and every label at the back rotates away from you.
+  **Depth cueing is written by the module as `--z`** — nothing in a
+  stylesheet can read a child's computed Z, so opacity, scale and the
+  front-most pick all derive from one number the module supplies.
+
+`services.html` keeps **matrix**, which still covers the four advisory
+lines only — see `docs/decisions.md`.
 
 ### The three that were replaced
 
