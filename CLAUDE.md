@@ -538,6 +538,44 @@ been stepped 0→1 by the thing whose whole job is stepping instruments
 in a job tmp dir. **If you add an instrument with a new track class, add
 it to that selector in the same commit.**
 
+## A stylesheet that does not arrive looks like a broken design
+
+2026-09-01. The owner opened `services/website-design.html` and saw the
+stack with no styling at all — six layers in normal flow, the key rail
+numbered `1. 2. 3.`, unclipped panels sprawling across an ultrawide
+window. It read as a catastrophic layout bug.
+
+The page was fine. The same bytes rendered correctly in a clean browser at
+1440x900 AND at 2560x1240, the server was returning the current file, and
+`svc-modules.css` parsed with 195 rules and balanced braces. The browser
+simply did not have it.
+
+**That failure mode is invisible as a network problem and total as a
+visual one**, because every `.sig`, `.rig` and `.stk` rule lives in that
+one file while `.tabs` and the readout live in `styles.css` — so the
+chrome looks perfect and the instrument looks destroyed.
+
+`Cache-Control: no-store` from `docs/serve.py` protects the NEXT request
+and does nothing for a tab that already parsed an old copy — and nothing
+at all on GitHub Pages, which applies its own cache lifetime, so the live
+site carries the same exposure on every push.
+
+**`docs/stamp.py` is the fix.** Every local `href`/`src` on a `.css` or
+`.js` carries `?v=<8 chars of that file's own content hash>`. Identical
+bytes keep the same URL and stay cached; one edited byte is a new URL that
+cannot be served from anywhere stale. 147 links across 13 pages.
+
+    python docs/stamp.py           # rewrite
+    python docs/stamp.py --check   # exit 1 if anything is out of date
+
+**RUN IT AFTER TOUCHING ANY CSS OR JS AND BEFORE COMMITTING.** A stale
+stamp is worse than none, because it looks deliberate.
+
+Diagnosing this class of thing: dump `document.styleSheets` with each
+sheet's `cssRules.length`. A sheet that failed shows `-1` or is absent
+entirely, and one that parsed shows its real rule count — which
+distinguishes "did not arrive" from "arrived and is wrong" in one read.
+
 ## Kill stale headless Chrome before you believe a probe
 
 Every tool here launches Chrome on a FIXED `--remote-debugging-port` and
