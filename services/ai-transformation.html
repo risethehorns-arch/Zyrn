@@ -131,37 +131,112 @@
         <span class="mono tab__idx">04</span>
         <span class="tab__name">AI adoption</span>
       </a>
+      <a class="tab" href="crm.html">
+        <span class="mono tab__idx">05</span>
+        <span class="tab__name">Customizable CRM</span>
+      </a>
     </nav>
     </div>
 
 
-    <!-- SIGNATURE · READINESS INSTRUMENT ──────────────────────────────
-         SYS.04's ladder, made operable. Five dimensions climbing at
-         different rates, because the constraint is never the average. -->
-    <section class="sig sig--ready" id="sigReady" aria-label="The readiness index, climbing">
+    <!-- ── SIGNATURE · THE WELL ─────────────────────────────────────────
+         Five dimensions climbing a shaft through four gates, and a plane
+         that rides on the SHORTEST of them. The plane is the instrument:
+         the readiness index is the lowest dimension, never the mean, and
+         the other four sticking uselessly through it says that without a
+         caption.
+
+         Replaced the five-bar readiness meter on 2026-09-01. The rates,
+         the convergence and the level copy are carried over unchanged —
+         they were right, they were just two hundred pixels tall.
+
+         Nothing in the frame loop changes a height: the fill is a
+         full-height box scaled from its base and the cap and readout are
+         translated to meet it. See modules/well.js. -->
+    <section class="sig sig--well" id="sigWell" aria-label="The readiness index, climbing">
       <div class="sig__track">
         <div class="sig__stage">
           <div class="sig__head">
-            <span class="mono sig__step" id="readyStep">LEVEL 00 &mdash; EXPLORATORY</span>
-            <span class="mono sig__pct"><span id="readyPct">000</span>%</span>
+            <span class="mono sig__step" id="wllStep">00 &mdash; THE WELL</span>
+            <span class="mono sig__pct"><span id="wllPct">000</span>%</span>
           </div>
 
-          <div class="rdy">
-            <div class="rdy__dial">
-              <span class="rdy__num" id="readyNum">00</span>
-              <span class="mono rdy__cap">READINESS</span>
+          <div class="rig wll" id="wll">
+            <div class="rig__view" aria-hidden="true">
+              <div class="wll__scene" id="wllScene">
+
+                <div class="wll__wall">
+                  <span class="wll__gate" style="--g:1"><span>LEVEL 01</span></span>
+                  <span class="wll__gate" style="--g:2"><span>LEVEL 02</span></span>
+                  <span class="wll__gate" style="--g:3"><span>LEVEL 03</span></span>
+                  <span class="wll__gate" style="--g:4"><span>LEVEL 04</span></span>
+                </div>
+
+                <div class="wll__ground"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+                <!-- The rates are authored HERE rather than in the module,
+                     so the argument the instrument makes is readable in the
+                     markup: governance is the slowest, and the slowest is
+                     the index. -->
+                <div class="wll__cols">
+                <div class="wll__col" data-rate="1.00">
+                  <span class="wll__trk"></span>
+                  <span class="wll__side"></span>
+                  <span class="wll__fill"></span>
+                  <span class="wll__cap"></span>
+                  <span class="wll__val">00</span>
+                  <span class="wll__k">STRATEGY</span>
+                </div>
+                <div class="wll__col" data-rate="0.72">
+                  <span class="wll__trk"></span>
+                  <span class="wll__side"></span>
+                  <span class="wll__fill"></span>
+                  <span class="wll__cap"></span>
+                  <span class="wll__val">00</span>
+                  <span class="wll__k">WORKFORCE</span>
+                </div>
+                <div class="wll__col" data-rate="0.88">
+                  <span class="wll__trk"></span>
+                  <span class="wll__side"></span>
+                  <span class="wll__fill"></span>
+                  <span class="wll__cap"></span>
+                  <span class="wll__val">00</span>
+                  <span class="wll__k">WORKFLOW</span>
+                </div>
+                <div class="wll__col" data-rate="0.55">
+                  <span class="wll__trk"></span>
+                  <span class="wll__side"></span>
+                  <span class="wll__fill"></span>
+                  <span class="wll__cap"></span>
+                  <span class="wll__val">00</span>
+                  <span class="wll__k">GOVERNANCE</span>
+                </div>
+                <div class="wll__col" data-rate="0.80">
+                  <span class="wll__trk"></span>
+                  <span class="wll__side"></span>
+                  <span class="wll__fill"></span>
+                  <span class="wll__cap"></span>
+                  <span class="wll__val">00</span>
+                  <span class="wll__k">DATA</span>
+                </div>
+                </div>
+
+                <span class="wll__plane"></span>
+                <span class="wll__ix"><b id="wllNum">00</b><span>READINESS</span></span>
+
+              </div>
             </div>
-            <div class="rdy__dims" id="readyDims">
-              <div class="dim" data-rate="1.00"><span class="mono dim__k">STRATEGY</span><span class="dim__bar"><i></i></span><span class="mono dim__v">00</span></div>
-              <div class="dim" data-rate="0.72"><span class="mono dim__k">WORKFORCE</span><span class="dim__bar"><i></i></span><span class="mono dim__v">00</span></div>
-              <div class="dim" data-rate="0.88"><span class="mono dim__k">WORKFLOW</span><span class="dim__bar"><i></i></span><span class="mono dim__v">00</span></div>
-              <div class="dim" data-rate="0.55"><span class="mono dim__k">GOVERNANCE</span><span class="dim__bar"><i></i></span><span class="mono dim__v">00</span></div>
-              <div class="dim" data-rate="0.80"><span class="mono dim__k">DATA</span><span class="dim__bar"><i></i></span><span class="mono dim__v">00</span></div>
-            </div>
+
+            <ol class="rig__key" id="wllKey">
+              <li><span class="mono k__n">01</span><span class="k__t">Strategy</span><span class="mono k__v">LEVEL 00</span></li>
+              <li><span class="mono k__n">02</span><span class="k__t">Workforce</span><span class="mono k__v">LEVEL 00</span></li>
+              <li><span class="mono k__n">03</span><span class="k__t">Workflow</span><span class="mono k__v">LEVEL 00</span></li>
+              <li><span class="mono k__n">04</span><span class="k__t">Governance</span><span class="mono k__v">LEVEL 00 &mdash; CONSTRAINT</span></li>
+              <li><span class="mono k__n">05</span><span class="k__t">Data</span><span class="mono k__v">LEVEL 00</span></li>
+            </ol>
           </div>
 
-          <p class="sig__note" id="readyNote">Tools in use, nothing measured. Value is anecdotal, and the firm cannot say whether it is working.</p>
-          <p class="mono rdy__constraint" id="readyConstraint">CONSTRAINT &mdash; GOVERNANCE</p>
+          <p class="sig__note" id="wllNote">Five dimensions, four gates, one shaft. Nothing has been measured yet, which is where most firms are: not at level zero on an index, but not on the index at all.</p>
         </div>
       </div>
     </section>
@@ -290,6 +365,7 @@
               <a href="../services/brand-kit.html"><span class="mono">02</span> Brand kit</a>
               <a href="../services/business-structuring.html"><span class="mono">03</span> Business structuring</a>
               <a href="../services/ai-transformation.html"><span class="mono">04</span> AI adoption</a>
+              <a href="../services/crm.html"><span class="mono">05</span> Customizable CRM</a>
             </div>
             <div class="fcol">
               <span class="mono fcol__h">The firm</span>
@@ -345,7 +421,7 @@
 
 <script type="module">
 import { initField } from '../assets/js/field.js';
-import { initReadiness } from '../assets/js/modules/readiness.js';
+import { initWell } from '../assets/js/modules/well.js';
 
 const roState = document.getElementById('readoutState');
 initField({
@@ -359,7 +435,7 @@ initField({
   onState: (p, n) => { if (roState) roState.textContent = n; },
 });
 
-initReadiness();
+initWell();
 </script>
 </body>
 </html>

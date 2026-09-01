@@ -97,6 +97,7 @@ const ROUTES = {
   'brand-kit.html': 'S3',
   'business-structuring.html': 'S3',
   'ai-transformation.html': 'S1',
+  'crm.html': 'S1',
   'human-capital.html': 'S1', 'web-strategy.html': 'S1',
 };
 const HANDOFF_KEY = 'zyrn:handoff';

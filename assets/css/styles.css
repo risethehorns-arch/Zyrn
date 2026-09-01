@@ -616,12 +616,15 @@ h1,h2,h3,h4,blockquote,.mono,summary,figcaption,th{text-wrap:balance}
 
 
 /* ── service tabs ───────────────────────────────────────────────────
-   The four lines as a persistent switcher. Glass housing, one active
-   channel — reads as instrument channel-select, not website navigation. */
+   The service pages as a persistent switcher. Glass housing, one active
+   channel — reads as instrument channel-select, not website navigation.
+   Five channels since 2026-09-01: the four lines and the system they
+   ship. The active marker is `100% / 5` wide and steps by whole
+   multiples of itself, so the two numbers below have to move together. */
 
 .tabs{
   position:relative;
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
   gap:1px;margin-top:40px;
   border-radius:10px;
   border:1px solid var(--glass-edge);
@@ -649,13 +652,14 @@ h1,h2,h3,h4,blockquote,.mono,summary,figcaption,th{text-wrap:balance}
 /* the active channel is marked by the section's single Pulse */
 .tab.is-active::before{
   content:'';position:absolute;top:0;height:2px;background:var(--pulse);
-  width:25%;
+  width:20%;
   transition:transform 500ms var(--ease-reveal);
 }
 .tabs[data-active="0"] .tab.is-active::before{left:0;transform:translateX(0)}
 .tabs[data-active="1"] .tab.is-active::before{left:0;transform:translateX(100%)}
 .tabs[data-active="2"] .tab.is-active::before{left:0;transform:translateX(200%)}
 .tabs[data-active="3"] .tab.is-active::before{left:0;transform:translateX(300%)}
+.tabs[data-active="4"] .tab.is-active::before{left:0;transform:translateX(400%)}
 
 
 /* ── page transition veil ───────────────────────────────────────────

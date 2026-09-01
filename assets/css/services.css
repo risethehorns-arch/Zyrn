@@ -410,3 +410,44 @@
   .core,.core__ring,.core__hub,.corearm,.corenode{transition:none!important}
   .lcard::after,.glyph i,.mx__bar::after,.mx__sw::after{transition:none!important}
 }
+
+
+/* ══ 05 · THE SYSTEM THE LINES SHIP ════════════════════════════════════
+   Deliberately set apart from the four above. They are engagements; this
+   is an artefact, and filing it as a fifth line would have meant
+   re-cutting the core instrument's ring into five arcs and inventing
+   sixteen more matrix readings for combinations nobody has claimed.
+
+   It is the same card so it reads as the same kind of destination, with
+   its own top rule and a mono flag so nobody counts it as a line. */
+
+.lcards--sys{margin-top:0;border-top:none}
+.lcard--sys{
+  border-top:1px solid var(--hair);
+  border-bottom:1px solid var(--hair);
+}
+.lcard--sys .lcard__idx{color:rgba(242,243,245,0.10)}
+.lcard--sys:hover .lcard__idx{color:rgba(242,243,245,0.30)}
+
+/* the glyph: a prism, turning. Four faces of one object rather than four
+   objects, which is the thing the page it leads to is about. */
+.glyph--sys{perspective:220px}
+.glyph--sys i{
+  left:50%;top:50%;width:34%;height:44%;margin:-22% 0 0 -17%;
+  background:none;border:1px solid rgba(242,243,245,0.5);
+  /* translateZ takes a LENGTH, never a percentage — a percentage here is
+     an invalid declaration and the whole transform is dropped, which
+     leaves four identical rectangles stacked in the middle of the box. */
+  transform:rotateY(calc(var(--n) * 90deg)) translateZ(15px);
+  transition:transform 620ms var(--ease-reveal);
+}
+.glyph--sys i:nth-child(1){--n:0}
+.glyph--sys i:nth-child(2){--n:1;border-color:rgba(242,243,245,0.26)}
+.glyph--sys i:nth-child(3){--n:2;border-color:rgba(242,243,245,0.16)}
+.glyph--sys i:nth-child(4){--n:3;border-color:rgba(242,243,245,0.26)}
+.lcard:hover .glyph--sys i{
+  transform:rotateY(calc(var(--n) * 90deg - 90deg)) translateZ(15px);
+}
+
+/* the same distinction on the landing page's SYS.03 list */
+.line--sys .line__idx{color:rgba(242,243,245,0.30)}

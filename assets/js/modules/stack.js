@@ -99,6 +99,15 @@ export function initStack() {
 
     stk.style.setProperty('--open', open.toFixed(4));
 
+    /* The camera, and it moves BEFORE the stack does. Driven off `--open`
+       alone the widest moment of the instrument is early in the tip —
+       barely scaled down, already rotated a few degrees on Z, which adds
+       the box's width to its height. rigfit measured that transient 14px
+       into the note at 1920x1080. Pulling back first removes it, and the
+       move reads as a camera taking in something about to happen. */
+    const squeeze = ramp(p, 0.045, 0.170) - ramp(p, 0.900, 0.985);
+    stk.style.setProperty('--squeeze', squeeze.toFixed(4));
+
     /* A slow drift while it is held apart, so the stack is alive rather
        than parked. Amplitude scales with `open`, so it cannot wobble a
        surface that is supposed to be lying flat. */
@@ -120,6 +129,7 @@ export function initStack() {
     /* Held open at the middle layer: the whole argument is that there are
        six of these, and that is legible standing still. No drift. */
     stk.style.setProperty('--open', '1');
+    stk.style.setProperty('--squeeze', '1');
     stk.style.setProperty('--drift', '0');
     if (pctEl) pctEl.textContent = '000';
     beat(3);

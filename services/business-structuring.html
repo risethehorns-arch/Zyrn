@@ -131,33 +131,64 @@
         <span class="mono tab__idx">04</span>
         <span class="tab__name">AI adoption</span>
       </a>
+      <a class="tab" href="crm.html">
+        <span class="mono tab__idx">05</span>
+        <span class="tab__name">Customizable CRM</span>
+      </a>
     </nav>
     </div>
 
 
-    <!-- SIGNATURE · DECISION RIGHTS ───────────────────────────────────
-         The same eleven nodes, rewired. Left: the chart as published.
-         Right: authority where the work is. -->
-    <section class="sig sig--graph" id="sigGraph" aria-label="Decision rights, rewired">
+    <!-- ── SIGNATURE · THE PLAN ─────────────────────────────────────────
+         Eleven nodes, seen twice: as the elevation everybody has agreed to
+         (a tree standing up) and as the plan nobody has drawn (the same
+         eleven lying on a floor, authority where the work is). The camera
+         rotates between them while the tree settles onto the ground, and a
+         decision travels the long way, then the short way.
+
+         Replaced the flat two-layout lerp on 2026-09-01: that never became
+         one picture, so the reader had to be TOLD the two were the same
+         eleven nodes instead of watching it happen.
+
+         Every count on the key rail is written by plan.js off the arrays
+         that draw the diagram — nothing here is typed. See modules/plan.js. -->
+    <section class="sig sig--plan" id="sigPlan" aria-label="Decision rights, laid down">
       <div class="sig__track">
         <div class="sig__stage">
           <div class="sig__head">
-            <span class="mono sig__step" id="graphStep">01 &mdash; AS PUBLISHED</span>
-            <span class="mono sig__pct"><span id="graphPct">000</span>%</span>
+            <span class="mono sig__step" id="plnStep">01 &mdash; AS PUBLISHED</span>
+            <span class="mono sig__pct"><span id="plnPct">000</span>%</span>
           </div>
 
-          <svg class="grf" id="grf" viewBox="0 0 900 460" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-            <g class="grf__edges" id="grfEdges"></g>
-            <g class="grf__nodes" id="grfNodes"></g>
-          </svg>
+          <div class="rig pln" id="pln">
+            <div class="rig__view" aria-hidden="true">
+              <svg class="pln__svg" id="plnSvg" viewBox="0 0 1000 720"
+                   preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                <g class="pln__floor" id="plnFloor" opacity="0"></g>
+                <g class="pln__tiers" id="plnTiers"></g>
+                <g class="pln__edges" id="plnEdges"></g>
+                <!-- The travelling decision. Hidden by OPACITY, never by a
+                     position off to the left: this svg is overflow:visible so
+                     the tier rules can reach the full width, and a circle
+                     parked outside the viewBox paints outside the instrument. -->
+                <path class="pln__trail" id="plnTrail" d="M0,0" opacity="0"></path>
+                <g class="pln__nodes" id="plnNodes"></g>
+                <circle class="pln__halo" id="plnHalo" cx="0" cy="0" r="13" opacity="0"></circle>
+                <circle class="pln__tok" id="plnTok" cx="0" cy="0" r="6" opacity="0"></circle>
+              </svg>
+            </div>
 
-          <div class="grf__legend mono">
-            <span><i class="grf__key grf__key--esc"></i> ESCALATED DECISION</span>
-            <span><i class="grf__key grf__key--own"></i> OWNED WHERE IT LANDS</span>
-            <span id="grfStat">HOPS TO A DECISION &mdash; <b>4.2</b></span>
+            <ol class="rig__key" id="plnKey">
+              <li><span class="mono k__n">01</span><span class="k__t">People on the chart</span><span class="mono k__v"><span data-c="nodes">&mdash;</span> NODES &middot; <span data-c="tiers">&mdash;</span> TIERS</span></li>
+              <li><span class="mono k__n">02</span><span class="k__t">Reporting lines</span><span class="mono k__v"><span data-c="published">&mdash;</span> PUBLISHED, ALL CORRECT</span></li>
+              <li><span class="mono k__n">03</span><span class="k__t">The escalation</span><span class="mono k__v"><span data-c="long">&mdash;</span> HOPS TO AN ANSWER</span></li>
+              <li><span class="mono k__n">04</span><span class="k__t">Laid down</span><span class="mono k__v">SAME <span data-c="nodes">&mdash;</span>, NONE ADDED</span></li>
+              <li><span class="mono k__n">05</span><span class="k__t">Local authority</span><span class="mono k__v"><span data-c="local">&mdash;</span> LINES &middot; 01 HOP</span></li>
+              <li><span class="mono k__n">06</span><span class="k__t">Kept at the centre</span><span class="mono k__v"><span data-c="arb">&mdash;</span> DECISIONS ONLY</span></li>
+            </ol>
           </div>
 
-          <p class="sig__note" id="graphNote">Every decision travels to the top and back. The chart is accurate and the firm is still slow.</p>
+          <p class="sig__note" id="plnNote">Eleven people, three tiers, ten reporting lines. Every line on this chart is correct, everybody agrees it is correct, and the firm is still slow &mdash; because a reporting line says who is told, not who may decide.</p>
         </div>
       </div>
     </section>
@@ -286,6 +317,7 @@
               <a href="../services/brand-kit.html"><span class="mono">02</span> Brand kit</a>
               <a href="../services/business-structuring.html"><span class="mono">03</span> Business structuring</a>
               <a href="../services/ai-transformation.html"><span class="mono">04</span> AI adoption</a>
+              <a href="../services/crm.html"><span class="mono">05</span> Customizable CRM</a>
             </div>
             <div class="fcol">
               <span class="mono fcol__h">The firm</span>
@@ -341,7 +373,7 @@
 
 <script type="module">
 import { initField } from '../assets/js/field.js';
-import { initGraph } from '../assets/js/modules/graph.js';
+import { initPlan } from '../assets/js/modules/plan.js';
 
 const roState = document.getElementById('readoutState');
 initField({
@@ -354,7 +386,7 @@ initField({
   onState: (p, n) => { if (roState) roState.textContent = n; },
 });
 
-initGraph();
+initPlan();
 </script>
 </body>
 </html>

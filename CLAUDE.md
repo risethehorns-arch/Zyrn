@@ -430,6 +430,47 @@ Three behaviours were added and one was corrected. Full account in
   pointer input over CDP and photographs the wake and the shell, because none
   of this exists in a static screenshot.
 
+## Five service pages, five instruments, one scale — 2026-09-01
+
+All five signature instruments were rebuilt onto one shell at one size,
+and a fifth service page was added. The parts that constrain future work:
+
+- **`--righ` is the size of every instrument on the site**, and every
+  geometry inside one is a ratio of it. Full account in
+  `.claude/rules/instruments.md`, which loads whenever a module or
+  `svc-modules.css` is touched. Do not add a pixel constant to an
+  instrument; add a ratio.
+- **`perspective` is a ratio too.** It was `1500px` flat and it was tuned
+  against a stack a third smaller than the current one. A camera that does
+  not step back when the subject grows overflows the stage, silently,
+  because a pinned stage cannot be scrolled to reveal what it clipped.
+- **`docs/rigfit.py` is the check**, and it replaces `stkfit.py` (which
+  only knew about the stack). Nine window sizes, eight progress values,
+  projected unions against the head, the note, the rail and the window
+  edges. Run it after any geometry change. `docs/rigshot.py` takes the
+  pictures.
+- **`services/crm.html` is the fifth CHANNEL, not the fifth LINE**, and
+  the distinction is load-bearing rather than pedantic. "Four lines, one
+  system" is geometry on this site: the core instrument draws four arcs on
+  the diagonals and the matrix authors sixteen named readings for the
+  subsets of four. Making the CRM line 05 would mean re-cutting that ring
+  into five 72-degree arcs — putting a 168px label straight down the
+  bottom of a PINNED stage — and inventing sixteen more coverage claims
+  nobody has made. So the tab strip, the footer, the palette, the sitemap
+  and both index pages carry five; the core, the matrix and every "four
+  lines" sentence are untouched and still true. See `docs/decisions.md`.
+- **The tab strip is five wide above 1023px and its marker is `100% / 5`
+  stepped by whole multiples of itself** — those two numbers move
+  together. Below 1023px the strip WRAPS, where a marker positioned by
+  translateX cannot be right for any cell, so it becomes an edge on the
+  active cell instead. That needed `position:relative` on `.tab` scoped to
+  that media query ONLY; adding it globally parks every desktop marker at
+  x = 0.
+- Everything the CRM page prints about the product was counted out of the
+  repository or read out of its sync code. The four guarantees on the
+  prism's fourth face are the four that `website-sync.ts` actually
+  enforces, not four written for the page.
+
 ## Kill stale headless Chrome before you believe a probe
 
 Every tool here launches Chrome on a FIXED `--remote-debugging-port` and

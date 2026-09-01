@@ -9,7 +9,7 @@
    already exists on every page:
 
      the top level  ← .nav__links
-     the four lines ← the footer's "Lines" column
+     the service lines ← the footer's "Lines" column
 
    Their hrefs already differ by directory depth (`#sys-03` at the root,
    `../index.html#sys-03` inside services/), and a clone inherits whatever
@@ -18,7 +18,7 @@
    hard-code a menu.
 
    The Services row is a DISCLOSURE: the label navigates to the index, the
-   chevron beside it expands the four lines in place. Two separate targets,
+   chevron beside it expands the lines in place. Two separate targets,
    both over 44px, because a row that either navigates or expands depending
    on where your thumb lands is a coin toss on touch.
    ══════════════════════════════════════════════════════════════════════ */
@@ -33,7 +33,7 @@
   var links = Array.prototype.slice.call(row.querySelectorAll('a'));
   if (!links.length) return;
 
-  /* the four service lines, taken from the footer column that already
+  /* the service lines, taken from the footer column that already
      carries them with this page's own relative paths */
   var lines = (function () {
     var cols = document.querySelectorAll('.sitefoot__cols .fcol');
@@ -102,7 +102,7 @@
     more.className = 'navsheet__more';
     more.setAttribute('aria-expanded', 'false');
     more.setAttribute('aria-controls', 'navsheet-lines');
-    more.setAttribute('aria-label', 'Show the four service lines');
+    more.setAttribute('aria-label', 'Show the service lines');
     more.innerHTML =
       '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
 
@@ -135,7 +135,7 @@
       group.setAttribute('data-open', String(next));
       more.setAttribute('aria-expanded', String(next));
       more.setAttribute('aria-label',
-        next ? 'Hide the four service lines' : 'Show the four service lines');
+        next ? 'Hide the service lines' : 'Show the service lines');
     });
   });
 

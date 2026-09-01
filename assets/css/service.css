@@ -161,10 +161,19 @@
   .phase{padding-top:0;padding-left:16px}
   .phase::before{height:100%}
   .tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .tab{border-right:none;border-bottom:1px solid rgba(242,243,245,0.07)}
-  .tabs .tab.is-active::before{width:50%}
-  .tabs[data-active="2"] .tab.is-active::before{transform:translateX(0)}
-  .tabs[data-active="3"] .tab.is-active::before{transform:translateX(100%)}
+  /* position:relative ONLY here. On desktop the marker is positioned
+     against `.tabs` and stepped by translateX, so giving the cell a
+     containing block up there would park every marker at x=0. */
+  .tab{position:relative;border-right:none;border-bottom:1px solid rgba(242,243,245,0.07)}
+  /* Below this width the strip WRAPS, and a marker positioned by
+     translateX of its own width only works on a single row — with four
+     channels it was already only correct for two of the four, and with
+     five it cannot be correct for any. So the marker stops being a bar
+     across the top and becomes an edge on the active cell, which needs
+     no arithmetic and cannot be wrong. */
+  .tabs .tab.is-active::before{
+    top:0;bottom:0;left:0;width:2px;height:auto;transform:none;
+  }
 }
 
 @media (max-width:767px){
@@ -172,5 +181,4 @@
   .svc-sec__note{text-align:left;max-width:none}
   .signal{grid-template-columns:minmax(0,1fr);gap:6px}
   .tabs{grid-template-columns:minmax(0,1fr)}
-  .tabs .tab.is-active::before{width:100%;transform:none !important}
 }

@@ -1,7 +1,7 @@
 /* ══════════════════════════════════════════════════════════════════════
    ZYRN — THE INDEX  (⌘K)
 
-   Eleven pages, five landing scenes and four service lines. The nav can
+   Twelve pages, five landing scenes and five service channels. The nav can
    hold five slots and the footer holds the rest, which means most of the
    site is two clicks and a scroll away from anywhere. This is the direct
    route: one keystroke, type three letters, arrive.
@@ -41,6 +41,7 @@
     { k: '02',     l: 'Brand kit',            h: UP + 'services/brand-kit.html',           t: 'Line',     q: 'identity palette type logo motion voice' },
     { k: '03',     l: 'Business structuring', h: UP + 'services/business-structuring.html',t: 'Line',     q: 'org decision rights authority incentives operating model' },
     { k: '04',     l: 'AI adoption',          h: UP + 'services/ai-transformation.html',   t: 'Line',     q: 'ai artificial intelligence transformation workflow governance' },
+    { k: '05',     l: 'Customizable CRM',     h: UP + 'services/crm.html',                  t: 'System',   q: 'crm customer database desk pipeline records custom software build vs buy salesforce hubspot seats licence sales' },
     { k: 'SYS.06', l: 'The brand kit',        h: UP + 'brand.html',                        t: 'Method',   q: 'brand kit tokens colours type spec documentation how we present deliverable handover' },
     { k: 'SYS.07', l: 'Lumina — a case',      h: UP + 'lumina.html',                       t: 'Work',     q: 'lumina case study proof work client real estate amman example portfolio rebase' },
     { k: 'SYS.08', l: 'THEHUB — a case',      h: UP + 'thehub.html',                       t: 'Work',     q: 'thehub qutaifan case study proof work client directory open source software redesign before after design system unify' },

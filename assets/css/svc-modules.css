@@ -1,173 +1,141 @@
 /* ══════════════════════════════════════════════════════════════════════
    ZYRN — SIGNATURE MODULES (service pages)
 
-   One interactive instrument per line. They share a shape: a tall track,
-   a stage that pins while you scroll through it, a mono step readout, and
-   a note that changes per stage. assets/js/modules/<name>.js drives each
-   one off a single 0..1 progress value, so nothing here needs its own
-   scroll listener.
+   One interactive instrument per line, and all five are now the same
+   INSTRUMENT SHELL at the same scale:
+
+     a 620vh track · a stage pinned with position:sticky · a mono step
+     readout · a rig at `--righ` tall with a counted key rail beside it ·
+     a note that swaps per beat
+
+   assets/js/modules/<name>.js drives each one off a single 0..1 progress
+   value from _track.js, so nothing here needs its own scroll listener.
+
+   THE SCALE IS ONE NUMBER. `--righ` is the height of every rig on the
+   site and everything else is derived from it — the stack's Z separation,
+   the fold's panel width, the well's shaft, the prism's radius. Before
+   2026-09-01 each instrument carried its own hand-tuned geometry in
+   pixels, which is why they were four different sizes and all four were
+   smaller than the space around them. Change `--righ` and all five move
+   together; change a px constant inside one and you have reintroduced the
+   problem.
 
    These run alongside a 90k-particle simulation, so everything is CSS
    transitions on compositor properties. No per-frame layout, no canvas.
    ══════════════════════════════════════════════════════════════════════ */
 
 .sig{position:relative}
-.sig__track{position:relative;height:340vh}
+.sig__track{position:relative;height:620vh}
 .sig__stage{
   position:sticky;top:0;
   min-height:100svh;
   display:flex;flex-direction:column;justify-content:center;
-  gap:clamp(14px,2.2vh,26px);
+  gap:clamp(12px,1.8vh,22px);
   /* The gutter was missing here: `.sig` is a direct child of <main>, and
      <main> has no padding — every other section brings its own. So the step
      readout, the percentage and the note all sat flush against the viewport
-     edge on all four service pages. Shipped that way; fixed 2026-08-18. */
-  padding:clamp(72px,10vh,110px) var(--gutter) clamp(40px,6vh,64px);
+     edge on all four service pages. Shipped that way; fixed 2026-08-18.
+     Tightened 2026-09-01: the instruments are the reason anyone is on these
+     pages and the page gutter was costing them 96px of width at 1440. */
+  padding:clamp(60px,7.5vh,92px) clamp(16px,2.6vw,34px) clamp(32px,4.5vh,52px);
 }
 .sig__head{
   display:flex;justify-content:space-between;align-items:baseline;gap:16px;
-  border-bottom:1px solid var(--hair);padding-bottom:12px;
+  border-bottom:1px solid var(--hair);padding-bottom:10px;
 }
 .sig__step{color:var(--vapor);transition:opacity 260ms}
 .sig__pct{color:var(--steel)}
 .sig__note{
-  max-width:60ch;font-size:14px;line-height:1.75;
+  max-width:74ch;font-size:14px;line-height:1.7;
   color:rgba(242,243,245,0.72);
-  min-height:5.2em;margin:0;
+  min-height:3.6em;margin:0;
   transition:opacity 240ms;
 }
 .sig__note.is-swap{opacity:0}
 /* the readout and the note sit directly on the field with no panel behind
    them — the same veil every other body copy on a service page gets */
 .sig__step,.sig__pct,.sig__note{text-shadow:0 1px 12px rgba(14,15,18,0.75)}
-@media (max-width:720px){
-  .sig__track{height:300vh}
-  .sig__note{min-height:7em;font-size:13px}
-}
 
 
-/* ── 02 · LIVING SPECIMEN ───────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════════════
+   THE RIG — the shared shell every instrument sits in
+   ══════════════════════════════════════════════════════════════════════ */
 
-.spec{position:relative;min-height:clamp(240px,42vh,380px)}
-.spec__panel{
-  position:absolute;inset:0;
-  opacity:0;pointer-events:none;transform:translateY(12px);
-  transition:opacity 420ms cubic-bezier(.16,1,.3,1),
-             transform 420ms cubic-bezier(.16,1,.3,1);
-  display:flex;flex-direction:column;justify-content:center;gap:22px;
-}
-.spec__panel.is-on{opacity:1;pointer-events:auto;transform:none}
+.rig{
+  /* THE one number. `--rigchrome` is everything the pinned stage spends on
+     something other than the instrument: both paddings, the head, the two
+     gaps and the note. Subtract it from the viewport and the rig takes the
+     rest, up to a cap so it does not become absurd on a tall monitor.
 
-.spec__chips{display:flex;gap:12px;flex-wrap:wrap}
-.chip{
-  display:flex;align-items:center;gap:10px;
-  padding:10px 14px 10px 10px;
-  border:1px solid var(--hair);border-radius:6px;
-  background:rgba(14,15,18,0.5);
-  transition:border-color 240ms,background 240ms,transform 240ms;
-}
-.chip:hover,.chip:focus-visible{border-color:var(--hair-strong);transform:translateY(-2px)}
-.chip.is-on{border-color:rgba(242,243,245,0.34);background:rgba(242,243,245,0.05)}
-.chip__sw{display:block;width:26px;height:26px;border-radius:4px;flex:0 0 auto}
-.chip__n{color:var(--vapor);font-size:11px}
-.spec__read{
-  display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;
-  border-top:1px solid var(--hair);padding-top:16px;
-}
-.spec__hex{font-size:22px;color:var(--vapor);letter-spacing:0.06em}
-.spec__use{font-size:13px;color:rgba(242,243,245,0.66);max-width:52ch}
-
-.spec__scale{display:flex;flex-direction:column;gap:clamp(6px,1.4vh,16px)}
-.ts{display:flex;align-items:baseline;gap:18px}
-.ts__k{color:var(--steel);flex:0 0 auto;width:104px}
-.ts__v{
-  font-size:calc(var(--s) * clamp(0.42px,0.075vw + 0.28px,1px));
-  line-height:1.1;letter-spacing:-0.02em;color:var(--vapor);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-.ts__v--mono{font-family:var(--font-mono);letter-spacing:0.16em}
-.spec__foot{color:var(--steel);border-top:1px solid var(--hair);padding-top:14px;margin:0}
-
-.spec__markstage{
-  display:flex;align-items:center;justify-content:center;
-  min-height:clamp(110px,20vh,180px);
-}
-.spec__law{
-  display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
-  border-top:1px solid var(--hair);padding-top:16px;
-}
-.spec__law .mono{color:var(--steel)}
-.spec__btn{flex:0 0 auto}
-
-
-/* ── 03 · DECISION RIGHTS ───────────────────────────────────────────── */
-
-.grf{width:100%;height:auto;max-height:46vh;display:block}
-.grf__edges path{
-  fill:none;stroke:rgba(242,243,245,0.16);stroke-width:1;
-}
-.grf__edges path.is-esc{stroke:rgba(242,243,245,0.34);stroke-dasharray:3 3}
-.grf__edges path.is-own{stroke:var(--pulse-mark,#6E56F8);stroke-width:1.4;stroke-dasharray:none}
-.grf__nodes circle{
-  fill:rgba(14,15,18,0.9);stroke:rgba(242,243,245,0.42);stroke-width:1;
-}
-.grf__nodes circle.is-hub{fill:rgba(242,243,245,0.9);stroke:none}
-.grf__nodes text{
-  font-family:var(--font-mono);font-size:8px;letter-spacing:0.14em;
-  fill:rgba(242,243,245,0.6);text-anchor:middle;
-}
-.grf__legend{
-  display:flex;gap:22px;flex-wrap:wrap;align-items:center;
-  color:var(--steel);border-top:1px solid var(--hair);padding-top:14px;
-}
-.grf__legend b{color:var(--vapor);font-weight:400}
-.grf__key{display:inline-block;width:16px;height:2px;vertical-align:middle;margin-right:6px}
-.grf__key--esc{background:rgba(242,243,245,0.34)}
-.grf__key--own{background:var(--pulse-mark,#6E56F8)}
-
-
-/* ── 04 · READINESS INSTRUMENT ──────────────────────────────────────── */
-
-.rdy{display:grid;grid-template-columns:auto 1fr;gap:clamp(24px,4vw,56px);align-items:center}
-.rdy__dial{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
-  width:clamp(120px,15vw,180px);aspect-ratio:1;
-  border:1px solid var(--hair);border-radius:50%;
-  background:rgba(14,15,18,0.5);
-}
-.rdy__num{
-  font-family:var(--font-mono);font-size:clamp(38px,5.4vw,64px);line-height:1;
-  color:var(--vapor);font-variant-numeric:tabular-nums;
-}
-.rdy__cap{color:var(--steel);font-size:9px}
-.rdy__dims{display:flex;flex-direction:column;gap:clamp(8px,1.6vh,16px)}
-.dim{display:grid;grid-template-columns:110px 1fr 28px;gap:14px;align-items:center}
-.dim__k{color:var(--steel)}
-.dim__bar{display:block;height:2px;background:var(--hair);position:relative;overflow:hidden}
-.dim__bar i{
-  position:absolute;left:0;top:0;bottom:0;width:100%;
-  background:var(--vapor);transform:scaleX(0);transform-origin:left;
-  transition:transform 420ms cubic-bezier(.16,1,.3,1);
-}
-.dim.is-constraint .dim__bar i{background:var(--pulse-mark,#6E56F8)}
-.dim.is-constraint .dim__k{color:var(--vapor)}
-.dim__v{color:var(--vapor);text-align:right;font-variant-numeric:tabular-nums}
-.rdy__constraint{color:var(--steel);margin:0;border-top:1px solid var(--hair);padding-top:14px}
-@media (max-width:720px){
-  .rdy{grid-template-columns:1fr;justify-items:start}
-  .dim{grid-template-columns:88px 1fr 26px;gap:10px}
-  .ts__k{width:74px}
+     A pinned stage cannot be scrolled to reveal what does not fit, so BOTH
+     numbers are measured rather than guessed. The chrome is what the stage
+     actually spends — 197 to 244px on a desktop, 351 to 464 on a phone
+     where the key rail moves underneath the stage and the note runs to
+     four lines — and the cap is what docs/rigfit.py will pass at every one
+     of nine window sizes with the stack fully exploded. The first pass
+     estimated 296 and gave away eighty pixels of instrument on every
+     desktop for nothing. */
+  --rigchrome:252px;
+  --righ:clamp(200px,calc(100svh - var(--rigchrome)),760px);
+  --open:0;
+  --drift:0;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) clamp(214px,20%,290px);
+  align-items:center;
+  gap:clamp(16px,2.4vw,38px);
+  width:100%;
 }
 
+/* The stage every instrument draws inside. Nothing may change its size:
+   a 3D scene overflows its own layout box by definition, so the box is
+   fixed here and the overflow is measured rather than reflowed. */
+.rig__view{
+  position:relative;
+  height:var(--righ);
+  /* PERSPECTIVE IS A RATIO OF THE RIG, not a constant. The old 1500px was
+     tuned against a 520px stack; at 700px the same camera magnified the
+     pulled-out layer by 1.6x and pushed 50px of it down through the note.
+     A camera that does not move back when the subject grows is the same
+     bug as a hard-coded pixel geometry, one level up. Measured with
+     docs/rigfit.py. */
+  perspective:calc(var(--righ) * 3.0);
+  perspective-origin:50% 46%;
+}
 
-/* ── reduced motion ─────────────────────────────────────────────────── */
+/* ── the counted key ─────────────────────────────────────────────────
+   Every instrument has one, every row on it is a real count, and the row
+   for whatever is being named right now is lit. Doctrine rule 2: the only
+   decoration is real information. */
 
-/* This page's note is three lines, not four, and the stack is the reason
-   anyone is on the page — so it gets the vertical the shared floor was
-   reserving. Scoped to .sig--stack so the other three service pages keep
-   the taller floor their notes actually need. */
-.sig--stack .sig__note{min-height:4.4em;max-width:56ch}
-.sig--stack .sig__stage{padding-top:clamp(64px,8vh,96px)}
+.rig__key{
+  list-style:none;margin:0;padding:0;
+  display:flex;flex-direction:column;gap:1px;
+  background:var(--hair);border:1px solid var(--hair);
+}
+.rig__key li{
+  background:rgba(14,15,18,0.62);
+  padding:clamp(6px,1vh,11px) clamp(9px,0.9vw,13px);
+  display:grid;grid-template-columns:auto 1fr;gap:2px 9px;
+  align-items:baseline;
+  transition:background 300ms ease,color 300ms ease;
+}
+.rig__key .k__n{
+  font-family:var(--font-mono);font-size:9px;letter-spacing:0.16em;
+  color:rgba(242,243,245,0.34);grid-row:1 / span 2;
+}
+.rig__key .k__t{
+  font-size:clamp(11px,1.05vw,13px);letter-spacing:-0.01em;
+  color:rgba(242,243,245,0.66);
+}
+.rig__key .k__v{
+  font-family:var(--font-mono);font-size:8.5px;letter-spacing:0.14em;
+  color:rgba(242,243,245,0.34);
+}
+.rig__key li.is-on{background:rgba(14,15,18,0.92)}
+.rig__key li.is-on .k__t{color:var(--vapor)}
+.rig__key li.is-on .k__n,
+.rig__key li.is-on .k__v{color:rgba(242,243,245,0.72)}
+
 
 /* ══════════════════════════════════════════════════════════════════════
    SIGNATURE · THE STACK   (services/website-design.html — modules/stack.js)
@@ -183,55 +151,51 @@
    that came out of the pinned instrument deleted from axes.html.
    ══════════════════════════════════════════════════════════════════════ */
 
-.sig__track--long{height:620vh}
-
 .stk{
-  --open:0;
-  --drift:0;
-  /* The stack is sized by HEIGHT and derives its width, for the same reason
-     the case-page window is: this stage is pinned, so anything that does not
-     fit inside 100svh is clipped and cannot be scrolled to.
-
-     Everything about the explode is a variable, because a 3D explode
-     OVERFLOWS ITS OWN LAYOUT BOX by definition — the layers are pushed in Z
-     and the perspective magnifies them, so the box the browser reserved is
-     not the box you see. The first build was tuned by eye and hit the step
-     readout on all seven test viewports and ran off both edges of a phone.
-     These are tuned against stkfit.py, which reads the projected union of
-     the six layers back out of getBoundingClientRect. */
-  --stkh:min(56svh,520px);
-  --zstep:38px;      /* separation between layers, in Z */
-  --tilt:50deg;      /* rotateX at full open */
-  --spin:-26deg;     /* rotateZ at full open */
-  --lift:50px;       /* +Z reads as UP on screen once tilted; this recentres */
-  --shrink:0.32;     /* and this pays for the perspective magnification */
-  display:grid;
-  grid-template-columns:minmax(0,1fr) clamp(210px,24%,280px);
-  align-items:center;gap:clamp(18px,3vw,44px);
-  width:100%;
+  /* Every one of these was a hand-tuned pixel constant until 2026-09-01,
+     which meant the stack could not be made bigger without re-tuning five
+     numbers against each other. They are ratios of `--righ` now, so the
+     explode is SCALE-INVARIANT: the projected union grows exactly in step
+     with the box and the clearances rigfit.py measured hold at every size. */
+  --zstep:calc(var(--righ) * 0.064);   /* separation between layers, in Z */
+  --tilt:50deg;                        /* rotateX at full open */
+  --spin:-26deg;                       /* rotateZ at full open */
+  /* Both came down on 2026-09-01 after rigfit measured the projected union
+     running 5 to 16px into the note on every desktop size. `--lift` is the
+     recentring for the layers travelling up as they separate, so it has to
+     fall when `--zstep` does; `--shrink` is what pays for the perspective
+     magnification, and at this scale it was paying too little. */
+  --lift:calc(var(--righ) * 0.072);    /* +Z reads as UP once tilted; recentre */
+  --shrink:0.37;                       /* and this pays for the magnification */
+  --pull:calc(var(--righ) * 0.062);    /* how far the named layer comes forward */
 }
 
-/* ── the scene ───────────────────────────────────────────────────────── */
-
-.stk__view{
-  position:relative;
-  height:var(--stkh);
-  perspective:1500px;
-  perspective-origin:50% 46%;
-}
 .stk__scene{
   position:absolute;left:50%;top:50%;
-  width:calc(var(--stkh) * 1.5);
-  height:var(--stkh);
-  margin:calc(var(--stkh) / -2) 0 0 calc(var(--stkh) * -0.75);
+  /* A page-shaped rectangle, 3:2 — until the column is narrower than that,
+     at which point the width wins and the shape goes taller. Capping at
+     100% is what lets `--righ` be raised without the scene reaching across
+     into the key rail. */
+  width:min(calc(var(--righ) * 1.5),100%);
+  height:var(--righ);
+  margin-top:calc(var(--righ) / -2);
+  margin-left:calc(-0.5 * min(var(--righ) * 1.5,100%));
   transform-style:preserve-3d;
   /* Flat-on when closed, tipped into an isometric when open. Order matters:
      the lift and the shrink are OUTSIDE the rotations so they act in screen
      space — a translateY written after rotateX would travel along the tilted
      plane and go backwards into the scene instead of down the page. */
+  /* THE SQUEEZE LEADS THE TIP, and that is not a flourish. `--open` drives
+     the rotation; `--squeeze` drives the scale and reaches 1 much earlier.
+     Driven off one number, the WIDEST moment of the whole instrument is
+     early in the open — barely scaled down but already rotated a few
+     degrees on Z, which adds the width of the box to its height and
+     measured 14px into the note. Pulling the camera back before the tip
+     removes the transient entirely, and it reads better: the stack draws
+     back to be taken in, then comes apart. */
   transform:
     translateY(calc(var(--open) * var(--lift)))
-    scale(calc(1 - var(--open) * var(--shrink)))
+    scale(calc(1 - var(--squeeze,0) * var(--shrink)))
     rotateX(calc(var(--open) * var(--tilt)))
     rotateZ(calc(var(--open) * var(--spin) + var(--drift) * 1deg));
   will-change:transform;
@@ -256,7 +220,7 @@
   transform:translate3d(0,0,
     calc(var(--i) * var(--open) * var(--zstep)
          + var(--out) * var(--open) * (5 - var(--i)) * var(--zstep)
-         + var(--out) * var(--open) * 46px));
+         + var(--out) * var(--open) * var(--pull)));
   /* Closed, only the top layer should be readable — the five underneath it
      are the same box and would print through its hairlines. Open, they all
      come up together, and then whichever is being NAMED stays at full while
@@ -284,13 +248,10 @@
   border:1px solid rgba(242,243,245,0.34);
   opacity:calc(var(--open) * 0.5);
 }
-/* Once a layer is being named the others fall back, and the named one comes
-   forward out of the stack. `--out` is the only thing that moves it, so it
-   can never disagree with the separation the rest of the stack is holding. */
 /* Barely dimmed. The first build dropped the five unlit layers to 0.34 and
    the whole stack went to a ghost — five sixths of the picture is not
    spare. The naming is carried by the LIT layer gaining an edge, a shadow
-   and 34px of forward travel, not by the others being taken away. */
+   and its forward travel, not by the others being taken away. */
 .stk[data-act]:not([data-act="-1"]) .stk__l{--lit:0.84}
 .stk__l.is-lit{
   --lit:1;--out:1;
@@ -300,13 +261,13 @@
 }
 .stk__l.is-lit::after{opacity:calc(var(--open) * 1)}
 .stk__l.is-lit .stk__cap{color:var(--vapor);letter-spacing:0.34em}
-.stk__cap{transition:color 400ms ease,letter-spacing 620ms cubic-bezier(.16,1,.3,1)}
 
 .stk__cap{
-  position:absolute;left:9px;bottom:7px;
-  font-family:var(--font-mono);font-size:8.5px;letter-spacing:0.24em;
+  position:absolute;left:11px;bottom:9px;
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:0.24em;
   color:rgba(242,243,245,0.46);
   opacity:var(--open);
+  transition:color 400ms ease,letter-spacing 620ms cubic-bezier(.16,1,.3,1);
 }
 
 /* ── layer 0 · the grid ──────────────────────────────────────────────── */
@@ -326,8 +287,8 @@
 .stk__gm::before{left:0}
 .stk__gm::after{right:0}
 .stk__gl{
-  position:absolute;left:50%;top:calc(50% + 9px);transform:translateX(-50%);
-  font-family:var(--font-mono);font-size:7.5px;letter-spacing:0.22em;
+  position:absolute;left:50%;top:calc(50% + 10px);transform:translateX(-50%);
+  font-family:var(--font-mono);font-size:8.5px;letter-spacing:0.22em;
   color:rgba(242,243,245,0.5);white-space:nowrap;
 }
 
@@ -344,28 +305,30 @@
 
 /* ── layer 2 · the type ──────────────────────────────────────────────── */
 .stk__type{position:absolute;inset:0;padding:10% 8%;display:flex;
-  flex-direction:column;justify-content:center;gap:6px}
+  flex-direction:column;justify-content:center;gap:6px;
+  container-type:inline-size}
 .stk__type h4{
-  margin:0;font-size:clamp(15px,3.4cqw,30px);line-height:1.03;font-weight:400;
+  margin:0;font-size:clamp(15px,3.4cqw,34px);line-height:1.03;font-weight:400;
   letter-spacing:-0.035em;color:var(--vapor);
 }
 .stk__type p{
-  margin:0;font-size:clamp(7px,1.35cqw,11px);line-height:1.6;
+  margin:0;font-size:clamp(7px,1.35cqw,13px);line-height:1.6;
   color:rgba(242,243,245,0.72);max-width:34ch;
 }
 .stk__scale{display:flex;align-items:baseline;gap:8px;margin-top:8px;
-  font-family:var(--font-mono);font-size:8px;letter-spacing:0.2em;
-  color:rgba(242,243,245,0.34)}
+  font-family:var(--font-mono);font-size:clamp(7px,0.95cqw,10px);
+  letter-spacing:0.2em;color:rgba(242,243,245,0.34)}
 
 /* ── layer 3 · the colour ────────────────────────────────────────────── */
 .stk__tokens{position:absolute;inset:0;padding:12% 8%;display:flex;
-  align-items:center;gap:5%}
+  align-items:center;gap:5%;container-type:inline-size}
 .stk__tokens span{
   flex:1 1 0;height:46%;border:1px solid var(--hair);position:relative;
 }
 .stk__tokens span::after{
   content:attr(data-t);position:absolute;left:0;top:calc(100% + 5px);
-  font-family:var(--font-mono);font-size:7px;letter-spacing:0.18em;
+  font-family:var(--font-mono);font-size:clamp(7px,0.9cqw,10px);
+  letter-spacing:0.18em;
   color:rgba(242,243,245,0.4);white-space:nowrap;
 }
 /* THE one Pulse on this surface. Doctrine rule 3 — it appears exactly once
@@ -374,15 +337,15 @@
 
 /* ── layer 4 · the motion ────────────────────────────────────────────── */
 .stk__motion{position:absolute;inset:0;padding:11% 8%;display:flex;
-  align-items:center;justify-content:center}
+  align-items:center;justify-content:center;container-type:inline-size}
 .stk__motion svg{width:100%;height:76%;overflow:visible}
 .stk__motion path{fill:none;stroke:rgba(242,243,245,0.5);stroke-width:1.25}
 .stk__motion .stk__axis{stroke:rgba(242,243,245,0.14);stroke-width:1}
 .stk__motion circle{fill:var(--vapor)}
 .stk__ease{
   position:absolute;right:8%;bottom:11%;
-  font-family:var(--font-mono);font-size:7.5px;letter-spacing:0.16em;
-  color:rgba(242,243,245,0.4);
+  font-family:var(--font-mono);font-size:clamp(7px,0.95cqw,10px);
+  letter-spacing:0.16em;color:rgba(242,243,245,0.4);
 }
 
 /* ── layer 5 · the surface ───────────────────────────────────────────── */
@@ -390,15 +353,15 @@
   flex-direction:column;gap:4%;container-type:inline-size}
 .stk__nav{display:flex;align-items:center;justify-content:space-between;
   border-bottom:1px solid var(--hair);padding-bottom:5px}
-.stk__nav b{font-size:clamp(8px,1.5cqw,12px);letter-spacing:-0.03em;
+.stk__nav b{font-size:clamp(8px,1.5cqw,15px);letter-spacing:-0.03em;
   color:var(--vapor);font-weight:500}
 .stk__nav i{display:inline-block;width:14px;height:2px;
   background:rgba(242,243,245,0.2);margin-left:6px}
 .stk__surf h4{
-  margin:0;font-size:clamp(13px,3cqw,26px);line-height:1.05;font-weight:400;
+  margin:0;font-size:clamp(13px,3cqw,30px);line-height:1.05;font-weight:400;
   letter-spacing:-0.035em;color:var(--vapor);
 }
-.stk__surf p{margin:0;font-size:clamp(6.5px,1.25cqw,10px);line-height:1.55;
+.stk__surf p{margin:0;font-size:clamp(6.5px,1.25cqw,12px);line-height:1.55;
   color:rgba(242,243,245,0.58);max-width:38ch}
 .stk__cards{display:flex;gap:4%;flex:1 1 auto;min-height:0}
 .stk__cards span{
@@ -407,72 +370,801 @@
 .stk__surf .stk__foot{
   display:flex;justify-content:space-between;
   border-top:1px solid var(--hair);padding-top:5px;
-  font-family:var(--font-mono);font-size:7px;letter-spacing:0.2em;
-  color:rgba(242,243,245,0.34);
+  font-family:var(--font-mono);font-size:clamp(6.5px,0.85cqw,9px);
+  letter-spacing:0.2em;color:rgba(242,243,245,0.34);
 }
 
-/* ── the key ─────────────────────────────────────────────────────────── */
 
-.stk__key{
-  list-style:none;margin:0;padding:0;
-  display:flex;flex-direction:column;gap:1px;
-  background:var(--hair);border:1px solid var(--hair);
+/* ══════════════════════════════════════════════════════════════════════
+   SIGNATURE · THE FOLD   (services/brand-kit.html — modules/fold.js)
+
+   A kit is a DOCUMENT. So the instrument is one sheet, folded, that opens
+   into the five panels it was always made of — palette, type, the mark,
+   motion, voice — and folds back with a date on it.
+
+   This replaces the living specimen, which cross-faded three panels in a
+   box. The argument there was "here are the values"; the argument here is
+   "there is one document and everything is already on it", which is what a
+   brand kit actually sells.
+
+   THE MECHANISM IS A REAL HINGE. Panel n is a CHILD of panel n-1, pinned
+   at left:100% with transform-origin:left center, so rotating it about its
+   own left edge carries every panel after it. That is why the markup nests
+   five levels deep and must stay that way: flatten it into siblings and
+   each panel swings on its own and the thing stops being a fold.
+
+   THE CAMERA IS THE OTHER HALF. Unfolded at full size the row is five
+   panels wide and cannot fit, and shrunk to fit it is too small to read —
+   so it does both, in sequence. It opens small enough to see all five at
+   once (the claim), then flies in to full size and travels along them one
+   at a time (the evidence), then pulls back and shuts. --zoom and --tx are
+   that camera, written per frame by fold.js.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* A panel is a SHEET, not a column. At 0.68 of the rig's height it was
+   nearly twice as tall as it was wide, and the content — five swatches, a
+   four-row type scale, a mark — sat in a band across the middle with a
+   third of the panel empty above and below it. Shortening the scene rather
+   than widening the panel keeps five of them within reach of the camera. */
+.fld{--fldw:calc(var(--righ) * 0.74);--fldh:calc(var(--righ) * 0.88)}
+/* The row runs off both edges during the walk. Clipping it at the stage is
+   what allows the panels to stay full size instead of being scaled down to
+   fit a width they never needed to fit. */
+.fld .rig__view{overflow:hidden}
+
+.fld__scene{
+  position:absolute;left:50%;top:50%;
+  width:var(--fldw);height:var(--fldh);
+  margin-top:calc(var(--fldh) / -2);
+  margin-left:calc(var(--fldw) / -2);
+  transform-style:preserve-3d;
+  /* translate is listed FIRST so it is applied LAST — in screen pixels,
+     after the scale. fold.js already multiplies the pan by the zoom; if you
+     reorder these two the pan starts travelling in scene units and the walk
+     overshoots by a factor of two at the far end. */
+  transform:translateX(var(--tx,0px))
+            scale(var(--zoom,1))
+            rotateX(var(--rx,0deg))
+            rotateY(var(--ry,0deg));
+  will-change:transform;
 }
-.stk__key li{
-  background:rgba(14,15,18,0.62);
-  padding:clamp(7px,1.1vh,11px) clamp(9px,1vw,13px);
-  display:grid;grid-template-columns:auto 1fr;gap:2px 9px;
+
+.fld__p{
+  position:absolute;left:0;top:0;width:100%;height:100%;
+  transform-style:preserve-3d;
+}
+/* every panel except the root: hinged on the previous panel's right edge */
+.fld__p--h{
+  left:100%;
+  transform-origin:left center;
+  transform:rotateY(var(--r,-96deg));
+  will-change:transform;
+}
+/* the score line the sheet folds along */
+.fld__p--h::before{
+  content:'';position:absolute;left:-1px;top:6%;bottom:6%;width:1px;
+  background:rgba(242,243,245,0.30);
+  transform:translateZ(1px);
+}
+
+.fld__face{
+  position:absolute;inset:0;
+  background:#0B0D11;
+  border:1px solid var(--hair);
+  overflow:hidden;
+  /* Without this the tucked panels show their own content mirrored through
+     the sheet while they are edge-on, which reads as the instrument having
+     drawn the same panel twice. */
+  backface-visibility:hidden;
+  container-type:inline-size;
+  transform:translateZ(0);
+  transition:border-color 420ms ease,
+             box-shadow 560ms var(--ease-reveal,cubic-bezier(.16,1,.3,1)),
+             transform 560ms var(--ease-reveal,cubic-bezier(.16,1,.3,1));
+}
+.fld__face::after{
+  content:'';position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(242,243,245,0.30) 30%,
+             rgba(242,243,245,0.30) 70%,transparent);
+  opacity:calc(var(--open) * 0.9);pointer-events:none;
+}
+/* THE PANEL IS AN OBJECT AND STAYS OPAQUE. The first build dimmed the
+   whole face with `opacity`, which is the exact mistake the stack already
+   documented: a 78%-opaque panel over a 90k-particle field is not a dimmed
+   panel, it is a window, and five of them read as one grey smear with the
+   field pouring through. What is held back is the CONTENT — the body, the
+   caption and the number — and the face underneath stays solid. */
+.fld[data-act]:not([data-act="-1"]) .fld__body,
+.fld[data-act]:not([data-act="-1"]) .fld__cap,
+.fld[data-act]:not([data-act="-1"]) .fld__n{opacity:0.62}
+.fld__body,.fld__cap,.fld__n{transition:opacity 420ms ease}
+.fld__p.is-lit > .fld__face .fld__body,
+.fld__p.is-lit > .fld__face .fld__cap,
+.fld__p.is-lit > .fld__face .fld__n{opacity:1}
+.fld__p.is-lit > .fld__face{
+  border-color:rgba(242,243,245,0.55);
+  box-shadow:0 0 0 1px rgba(242,243,245,0.12),0 30px 80px rgba(0,0,0,0.7);
+  transform:translateZ(calc(var(--righ) * 0.075));
+}
+
+/* Captions ride the camera INVERSELY, so they stay legible when the sheet
+   is pulled back to show all five at once. It is what a map does with its
+   labels, and it is the only thing in the scene allowed to know the zoom. */
+.fld__cap{
+  position:absolute;left:11px;bottom:9px;
+  transform-origin:left bottom;transform:scale(var(--capsc,1));
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:0.24em;
+  color:rgba(242,243,245,0.5);white-space:nowrap;
+  transition:color 400ms ease,letter-spacing 620ms cubic-bezier(.16,1,.3,1);
+}
+.fld__p.is-lit > .fld__face .fld__cap{color:var(--vapor);letter-spacing:0.34em}
+.fld__n{
+  position:absolute;right:11px;top:10px;
+  transform-origin:right top;transform:scale(var(--capsc,1));
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:0.2em;
+  color:rgba(242,243,245,0.26);
+}
+
+.fld__body{
+  position:absolute;inset:0;padding:11% 9% 15%;
+  display:flex;flex-direction:column;justify-content:center;
+  gap:clamp(6px,2.2cqw,16px);
+}
+.fld__h{
+  font-family:var(--font-mono);font-size:clamp(7px,1.9cqw,13px);
+  letter-spacing:0.2em;color:rgba(242,243,245,0.46);margin:0;
+}
+
+/* ── panel 01 · palette ──────────────────────────────────────────────── */
+.fld__sw{display:flex;flex-direction:column;gap:clamp(4px,1.4cqw,10px)}
+.fld__sw span{
+  display:grid;grid-template-columns:clamp(18px,7cqw,42px) 1fr auto;
+  gap:clamp(6px,2cqw,14px);align-items:center;
+}
+.fld__sw i{
+  display:block;height:clamp(14px,5cqw,38px);
+  border:1px solid rgba(242,243,245,0.10);
+}
+.fld__sw b{
+  font-weight:400;font-size:clamp(8px,2.4cqw,19px);
+  color:rgba(242,243,245,0.88);letter-spacing:-0.01em;
+}
+.fld__sw em{
+  font-style:normal;font-family:var(--font-mono);
+  font-size:clamp(7px,1.9cqw,13px);letter-spacing:0.1em;
+  color:rgba(242,243,245,0.46);
+}
+/* THE one Pulse on this surface. The mark's seam on panel 03 is the
+   documented exception (Departure 4 — the wordmark prints the accent and
+   nothing else does), so this chip and that seam are not two accents. */
+.fld__sw .is-pulse{background:var(--pulse-mark);border-color:transparent}
+
+/* ── panel 02 · type ─────────────────────────────────────────────────── */
+.fld__ts{display:flex;flex-direction:column;gap:clamp(3px,1.2cqw,9px)}
+.fld__ts div{display:flex;align-items:baseline;gap:clamp(6px,2cqw,14px)}
+.fld__ts .mono{
+  flex:0 0 auto;width:clamp(38px,15cqw,88px);
+  font-size:clamp(6.5px,1.7cqw,12px);letter-spacing:0.14em;
+  color:rgba(242,243,245,0.40);
+}
+.fld__ts p{
+  margin:0;line-height:1.05;letter-spacing:-0.025em;color:var(--vapor);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  /* The ceiling was doing the limiting rather than the container: at a
+     480px panel the preferred 0.115cqw is 0.55px and the cap pulled it
+     back to 0.34, so a 72-unit display line set at 24px in a 570px-tall
+     panel. */
+  font-size:calc(var(--s) * clamp(0.09px,0.115cqw,0.46px));
+}
+.fld__ts p.is-mono{font-family:var(--font-mono);letter-spacing:0.14em}
+
+/* ── panel 03 · the mark ─────────────────────────────────────────────── */
+.fld__mark{
+  flex:1 1 auto;display:flex;align-items:center;justify-content:center;
+  min-height:0;
+}
+.fld__mark .shear{--shear-size:clamp(18px,11cqw,80px)}
+
+/* ── panel 04 · motion ───────────────────────────────────────────────── */
+.fld__curve{position:relative;width:100%;flex:0 0 auto}
+.fld__curve svg{display:block;width:100%;height:clamp(46px,26cqw,190px);overflow:visible}
+.fld__curve path{fill:none;stroke:rgba(242,243,245,0.55);stroke-width:1.25}
+.fld__curve .fld__axis{stroke:rgba(242,243,245,0.14);stroke-width:1}
+.fld__curve circle{fill:var(--vapor)}
+
+/* ── panel 05 · voice ────────────────────────────────────────────────── */
+.fld__rules{list-style:none;margin:0;padding:0;
+  display:flex;flex-direction:column;gap:clamp(4px,1.6cqw,11px)}
+.fld__rules li{
+  display:grid;grid-template-columns:auto 1fr;gap:clamp(6px,2cqw,12px);
   align-items:baseline;
-  transition:background 300ms ease,color 300ms ease;
+  font-size:clamp(7.5px,2.1cqw,16px);line-height:1.45;
+  color:rgba(242,243,245,0.80);
 }
-.stk__key .k__n{
+.fld__rules li span{
+  font-family:var(--font-mono);font-size:clamp(6.5px,1.7cqw,12px);
+  letter-spacing:0.14em;color:rgba(242,243,245,0.40);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   SIGNATURE · THE PLAN   (services/business-structuring.html — plan.js)
+
+   The same eleven nodes, seen twice: as an ELEVATION — the chart as it is
+   published, a tree standing up — and as a PLAN, the same eleven lying on
+   a floor with authority where the work is. The instrument does not
+   cross-fade between two pictures; it rotates the camera from one to the
+   other while the nodes settle onto the ground, because that is the
+   argument. The chart is a picture of reporting. The plan is a picture of
+   who decides.
+
+   Between the two, a DECISION TRAVELS. It leaves operations, climbs four
+   tiers to be answered, and comes back — and then, after the rotation, the
+   same decision resolves in one hop. Both routes are drawn from the same
+   node coordinates the diagram is already using, so the hop counts on the
+   readout cannot drift from the picture.
+
+   Everything is SVG attribute writes on a scene that never reflows the
+   page. Geometry is recomputed only when the camera actually moves;
+   while the token is travelling the layout is static and only the token
+   and its trail are touched.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── the housing ─────────────────────────────────────────────────────
+   The stack, the fold and the prism are OBJECTS: opaque panels that
+   occlude the field behind them. These two are DRAWINGS — hairlines and
+   labels on open ground — and a 90k-particle field runs straight through
+   a hairline. Measured against a screenshot rather than argued about: the
+   edges of the lattice and the gate rules of the well were both invisible
+   at 1440x900 with the field at its densest.
+
+   So the two drawings get a housing, and it is the same surface the key
+   rail beside them already uses. It is not a panel behind the argument;
+   it is the instrument's own case. */
+.pln .rig__view::before,
+.wll .rig__view::before{
+  content:'';position:absolute;inset:-1.5% -1%;
+  background:rgba(11,13,17,0.66);
+  border:1px solid var(--hair);
+  pointer-events:none;
+}
+
+.pln__svg{
+  position:absolute;inset:0;width:100%;height:100%;
+  display:block;
+  /* The geometry is authored to stay inside the viewBox at both ends of
+     the rotation, and this is the guarantee that a future tweak to the
+     pitch or the ring cannot quietly break it: nothing paints outside the
+     instrument's own box, ever. */
+  overflow:hidden;
+}
+
+/* the surveyed ground — only there once the camera has tipped over */
+.pln__floor path{fill:none;stroke:rgba(242,243,245,0.17);stroke-width:1}
+
+.pln__edges path{fill:none;stroke:rgba(242,243,245,0.26);stroke-width:1.2}
+/* a published reporting line the escalation actually uses */
+.pln__edges path.is-esc{stroke:rgba(242,243,245,0.46);stroke-dasharray:4 4}
+/* a local line: the decision is owned where it lands */
+.pln__edges path.is-local{stroke:rgba(242,243,245,0.60)}
+/* THE one Pulse on this surface: the two things the centre still
+   arbitrates after everything else has been handed down. */
+.pln__edges path.is-arb{stroke:var(--pulse-mark);stroke-width:1.5;stroke-dasharray:none}
+
+.pln__trail{
+  fill:none;stroke:var(--vapor);stroke-width:2.2;
+  stroke-linecap:round;stroke-linejoin:round;
+}
+.pln__tok{fill:var(--vapor)}
+.pln__halo{fill:none;stroke:rgba(242,243,245,0.42);stroke-width:1}
+
+.pln__nodes circle{
+  fill:#0B0D11;stroke:rgba(242,243,245,0.62);stroke-width:1.2;
+}
+.pln__nodes circle.is-hub{fill:rgba(242,243,245,0.88);stroke:none}
+.pln__nodes text{
+  font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;
+  fill:rgba(242,243,245,0.80);text-anchor:middle;
+}
+.pln__nodes g.is-on circle{stroke:rgba(242,243,245,0.9)}
+.pln__nodes g.is-on text{fill:var(--vapor)}
+
+.pln__tiers text{
+  font-family:var(--font-mono);font-size:9px;letter-spacing:0.2em;
+  fill:rgba(242,243,245,0.52);
+}
+.pln__tiers path{stroke:rgba(242,243,245,0.16);stroke-width:1;fill:none}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   SIGNATURE · THE WELL   (services/ai-transformation.html — modules/well.js)
+
+   Five dimensions standing in a shaft, climbing at their own rates through
+   four gates. And a PLANE that rides on the shortest one.
+
+   The plane is the whole instrument. The readiness index is not the mean
+   of the five and never was — it is the lowest, because a firm cannot do
+   anything its weakest dimension will not let it do. Drawn as bars that
+   was a claim in the copy. Drawn as a slab of floor resting on the
+   shortest column, with the other four sticking uselessly through it, it
+   is a thing the reader works out before reading a word.
+
+   Replaced `readiness.js` (five bars in a row and a dial) on 2026-09-01.
+   The rates, the convergence and the level copy are carried over
+   unchanged — they were right; they were just two hundred pixels tall.
+
+   Everything here is scaleY and translateY on compositor properties. A
+   column that grew by changing its HEIGHT would relayout the whole scene
+   every frame, so the fill is a full-height box scaled from its base and
+   the cap is a separate element translated to meet it.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.wll{
+  --shaft:calc(var(--righ) * 0.66);
+  --depth:calc(var(--righ) * 0.26);
+  --wellw:min(calc(var(--righ) * 1.30),100%);
+}
+
+.wll__scene{
+  position:absolute;left:50%;bottom:17%;
+  width:var(--wellw);height:var(--shaft);
+  margin-left:calc(-0.5 * var(--wellw));
+  transform-style:preserve-3d;
+  transform-origin:50% 100%;
+  transform:rotateX(var(--rx,8deg)) rotateY(var(--ry,-20deg));
+  will-change:transform;
+}
+
+/* ── the back wall, and the four gates ruled across it ───────────────── */
+.wll__wall{
+  position:absolute;inset:0;
+  transform:translateZ(calc(var(--depth) * -1));
+  border-left:1px solid var(--hair);border-right:1px solid var(--hair);
+}
+.wll__gate{
+  position:absolute;left:0;right:0;height:1px;
+  bottom:calc(var(--g) * 25%);
+  background:rgba(242,243,245,0.20);
+  transition:background 420ms ease;
+}
+.wll__gate span{
+  position:absolute;left:0;bottom:4px;
+  font-family:var(--font-mono);font-size:9px;letter-spacing:0.2em;
+  color:rgba(242,243,245,0.46);
+  transition:color 420ms ease;
+}
+.wll__gate.is-on{background:rgba(242,243,245,0.36)}
+.wll__gate.is-on span{color:rgba(242,243,245,0.72)}
+
+/* ── the ground ──────────────────────────────────────────────────────── */
+.wll__ground{
+  position:absolute;left:0;right:0;
+  bottom:calc(var(--depth) * -1);height:var(--depth);
+  transform-origin:50% 0;transform:rotateX(-90deg);
+  border-top:1px solid rgba(242,243,245,0.16);
+  display:flex;justify-content:space-between;
+}
+/* real elements, not a repeating gradient: the hard rule against gradients
+   on DOM elements is still in force and a floor grid is six hairlines. */
+.wll__ground i{display:block;width:1px;background:rgba(242,243,245,0.13)}
+
+/* ── the columns ─────────────────────────────────────────────────────── */
+.wll__cols{
+  position:absolute;inset:0;
+  display:flex;align-items:flex-end;justify-content:space-between;
+  padding:0 5% 0 15%;
+  transform-style:preserve-3d;
+}
+.wll__col{
+  position:relative;flex:0 0 11%;height:100%;
+  transform-style:preserve-3d;
+}
+/* the empty shaft the column has still to climb */
+.wll__trk{
+  position:absolute;inset:0;
+  /* an opaque tube, so a column reads as a shaft rather than as a
+     rectangle of field */
+  background:rgba(9,11,15,0.72);
+  border:1px solid rgba(242,243,245,0.13);border-bottom:none;
+}
+.wll__fill{
+  position:absolute;left:0;right:0;bottom:0;height:100%;
+  background:rgba(242,243,245,0.17);
+  border:1px solid rgba(242,243,245,0.44);
+  transform-origin:50% 100%;transform:scaleY(var(--v,0));
+  will-change:transform;
+}
+/* the depth face, so a column is an object rather than a bar */
+.wll__side{
+  position:absolute;left:100%;bottom:0;
+  width:var(--depth);height:100%;
+  background:rgba(20,23,29,0.86);
+  border:1px solid rgba(242,243,245,0.20);
+  transform-origin:0 100%;transform:rotateY(90deg) scaleY(var(--v,0));
+  will-change:transform;
+}
+/* the lit top edge, translated to meet the fill rather than scaled with it */
+.wll__cap{
+  position:absolute;left:-2px;right:-2px;bottom:0;height:2px;
+  background:var(--vapor);
+  transform:translateY(calc(var(--v,0) * var(--shaft) * -1));
+  will-change:transform;
+}
+.wll__val{
+  position:absolute;left:0;right:0;bottom:0;
+  transform:translateY(calc(var(--v,0) * var(--shaft) * -1 - 17px));
+  font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;
+  color:rgba(242,243,245,0.78);text-align:center;
+  font-variant-numeric:tabular-nums;
+  will-change:transform;
+}
+/* the dimension's name, at the foot, where it cannot move */
+.wll__k{
+  position:absolute;left:50%;top:100%;margin-top:9px;
+  transform:translateX(-50%);
   font-family:var(--font-mono);font-size:9px;letter-spacing:0.16em;
-  color:rgba(242,243,245,0.34);grid-row:1 / span 2;
+  color:rgba(242,243,245,0.64);white-space:nowrap;
+  transition:color 400ms ease;
 }
-.stk__key .k__t{
-  font-size:clamp(11px,1.05vw,13px);letter-spacing:-0.01em;
-  color:rgba(242,243,245,0.66);
+/* THE one Pulse on this surface: the constraint, and nothing else. */
+.wll__col.is-constraint .wll__fill{
+  background:rgba(110,86,248,0.18);border-color:var(--pulse-mark);
 }
-.stk__key .k__v{
-  font-family:var(--font-mono);font-size:8.5px;letter-spacing:0.14em;
-  color:rgba(242,243,245,0.34);
-}
-.stk__key li.is-on{background:rgba(14,15,18,0.92)}
-.stk__key li.is-on .k__t{color:var(--vapor)}
-.stk__key li.is-on .k__n,
-.stk__key li.is-on .k__v{color:rgba(242,243,245,0.72)}
+.wll__col.is-constraint .wll__cap{background:var(--pulse-mark)}
+.wll__col.is-constraint .wll__k{color:var(--vapor)}
 
-/* ── responsive ──────────────────────────────────────────────────────── */
+/* ── the index plane ─────────────────────────────────────────────────── */
+.wll__plane{
+  position:absolute;left:-3%;right:-3%;
+  bottom:calc(var(--depth) * -1);height:var(--depth);
+  transform-origin:50% 0;
+  transform:translateY(calc(var(--idx,0) * var(--shaft) * -1)) rotateX(-90deg);
+  background:rgba(242,243,245,0.085);
+  border:1px solid rgba(242,243,245,0.50);
+  will-change:transform;
+}
+/* the readout rides the plane, upright, in the lane the columns leave for
+   it — inside the well, because anything hung outside it overflows the
+   stage on a narrow column and a pinned stage cannot be scrolled */
+.wll__ix{
+  position:absolute;left:0;bottom:0;width:12%;
+  transform:translateY(calc(var(--idx,0) * var(--shaft) * -1)) translateZ(2px);
+  display:flex;flex-direction:column;gap:1px;
+  will-change:transform;
+}
+.wll__ix b{
+  font-family:var(--font-mono);font-weight:400;line-height:0.9;
+  font-size:clamp(17px,calc(var(--righ) * 0.076),44px);
+  color:var(--vapor);font-variant-numeric:tabular-nums;
+}
+.wll__ix span{
+  font-family:var(--font-mono);font-size:8.5px;letter-spacing:0.18em;
+  color:rgba(242,243,245,0.42);
+}
 
+
+/* ══════════════════════════════════════════════════════════════════════
+   SIGNATURE · THE PRISM   (services/crm.html — modules/prism.js)
+
+   One record set, four faces. The prism turns and the same data is a
+   table, a pipeline, a ledger, and the rules that hold it together — then
+   it turns once more and the table is somebody else's firm.
+
+   That last quarter-turn is the product. Everything a buyer worries about
+   with a custom system is whether it is a bespoke thing built once and
+   then stranded. A prism that returns to the first face with different
+   columns on it says the opposite: one core, configured, and the
+   guarantees do not move when the fields do.
+
+   ── THE FRONT FACE IS ALWAYS AT Z = 0 ───────────────────────────────
+   A four-sided prism of width W puts its front face at +W/2, which under
+   perspective magnifies it by about a third — so every face would swell
+   as it arrived and shrink as it left, and the reader would be trying to
+   read a moving target. The prism carries a translateZ(-W/2) that cancels
+   it exactly. Take that line out and the instrument still works and looks
+   wrong, which is the hardest kind of bug to find later.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.prs{
+  /* --prw IS A LENGTH, ALWAYS, AND IT IS WRITTEN BY prism.js.
+
+     It cannot be `min(<length>, 70%)` here, and that mistake cost the
+     whole instrument: translateZ does NOT accept a percentage, so the
+     moment the 70% branch won, BOTH transforms below became invalid
+     declarations and were dropped entirely. The prism did not turn, the
+     faces did not separate, and all four stacked on top of each other —
+     so the page showed whichever face came last in the markup while the
+     readout confidently named a different one. Nothing threw, nothing
+     logged, and it looked like a beat-sequencing bug rather than a units
+     bug. See the identical note on `.glyph--sys`.
+
+     The 70% itself is not a margin, it is THE DIAGONAL: a square prism
+     halfway through a quarter-turn presents its corner, and a corner is
+     the face width times root two. Sized to the stage at rest it spills
+     over the key rail every time it moves.
+
+     This value is the pre-script fallback; prism.js replaces it on load
+     and on resize with min(stage height, stage width * 0.7) in pixels. */
+  --prw:calc(var(--righ) * 0.7);
+  /* Shorter than the rig, because a face is a screen and a screen is
+     wider than it is tall. At 0.92 the content sat in the top four
+     tenths with half the face empty under it. */
+  --prh:calc(var(--righ) * 0.78);
+}
+/* Deeper than the shared 1500: at this size a 1500px camera puts a hard
+   keystone on the two side faces mid-turn. */
+.prs .rig__view{perspective:calc(var(--righ) * 4.4);perspective-origin:50% 48%}
+
+.prs__prism{
+  position:absolute;left:50%;top:50%;
+  width:var(--prw);height:var(--prh);
+  margin-left:calc(-0.5 * var(--prw));
+  margin-top:calc(var(--prh) / -2);
+  transform-style:preserve-3d;
+  transform:translateZ(calc(var(--prw) * -0.5))
+            rotateX(var(--rx,4deg))
+            rotateY(var(--spin,0deg));
+  will-change:transform;
+}
+
+.prs__f{
+  position:absolute;inset:0;
+  background:#0B0D11;
+  border:1px solid var(--hair);
+  overflow:hidden;
+  backface-visibility:hidden;
+  container-type:inline-size;
+  transform:rotateY(calc(var(--i) * 90deg)) translateZ(calc(var(--prw) * 0.5));
+  transition:border-color 460ms ease,box-shadow 620ms var(--ease-reveal,cubic-bezier(.16,1,.3,1));
+}
+.prs__f.is-front{
+  border-color:rgba(242,243,245,0.5);
+  box-shadow:0 0 0 1px rgba(242,243,245,0.10),0 34px 90px rgba(0,0,0,0.72);
+}
+.prs__f::after{
+  content:'';position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(242,243,245,0.28) 30%,
+             rgba(242,243,245,0.28) 70%,transparent);
+  pointer-events:none;
+}
+
+.prs__body{
+  position:absolute;inset:0;padding:5.5% 6% 7%;
+  display:flex;flex-direction:column;gap:clamp(6px,1.8cqw,16px);
+}
+.prs__hd{
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  border-bottom:1px solid var(--hair);padding-bottom:clamp(4px,1.2cqw,9px);
+  font-size:clamp(6.5px,1.5cqw,10px);letter-spacing:0.2em;
+  color:rgba(242,243,245,0.44);
+}
+.prs__hd b{font-weight:400;color:rgba(242,243,245,0.86)}
+.prs__cap{
+  position:absolute;left:11px;bottom:9px;
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:0.24em;
+  color:rgba(242,243,245,0.46);
+  transition:color 400ms ease,letter-spacing 620ms cubic-bezier(.16,1,.3,1);
+}
+.prs__f.is-front .prs__cap{color:var(--vapor);letter-spacing:0.34em}
+
+/* ── face 01 · the table ─────────────────────────────────────────────── */
+.prs__tbl{display:flex;flex-direction:column;justify-content:space-between;
+  gap:clamp(3px,1cqw,8px);flex:1 1 auto;min-height:0}
+.prs__hr,.prs__row{display:flex;gap:2.4%;align-items:center}
+.prs__hr span,.prs__row span{
+  position:relative;flex:1 1 0;min-width:0;overflow:hidden;
+  transition:flex 540ms var(--ease-reveal,cubic-bezier(.16,1,.3,1)),
+             opacity 420ms ease;
+}
+.prs__hr{
+  border-bottom:1px solid var(--hair);
+  padding-bottom:clamp(3px,1cqw,7px);
+  font-family:var(--font-mono);font-size:clamp(6px,1.35cqw,9.5px);
+  letter-spacing:0.16em;color:rgba(242,243,245,0.40);
+}
+/* The two labels for one column, cross-faded. Both are in the DOM the
+   whole time: an instrument that rewrites its own text on a class change
+   flickers, and the point being made is that the COLUMN is the same
+   column with a different name on it. */
+.prs__hr b,.prs__hr i{font-weight:400;font-style:normal;white-space:nowrap;
+  transition:opacity 380ms ease}
+.prs__hr i{position:absolute;left:0;top:0;opacity:0}
+.prs__row{
+  font-family:var(--font-mono);font-size:clamp(6px,1.3cqw,9px);
+  letter-spacing:0.12em;color:rgba(242,243,245,0.60);
+}
+.prs__row em{font-style:normal;color:rgba(242,243,245,0.88)}
+/* a cell with a value in it that is not worth printing at this size */
+.prs__row s{
+  display:block;height:clamp(4px,1.1cqw,8px);text-decoration:none;
+  background:rgba(242,243,245,0.13);
+}
+.prs__row u{
+  text-decoration:none;color:rgba(242,243,245,0.5);
+  border:1px solid var(--hair);padding:1px 4px;display:inline-block;
+}
+
+/* the reconfiguration: one column leaves, another arrives, the rest stay */
+.prs__tbl.is-alt .prs__hr b{opacity:0}
+.prs__tbl.is-alt .prs__hr i{opacity:1}
+.prs__hr span[data-add],.prs__row span[data-add]{flex:0 0 0;opacity:0}
+.prs__tbl.is-alt span[data-add]{flex:0 0 15%;opacity:1}
+.prs__tbl.is-alt span[data-drop]{flex:0 0 0;opacity:0}
+
+/* ── face 02 · the pipeline ──────────────────────────────────────────── */
+.prs__board{display:flex;gap:3%;flex:1 1 auto;min-height:0}
+.prs__lane{
+  flex:1 1 0;display:flex;flex-direction:column;gap:clamp(4px,1.2cqw,9px);
+  border-top:1px solid var(--hair);padding-top:clamp(5px,1.4cqw,10px);
+}
+.prs__lane > span{
+  font-family:var(--font-mono);font-size:clamp(6px,1.35cqw,9.5px);
+  letter-spacing:0.16em;color:rgba(242,243,245,0.42);
+}
+.prs__card{
+  border:1px solid var(--hair);background:rgba(242,243,245,0.035);
+  padding:clamp(5px,1.5cqw,11px) clamp(6px,1.6cqw,12px);
+  display:flex;flex-direction:column;gap:clamp(3px,0.9cqw,7px);
+}
+.prs__card em{
+  font-style:normal;font-family:var(--font-mono);
+  font-size:clamp(6px,1.3cqw,9px);letter-spacing:0.14em;
+  color:rgba(242,243,245,0.82);
+}
+.prs__card s{display:block;height:clamp(3px,0.9cqw,6px);text-decoration:none;
+  background:rgba(242,243,245,0.12)}
+/* THE one Pulse on this surface: the file that has not moved inside the
+   working-day window the desk actually enforces. */
+.prs__card.is-flag{border-color:var(--pulse-mark)}
+.prs__card.is-flag em{color:var(--vapor)}
+.prs__flag{
+  align-self:flex-start;
+  font-family:var(--font-mono);font-size:clamp(5.5px,1.1cqw,8px);
+  letter-spacing:0.16em;color:var(--pulse-mark);
+}
+
+/* ── face 03 · the ledger ────────────────────────────────────────────── */
+.prs__log{
+  list-style:none;margin:0;padding:0;flex:1 1 auto;min-height:0;
+  display:flex;flex-direction:column;gap:clamp(3px,1cqw,8px);
+}
+.prs__log li{
+  display:grid;grid-template-columns:clamp(34px,13cqw,74px) 1fr auto;
+  gap:clamp(6px,2cqw,14px);align-items:baseline;
+  font-family:var(--font-mono);font-size:clamp(6px,1.3cqw,9px);
+  letter-spacing:0.12em;color:rgba(242,243,245,0.56);
+  border-bottom:1px solid rgba(242,243,245,0.05);
+  padding-bottom:clamp(2px,0.8cqw,6px);
+}
+.prs__log b{font-weight:400;color:rgba(242,243,245,0.88)}
+.prs__log span:last-child{color:rgba(242,243,245,0.34)}
+
+/* ── face 04 · the rules ─────────────────────────────────────────────── */
+.prs__rules{list-style:none;margin:0;padding:0;flex:1 1 auto;
+  display:flex;flex-direction:column;justify-content:center;
+  gap:clamp(6px,2cqw,16px)}
+.prs__rules li{
+  display:grid;grid-template-columns:auto 1fr;gap:clamp(7px,2.2cqw,14px);
+  align-items:baseline;
+  font-size:clamp(7.5px,2cqw,14px);line-height:1.45;
+  color:rgba(242,243,245,0.80);
+}
+.prs__rules li span{
+  font-family:var(--font-mono);font-size:clamp(6px,1.4cqw,10px);
+  letter-spacing:0.16em;color:rgba(242,243,245,0.34);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   RESPONSIVE — one block for all five, because they are one shell now
+
+   `--rigchrome` is the only knob. It is everything the pinned stage
+   spends on something other than the instrument, so when the note gets
+   taller or the key rail moves under the stage, the number goes up and
+   every rig on the site shrinks to match. Nothing here re-tunes an
+   instrument's internal geometry: those are all ratios of `--righ`.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── the key rail goes under the stage ──────────────────────────────── */
 @media (max-width:900px){
-  .stk{
-    grid-template-columns:1fr;gap:clamp(12px,2vh,18px);
-    --stkh:min(26svh,208px);
-    --zstep:21px;--tilt:46deg;--spin:-20deg;--lift:32px;--shrink:0.30;
+  .rig{
+    grid-template-columns:minmax(0,1fr);
+    gap:clamp(10px,1.6vh,16px);
+    /* the rail is now BELOW the rig rather than beside it, so it comes
+       out of the same vertical budget the instrument does */
+    --rigchrome:470px;
   }
-  .stk__key li{padding:6px 9px}
-  .stk__key .k__t{font-size:11px}
-}
-/* A pinned stage cannot be scrolled to reveal what does not fit. At 500px
-   tall every clamp on this page sits on its floor, so the floors have to be
-   replaced rather than relied on. */
-@media (max-height:620px){
-  .stk{
-    --stkh:min(32svh,168px);
-    --zstep:17px;--tilt:46deg;--spin:-22deg;--lift:26px;--shrink:0.30;
-  }
-  .sig__stage{padding-top:56px;padding-bottom:14px;gap:8px}
-  .sig__note{min-height:0;font-size:11.5px;line-height:1.55}
-  .stk__key li{padding:4px 8px}
-  .stk__key .k__t{font-size:10.5px}
-  .stk__key .k__v{font-size:7.5px}
+  .rig__key li{padding:5px 9px}
+  .rig__key .k__t{font-size:11px}
+  .rig__key .k__n{font-size:8.5px}
+  .rig__key .k__v{font-size:8px}
+  .sig__note{font-size:13px;min-height:4.6em}
+
+  /* THE FOLD — the row is five panels wide and a phone column is one, so
+     the camera does most of the work. Narrower panels keep the dive
+     legible instead of filling the screen with one corner of one panel. */
+  .fld{--fldw:calc(var(--righ) * 0.82);--fldh:calc(var(--righ) * 0.94)}
+
+  /* THE PLAN — the SVG scales by `meet`, so it needs nothing. */
+
+  /* THE WELL — five columns and a readout lane in a phone's width is
+     tight; the lane narrows and the columns take what it gives back.
+     The shaft also has to STOP AT 84% of the stage rather than filling
+     it: the whole well is rotated 24 degrees on Y, and a box that wide
+     projects past the right edge — measured at 21px over on a 390px
+     screen. The index plane loses its 3% overhang for the same reason. */
+  .wll{--wellw:min(calc(var(--righ) * 1.30),84%)}
+  .wll__plane{left:0;right:0}
+  .wll__cols{padding:0 3% 0 19%}
+  .wll__ix{width:17%}
+  .wll__k{font-size:7.5px;letter-spacing:0.1em}
+  .wll__gate span{font-size:8px}
+
+  /* THE PRISM — the faces are the full width of the stage here. */
+  /* the phone fallback, again a pure length — prism.js overwrites it */
+  .prs{--prw:calc(var(--righ) * 0.72)}
 }
 
+/* At 360px the note runs to FOUR lines and the key rail is six rows, and
+   between them they were asking for 464px of a 640px window — which put
+   the rig on its 200px floor and still overflowed by 24. A floor cannot
+   shrink, so the chrome is what has to: tighter rows, a tighter note. */
+@media (max-width:420px){
+  .rig{--rigchrome:400px}
+  .rig__key li{padding:3.5px 8px}
+  .rig__key .k__t{font-size:10.5px}
+  .rig__key .k__n{font-size:8px}
+  .rig__key .k__v{font-size:7.5px}
+  .sig__note{font-size:12.5px;line-height:1.5;min-height:0}
+}
+
+/* ── short windows: the floors under every clamp have to be replaced ──
+   A pinned stage cannot be scrolled to reveal what does not fit, and at
+   500px tall every clamp on the page is sitting on its floor — so the
+   floors themselves are what have to move, not the preferred values. */
+/* Above 900px the key rail is still BESIDE the stage, so a short window
+   only has to pay for the chrome above and below. */
+@media (max-height:620px) and (min-width:901px){
+  .rig{--rigchrome:214px}
+  .sig__stage{padding-top:50px;padding-bottom:12px;gap:7px}
+  .sig__note{min-height:0;font-size:11.5px;line-height:1.55}
+  .rig__key li{padding:3px 8px}
+  .rig__key .k__t{font-size:10.5px}
+  .rig__key .k__v{font-size:7.5px}
+  .fld__cap,.prs__cap,.stk__cap{font-size:8px}
+  .wll__ix b{font-size:clamp(15px,calc(var(--righ) * 0.09),30px)}
+}
+
+/* Narrow AND short — a phone in landscape, and the case the first build
+   got wrong. Both blocks above set `--rigchrome` at the same specificity,
+   so the later one simply won: a 393x610 window claimed the 214px budget
+   of a wide screen while still stacking a six-row key rail underneath the
+   stage, and the whole thing overflowed the top of the viewport by 62px.
+   Two conditions, one rule, no ordering to get right. */
+@media (max-width:900px) and (max-height:620px){
+  .rig{--rigchrome:392px}
+  .sig__stage{padding-top:48px;padding-bottom:12px;gap:7px}
+  .sig__note{min-height:0;font-size:11.5px;line-height:1.5}
+  .rig__key li{padding:3px 8px}
+  .rig__key .k__t{font-size:10px}
+  .rig__key .k__v{font-size:7.5px}
+}
+
+/* ── reduced motion ─────────────────────────────────────────────────── */
 @media (prefers-reduced-motion:reduce){
-  .spec__panel,.chip,.dim__bar i,.sig__note{transition:none}
-  /* stack.js already parks it open and stops the drift; this stills the
-     per-layer transitions so nothing eases on the way to that resting
-     state either, and drops the compositor hints it no longer needs. */
-  .stk__scene,.stk__l{will-change:auto}
-  .stk__l,.stk__cap,.stk__key li{transition:none}
+  /* Every module already parks itself in a resting state and stops
+     driving the track. This stills the transitions so nothing eases on
+     the way to that state either, and drops the compositor hints none of
+     them need once nothing is moving. */
+  .sig__note,
+  .stk__scene,.stk__l,.stk__cap,
+  .fld__scene,.fld__p--h,.fld__face,.fld__cap,
+  .wll__scene,.wll__fill,.wll__side,.wll__cap,.wll__val,.wll__plane,.wll__ix,
+  .wll__gate,.wll__gate span,
+  .prs__prism,.prs__f,.prs__cap,
+  .prs__hr span,.prs__row span,.prs__hr b,.prs__hr i,
+  .rig__key li{
+    transition:none;
+    will-change:auto;
+  }
 }

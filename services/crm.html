@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZYRN &mdash; Customizable CRM</title>
+<meta name="description" content="A desk system built to the firm rather than rented from a vendor. Your objects, your vocabulary, your hosting — handed over as source, with no seat count and nothing to renew.">
+<link rel="canonical" href="https://zyrn.org/services/crm.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ZYRN">
+<meta property="og:locale" content="en">
+<meta property="og:title" content="ZYRN &mdash; Customizable CRM">
+<meta property="og:description" content="A desk system built to the firm rather than rented from a vendor. Your objects, your vocabulary, your hosting — handed over as source, with no seat count and nothing to renew.">
+<meta property="og:url" content="https://zyrn.org/services/crm.html">
+<meta property="og:image" content="https://zyrn.org/assets/media/og.jpg?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ZYRN — the wordmark cut by its Pulse seam, inside the particle core.">
+<meta property="og:image:secure_url" content="https://zyrn.org/assets/media/og.jpg?v=2">
+<meta property="og:image:type" content="image/jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/media/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/media/icons/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/media/icons/apple-touch-icon.png">
+<link rel="manifest" href="../site.webmanifest">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<!-- The import map MUST precede every module load on the page, and a
+     <link rel="modulepreload"> IS a module load: Chrome resolves the
+     preloaded module's own imports at preload time. With the map below the
+     preloads, GPUComputationRenderer's bare `import ... from 'three'` had
+     nothing to resolve against and every page logged
+     `Failed to resolve module specifier "three"`. The field still ran —
+     the real import later found the map — but the preload was wasted and
+     the console was dirty on all eight pages. Fixed 2026-08-18. -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/",
+    "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.mjs",
+    "lil-gui": "https://cdn.jsdelivr.net/npm/lil-gui@0.19.2/dist/lil-gui.esm.js"
+  }
+}
+</script>
+
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/build/three.module.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/misc/GPUComputationRenderer.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.171.0/examples/jsm/postprocessing/EffectComposer.js">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/styles.css">
+<link rel="stylesheet" href="../assets/css/service.css">
+<link rel="stylesheet" href="../assets/css/field.css">
+<link rel="stylesheet" href="../assets/css/footer.css">
+<link rel="stylesheet" href="../assets/css/cmdk.css">
+<link rel="stylesheet" href="../assets/css/svc-modules.css">
+
+</head>
+<body>
+
+<!-- shared ground: the same field, off the same seed, carried across the
+     navigation by field.js so the pages read as one surface changing
+     channels rather than as separate documents. -->
+<canvas id="field" aria-hidden="true"></canvas>
+
+<div class="grid" aria-hidden="true">
+  <span class="grid__line grid__line--a"></span>
+  <span class="grid__line grid__line--b"></span>
+</div>
+
+<div class="readout" aria-hidden="true">
+  <span class="readout__label">ZYRN / SYS.04 &middot; <span id="readoutState">FIELD</span> &mdash; <span id="readoutPct">000</span>%</span>
+  <span class="readout__track"><span class="readout__fill" id="readoutFill"></span></span>
+</div>
+
+<div class="shell">
+
+  <nav class="nav">
+    <div class="nav__row">
+      <a href="../index.html" aria-label="ZYRN — home">
+        <span class="glitch">
+          <span class="shear shear--auto is-sheared" style="--shear-size:20px">
+            <span class="shear__half shear__half--top">ZYRN</span>
+            <span class="shear__half shear__half--bot">ZYRN</span>
+            <span class="shear__seam"></span>
+          </span>
+        </span>
+      </a>
+      <div class="nav__links">
+        <a href="../index.html#sys-03" class="nav__link">Work<sup class="nav__sup">04</sup></a>
+        <a href="../foundation.html" class="nav__link">Foundation</a>
+        <a href="../index.html#sys-04" class="nav__link">System</a>
+        <a href="../services.html" class="nav__link">Services</a>
+        <a href="../index.html#production" class="nav__link">In production</a>
+        <a href="../index.html#sys-05" class="nav__link">Contact</a>
+      </div>
+      <div class="nav__end">
+        <span class="mono nav__coords">AMM 31.95&deg;N / 35.93&deg;E</span>
+        <a class="btn btn--hairline" href="../index.html#sys-05">Request access</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <header class="svc-hero">
+      <a class="mono svc-hero__up" href="../services.html"><span aria-hidden="true">&larr;</span> SYS.03 &mdash; SERVICE LINES</a>
+      <span class="mono svc-hero__idx" aria-hidden="true">05</span>
+      <h1 class="svc-hero__title" data-keepout data-reveal data-kinetic>Customizable<br>CRM.</h1>
+      <p class="svc-hero__lede" data-keepout>Every firm is told the same thing: take the system the vendor built for somebody else and change how you work to suit it. Zyrn builds the other way round &mdash; your objects, your vocabulary, your rules &mdash; and hands over the source, the data and the hosting in your name.</p>
+      <div class="mono svc-hero__meta" data-keepout>SCHEMA &nbsp;/&nbsp; PIPELINE &nbsp;/&nbsp; LEDGER &nbsp;/&nbsp; HANDOVER</div>
+    </header>
+
+    <div class="svc-sec" style="padding-top:0">
+    <nav class="tabs" data-active="4" aria-label="Service lines">
+      <a class="tab" href="website-design.html">
+        <span class="mono tab__idx">01</span>
+        <span class="tab__name">Website design</span>
+      </a>
+      <a class="tab" href="brand-kit.html">
+        <span class="mono tab__idx">02</span>
+        <span class="tab__name">Brand kit</span>
+      </a>
+      <a class="tab" href="business-structuring.html">
+        <span class="mono tab__idx">03</span>
+        <span class="tab__name">Business structuring</span>
+      </a>
+      <a class="tab" href="ai-transformation.html">
+        <span class="mono tab__idx">04</span>
+        <span class="tab__name">AI adoption</span>
+      </a>
+      <a class="tab is-active" href="crm.html" aria-current="page">
+        <span class="mono tab__idx">05</span>
+        <span class="tab__name">Customizable CRM</span>
+      </a>
+    </nav>
+    </div>
+
+
+    <!-- ── SIGNATURE · THE PRISM ────────────────────────────────────────
+         One record set, four faces: the book, the pipeline, the ledger, and
+         the four guarantees underneath them. Then a fifth station, which is
+         the first face again with somebody else's columns on it — because
+         the objection to a custom system is that it is stranded, and a
+         prism that comes back reconfigured with the same rules behind it
+         answers that in one move.
+
+         The prism carries a translateZ(-W/2) so the front face sits at
+         z = 0 and no face swells as it arrives. The four rules on face 04
+         are the ones the sync code actually enforces; they were read out of
+         it, not written for the page. See modules/prism.js. -->
+    <section class="sig sig--prism" id="sigPrism" aria-label="One record set, four faces">
+      <div class="sig__track">
+        <div class="sig__stage">
+          <div class="sig__head">
+            <span class="mono sig__step" id="prsStep">00 &mdash; ONE RECORD SET</span>
+            <span class="mono sig__pct"><span id="prsPct">000</span>%</span>
+          </div>
+
+          <div class="rig prs" id="prs">
+            <div class="rig__view" aria-hidden="true">
+              <div class="prs__prism" id="prsPrism">
+
+                <!-- 00 · the book. Two labels per column, both in the DOM
+                     the whole time — the point is that it is the same
+                     column with a different name on it. -->
+                <div class="prs__f is-front" style="--i:0">
+                  <div class="prs__body">
+                    <div class="prs__hd"><b>THE BOOK</b><span class="mono" id="prsSrc">SCHEMA &mdash; AS INSTALLED</span></div>
+                    <div class="prs__tbl" id="prsTbl">
+                      <div class="prs__hr">
+                        <span><b>REF</b><i>REF</i></span>
+                        <span><b>TYPE</b><i>SERVICE</i></span>
+                        <span><b>LOCATION</b><i>ROOM</i></span>
+                        <span data-drop><b>AREA</b><i></i></span>
+                        <span><b>STATUS</b><i>STATUS</i></span>
+                        <span data-add><b></b><i>CONSENT</i></span>
+                        <span><b>OWNER</b><i>PRACTITIONER</i></span>
+                      </div>
+                      <div class="prs__row"><span><em>015</em></span><span><s></s></span><span><s></s></span><span data-drop><s></s></span><span><u>AVAILABLE</u></span><span data-add><s></s></span><span><s></s></span></div>
+                      <div class="prs__row"><span><em>016</em></span><span><s></s></span><span><s></s></span><span data-drop><s></s></span><span><u>RESERVED</u></span><span data-add><s></s></span><span><s></s></span></div>
+                      <div class="prs__row"><span><em>017</em></span><span><s></s></span><span><s></s></span><span data-drop><s></s></span><span><u>AVAILABLE</u></span><span data-add><s></s></span><span><s></s></span></div>
+                      <div class="prs__row"><span><em>018</em></span><span><s></s></span><span><s></s></span><span data-drop><s></s></span><span><u>UNDER OFFER</u></span><span data-add><s></s></span><span><s></s></span></div>
+                      <div class="prs__row"><span><em>019</em></span><span><s></s></span><span><s></s></span><span data-drop><s></s></span><span><u>WITHDRAWN</u></span><span data-add><s></s></span><span><s></s></span></div>
+                    </div>
+                  </div>
+                  <span class="prs__cap">TABLE</span>
+                </div>
+
+                <!-- 01 · the pipeline. The flag is the working-day SLA the
+                     desk actually enforces, not a decorative badge. -->
+                <div class="prs__f" style="--i:1">
+                  <div class="prs__body">
+                    <div class="prs__hd"><b>IN PROGRESS</b><span class="mono">FLAGGED AT 07 WORKING DAYS</span></div>
+                    <div class="prs__board">
+                      <div class="prs__lane">
+                        <span>QUALIFIED</span>
+                        <div class="prs__card"><em>0441</em><s></s><s></s></div>
+                        <div class="prs__card"><em>0446</em><s></s><s></s></div>
+                        <div class="prs__card"><em>0448</em><s></s><s></s></div>
+                      </div>
+                      <div class="prs__lane">
+                        <span>VIEWING</span>
+                        <div class="prs__card"><em>0439</em><s></s><s></s></div>
+                        <div class="prs__card is-flag"><em>0431</em><s></s><span class="prs__flag">NO MOVE &mdash; 09D</span></div>
+                      </div>
+                      <div class="prs__lane">
+                        <span>CLOSING</span>
+                        <div class="prs__card"><em>0447</em><s></s><s></s></div>
+                        <div class="prs__card"><em>0428</em><s></s><s></s></div>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="prs__cap">PIPELINE</span>
+                </div>
+
+                <!-- 02 · the ledger -->
+                <div class="prs__f" style="--i:2">
+                  <div class="prs__body">
+                    <div class="prs__hd"><b>ACTIVITY</b><span class="mono">EVERY CHANGE, ATTRIBUTED</span></div>
+                    <ul class="prs__log">
+                      <li><b>09:14</b><span>LISTING 016 &mdash; PRICE CHANGED</span><span>ADVISOR 02</span></li>
+                      <li><b>09:41</b><span>FEED PULLED &mdash; 03 ADDED, 01 ARCHIVED</span><span>SYSTEM</span></li>
+                      <li><b>10:02</b><span>DEAL 0447 &mdash; STAGE MOVED</span><span>ADVISOR 01</span></li>
+                      <li><b>11:20</b><span>LISTING 021 &mdash; SENT FOR REVIEW</span><span>ADVISOR 03</span></li>
+                      <li><b>11:58</b><span>LISTING 021 &mdash; APPROVED</span><span>MANAGER</span></li>
+                      <li><b>14:35</b><span>REF 009 &mdash; ARCHIVED, NOT DELETED</span><span>SYSTEM</span></li>
+                    </ul>
+                  </div>
+                  <span class="prs__cap">LEDGER</span>
+                </div>
+
+                <!-- 03 · the rules. Read out of the sync code, not written
+                     for this page. -->
+                <div class="prs__f" style="--i:3">
+                  <div class="prs__body">
+                    <div class="prs__hd"><b>GUARANTEES</b><span class="mono">ENFORCED AT THE DATA</span></div>
+                    <ul class="prs__rules">
+                      <li><span>01</span>A reference that drops out of the feed is archived, never deleted &mdash; its photos, its showings and its deals survive it.</li>
+                      <li><span>02</span>A photo added on the desk survives the next sync. The feed adds; it does not overwrite what the desk put there.</li>
+                      <li><span>03</span>The feed runs one way. The public site is never written to from the desk.</li>
+                      <li><span>04</span>A record created on the desk is never touched by the feed, whatever the feed says.</li>
+                    </ul>
+                  </div>
+                  <span class="prs__cap">RULES</span>
+                </div>
+
+              </div>
+            </div>
+
+            <ol class="rig__key" id="prsKey">
+              <li><span class="mono k__n">01</span><span class="k__t">The book</span><span class="mono k__v"><span data-c="cols">&mdash;</span> FIELDS &middot; YOUR REFS</span></li>
+              <li><span class="mono k__n">02</span><span class="k__t">The pipeline</span><span class="mono k__v">03 STAGES &middot; 07-DAY FLAG</span></li>
+              <li><span class="mono k__n">03</span><span class="k__t">The ledger</span><span class="mono k__v">EVERY CHANGE, ATTRIBUTED</span></li>
+              <li><span class="mono k__n">04</span><span class="k__t">The rules</span><span class="mono k__v">04 GUARANTEES</span></li>
+              <li><span class="mono k__n">05</span><span class="k__t">Reconfigured</span><span class="mono k__v">01 CORE &middot; 02 SCHEMAS</span></li>
+              <li><span class="mono k__n">06</span><span class="k__t">Handed over</span><span class="mono k__v">SOURCE &middot; DATA &middot; HOSTING</span></li>
+            </ol>
+          </div>
+
+          <p class="sig__note" id="prsNote">A desk system for a real firm, running in production. What follows is the same data four times over &mdash; not four modules, four faces of one object, which is the difference between a product and a bundle.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="svc-sec">
+      <div class="svc-sec__head" data-keepout>
+        <h2 class="svc-sec__title">What it covers</h2>
+        <p class="svc-sec__note" data-keepout>Six modules. The schema is agreed before a screen is drawn.</p>
+      </div>
+      <div class="mods" data-keepout>
+        <article class="mod" data-reveal data-rdelay="120">
+          <span class="mono mod__idx">05a</span>
+          <h3 class="mod__title">Schema</h3>
+          <p class="mod__body">The objects the firm already talks in, with the field names it already uses. Nothing is renamed to suit the software.</p>
+        </article>
+        <article class="mod" data-reveal data-rdelay="190">
+          <span class="mono mod__idx">05b</span>
+          <h3 class="mod__title">Pipeline</h3>
+          <p class="mod__body">Stages that match how the desk really works, and a stall rule counted in working days rather than calendar ones.</p>
+        </article>
+        <article class="mod" data-reveal data-rdelay="260">
+          <span class="mono mod__idx">05c</span>
+          <h3 class="mod__title">Ledger</h3>
+          <p class="mod__body">Every change attributed and timestamped, because the question that gets asked is who changed it, not whether it changed.</p>
+        </article>
+        <article class="mod" data-reveal data-rdelay="330">
+          <span class="mono mod__idx">05d</span>
+          <h3 class="mod__title">Roles</h3>
+          <p class="mod__body">Who may see, who may edit, and who may delete &mdash; enforced at the data rather than by hiding a button.</p>
+        </article>
+        <article class="mod" data-reveal data-rdelay="400">
+          <span class="mono mod__idx">05e</span>
+          <h3 class="mod__title">Feed</h3>
+          <p class="mod__body">A one-way sync from whatever is already the source of truth, with archiving instead of deletion when a record leaves it.</p>
+        </article>
+        <article class="mod" data-reveal data-rdelay="470">
+          <span class="mono mod__idx">05f</span>
+          <h3 class="mod__title">Handover</h3>
+          <p class="mod__body">The source, the data and the hosting, in the firm&rsquo;s name. There is no seat count and nothing to renew.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="svc-sec">
+      <div class="svc-sec__head" data-keepout>
+        <h2 class="svc-sec__title">One is already running</h2>
+        <p class="svc-sec__note" data-keepout>Lumina Desk, built for a brokerage in Amman. Counted out of the repository, not estimated.</p>
+      </div>
+      <ul class="signals" data-keepout>
+        <li class="signal" data-reveal data-rdelay="120">
+          <span class="mono signal__k">BUILD</span>
+          <span class="signal__v">81 source files, 8,996 lines. 16 screens, 09 action modules, 07 endpoints.</span>
+        </li>
+        <li class="signal" data-reveal data-rdelay="190">
+          <span class="mono signal__k">SCHEMA</span>
+          <span class="signal__v">20 declared types carrying 130 typed fields. Every one of them argued for before it was added.</span>
+        </li>
+        <li class="signal" data-reveal data-rdelay="260">
+          <span class="mono signal__k">DEPENDENCIES</span>
+          <span class="signal__v">08 at runtime. A dependency is a decision somebody else gets to change later.</span>
+        </li>
+        <li class="signal" data-reveal data-rdelay="330">
+          <span class="mono signal__k">SEATS</span>
+          <span class="signal__v">Not counted, because they are not charged for. The bill does not move when the desk grows.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="svc-sec">
+      <div class="svc-sec__head" data-keepout>
+        <h2 class="svc-sec__title">How it runs</h2>
+        <p class="svc-sec__note" data-keepout>Three phases, the same three every line runs. Measured at each one.</p>
+      </div>
+      <div class="phases" data-keepout>
+        <div class="phase" data-reveal data-rdelay="120">
+          <span class="mono phase__k">P.01</span>
+          <h3 class="phase__title">Model</h3>
+          <p class="phase__body">Two to three weeks. The objects, the vocabulary and the rules, written down and agreed before a screen exists.</p>
+        </div>
+        <div class="phase" data-reveal data-rdelay="210">
+          <span class="mono phase__k">P.02</span>
+          <h3 class="phase__title">Build</h3>
+          <p class="phase__body">One quarter. The desk runs against real records from the first week, because a system tested on invented data is tested on nothing.</p>
+        </div>
+        <div class="phase" data-reveal data-rdelay="300">
+          <span class="mono phase__k">P.03</span>
+          <h3 class="phase__title">Hand over</h3>
+          <p class="phase__body">The repository, the database and the hosting move into the firm&rsquo;s accounts. Changes ship from inside the firm after that.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="svc-sec">
+      <div class="svc-sec__head" data-keepout>
+        <h2 class="svc-sec__title">What changes</h2>
+        <p class="svc-sec__note" data-keepout>Signals the engagement watches, and the direction they are expected to move.</p>
+      </div>
+      <ul class="signals" data-keepout>
+        <li class="signal" data-reveal data-rdelay="120">
+          <span class="mono signal__k">SOURCE OF TRUTH</span>
+          <span class="signal__v">One system, rather than a system and the spreadsheet everybody actually uses.</span>
+        </li>
+        <li class="signal" data-reveal data-rdelay="190">
+          <span class="mono signal__k">COST</span>
+          <span class="signal__v">Flat. It stops tracking headcount, which is the line item that made the old one hurt.</span>
+        </li>
+        <li class="signal" data-reveal data-rdelay="260">
+          <span class="mono signal__k">CHANGE</span>
+          <span class="signal__v">A new field is a commit, not a support ticket and a quarter of waiting.</span>
+        </li>
+        <li class="signal" data-reveal data-rdelay="330">
+          <span class="mono signal__k">EXIT</span>
+          <span class="signal__v">There is nothing to migrate off. The source and the data were always the firm&rsquo;s.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="svc-end">
+      <h2 class="svc-end__title" data-keepout data-reveal data-kinetic>Built to the firm.<br>Not rented to it.</h2>
+      <p class="body veil" style="margin-top:24px">The engagement closes when the repository is in your account and the team is shipping from it.</p>
+      <div class="cta-row" style="margin-top:32px">
+        <a class="btn btn--pulse" href="../index.html#sys-05">
+          Request access
+          <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+        </a>
+        <a class="btn btn--hairline" href="../lumina.html">See the Lumina case</a>
+      </div>
+    </section>
+
+    <footer class="sitefoot">
+      <div class="sitefoot__in" data-keepout>
+
+        <div class="sitefoot__top">
+          <div class="sitefoot__brand">
+            <span class="glitch">
+              <span class="shear shear--auto" id="footMark" style="--shear-size:clamp(38px,5.2vw,62px)">
+                <span class="shear__half shear__half--top">ZYRN</span>
+                <span class="shear__half shear__half--bot">ZYRN</span>
+                <span class="shear__seam"></span>
+              </span>
+            </span>
+            <p class="sitefoot__line">Organizations, engineered.</p>
+            <a class="sitefoot__mail" href="mailto:info@zyrn.org">info@zyrn.org</a>
+          </div>
+
+          <nav class="sitefoot__cols" aria-label="Footer">
+            <div class="fcol">
+              <span class="mono fcol__h">Lines</span>
+              <a href="../services/website-design.html"><span class="mono">01</span> Website design</a>
+              <a href="../services/brand-kit.html"><span class="mono">02</span> Brand kit</a>
+              <a href="../services/business-structuring.html"><span class="mono">03</span> Business structuring</a>
+              <a href="../services/ai-transformation.html"><span class="mono">04</span> AI adoption</a>
+              <a href="../services/crm.html"><span class="mono">05</span> Customizable CRM</a>
+            </div>
+            <div class="fcol">
+              <span class="mono fcol__h">The firm</span>
+              <a href="../foundation.html">Foundation</a>
+              <a href="../brand.html">Brand kit &mdash; the method</a>
+              <a href="../lumina.html">Lumina &mdash; a case</a>
+              <a href="../thehub.html">THEHUB &mdash; a case</a>
+              <a href="../axes.html">Axes &mdash; in service</a>
+              <a href="../index.html#sys-04">Readiness index</a>
+              <a href="../index.html#sys-05">Access</a>
+            </div>
+            <div class="fcol">
+              <span class="mono fcol__h">Intake</span>
+              <span class="fcol__stat">Q3 &mdash; 2026</span>
+              <span class="fcol__stat">01 of 04 seats open</span>
+              <span class="fcol__stat">By referral</span>
+              <span class="fcol__stat">Two quarters minimum</span>
+            </div>
+          </nav>
+        </div>
+
+        <div class="sitefoot__bar mono">
+          <span class="sitefoot__stamp">
+            <span class="mark" aria-hidden="true">
+              <svg class="mark__half mark__half--top" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+              <svg class="mark__half mark__half--bot" viewBox="0 0 20 20"><path d="M4 5h12L4 15h12"/></svg>
+              <span class="mark__seam"></span>
+            </span>
+            ZYRN &mdash; EST. 2026
+          </span>
+          <span>AMM 31.95&deg;N / 35.93&deg;E</span>
+          <span class="sitefoot__clock">AMM <b id="footClock">--:--:--</b></span>
+          <a class="lum" href="https://www.lumina-jo.com/" target="_blank" rel="noopener noreferrer"
+             aria-label="Lumina — opens in a new tab">
+            <img src="../assets/media/lumina-logo.png" alt="Lumina" width="222" height="60" loading="lazy" decoding="async">
+          </a>
+          <span class="sitefoot__spacer"></span>
+          <span>SYS.04 &mdash; AI ADOPTION</span>
+          <span>V.2.0 / EN &mdash; AR</span>
+        </div>
+
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script src="../assets/js/nav.js"></script>
+<script src="../assets/js/cmdk.js"></script>
+<script src="../assets/js/footer.js"></script>
+
+<script type="module">
+import { initField } from '../assets/js/field.js';
+import { initPrism } from '../assets/js/modules/prism.js';
+
+const roState = document.getElementById('readoutState');
+initField({
+  program: [
+    { at: 0.00, form: 'S1' },   // the record set, as parts
+    { at: 0.42, form: 'S1' },
+    { at: 0.78, form: 'S3' },   // turned into one object
+    { at: 1.00, form: 'S3' },
+  ],
+  channel: { tilt: { S1: 34, S3: 16 }, spin: { S1: 120, S3: 168 } },
+  onState: (p, n) => { if (roState) roState.textContent = n; },
+});
+
+initPrism();
+</script>
+</body>
+</html>

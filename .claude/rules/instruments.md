@@ -13,26 +13,106 @@ instrument and its history — including the two that had to be deleted and
 what that cost. It loads automatically whenever Claude touches a module,
 a script, or one of the two stylesheets that carry them.
 
-## Signature instruments (added 2026-08-18)
+## Signature instruments — rebuilt at one scale, 2026-09-01
 
-One per service line, all on the same shape: a 340vh track, a stage pinned with
-`position:sticky`, a mono step readout, and a note that swaps per stage.
+**Read this before touching any of them.** Five service pages, five
+instruments, and they are ONE SHELL now:
+
+    .sig__track            620vh, every page
+    .sig__stage            position:sticky, min-height:100svh
+    .sig__head             mono step readout + percentage
+    .rig                   the instrument, at --righ tall
+      .rig__view           the stage it draws inside
+      .rig__key            the counted key rail beside it
+    .sig__note             what the current beat means
+
 `_track.js` gives each one a 0..1 progress on rAF — not on a scroll event,
-because Lenis drives scrolling on rAF and a scroll listener would lag the field
-by a frame or two. One shared loop serves the page and parks when nothing is on
-screen.
+because Lenis drives scrolling on rAF and a scroll listener would lag the
+field by a frame or two. One shared loop serves the page and parks when
+nothing is on screen.
 
-- **build** — five stages, driven by a single `[data-stage]` attribute on the
-  frame. CSS does the rest, so a stage change is one attribute write.
-- **specimen** — three cross-faded panels. The chips report the real hex and the
-  real rule, and the mark runs the actual shear component, not a picture of one.
-- **graph** — two authored layouts lerped by scroll. Deliberately NOT a force
-  simulation: a layout that settles differently every load is the wrong thing
-  for an argument you want to make twice.
-- **readiness** — five dimensions at authored rates, so the constraint is
-  obvious on sight. They converge over the last 40% because that is what the
-  engagement does. Without the convergence the index caps at the constraint's
-  rate and never reaches the Level 04 the copy promises.
+### THE SCALE IS ONE NUMBER, and this is the rule that matters
+
+    --rigchrome   everything the pinned stage spends on something other
+                  than the instrument: both paddings, the head, the two
+                  gaps, the note
+    --righ        clamp(200px, 100svh - var(--rigchrome), 700px)
+
+Every geometry inside every instrument is a RATIO of `--righ`. The stack's
+Z separation, the fold's panel width, the well's shaft and depth, the
+prism's face width, and — the one that was missed first time — **the
+camera**. Before this rebuild each instrument carried hand-tuned pixel
+constants, which is why the four were four different sizes and all four
+were smaller than the space around them: you could not make one bigger
+without re-tuning five numbers against each other.
+
+**If you add an instrument, derive its geometry from `--righ` and add
+nothing in px.** If you find yourself wanting to, the answer is almost
+always a new ratio.
+
+**A camera is geometry too.** `perspective` was a flat `1500px`, tuned
+against a 520px stack. At 700px the same camera magnified the stack's
+pulled-out layer by 1.6x and pushed fifty pixels of it down through the
+note. It is `calc(var(--righ) * 3.0)` now — a camera that does not step
+back when the subject grows is the same bug as a hard-coded geometry, one
+level up.
+
+**`docs/rigfit.py` is how any of this is known.** It steps every
+instrument through eight progress values at nine window sizes and reports
+the PROJECTED union of everything painted against the head, the note, the
+key rail and the window edges. `getBoundingClientRect` reports the
+projected rect of a transformed element, which is what makes a 3D explode
+measurable rather than a matter of opinion. Run it after touching any
+geometry. `docs/rigshot.py` photographs one at chosen progress values.
+
+### The five
+
+- **stack** (`services/website-design.html`) — a finished page taken apart
+  into the six layers it is made of, held apart while each is named, and
+  put back. Six absolutely-positioned siblings in one preserve-3d scene.
+  The last row of its key is not typed: `field.js` writes the live median
+  frame time and fps into `#sMs` / `#sFps`, so the MEASUREMENT row is
+  measuring the page you are reading.
+- **fold** (`services/brand-kit.html`) — one sheet that unfolds into five
+  panels and folds back. **Panel n is a CHILD of panel n-1**, pinned at
+  `left:100%` with `transform-origin:left center`: that nesting IS the
+  hinge, and flattening it into siblings makes each panel swing alone.
+  The camera does the other half — it opens small enough to see all five
+  at once, dives to full size, walks the row, then pulls back and shuts.
+  Replaced `specimen.js`.
+- **plan** (`services/business-structuring.html`) — eleven nodes as an
+  elevation (the published chart) rotating into a plan (authority where
+  the work is) while a decision token travels the long route and then the
+  short one. Two 3D positions per node, one camera pitch, both driven by
+  the same eased number. Every hop count on the key rail is written by the
+  module off the arrays that draw the diagram — nothing is typed.
+  Replaced `graph.js`, which lerped two flat layouts and never became one
+  picture.
+- **well** (`services/ai-transformation.html`) — five dimensions climbing
+  a shaft through four gates, and a plane that rides on the SHORTEST of
+  them. The plane is the instrument: the readiness index is the lowest
+  dimension, never the mean. Rates, convergence and level copy carried
+  over verbatim from `readiness.js`; only the size and the form changed.
+  **Nothing changes a height**: the fill is a full-height box scaled from
+  its base and the cap and readout are translated to meet it.
+- **prism** (`services/crm.html`) — one record set, four faces, and a
+  fifth station that is the first face again with somebody else's columns
+  on it. **The prism carries `translateZ(-W/2)`** so the front face sits
+  at z = 0; without it every face swells by about a third as it arrives
+  and the reader is trying to read a moving target.
+
+`services.html` keeps **core** (four arcs partitioning and extending) and
+**matrix**. Both were left alone deliberately — see `docs/decisions.md`.
+
+### The three that were replaced
+
+`specimen.js`, `graph.js` and `readiness.js` were deleted on 2026-09-01.
+None of them was broken and none of the arguments they made was wrong;
+all three were roughly a quarter the size of the space they sat in, and
+two of them made their point in a caption rather than in the picture. The
+copy worth keeping was carried across verbatim — the five readiness level
+texts, the rates and the convergence curve, the palette and type values.
+Git history has the originals.
 
 Two more on `lumina.html`, same shape:
 

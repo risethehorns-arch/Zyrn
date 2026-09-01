@@ -241,3 +241,22 @@ reveals. Let children inherit the parent's reveal instead.
 
 `design/*.dc.html` is Claude Design's own format (`<x-dc>`, `DCLogic`) and does not
 run standalone. `index.html` is the faithful vanilla port and is the thing we build on.
+
+## `services/crm.html` — the fifth channel (added 2026-09-01)
+
+The customizable CRM. Not line 05: see `docs/decisions.md`. Generated from
+the shape of `services/ai-transformation.html` by a script rather than
+hand-authored, so the head, the nav, the footer and the script scaffolding
+are the same on all five and a change to any of those still lands here.
+
+**Everything it prints about the product is counted or quoted, not
+asserted.** The build numbers (81 source files, 8,996 lines, 16 screens,
+09 action modules, 07 endpoints, 20 declared types carrying 130 typed
+fields, 08 runtime dependencies) were counted out of the Lumina Desk
+repository. The four guarantees on the prism's fourth face are the four
+that `website-sync.ts` actually enforces — archive rather than delete, desk
+photos surviving a sync, a one-way feed, and desk-created records the feed
+never touches. If the product changes, these have to be re-counted; if you
+cannot re-count one, it comes off the page rather than going stale.
+
+The instrument is **THE PRISM** (`modules/prism.js`).

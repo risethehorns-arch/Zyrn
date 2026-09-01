@@ -241,3 +241,61 @@ be tried again.
   four lines that carry them", to `services.html`. `.cap__arrow` and its
   hover rule are kept in `styles.css` for the day the method gets a page
   of its own; nothing renders them today.
+
+## The CRM is the fifth channel, not the fifth line — 2026-09-01
+
+**Settled. Do not re-open without re-reading this.**
+
+The owner asked for the customizable CRM as "the new 5th service", with
+its own page and its own signature instrument. It has both. What it is not
+is line 05, and the reason is structural rather than editorial.
+
+"Four lines, one system" is not a slogan on this site. It is:
+
+- the H1 of `services.html`, and a kinetic headline
+- `core.js` — a ring cut into four 80-degree arcs with the gaps landing
+  exactly on the diagonals the four arms run along, inside a PINNED stage
+- `matrix.js` — sixteen authored readings, one per subset of four, each
+  one a claim the firm is willing to make
+- copy on `index.html`, `brand.html`, `duk.html` and `foundation.html`
+
+Filing the CRM as line 05 costs: re-cutting that ring into five 72-degree
+arcs, which puts one 168px node label straight down the bottom of a stage
+that cannot be scrolled; sixteen more matrix readings for combinations
+nobody has claimed; and a positioning change on five pages. It buys
+nothing the fifth channel does not already give.
+
+It is also not true. The four lines are ENGAGEMENTS — you run one and
+something about the firm changes. The CRM is an ARTEFACT: it gets
+installed, handed over, and then nobody from Zyrn touches it again. That
+is a different kind of thing and the site is better for saying so.
+
+So: five tabs, five footer rows, five palette entries, five sitemap
+entries, a card on `services.html` under its own rule and one in
+`index.html` SYS.03, all marked 05 — and the core instrument, the matrix
+and every "four lines" sentence left exactly as they were. `index.html`
+SYS.03's lede went from "Four lines, one system" to "Four lines and the
+system they ship", which is the only sentence that had to move.
+
+This matches `docs/roadmap.md` Phase 2, which reached the same conclusion
+from the market side before any of it was built.
+
+## Three instruments were deleted and none of them was broken — 2026-09-01
+
+`specimen.js`, `graph.js`, `readiness.js`. Every argument they made was
+correct and the copy was good enough to carry across verbatim. They were
+replaced because they were roughly a quarter the size of the space they
+sat in, and because two of them made their point in a caption under the
+picture rather than in the picture:
+
+- the readiness meter said "the index is the constraint, not the mean" in
+  a line of mono under five bars. THE WELL rests a slab of floor on the
+  shortest column and lets the other four stick uselessly through it.
+- the decision graph lerped between two flat layouts, so the reader had to
+  be told they were the same eleven nodes. THE PLAN rotates the camera
+  from an elevation to a plan and the chart tips over in front of you.
+
+**The generalisable rule: if the instrument needs a caption to make its
+argument, the instrument is not making the argument.** That is worth
+checking before building the next one.
+
