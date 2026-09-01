@@ -183,6 +183,96 @@
      rootMargin band rather than a threshold, so tall and short sections
      behave the same. */
 
+  /* ── WHICH TAB IS LIVE ───────────────────────────────────────────
+     The nav marks one link with `.is-here` and the light in styles.css
+     travels around it. Two cases, one function:
+
+       · a link to another PAGE is live when we are on that page
+       · a link to a SECTION is live when that section owns the middle of
+         the viewport, which is the same band `setupSysNav` uses, so the
+         bar and the section rail can never disagree
+
+     A page link wins over a section link, and it is settled once at load —
+     otherwise `services.html` would light "Services" AND whatever section
+     happens to be mid-viewport. */
+  function setupNavHere() {
+    var links = Array.prototype.slice.call(
+      document.querySelectorAll('.nav__link'));
+    if (!links.length) return;
+
+    var here = location.pathname.split('/').pop() || 'index.html';
+
+    /* Most pages are not IN the nav — there is no "Lumina" tab and no
+       "CRM" tab — but every one of them is reached THROUGH a tab, and the
+       bar should say which. A page with no link of its own is owned by
+       the entry a reader would have used to get to it. Without this the
+       light simply goes out on eight of the twelve pages, which reads as
+       the bar having stopped working rather than as the page not being in
+       it. Keyed on the leaf name; the value is the href to light. */
+    var OWNER = {
+      'lumina.html':   '#production',
+      'thehub.html':   '#production',
+      'duk.html':      '#production',
+      'axes.html':     '#production',
+      'brand.html':    'foundation.html',
+      'crm.html':          'services.html',
+      'website-design.html':       'services.html',
+      'brand-kit.html':            'services.html',
+      'business-structuring.html': 'services.html',
+      'ai-transformation.html':    'services.html'
+    };
+
+    var pageHit = null;
+    links.forEach(function (a) {
+      var href = a.getAttribute('href') || '';
+      if (href.charAt(0) === '#') return;
+      var leaf = href.split('#')[0].split('/').pop();
+      if (leaf && leaf === here) pageHit = a;
+    });
+    if (!pageHit && OWNER[here]) {
+      var want = OWNER[here];
+      links.forEach(function (a) {
+        var href = a.getAttribute('href') || '';
+        if (pageHit) return;
+        // '#production' matches 'index.html#production' from a subfolder too
+        if (want.charAt(0) === '#') {
+          if (href.slice(-want.length) === want) pageHit = a;
+        } else if (href.split('#')[0].split('/').pop() === want) {
+          pageHit = a;
+        }
+      });
+    }
+    if (pageHit) { pageHit.classList.add('is-here'); return; }
+
+    var byHash = {};
+    links.forEach(function (a) {
+      var href = a.getAttribute('href') || '';
+      var i = href.indexOf('#');
+      if (i === -1) return;
+      // only the links that point INTO this page
+      var leaf = href.slice(0, i).split('/').pop();
+      if (leaf && leaf !== here) return;
+      byHash[href.slice(i + 1)] = a;
+    });
+    var ids = Object.keys(byHash);
+    if (!ids.length) return;
+
+    var navIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var next = byHash[e.target.id];
+        if (!next || next.classList.contains('is-here')) return;
+        links.forEach(function (a) { a.classList.remove('is-here'); });
+        next.classList.add('is-here');
+      });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+
+    ids.forEach(function (id) {
+      var sec = document.getElementById(id);
+      if (sec) navIO.observe(sec);
+    });
+  }
+
   function setupSysNav() {
     var rail = document.querySelector('.sysnav');
     if (!rail) return;
@@ -275,6 +365,7 @@
   setupReveals();
   shearMarks();
   setupSysNav();
+  setupNavHere();
 
   document.addEventListener('visibilitychange', function () {
     if (!document.hidden) schedule();

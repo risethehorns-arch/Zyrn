@@ -520,3 +520,12 @@ body.is-navopen .nav{background:rgba(8,9,11,0.94)}
   .navsheet.is-on .navsheet__list > .navsheet__group,
   .navsheet__sub a{transform:none}
 }
+
+
+/* ── the nav light, under reduced motion ─────────────────────────────
+   The arc stops travelling and becomes a still rim. The point of the mark
+   is WHICH tab is live, and that survives being stationary. */
+@media (prefers-reduced-motion:reduce){
+  .nav__link.is-here::before{animation:none}
+  .nav__link::before{transition:none}
+}

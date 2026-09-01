@@ -141,6 +141,30 @@ const RAMPS = {
             pos: [0.42, 0.78, 1.0], intensity: 1.0 },
 };
 
+/** Sample a ramp on the CPU exactly the way the shader does on the GPU.
+ *
+ *  The stops and their positions are the SAME arrays the fragment shader
+ *  reads, so a colour taken here cannot drift from the colour on screen —
+ *  which matters, because this one is printed in the DOM next to the field
+ *  it claims to have come from. Linear in sRGB, like the shader's mix().
+ */
+function rampHexFrom(ramp, t) {
+  const stops = ramp.stops, pos = ramp.pos;
+  t = t < 0 ? 0 : t > 1 ? 1 : t;
+  const bounds = [0, pos[0], pos[1], pos[2]];
+  let i = 0;
+  while (i < 2 && t > bounds[i + 1]) i++;
+  const a = stops[i], b = stops[i + 1];
+  const span = Math.max(1e-4, bounds[i + 1] - bounds[i]);
+  const f = (t - bounds[i]) / span;
+  const ch = (sh) => {
+    const av = (a >> sh) & 255, bv = (b >> sh) & 255;
+    return Math.round(av + (bv - av) * f);
+  };
+  const hx = (v) => v.toString(16).padStart(2, '0');
+  return '#' + hx(ch(16)) + hx(ch(8)) + hx(ch(0));
+}
+
 /* ══ SHADER CHUNKS ═══════════════════════════════════════════════════ */
 
 /* Simplex noise returning an ANALYTIC gradient. Curl then costs three
@@ -700,6 +724,7 @@ async function boot(canvas, cfg) {
 
   let COUNT = pickTier();
   const RAMP = RAMPS[cfg.ramp] || RAMPS.vivid;
+  const rampHex = (t) => rampHexFrom(RAMP, t);
   const RAMP_POS = (cfg.rampPos || RAMP.pos).slice();
   const TURB = { base: cfg.turbulence ?? 0.16 };
   let SIDE, gpu, posVar, velVar, points, targets, targetTex = {};
@@ -1434,6 +1459,26 @@ async function boot(canvas, cfg) {
       } else if (fontsReady && frames > 45) {
         coldStart = (performance.now() - T0) / 1000;
       }
+    }
+
+    /* ── THE FIELD LENDS ITS COLOUR TO THE NAV ──────────────────────
+       The active tab is marked by a light travelling around it, and the
+       owner's ask was that the light come from the particles behind. So
+       it does, literally: sample THIS page's ramp — the same array the
+       shader reads — at the current scroll position, and publish three
+       consecutive stops. Scroll the site and the arc drifts green-teal →
+       cyan → Pulse → Vapor, because that is the journey the field is
+       making at the same moment.
+
+       Every twentieth frame, not every frame. Three custom properties on
+       :root invalidate style for the whole document, and at 60fps that is
+       a cost for a colour nobody can see changing that fast. */
+    if (frames % 20 === 0) {
+      const base = 0.10 + 0.62 * (FLAGS.pin !== null ? FLAGS.pin : progress);
+      const root = document.documentElement.style;
+      root.setProperty('--fld-1', rampHex(base));
+      root.setProperty('--fld-2', rampHex(base + 0.20));
+      root.setProperty('--fld-3', rampHex(base + 0.40));
     }
 
     /* readouts */

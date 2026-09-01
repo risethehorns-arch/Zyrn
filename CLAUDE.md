@@ -471,6 +471,73 @@ and a fifth service page was added. The parts that constrain future work:
   prism's fourth face are the four that `website-sync.ts` actually
   enforces, not four written for the page.
 
+## An entrance is not a scroll animation — 2026-09-01
+
+`.rk` and `.wp` — the case windows on `lumina.html` and `thehub.html` —
+faded in from `opacity: calc(0.2 + 0.8 * var(--in))` with `--in` driven by
+TRACK PROGRESS, over `ramp(p, 0.00, 0.10)`. On a 1200vh track that is
+**110vh of scrolling** at partial opacity with a 90,000-particle field
+pouring through the window; before it, while the section is still arriving,
+`_track.js` clamps `p` to the pinned stretch so the value is a CONSTANT
+0.2 for another whole viewport. Two screens of murk in front of the one
+thing those pages exist to show, on a site whose argument is that it builds
+immersive scroll work.
+
+It could not be retimed, because nothing can animate during the approach.
+So: `revealOnce()` in `_track.js`, an IntersectionObserver that flips
+`--in` to 1 the first time the element is on screen, with the easing in
+CSS. Under a second, once, never dimmed again.
+
+**The rule: if a thing should be visible while the reader is looking at
+it, do not spend scroll on making it visible.** Scroll progress drives
+what the instrument DOES; entrances belong to the reveal system.
+
+The same change removed the tail fade (`- 0.55 * ramp(p, 0.94, 1.00)`),
+which dropped the window to 45% for the closing frames of the
+demonstration.
+
+## The nav bar — centred by grid, and lit by the field
+
+- **`justify-content:space-between` does not centre the middle child.** It
+  centres it in the space the OUTER two leave, and on this bar those are
+  the mark (~90px) and the end group (~430px) — so the link row sat
+  **260px left of the viewport centre** at 1440. `.nav__row` is
+  `grid-template-columns:1fr auto 1fr` now, which puts it on the real
+  centre line at every width. `docs/navprobe.py` measures it.
+- **The link row and the phone toggle must swap at the SAME width.** The
+  toggle appeared at 899px and the row hid at 767, so between them the bar
+  carried both and the links overflowed the end group by 648px. Both are
+  899 now. If you move one, move the other.
+- **The active tab is marked by a light travelling around it, and the
+  light is the field's own.** `field.js` samples ITS OWN RAMP — the same
+  array the shader reads — at the page's current scroll position and
+  publishes three consecutive stops as `--fld-1/2/3` on `:root`, every
+  twentieth frame. The nav paints a conic arc in those colours. Scroll and
+  the light drifts green-teal → cyan → Pulse → Vapor, because that is the
+  journey the particles are making behind it.
+
+  **OWNER-REQUESTED DEPARTURE, and it is the third one.** The hard rules
+  forbid gradients on DOM elements and glows; this is one conic arc and
+  one 22px glow, on ONE element at a time. Asked for directly: *"a light
+  from the particles behind that goes around the chosen tab"*. Held to the
+  live tab only — never two at the same strength.
+- **A page the nav has no link to still has an OWNER on the bar.** There is
+  no "Lumina" tab and no "CRM" tab, but every page is reached THROUGH a
+  tab, and `setupNavHere()` in `main.js` maps the leaf name to the entry a
+  reader would have used. Without it the light goes out on eight of the
+  twelve pages, which reads as the bar having broken.
+- `@property --beam` is what lets a conic angle animate at all. Without it
+  the arc sits still — degraded, not broken.
+
+## `exercise.py` was blind to the wipe
+
+Its selector was `.sig__track,.rk__track,.rb__track,.in__track`, so
+`.wp__track` — one of the two instruments on `thehub.html` — had never once
+been stepped 0→1 by the thing whose whole job is stepping instruments
+0→1. Fixed 2026-09-01, and the tool now lives in `docs/` rather than only
+in a job tmp dir. **If you add an instrument with a new track class, add
+it to that selector in the same commit.**
+
 ## Kill stale headless Chrome before you believe a probe
 
 Every tool here launches Chrome on a FIXED `--remote-debugging-port` and

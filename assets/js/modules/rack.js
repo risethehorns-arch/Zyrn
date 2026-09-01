@@ -40,7 +40,7 @@
    dots, percent, and the phone beside it.
    ══════════════════════════════════════════════════════════════════════ */
 
-import { onTrack, swapText, pad3, REDUCED } from './_track.js';
+import { onTrack, swapText, pad3, REDUCED, revealOnce } from './_track.js';
 
 /* `w` is the scene's share of the track, and it is the TILE COUNT: a scene
    holding ten viewports of content earns more scroll than one holding four.
@@ -166,10 +166,6 @@ export function initRack(opts) {
   function draw(p) {
     if (pctEl) pctEl.textContent = pad3(p);
 
-    /* the frame arrives and leaves */
-    const inD = ramp(p, 0.00, 0.10) - 0.55 * ramp(p, 0.94, 1.00);
-    rack.style.setProperty('--in', inD.toFixed(3));
-
     /* ── THE TRAVEL IS LINEAR. IT MUST STAY LINEAR. ───────────────────
        This window is a page being scrolled, and the one thing a reader
        checks without knowing they are checking it is whether the thing under
@@ -240,7 +236,6 @@ export function initRack(opts) {
        survives being still. */
     measure();
     layers.forEach((l, i) => { l.style.opacity = i === SETTLED ? '1' : '0'; });
-    rack.style.setProperty('--in', '1');
     if (pctEl) pctEl.textContent = '000';
     const s = SCENES[SETTLED];
     swapText(capEl, s.cap);
@@ -251,5 +246,9 @@ export function initRack(opts) {
     dots.forEach((d, i) => d.classList.toggle('is-on', i === SETTLED));
     return;
   }
+  /* The window rises and lights ONCE, when the section reaches the
+     viewport — not over a hundred and ten vertical hundredths of the
+     track it used to spend on it. See revealOnce in _track.js. */
+  revealOnce(rack);
   onTrack(track, draw);
 }

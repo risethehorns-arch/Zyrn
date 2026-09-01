@@ -43,6 +43,35 @@ export function onTrack(track, cb) {
   cb(0);
 }
 
+/** Flip `--in` to 1 the first time `el` is on screen, and never again.
+ *
+ *  An entrance is not a scroll animation. Driving one from track progress
+ *  spends real scrolling on it — on the Lumina rack, `ramp(p, 0, 0.10)` of
+ *  a 1200vh track was 110vh of it — and `_track.js` clamps `p` to the
+ *  PINNED stretch anyway, so nothing can animate while the section is still
+ *  arriving. The value the reader stares at during the approach is a
+ *  constant, and on that page it was 0.2.
+ *
+ *  The element starts at `--in:1` in CSS so a page with no JS shows the
+ *  thing rather than a blank box; this drops it to 0 and lets the CSS
+ *  transition bring it back. */
+export function revealOnce(el, margin) {
+  if (!el) return;
+  if (REDUCED || typeof IntersectionObserver !== 'function') {
+    el.style.setProperty('--in', '1');
+    return;
+  }
+  el.style.setProperty('--in', '0');
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      el.style.setProperty('--in', '1');
+      io.disconnect();
+    }
+  }, { rootMargin: margin || '0px 0px -12% 0px' });
+  io.observe(el);
+}
+
 /** Split 0..1 into `n` stages, returning a 1-based index. */
 export function stageOf(p, n) {
   return Math.min(n, Math.floor(p * n) + 1);

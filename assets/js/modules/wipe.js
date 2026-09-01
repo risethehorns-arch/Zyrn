@@ -25,7 +25,7 @@
    had to be deleted from axes.html.
    ══════════════════════════════════════════════════════════════════════ */
 
-import { onTrack, swapText, pad3, REDUCED } from './_track.js';
+import { onTrack, swapText, pad3, REDUCED, revealOnce } from './_track.js';
 
 const PAIRS = [
   {
@@ -127,8 +127,6 @@ export function initWipe() {
   function draw(p) {
     if (pctEl) pctEl.textContent = pad3(p);
 
-    const inD = ramp(p, 0.00, 0.10) - 0.55 * ramp(p, 0.94, 1.00);
-    stage.style.setProperty('--in', inD.toFixed(3));
 
     /* Held clear of both ends, so the stage is never arriving and wiping at
        the same time — two motions on one element read as a fault. */
@@ -149,10 +147,10 @@ export function initWipe() {
     /* Settled on the pillar pair at the halfway seam: it is the pair that
        carries the argument — two design systems on one domain — and it is
        legible standing still. */
-    stage.style.setProperty('--in', '1');
     if (pctEl) pctEl.textContent = '000';
     show(1, 0.5, 1);
     return;
   }
+  revealOnce(stage);
   onTrack(track, draw);
 }

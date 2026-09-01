@@ -340,16 +340,100 @@ h1,h2,h3,h4,blockquote,.mono,summary,figcaption,th{text-wrap:balance}
   backdrop-filter:blur(6px);
   -webkit-backdrop-filter:blur(6px);
 }
+/* THREE COLUMNS, NOT space-between. That property centres the middle child
+   in the space the OUTER two leave, and on this bar those two are the mark
+   (~90px) and the end group (~430px) — so the link row sat 260px left of
+   the viewport centre at 1440, measured off a render. `1fr auto 1fr` puts
+   it on the real centre line and keeps it there while the ends change
+   width from page to page. */
 .nav__row{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:16px var(--gutter);
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  gap:14px;padding:10px var(--gutter);
 }
-.nav__links{display:flex;align-items:center;gap:40px}
-.nav__link{font-size:14px;color:rgba(242,243,245,0.85);transition:color var(--t-ui)}
-.nav__link:hover{color:var(--vapor)}
+.nav__brand{justify-self:start}
+/* The links carry their own padding now, so the gap between them closes
+   from 40px to 4 and the row reads as a set of channels rather than six
+   words that happen to be near each other. Same total width, one object. */
+.nav__links{display:flex;align-items:center;gap:2px;justify-self:center}
+.nav__end{display:flex;align-items:center;gap:12px;justify-self:end}
+
+.nav__link{
+  position:relative;isolation:isolate;
+  display:inline-flex;align-items:center;
+  padding:10px 14px;border-radius:8px;
+  font-size:14px;line-height:1;white-space:nowrap;
+  color:rgba(242,243,245,0.72);
+  transition:color var(--t-ui),background var(--t-ui);
+}
+.nav__link:hover,.nav__link:focus-visible{
+  color:var(--vapor);background:rgba(242,243,245,0.045);
+}
 .nav__sup{font-family:var(--font-mono);font-size:10px;color:var(--steel);margin-left:3px}
-.nav__end{display:flex;align-items:center;gap:24px}
-.nav__coords{text-transform:none}
+.nav__coords{text-transform:none;font-size:10px;color:rgba(242,243,245,0.42)}
+/* Measured at 1440: fourteen pixels between the link row and the end
+   group, on both sides — the bar is genuinely full, and the coordinate
+   string is the widest thing on it at ~180px. It is metadata, it is
+   repeated in the footer on every page, and it is the one item here that
+   is not navigation. Below 1500 it goes and the row breathes. */
+@media (max-width:1499px){ .nav__coords{display:none} }
+
+
+/* ══ THE LIGHT ═══════════════════════════════════════════════════════
+   The chosen tab is marked by a light travelling around its edge, and the
+   light is the FIELD'S: `field.js` samples its own ramp at the page's
+   current scroll position and publishes three consecutive stops as
+   --fld-1/2/3, so the arc drifts green-teal → cyan → Pulse → Vapor as you
+   scroll, because that is the journey the particles are making behind it.
+
+   OWNER-REQUESTED DEPARTURE, 2026-09-01, same standing as glass and the
+   glitch: the hard rules forbid gradients on DOM elements and glows. This
+   is one conic arc and one 22px glow, on ONE element at a time — never on
+   a second tab, never on anything that is not the live one.
+
+   `@property` is what lets a conic angle animate at all; without it the
+   arc simply sits still, which is a degraded look rather than a broken
+   one. The mask pair is the standard border-only trick: paint the whole
+   box, then cut the middle out so only the 1px rim survives. */
+@property --beam{syntax:'<angle>';inherits:false;initial-value:0deg}
+
+:root{
+  --fld-1:#33C9DE;
+  --fld-2:#6E56F8;
+  --fld-3:#F2F3F5;
+}
+
+.nav__link::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  padding:1px;
+  background:conic-gradient(from var(--beam),
+    transparent 0deg 236deg,
+    var(--fld-1) 296deg,
+    var(--fld-2) 332deg,
+    var(--fld-3) 352deg,
+    transparent 360deg);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+          mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  opacity:0;pointer-events:none;
+  transition:opacity 520ms var(--ease-reveal);
+}
+.nav__link.is-here{
+  color:var(--vapor);
+  background:rgba(242,243,245,0.05);
+  box-shadow:0 0 0 1px rgba(242,243,245,0.05),
+             0 0 22px -6px var(--fld-2);
+}
+.nav__link.is-here::before{
+  opacity:1;
+  animation:navbeam 5.2s linear infinite;
+}
+@keyframes navbeam{ to{ --beam:360deg } }
+
+/* A tab that is being hovered but is not the live one gets the arc at a
+   whisper, so the bar answers the pointer without ever showing two lights
+   at the same strength. */
+.nav__link:hover::before{opacity:0.34}
+.nav__link.is-here:hover::before{opacity:1}
 
 
 /* ── sections ───────────────────────────────────────────────────────── */
@@ -720,9 +804,26 @@ h1,h2,h3,h4,blockquote,.mono,summary,figcaption,th{text-wrap:balance}
   .step::before{width:1px;height:100%;top:0}
 }
 
+/* THE LINK ROW AND THE PHONE TOGGLE MUST SWAP AT THE SAME WIDTH.
+   The toggle appears at 899px (field.css) and the doctrine note says the
+   link row hides below 900 — but this rule said 767, so between 768 and
+   899 the bar carried BOTH, and the six links overflowed the end group by
+   648px. Measured, not spotted: it needed a probe that reports the gap
+   between the row and the end group as a signed number. */
+@media (max-width:899px){
+  .nav__links{display:none}
+}
+
+/* At 900 the row and the end group are fourteen pixels apart, which is a
+   bar that fits rather than a bar with air in it. The links give back
+   eight pixels each below 1180 and the row breathes again. */
+@media (max-width:1179px){
+  .nav__link{padding:10px 10px;font-size:13.5px}
+  .nav__links{gap:0}
+}
+
 @media (max-width:767px){
   .grid{display:none}
-  .nav__links{display:none}
   .footer__coords{display:none}
   .lede{text-align:left;max-width:none}
   .row--bottom{align-items:flex-start}
