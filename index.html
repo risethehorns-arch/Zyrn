@@ -53,7 +53,7 @@
 <link rel="stylesheet" href="assets/css/styles.css?v=26bb47c2">
 <link rel="stylesheet" href="assets/css/field.css?v=0539fb2e">
 <link rel="stylesheet" href="assets/css/duk.css?v=45f5fa3d">
-<link rel="stylesheet" href="assets/css/proof.css?v=18c4b50e">
+<link rel="stylesheet" href="assets/css/proof.css?v=b74b6c6b">
 <link rel="stylesheet" href="assets/css/axes.css?v=6276b57d">
 <link rel="stylesheet" href="assets/css/footer.css?v=9cd9eb26">
 <link rel="stylesheet" href="assets/css/cmdk.css?v=2b54249d">
@@ -381,25 +381,29 @@
 
         <article class="proof__card" data-reveal data-rdelay="300">
           <!-- Lumina's whole argument is that its pages MOVE — the hero is a
-               descent through cloud onto a residence, /room furnishes an empty
-               room as you scroll, /invest puts a building up floor by floor. A
-               still of any of that is a photograph of the one thing it is not.
-               So this is three cuts of the live www.lumina-jo.com, screencast
-               at 2x off a real GPU: the descent, the room, the building.
+               descent through cloud onto a residence, and every section below
+               it arrives rather than sits. A still of any of that is a
+               photograph of the one thing it is not. So this is ONE take of
+               the live www.lumina-jo.com home page scrolled top to bottom,
+               screencast off a real GPU (2026-09-19). With a mouse it plays
+               while the card is hovered; ui.js has the rest.
 
                `preload="none"` — the bytes are not in the page load. ui.js
-               upgrades and plays it on approach and pauses it on the way out,
-               and never starts it under reduced motion or Save-Data, where the
-               poster (a real frame of the same footage) stands in. -->
+               loads it on approach, plays it on hover (or on approach, where
+               there is no hover), pauses it on the way out, and never starts
+               it under reduced motion or Save-Data, where the poster (the top
+               of the same home page) stands in. -->
           <span class="proof__vis">
             <video class="proof__vid" data-vid
                    width="960" height="600"
-                   poster="assets/media/work/lumina-card-poster.webp"
+                   poster="assets/media/work/lumina-scroll-poster.webp"
                    muted loop playsinline disablepictureinpicture
                    preload="none" aria-label="The Lumina website, live">
-              <source src="assets/media/work/lumina-card.webm" type="video/webm">
-              <source src="assets/media/work/lumina-card.mp4" type="video/mp4">
+              <source src="assets/media/work/lumina-scroll.webm" type="video/webm">
+              <source src="assets/media/work/lumina-scroll.mp4" type="video/mp4">
             </video>
+            <span class="proof__rail" aria-hidden="true"><i></i></span>
+            <span class="proof__cue mono" aria-hidden="true">Hover &middot; scroll the site</span>
 <a class="visit visit--lum" href="https://www.lumina-jo.com/" target="_blank"
                rel="noopener noreferrer" aria-label="Open lumina-jo.com in a new tab">
               <span class="visit__dot" aria-hidden="true"></span>
@@ -432,19 +436,23 @@
         </article>
 
         <article class="proof__card proof__card--hub" data-reveal data-rdelay="380">
-          <!-- Same treatment as Lumina, for the same reason: this site's
-               argument is a design system running across 180 pages, and one
-               screenshot shows one page. Three cuts of the live
-               www.qutaifan.com — the home page, the tool grid, a pillar. -->
+          <!-- Same treatment as Lumina: one take of the live www.qutaifan.com
+               home page scrolled top to bottom, re-shot 2026-09-19 when the
+               site took its current look (the orbit hero). The cookie notice
+               and an empty ad slot were HIDDEN for the take, never dismissed —
+               accepting consent on someone else's site to get a cleaner
+               video would be consenting on their behalf. -->
           <span class="proof__vis">
             <video class="proof__vid" data-vid
                    width="960" height="600"
-                   poster="assets/media/work/hub-card-poster.webp"
+                   poster="assets/media/work/hub-scroll-poster.webp"
                    muted loop playsinline disablepictureinpicture
                    preload="none" aria-label="THEHUB, live">
-              <source src="assets/media/work/hub-card.webm" type="video/webm">
-              <source src="assets/media/work/hub-card.mp4" type="video/mp4">
+              <source src="assets/media/work/hub-scroll.webm" type="video/webm">
+              <source src="assets/media/work/hub-scroll.mp4" type="video/mp4">
             </video>
+            <span class="proof__rail" aria-hidden="true"><i></i></span>
+            <span class="proof__cue mono" aria-hidden="true">Hover &middot; scroll the site</span>
 <a class="visit visit--hub" href="https://www.qutaifan.com/" target="_blank"
                rel="noopener noreferrer" aria-label="Open qutaifan.com in a new tab">
               <span class="visit__dot" aria-hidden="true"></span>
@@ -712,7 +720,7 @@
 </div>
 
 <script src="assets/js/main.js?v=db0ab441"></script>
-<script src="assets/js/ui.js?v=a021cfb8"></script>
+<script src="assets/js/ui.js?v=68d24e49"></script>
 <script src="assets/js/nav.js?v=193af980"></script>
 <script src="assets/js/cmdk.js?v=1c463638"></script>
 <script src="assets/js/footer.js?v=bac1aa7c"></script>

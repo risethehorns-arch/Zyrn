@@ -117,20 +117,29 @@
 
 
   /* ── 3 · video that only exists when it is being looked at ───────
-     There is one video on the landing page — the Lumina card — and the
-     landing page also spends its GPU on a 90,000-point field measured at
-     2.78ms a frame. The card is affordable only because it costs nothing
-     until it is on screen:
+     Two videos on the landing page, the Lumina and THEHUB cards, and each
+     is one continuous take of that client's live HOME PAGE being scrolled
+     top to bottom. The landing page also spends its GPU on a 90,000-point
+     field measured at 2.78ms a frame, so the cards cost nothing until they
+     are needed:
 
        · `preload="none"` in the markup, so the bytes are not in the load
-         at all. This observer is what upgrades it, and only on approach.
-       · paused the moment it leaves, so a reader who scrolls past is not
-         decoding video behind SYS.04.
-       · `prefers-reduced-motion` never starts it. The poster is a real
-         frame of the same footage, so the card is complete standing still —
-         it does not degrade to a gap.
-       · Save-Data is honoured for the same reason. A visitor who has asked
-         their browser to spend less gets the poster and no request.
+         at all. This observer upgrades them, and only on approach.
+       · with a real mouse, approach only LOADS. The card stays on its
+         poster, which is the top of that home page, and the scroll plays
+         while the pointer (or keyboard focus) is on the card. It pauses
+         the moment it leaves and rewinds, under a short fade, to the top
+         of the page, so every hover is the same tour.
+       · without hover (phones, tablets) there is nothing to wait for, so
+         it plays on approach instead, as the cards always did.
+       · paused whenever it leaves the viewport, whatever started it.
+       · `prefers-reduced-motion` and Save-Data never start it. The poster
+         is a real frame of the same take, so the card is complete standing
+         still — it does not degrade to a gap.
+
+     The rail on the right of the frame is the take's playhead, drawn as a
+     scrollbar because that is what it stands for. Moved by transform, on
+     rAF, and only while the video is playing.
 
      The play() promise is caught rather than ignored: a browser that
      refuses autoplay rejects it, and an uncaught rejection would print an
@@ -142,23 +151,106 @@
     var conn = navigator.connection;
     if (reduced || (conn && conn.saveData)) return;
 
+    var fine = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+    function load(v) {
+      if (v.getAttribute('preload') !== 'auto') {
+        v.setAttribute('preload', 'auto');
+        v.load();
+      }
+    }
+    function play(v) {
+      load(v);
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {});
+    }
+
+    // the playhead: one rAF loop per video, alive only while it plays
+    function rail(v) {
+      var card = v.closest('.proof__card');
+      var thumb = card && card.querySelector('.proof__rail i');
+      if (!thumb) return;
+      var raf = 0;
+      function tick() {
+        var d = v.duration;
+        if (d > 0) {
+          // the thumb is 22% of the rail, so its travel is 78/22 of itself
+          thumb.style.transform = 'translateY(' + (v.currentTime / d * 354.5).toFixed(1) + '%)';
+        }
+        raf = v.paused ? 0 : requestAnimationFrame(tick);
+      }
+      v.addEventListener('play', function () {
+        card.classList.add('is-playing');
+        if (!raf) raf = requestAnimationFrame(tick);
+      });
+      v.addEventListener('pause', function () {
+        card.classList.remove('is-playing');
+      });
+    }
+
     var io = new IntersectionObserver(function (entries) {
       for (var i = 0; i < entries.length; i++) {
         var v = entries[i].target;
         if (entries[i].isIntersecting) {
-          if (v.getAttribute('preload') !== 'auto') {
-            v.setAttribute('preload', 'auto');
-            v.load();
+          v._seen = true;
+          if (fine.matches && v._card) {
+            load(v);
+            if (v._hot) play(v);
+          } else {
+            play(v);
           }
-          var p = v.play();
-          if (p && p.catch) p.catch(function () {});
-        } else if (!v.paused) {
-          v.pause();
+        } else {
+          v._seen = false;
+          if (!v.paused) v.pause();
         }
       }
     }, { rootMargin: '200px 0px', threshold: 0.12 });
 
-    Array.prototype.forEach.call(vids, function (v) { io.observe(v); });
+    Array.prototype.forEach.call(vids, function (v) {
+      var card = v.closest('.proof__card');
+      v._card = card;
+      rail(v);
+      if (card) {
+        card.classList.add('has-scroll');
+        var on = function () {
+          v._hot = true;
+          card.classList.remove('is-rewind');
+          if (fine.matches && v._seen) play(v);
+        };
+        // Leaving puts the card back at the top of the home page, under a
+        // short fade, so every hover is the same tour from the hero down and
+        // the idle card never sits on whatever frame the pointer left it on
+        // (THEHUB's hero fades out as its pin ends, and a card parked there
+        // reads as a broken video).
+        var off = function () {
+          v._hot = false;
+          if (!fine.matches) return;
+          if (!v.paused) v.pause();
+          if (v.currentTime > 0.05) {
+            card.classList.add('is-rewind');
+            clearTimeout(v._rw);
+            v._rw = setTimeout(function () {
+              if (v._hot) { card.classList.remove('is-rewind'); return; }
+              v.currentTime = 0;
+            }, 260);
+          }
+        };
+        v.addEventListener('seeked', function () {
+          if (v.currentTime < 0.05) {
+            card.classList.remove('is-rewind');
+            var th = card.querySelector('.proof__rail i');
+            if (th) th.style.transform = '';
+          }
+        });
+        card.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') on(); });
+        card.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') off(); });
+        card.addEventListener('focusin', on);
+        card.addEventListener('focusout', function (e) {
+          if (!card.contains(e.relatedTarget)) off();
+        });
+      }
+      io.observe(v);
+    });
   }
 
   setupVideos();

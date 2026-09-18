@@ -88,6 +88,7 @@
 .proof__card:focus-within:has(.visit:focus-visible){outline:none}
 
 .proof__vis{
+  position:relative;
   display:block;overflow:hidden;border-radius:4px;
   border:1px solid var(--hair);background:#05070B;
   margin-bottom:clamp(14px,1.8vh,20px);
@@ -102,7 +103,71 @@
    else's website, and on a phone a long press does the same. The card's own
    href is what should be reachable, so the video is scenery. */
 .proof__vid{pointer-events:none;background:#05070B}
+/* the rewind after a hover: out, seek to the top, back in (ui.js) */
+.proof__vid{transition:transform 620ms var(--ease-reveal,cubic-bezier(.16,1,.3,1)),opacity 240ms ease}
+.proof__card.is-rewind .proof__vid{opacity:0}
 
+/* ── the scroll-through (Lumina, THEHUB) ─────────────────────────────
+   Each of the two client cards carries one take of that client's live
+   home page scrolled top to bottom. With a mouse it plays while the card
+   is hovered or focused (ui.js), so the frame needs to say two things a
+   poster cannot: that there is more page below, and where in it you are.
+
+   The rail is a scrollbar because that is what it stands for — the thumb
+   is the take's playhead. Vapor ink; the light around it is the client's
+   own cast (amber for Lumina, cyan for THEHUB), the same rule as their
+   logo halos: another firm's colour appears as light, never as paint. */
+.proof__rail{
+  position:absolute;right:8px;top:19%;bottom:12%;z-index:2;
+  width:2px;border-radius:2px;
+  background:rgba(242,243,245,0.10);
+  pointer-events:none;
+  opacity:0.55;transition:opacity 420ms ease;
+}
+.proof__rail i{
+  display:block;width:100%;height:22%;border-radius:2px;
+  background:var(--vapor);
+  box-shadow:0 0 10px var(--cast,rgba(242,243,245,0.5));
+  will-change:transform;
+}
+.proof__card{--cast:rgba(255,178,90,0.75)}
+.proof__card--hub{--cast:rgba(74,196,255,0.75)}
+.proof__card.is-playing .proof__rail{opacity:1}
+
+/* The cue exists only where the scroll waits for a hover. Without one the
+   take plays on approach and a cue asking for a gesture the device cannot
+   make would be a lie. */
+.proof__cue{display:none}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  .proof__card.has-scroll .proof__cue{
+    position:absolute;left:10px;bottom:10px;z-index:2;
+    display:inline-flex;align-items:center;gap:8px;
+    height:26px;padding:0 10px;
+    font-size:9px;letter-spacing:0.22em;text-transform:uppercase;
+    color:rgba(242,243,245,0.8);
+    background:rgba(8,9,12,0.8);
+    border:1px solid rgba(242,243,245,0.18);
+    -webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);
+    pointer-events:none;
+    transition:opacity 360ms ease,transform 460ms var(--ease-reveal,cubic-bezier(.16,1,.3,1));
+  }
+  /* a mouse wheel, drawn: the dot inside rolls down and fades, on repeat */
+  .proof__card.has-scroll .proof__cue::before{
+    content:'';flex:0 0 auto;width:9px;height:13px;border-radius:5px;
+    border:1px solid rgba(242,243,245,0.6);box-sizing:border-box;
+  }
+  .proof__card.has-scroll .proof__cue::after{
+    content:'';position:absolute;left:14px;top:calc(50% - 4px);
+    width:1px;height:3px;border-radius:1px;background:var(--vapor);
+    animation:pf-wheel 1.8s cubic-bezier(.45,0,.2,1) infinite;
+  }
+  .proof__card.has-scroll:hover .proof__cue,
+  .proof__card.has-scroll.is-playing .proof__cue{opacity:0;transform:translateY(6px)}
+}
+@keyframes pf-wheel{
+  0%{transform:translateY(0);opacity:1}
+  70%,100%{transform:translateY(4px);opacity:0}
+}
 /* ── Duk's panel ────────────────────────────────────────────────────
    Duk has no screenshot and must not be given a fake one — it is not
    built. So its panel is the mark, live, on a ruled ground: the thing

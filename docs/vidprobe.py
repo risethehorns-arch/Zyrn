@@ -3,9 +3,10 @@
 
 Three things a screenshot cannot tell you and this can:
 
-  1. the card video is actually PLAYING when the band is on screen, and
-     actually PAUSED when it is not — the whole budget argument rests on the
-     second half of that and nothing on the page would look wrong if it failed
+  1. the card video LOADS when the band is on screen but waits, PLAYS under
+     a real mouse hover, rewinds when the pointer leaves, and is PAUSED when
+     the band is off screen — the whole budget argument rests on that last
+     part and nothing on the page would look wrong if it failed
   2. the case-page reel is being SEEKED by scroll and lands where the scroll
      says, rather than sitting on frame zero looking like a poster
   3. `preload="none"` held — that the bytes were not in the page load
@@ -116,8 +117,35 @@ async def main():
         d = await ev(CARD)
         print("    %s" % d)
         print("    media requested : %s" % (media or "NONE"))
+        # With a mouse the card LOADS on approach and waits for a hover —
+        # it is a scroll through the client's home page, played on demand.
+        ok_idle = d.get("paused") and d.get("rs", 0) >= 2
+        print("    LOADED, WAITING : %s" % ("yes" if ok_idle else "NO"))
+
+        # a real pointer onto the card, not el.dispatchEvent
+        c = await send("Runtime.evaluate", {"expression":
+            "(function(){var r=document.querySelector('.proof__card').getBoundingClientRect();"
+            "return [r.x+r.width/2,r.y+r.height/3]})()", "returnByValue": True})
+        cx, cy = c["result"]["value"]
+        await send("Input.dispatchMouseEvent",
+                   {"type": "mouseMoved", "x": cx, "y": cy})
+        await asyncio.sleep(3.0)
+        d = await ev(CARD)
+        print("    %s" % d)
         ok_play = (not d.get("paused")) and d.get("t", 0) > 0.2
-        print("    PLAYING IN VIEW : %s" % ("yes" if ok_play else "NO"))
+        print("    PLAYING ON HOVER: %s" % ("yes" if ok_play else "NO"))
+
+        # off the card: paused, and rewound to the top of the home page
+        await send("Input.dispatchMouseEvent",
+                   {"type": "mouseMoved", "x": 4, "y": 4})
+        await asyncio.sleep(1.5)
+        d = await ev(CARD)
+        print("    after leaving: paused=%s t=%s" % (d.get("paused"), d.get("t")))
+        print("    REWOUND ON LEAVE: %s"
+              % ("yes" if d.get("paused") and d.get("t", 1) < 0.1 else "NO"))
+        await send("Input.dispatchMouseEvent",
+                   {"type": "mouseMoved", "x": cx, "y": cy})
+        await asyncio.sleep(2.0)
 
         await send("Runtime.evaluate", {"expression": "window.scrollTo(0,0)"})
         await asyncio.sleep(2.5)
