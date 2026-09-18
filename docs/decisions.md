@@ -68,6 +68,12 @@ be tried again.
   speed-up; hide cookie notices and empty ad slots, never dismiss them.
   `docs/vidprobe.py` part 1 checks the hover contract with real pointer
   events.
+  **MP4 only.** The first cut shipped WebM first and never played in the
+  owner's Chrome: `PIPELINE_ERROR_DECODE` from the hardware VP9 decoder on
+  a file libvpx decodes without a warning, and a `<source>` list does not
+  fall back on a decode error. Headless could not show it either — there
+  every WebM fails, so the failure looked like the environment. Test card
+  video in the real browser (claude-in-chrome), not headless.
 
 - **Two headless traps that both look exactly like a bug in the page.**
   Measured 2026-08-30, and neither is anything to do with the site:

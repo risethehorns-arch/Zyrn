@@ -388,6 +388,13 @@
                screencast off a real GPU (2026-09-19). With a mouse it plays
                while the card is hovered; ui.js has the rest.
 
+               MP4 (H.264) only, no WebM: the VP9 encode of this take failed
+               in desktop Chrome's hardware decoder with PIPELINE_ERROR_DECODE
+               while libvpx decoded it cleanly (measured 2026-09-19), and a
+               <source> list never falls back on a DECODE error — only on a
+               load error — so a WebM first meant a dead card. H.264 is
+               decoded in hardware by every browser that has one.
+
                `preload="none"` — the bytes are not in the page load. ui.js
                loads it on approach, plays it on hover (or on approach, where
                there is no hover), pauses it on the way out, and never starts
@@ -399,7 +406,6 @@
                    poster="assets/media/work/lumina-scroll-poster.webp"
                    muted loop playsinline disablepictureinpicture
                    preload="none" aria-label="The Lumina website, live">
-              <source src="assets/media/work/lumina-scroll.webm" type="video/webm">
               <source src="assets/media/work/lumina-scroll.mp4" type="video/mp4">
             </video>
             <span class="proof__rail" aria-hidden="true"><i></i></span>
@@ -448,7 +454,6 @@
                    poster="assets/media/work/hub-scroll-poster.webp"
                    muted loop playsinline disablepictureinpicture
                    preload="none" aria-label="THEHUB, live">
-              <source src="assets/media/work/hub-scroll.webm" type="video/webm">
               <source src="assets/media/work/hub-scroll.mp4" type="video/mp4">
             </video>
             <span class="proof__rail" aria-hidden="true"><i></i></span>
