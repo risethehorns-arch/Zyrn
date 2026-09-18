@@ -56,6 +56,18 @@ be tried again.
   that used to be there. If you add a third video, keep every one of those
   properties. Field re-measured after: 90,000 points, 2.66ms median,
   p95 3.83, governor rung 0.
+  **Changed 2026-09-19:** each is now ONE take of that client's live home
+  page scrolled top to bottom (`*-scroll.webm/mp4`, poster = the top of
+  the page), and with a mouse (`(hover:hover) and (pointer:fine)`) approach
+  only LOADS — the take plays while the card is hovered or focused, and
+  leaving pauses and rewinds it to the top under a 240ms fade. Without
+  hover it still plays on approach. A rail on the frame's right edge is the
+  playhead, drawn as a scrollbar. Re-shoot with a copy of `docs/reel.py`
+  (dpr 1, a pre-warm pass so lazy images are cached, a short dwell after
+  each move so section reveals finish) and `docs/cut.py` at a 1.15-1.35x
+  speed-up; hide cookie notices and empty ad slots, never dismiss them.
+  `docs/vidprobe.py` part 1 checks the hover contract with real pointer
+  events.
 
 - **Two headless traps that both look exactly like a bug in the page.**
   Measured 2026-08-30, and neither is anything to do with the site:
