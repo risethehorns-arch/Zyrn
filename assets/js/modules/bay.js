@@ -50,7 +50,7 @@
    ══════════════════════════════════════════════════════════════════════ */
 
 import { onNear, swapText, pad3, REDUCED } from './_track.js';
-import { LINES as COVER, DIMENSIONS } from './matrix.js';
+import { LINES as COVER, DIMENSIONS } from './lines.js';
 
 const N = 5;
 const DEG = Math.PI / 180;
@@ -102,7 +102,7 @@ function hexRgb(h, fallback) {
 }
 
 /* ── the figures ─────────────────────────────────────────────────────
-   A line's coverage by dimension, out of matrix.js — the same five
+   A line's coverage by dimension, out of lines.js — the same five
    numbers the matrix below combines, so the two cannot disagree. The CRM
    is not in that table ("a build, not a claim about coverage"), so its
    figure is the forty-eight records its own page opens on. */

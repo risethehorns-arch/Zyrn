@@ -181,7 +181,7 @@ geometry. `docs/rigshot.py` photographs one at chosen progress values.
       on top of the next; the radius opens by what the angle takes away,
       and the camera's pull-back is solved from the window width.
     · **Nothing on a slab is invented, and nothing counts up.** Coverage
-      is matrix.js's own table (exported for this); the counts are the
+      is the table in `modules/lines.js`, which matrix.js also reads; the counts are the
       service pages' key rails; the drawing is that page's instrument.
       A count-up was built and removed: it printed five false numbers
       on the way to the true one.
