@@ -6,37 +6,39 @@
    round on either side, and the floor turns underneath as they walk.
 
    OWNER-REQUESTED, 2026-09-28, against a reference of a spatial deck of
-   holographic panels. Two things in here leave the hard rules and both
-   are part of that request, held as tightly as the glint is:
-     · a lit rim on ONE slab at a time — the one in front. Never two at
-       full strength.
-     · the room (floor, core, streaks) is drawn in a canvas as LIGHT, in
-       the field's own ramp. It is the bed continued, not DOM ink.
+   holographic panels; v2 the same day ("very vibrant and seamless").
+   What it takes beyond the hard rules, all of it part of that request:
+     · EACH SLAB IS A CHANNEL OF THE FIELD. `--hc` is one stop of the
+       field's own vivid ramp — teal, cyan, blue, Pulse, lavender, in the
+       order the walk reaches them — so walking the five walks the ramp.
+       It is printed as LIGHT: rims, glows, the icon's accents, the chart.
+       Type stays Vapor.
+     · a light that runs round the rim of the slab in front — the glint's
+       construction (a static conic spun inside a rim-shaped mask), never
+       an animated custom property, and on ONE slab at a time.
+     · the room (floor, core, rails) is a canvas in the same channel.
 
    ── HOW A SLAB IS BUILT ─────────────────────────────────────────────
-   Five layers at five depths, so a slab that turns shows its thickness
-   and the type on it parts from its own reflection:
-
+       .bay__halo    -1u   the light the slab throws
        .bay__back    -7u   the rear face of the glass
        .bay__echo    -9u   the title, reflected (inside .bay__t)
-       .bay__glass    0    the front face
+       .bay__glass    0    the front face: tint, sheen, scanlines, the
+                           materialize line, the specular that follows
+                           the pointer
+       .bay__rim      0    the running light
        .bay__card    +3u   the inset the content is printed on
        .bay__c       +5u   four corner brackets
 
-   That only works while NOTHING between the scene and a layer flattens
-   the 3D context — so no opacity, filter, overflow or backdrop-filter on
-   .bay__p or .bay__card. Fades are applied to the LEAVES (`--vis`,
-   `--on`), never to the slab.
+   NOTHING between the scene and a layer may flatten the 3D context — no
+   opacity, filter, overflow, mask or backdrop-filter on .bay__p or
+   .bay__card. Every fade, clip and glow is on a LEAF.
 
-   ── ONE UNIT ────────────────────────────────────────────────────────
-   `--bu` is one hundredth of the slab's height, in px, written by the
-   module from the measured rig. Every size in a slab is a multiple of
-   it, which is the `--righ` rule taken one level down: the slab is
-   width-limited on a phone, so the rig's height alone would size the
-   type for a slab that is not there.
+   `--bu` is one hundredth of the slab's height, written by the module.
+   Every size in a slab is a multiple of it.
 
-   Without `.is-live` (no JavaScript, or reduced motion) none of the 3D
-   applies: the five are a plain grid in normal flow and nothing pins.
+   Every idle animation in here runs on the slab in front only
+   (`.is-front`) and is paused everywhere else — five slabs looping
+   behind the one being read would be noise, and cost.
    ══════════════════════════════════════════════════════════════════════ */
 
 .bay{
@@ -45,122 +47,269 @@
   grid-template-columns:minmax(0,1fr);
   gap:0;
 }
+.sig--bay{--hcur:201 192 252}
 
 /* ── the slab ─────────────────────────────────────────────────────── */
 .bay__p{
-  --on:1; --vis:1;
+  --on:1; --vis:1; --hc:201 192 252;
   position:relative;display:block;
   color:var(--vapor);text-decoration:none;
   -webkit-tap-highlight-color:transparent;
 }
 .bay__p:focus-visible{outline:none}
-.bay__p:focus-visible .bay__glass{border-color:var(--vapor)}
+.bay__p:focus-visible .bay__glass{border-color:rgb(var(--hc))}
 
-.bay__back,.bay__glass,.bay__rim,.bay__c{position:absolute;pointer-events:none}
+.bay__halo,.bay__back,.bay__glass,.bay__rim,.bay__c{position:absolute;pointer-events:none}
+
+.bay__halo{
+  inset:0;border-radius:calc(var(--bu) * 2);
+  box-shadow:
+    0 0 calc(var(--bu) * 16) calc(var(--bu) * -2) rgb(var(--hc) / 0.40),
+    0 calc(var(--bu) * 9) calc(var(--bu) * 22) calc(var(--bu) * -6) rgb(var(--hc) / 0.45);
+  opacity:calc(var(--on) * var(--on) * var(--vis));
+}
 .bay__back{
   inset:-2.2%;
-  border:1px solid rgba(242,243,245,0.09);
+  border:1px solid rgb(var(--hc) / 0.20);
   border-radius:calc(var(--bu) * 2.4);
-  background:rgba(242,243,245,0.016);
+  background:rgb(var(--hc) / 0.03);
   opacity:var(--vis);
 }
 .bay__glass{
-  inset:0;
-  border:1px solid rgba(242,243,245,calc(0.15 + 0.17 * var(--on)));
+  inset:0;overflow:hidden;
+  border:1px solid rgb(var(--hc) / calc(0.18 + 0.30 * var(--on)));
   border-radius:calc(var(--bu) * 2);
-  background:rgba(22,24,33,0.36);
+  background:
+    linear-gradient(152deg, rgb(var(--hc) / 0.20) 0%, rgb(var(--hc) / 0) 34%),
+    linear-gradient(0deg, rgb(var(--hc) / 0.14) 0%, rgb(var(--hc) / 0) 34%),
+    rgba(16,18,28,0.50);
   opacity:var(--vis);
 }
-.bay__rim{
-  inset:0;border-radius:calc(var(--bu) * 2);
-  box-shadow:
-    0 0 calc(var(--bu) * 10) calc(var(--bu) * -3) var(--glint-1,#8f7cf9),
-    inset 0 0 calc(var(--bu) * 5) calc(var(--bu) * -3) var(--glint-2,#c9c0fc);
-  opacity:calc(var(--on) * var(--vis) * 0.85);
+/* scanlines — the one texture in the room, and only on glass */
+.bay__grain{
+  position:absolute;inset:0;
+  background:linear-gradient(rgb(var(--hc) / 0.09) 1px, transparent 1px) 0 0 / 100% 3px;
+  opacity:0.55;
+}
+/* the materialize line: one thread of the channel's light that crosses
+   the CARD — over the type, not behind it — exactly while the slab powers
+   up, brightest half-way. Scrubbed by the scroll, no timer. (v2's first
+   cut was a tall gradient band behind the glass; it read as a tear.) */
+.bay__card > .bay__scan{
+  position:absolute;left:-1px;right:-1px;top:0;height:1.5px;
+  background:linear-gradient(90deg, transparent, rgb(var(--hc)) 12%, #fff 50%, rgb(var(--hc)) 88%, transparent);
+  box-shadow:0 0 10px 1px rgb(var(--hc) / 0.9);
+  transform:translateY(calc(var(--on) * var(--ph) * 0.9));
+  opacity:calc(3.2 * var(--on) * (1 - var(--on)) * var(--vis));
+  pointer-events:none;
+}
+/* an idle sweep while the slab is being read */
+.bay__sweep{
+  position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg, transparent, rgb(var(--hc) / 0.9) 30%, #fff 50%, rgb(var(--hc) / 0.9) 70%, transparent);
+  opacity:0;
+  animation:bay-sweep 5.2s cubic-bezier(.45,0,.55,1) infinite;
+  animation-play-state:paused;
+}
+.bay__p.is-front .bay__sweep{opacity:0.55;animation-play-state:running}
+@keyframes bay-sweep{
+  0%  {transform:translateY(0);opacity:0}
+  8%  {opacity:0.6}
+  88% {opacity:0.6}
+  100%{transform:translateY(var(--ph));opacity:0}
+}
+/* the specular: follows the pointer across the slab in front */
+.bay__spec{
+  position:absolute;left:50%;top:50%;
+  width:calc(var(--bu) * 110);height:calc(var(--bu) * 110);
+  margin:calc(var(--bu) * -55) 0 0 calc(var(--bu) * -55);
+  border-radius:50%;
+  background:radial-gradient(closest-side, rgba(255,255,255,0.16), rgb(var(--hc) / 0.10) 42%, transparent 72%);
+  opacity:0;will-change:transform,opacity;
 }
 
+/* ── the running light ────────────────────────────────────────────── */
+.bay__rim{
+  inset:-1px;border-radius:calc(var(--bu) * 2 + 1px);
+  padding:1.6px;overflow:hidden;
+  background:rgb(var(--hc) / 0.32);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+          mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  filter:drop-shadow(0 0 2px rgb(var(--hc))) drop-shadow(0 0 9px rgb(var(--hc) / 0.8));
+  opacity:calc(var(--on) * var(--on) * var(--vis));
+}
+.bay__beam{
+  position:absolute;left:50%;top:50%;
+  /* twice the half-diagonal, so the square covers the rim at every angle */
+  width:calc(var(--bu) * 180);height:calc(var(--bu) * 180);
+  margin:calc(var(--bu) * -90) 0 0 calc(var(--bu) * -90);
+  background:conic-gradient(from 0deg,
+    rgb(var(--hc) / 0) 0deg, rgb(var(--hc) / 0) 130deg,
+    rgb(var(--hc) / 0.9) 232deg, #fff 268deg, rgb(var(--hc) / 0.95) 290deg,
+    rgb(var(--hc) / 0.2) 332deg, rgb(var(--hc) / 0) 360deg);
+  animation:bay-spin 3.6s linear infinite;
+  animation-play-state:paused;
+  opacity:0;
+}
+.bay__p.is-front .bay__beam{opacity:1;animation-play-state:running}
+@keyframes bay-spin{to{transform:rotate(360deg)}}
+
+/* ── the card ─────────────────────────────────────────────────────── */
 .bay__card{
   position:relative;
   margin:calc(var(--bu) * 4.2) calc(var(--bu) * 3.4);
   padding:calc(var(--bu) * 3.2) calc(var(--bu) * 3.4) calc(var(--bu) * 3);
-  border:1px solid var(--hair);
+  border:1px solid rgb(var(--hc) / 0.16);
   border-radius:calc(var(--bu) * 1.2);
-  background:rgba(10,11,15,calc(0.80 * var(--vis)));
+  background:
+    radial-gradient(120% 55% at 50% 0%, rgb(var(--hc) / calc(0.12 * var(--vis))), transparent 62%),
+    rgba(9,10,15,calc(0.84 * var(--vis)));
   display:flex;flex-direction:column;
 }
-.bay__card > *{opacity:calc(var(--vis) * (0.34 + 0.66 * var(--on)))}
+.bay__card > *{opacity:calc(var(--vis) * (0.30 + 0.70 * var(--on)))}
 
 .bay__top{
-  display:flex;justify-content:space-between;align-items:baseline;gap:8px;
-  padding-bottom:calc(var(--bu) * 1.5);border-bottom:1px solid var(--hair);
+  display:flex;justify-content:space-between;align-items:center;gap:8px;
+  padding-bottom:calc(var(--bu) * 1.5);border-bottom:1px solid rgb(var(--hc) / 0.18);
   font-size:clamp(8px,calc(var(--bu) * 1.9),10.5px);letter-spacing:0.16em;
-  color:rgba(242,243,245,0.72);white-space:nowrap;
+  color:rgba(242,243,245,0.78);white-space:nowrap;
 }
-.bay__st{display:inline-flex;align-items:center;gap:6px;color:rgba(242,243,245,0.62)}
+.bay__id{display:inline-flex;align-items:center;gap:calc(var(--bu) * 1.2)}
+.bay__id::before{
+  content:'';width:calc(var(--bu) * 1.1);height:calc(var(--bu) * 1.1);
+  border:1.5px solid rgb(var(--hc));transform:rotate(45deg);
+}
+.bay__st{display:inline-flex;align-items:center;gap:6px;color:rgba(242,243,245,0.66)}
 .bay__st::before{
-  content:'';width:5px;height:5px;border-radius:50%;
-  background:var(--glint-3,#F2F3F5);
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:rgb(var(--hc));box-shadow:0 0 8px rgb(var(--hc));
+  animation:bay-blink 1.6s ease-in-out infinite;animation-play-state:paused;
+}
+.bay__p.is-front .bay__st::before{animation-play-state:running}
+
+.bay__mid{
+  display:flex;justify-content:space-between;align-items:flex-start;gap:8px;
+  margin:calc(var(--bu) * 2.2) 0 calc(var(--bu) * 1.6);
 }
 .bay__chip{
-  align-self:flex-end;
-  margin-top:calc(var(--bu) * 1.6);
-  padding:3px 7px;border:1px solid var(--hair-strong);border-radius:2px;
+  padding:3px 7px;border:1px solid rgb(var(--hc) / 0.5);border-radius:2px;
   font-size:clamp(7.500px,calc(var(--bu) * 1.65),9.500px);letter-spacing:0.16em;
-  color:rgba(242,243,245,0.6);white-space:nowrap;
+  color:rgba(242,243,245,0.82);background:rgb(var(--hc) / 0.10);white-space:nowrap;
 }
 
+/* the emitter: the icon stands in its own light */
+.bay__emit{
+  position:relative;flex:0 0 auto;
+  width:calc(var(--bu) * 17);height:calc(var(--bu) * 17);
+  display:grid;place-items:center;
+  background:radial-gradient(closest-side, rgb(var(--hc) / 0.28), rgb(var(--hc) / 0.07) 62%, transparent 100%);
+}
+.bay__emit > i{
+  position:absolute;width:calc(var(--bu) * 2.4);height:calc(var(--bu) * 2.4);
+  border:0 solid rgb(var(--hc) / 0.85);
+}
+.bay__emit > i:nth-of-type(1){left:0;top:0;border-width:1.5px 0 0 1.5px}
+.bay__emit > i:nth-of-type(2){right:0;top:0;border-width:1.5px 1.5px 0 0}
+.bay__emit > i:nth-of-type(3){left:0;bottom:0;border-width:0 0 1.5px 1.5px}
+.bay__emit > i:nth-of-type(4){right:0;bottom:0;border-width:0 1.5px 1.5px 0}
+
 .bay__ico{
-  width:calc(var(--bu) * 15);height:calc(var(--bu) * 15);
-  margin:calc(var(--bu) * 0.5) 0 calc(var(--bu) * 2);
+  width:74%;height:74%;overflow:visible;
   fill:none;stroke:var(--vapor);stroke-width:1.5;
   stroke-linecap:round;stroke-linejoin:round;
-  overflow:visible;
+  filter:drop-shadow(0 0 calc(var(--bu) * 0.9) rgb(var(--hc) / 0.95));
 }
-.bay__ico > *{stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--on))}
+.bay__ico .a{stroke:rgb(var(--hc))}
+.bay__ico .af{fill:rgb(var(--hc));stroke:none}
+.bay__ico .ab{fill:rgb(var(--hc) / 0.30);stroke:var(--vapor);stroke-width:1.2}
+.bay__ico .f{stroke:rgb(var(--hc) / 0.45);stroke-width:1}
+.bay__ico .d{stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--on))}
+.bay__ico *{animation-play-state:paused}
+.bay__p.is-front .bay__ico *{animation-play-state:running}
+.bay__ico .i-up{animation:bay-up 3.4s ease-in-out infinite}
+.bay__ico .i-dn{animation:bay-dn 3.4s ease-in-out infinite}
+.bay__ico .i-blink{animation:bay-blink 2.4s ease-in-out infinite}
+.bay__ico .i-bar{transform-box:fill-box;transform-origin:50% 100%;animation:bay-bar 1.9s ease-in-out infinite}
+.bay__ico .i-spin{transform-box:view-box;transform-origin:32px 32px;animation:bay-spin 16s linear infinite}
+.bay__ico .i-hop{animation:bay-hop 3.6s cubic-bezier(.6,0,.3,1) infinite}
+@keyframes bay-up{50%{transform:translateY(-2.6px)}}
+@keyframes bay-dn{50%{transform:translateY(2.6px)}}
+@keyframes bay-blink{0%,100%{opacity:0.35}50%{opacity:1}}
+@keyframes bay-bar{0%,100%{transform:scaleY(1)}50%{transform:scaleY(0.58)}}
+@keyframes bay-hop{
+  0%,8%   {transform:translate(13px,49px)}
+  30%,38% {transform:translate(13px,32px)}
+  62%,92% {transform:translate(32px,11px)}
+  100%    {transform:translate(13px,49px)}
+}
 
 .bay__t{
   position:relative;display:block;
   font-size:clamp(15px,calc(var(--bu) * 6.1),38px);font-weight:500;
   line-height:1.04;letter-spacing:-0.025em;color:var(--vapor);
   text-wrap:balance;
+  text-shadow:0 0 calc(var(--bu) * 4) rgb(var(--hc) / calc(0.55 * var(--on)));
 }
 .bay__echo{
   position:absolute;left:0;top:0;right:0;
-  color:var(--glint-2,#c9c0fc);
-  opacity:0.30;pointer-events:none;
+  color:rgb(var(--hc));text-shadow:none;
+  opacity:0.34;pointer-events:none;
 }
 .bay__l{
   display:block;
   margin-top:calc(var(--bu) * 1.8);
   font-size:clamp(10.500px,calc(var(--bu) * 2.5),14px);line-height:1.52;
-  color:rgba(242,243,245,0.74);max-width:38ch;
+  color:rgba(242,243,245,0.78);max-width:38ch;
 }
 
-/* the figure: a line's coverage by dimension, or the CRM's records */
+/* ── the figure ───────────────────────────────────────────────────── */
 .bay__fig{display:block;margin-top:auto;padding-top:calc(var(--bu) * 2.4)}
 .bay__k{
-  display:block;font-size:clamp(7.500px,calc(var(--bu) * 1.7),9.500px);
-  letter-spacing:0.16em;color:rgba(242,243,245,0.5);
+  display:flex;align-items:center;gap:6px;
+  font-size:clamp(7.500px,calc(var(--bu) * 1.7),9.500px);
+  letter-spacing:0.16em;color:rgba(242,243,245,0.56);
   margin-bottom:calc(var(--bu) * 1.2);
 }
-/* Uncovered left to right as the slab comes on. A clip, not a dash
-   draw-in: the chart is stretched to the card's width, so its stroke is
-   non-scaling — and a non-scaling stroke measures its dashes in SCREEN
-   units, which silently ignores pathLength and stops the line partway. */
+.bay__k::before{content:'';width:8px;height:1.5px;background:rgb(var(--hc));flex:0 0 auto}
+/* Uncovered left to right as the slab comes on — a clip, not a dash:
+   the chart is rebuilt at its real pixel size on every resize, and a clip
+   is the one reveal that cannot disagree with it. */
 .bay__cov{
   display:block;width:100%;height:calc(var(--bu) * 9.500);overflow:visible;
-  clip-path:inset(-14% calc((1 - var(--on)) * 100%) -14% -2%);
+  clip-path:inset(-20% calc((1 - var(--on)) * 100%) -20% -3%);
 }
 .bay__p--sys .bay__cov{clip-path:none}
-.bay__cov:empty{display:none}
-.bay__cov .ar{fill:rgba(242,243,245,0.075);stroke:none}
+
+.bay__cov stop{stop-color:rgb(var(--hc))}
+.bay__cov .tk{stroke:rgb(var(--hc) / 0.16);stroke-width:1}
+.bay__cov .bs{stroke:rgba(242,243,245,0.26);stroke-width:1}
 .bay__cov .ln{
-  fill:none;stroke:var(--glint-3,#F2F3F5);stroke-width:1.4;
-  vector-effect:non-scaling-stroke;stroke-linejoin:round;
+  fill:none;stroke:rgb(var(--hc));stroke-width:1.7;
+  stroke-linejoin:round;stroke-linecap:round;
+  filter:drop-shadow(0 0 3px rgb(var(--hc) / 0.95));
 }
-.bay__cov .tk{stroke:rgba(242,243,245,0.2);stroke-width:1;vector-effect:non-scaling-stroke}
-.bay__cov .bs{stroke:rgba(242,243,245,0.28);stroke-width:1;vector-effect:non-scaling-stroke}
-.bay__cov .dt{fill:var(--vapor);opacity:clamp(0.12,calc(var(--on) * 56 - var(--i)),0.9)}
+.bay__cov .cm{
+  fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round;
+  stroke-dasharray:0.07 1.3;stroke-dashoffset:1.1;
+  filter:drop-shadow(0 0 4px rgb(var(--hc)));
+  opacity:0;
+  animation:bay-comet 2.8s cubic-bezier(.4,0,.6,1) infinite;animation-play-state:paused;
+}
+.bay__p.is-front .bay__cov .cm{opacity:1;animation-play-state:running}
+@keyframes bay-comet{from{stroke-dashoffset:1.1}to{stroke-dashoffset:-0.1}}
+.bay__cov .pk{fill:#fff;stroke:rgb(var(--hc));stroke-width:1.5}
+.bay__cov .pr{
+  fill:none;stroke:rgb(var(--hc));stroke-width:1;
+  transform-box:fill-box;transform-origin:center;
+  animation:bay-ping 2.2s ease-out infinite;animation-play-state:paused;
+}
+.bay__p.is-front .bay__cov .pr{animation-play-state:running}
+@keyframes bay-ping{from{transform:scale(1);opacity:0.9}to{transform:scale(3.4);opacity:0}}
+.bay__cov .dt{fill:rgb(var(--hc));opacity:clamp(0.14,calc(var(--on) * 56 - var(--i)),0.9)}
+.bay__cov .tw{animation:bay-blink 2.8s ease-in-out infinite;animation-play-state:paused}
+.bay__p.is-front .bay__cov .tw{animation-play-state:running}
+
 .bay__ax{
   position:relative;display:block;height:1.4em;margin-top:4px;
   font-size:clamp(7px,calc(var(--bu) * 1.5),8.500px);letter-spacing:0.12em;
@@ -168,36 +317,43 @@
 }
 .bay__ax:empty{display:none}
 .bay__ax span{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}
-.bay__ax span.is-peak{color:var(--vapor)}
+.bay__ax span.is-peak{color:rgb(var(--hc))}
 
 .bay__stats{
   display:flex;gap:calc(var(--bu) * 4);
   margin-top:calc(var(--bu) * 1.6);padding-top:calc(var(--bu) * 1.6);
-  border-top:1px solid var(--hair);
+  border-top:1px solid rgb(var(--hc) / 0.18);
 }
 .bay__s{display:flex;flex-direction:column;gap:3px;min-width:0}
 .bay__s b{
   font-weight:500;font-size:clamp(13px,calc(var(--bu) * 3.7),22px);
   letter-spacing:0.04em;color:var(--vapor);font-variant-numeric:tabular-nums;
+  text-shadow:0 0 calc(var(--bu) * 2.4) rgb(var(--hc) / calc(0.7 * var(--on)));
 }
 .bay__s i{
   font-style:normal;font-size:clamp(7px,calc(var(--bu) * 1.55),9px);
-  letter-spacing:0.16em;color:rgba(242,243,245,0.5);white-space:nowrap;
+  letter-spacing:0.16em;color:rgba(242,243,245,0.54);white-space:nowrap;
 }
 .bay__go{
   position:absolute;right:calc(var(--bu) * 3.4);bottom:calc(var(--bu) * 3);
   display:inline-flex;align-items:center;gap:5px;
+  padding:calc(var(--bu) * 0.9) calc(var(--bu) * 1.6);
+  border:1px solid rgb(var(--hc) / 0.55);border-radius:999px;
+  background:rgb(var(--hc) / 0.12);
   font-size:clamp(7.500px,calc(var(--bu) * 1.7),9.500px);letter-spacing:0.18em;
-  color:rgba(242,243,245,0.7);
+  color:#fff;
+  transition:background 240ms ease,box-shadow 240ms ease;
 }
-.bay__go svg{width:1.5em;height:1.5em;fill:none;stroke:currentColor;stroke-width:1.6}
+.bay__go svg{width:1.4em;height:1.4em;fill:none;stroke:currentColor;stroke-width:1.7}
 .bay__card > .bay__go{opacity:calc(var(--vis) * var(--on) * var(--on))}
+.bay__p.is-front:hover .bay__go{background:rgb(var(--hc) / 0.28);box-shadow:0 0 18px -4px rgb(var(--hc))}
 
-/* the brackets: they sit inside the corners of a slab that is off, and
-   travel out to them as it comes on */
+/* the brackets sit inside the corners of a slab that is off, and travel
+   out to them as it comes on */
 .bay__c{
   width:calc(var(--bu) * 5);height:calc(var(--bu) * 5);
-  border:0 solid var(--glint-3,#F2F3F5);
+  border:0 solid rgb(var(--hc));
+  filter:drop-shadow(0 0 3px rgb(var(--hc)));
   opacity:calc(var(--vis) * (0.3 + 0.7 * var(--on)));
   --k:calc(var(--bu) * (2.2 - 3.4 * var(--on)));
 }
@@ -205,6 +361,19 @@
 .bay__c--tr{right:0;top:0;border-width:1.5px 1.5px 0 0;border-top-right-radius:calc(var(--bu) * 1.6)}
 .bay__c--bl{left:0;bottom:0;border-width:0 0 1.5px 1.5px;border-bottom-left-radius:calc(var(--bu) * 1.6)}
 .bay__c--br{right:0;bottom:0;border-width:0 1.5px 1.5px 0;border-bottom-right-radius:calc(var(--bu) * 1.6)}
+
+/* a slab too small to set everything legibly drops, in order, the figure,
+   then the lede and chip, and the word OPEN (the arrow already says it).
+   Unscoped so the opening transition's copy obeys it too. */
+[data-size="s"] .bay__fig,
+[data-size="xs"] .bay__fig,
+[data-size="xs"] .bay__chip,
+[data-size="xs"] .bay__l{display:none}
+[data-size="s"] .bay__stats,
+[data-size="xs"] .bay__stats{margin-top:auto}
+[data-size="s"] .bay__go > span,
+[data-size="xs"] .bay__go > span{display:none}
+[data-size="xs"] .bay__emit{width:calc(var(--bu) * 13);height:calc(var(--bu) * 13)}
 
 /* the reticle, the room and the HUD exist only in the live instrument */
 .bay__room,.bay__ret,.bay__hud{display:none}
@@ -226,8 +395,9 @@
 }
 .sig--bay:not(.is-live) .bay__p{display:flex;min-height:calc(var(--bu) * 92)}
 .sig--bay:not(.is-live) .bay__card{flex:1 1 auto}
-/* the lit rim is for the ONE slab in front; a grid has no front */
 .sig--bay:not(.is-live) .bay__rim,
+.sig--bay:not(.is-live) .bay__halo,
+.sig--bay:not(.is-live) .bay__scan,
 .sig--bay:not(.is-live) .bay__echo{display:none}
 .sig--bay:not(.is-live) + .svc-sec{padding-top:clamp(24px,4vh,48px)}
 .sig--bay:not(.is-live) .skip{display:none}
@@ -247,23 +417,19 @@
 }
 
 .sig--bay.is-live .rig__view{
-  /* horizontally the room runs off both edges of the window and is cut
-     there; vertically nothing may be cut, so it is measured instead
-     (docs/rigfit.py clamps per axis) */
   overflow-x:clip;overflow-y:visible;
   touch-action:pan-y;
   cursor:grab;
   -webkit-user-select:none;user-select:none;
 }
 .sig--bay.is-live .rig__view.is-drag{cursor:grabbing}
+.sig--bay.is-live .rig__view.is-drag .bay__p{pointer-events:none}
 
 .sig--bay.is-live .bay__scene{
   position:absolute;inset:0;
   transform-style:preserve-3d;
-  /* the module writes --pull and --tilt; --px/--py/--lean are the room
-     (_track.js), and they are the LAST terms so they lean a composition
-     that is already correct. Mirrored term for term in bay.js, which has
-     to project the floor through the same camera. */
+  /* --pull/--tilt from the module; --px/--py/--lean are the room, the
+     LAST terms. Mirrored term for term in bay.js `project()`. */
   transform:
     translateZ(calc(var(--pull,0) * -1px))
     rotateX(calc(var(--tilt,0) * 1deg + var(--py,0) * 1.4deg))
@@ -279,6 +445,7 @@
   --on:0;--vis:0;
   visibility:hidden;
 }
+.sig--bay.is-live .bay__halo{transform:translateZ(calc(var(--bu) * -1))}
 .sig--bay.is-live .bay__back{transform:translateZ(calc(var(--bu) * -7))}
 .sig--bay.is-live .bay__card{
   position:absolute;inset:calc(var(--bu) * 4.2) calc(var(--bu) * 3.4);margin:0;
@@ -292,34 +459,18 @@
 .sig--bay.is-live .bay__c--bl{transform:translate3d(var(--k),calc(var(--k) * -1),calc(var(--bu) * 5))}
 .sig--bay.is-live .bay__c--br{transform:translate3d(calc(var(--k) * -1),calc(var(--k) * -1),calc(var(--bu) * 5))}
 
-/* a slab that is too small to carry everything drops what it cannot set
-   legibly, in this order — the figure first, then the lede */
-.bay[data-size="s"] .bay__fig,
-.bay[data-size="xs"] .bay__fig,
-.bay[data-size="xs"] .bay__chip,
-.bay[data-size="xs"] .bay__l{display:none}
-.bay[data-size="s"] .bay__stats,
-.bay[data-size="xs"] .bay__stats{margin-top:auto}
-/* …and the word OPEN, which the arrow already says */
-.bay[data-size="s"] .bay__go > span,
-.bay[data-size="xs"] .bay__go > span{display:none}
-.bay[data-size="s"] .bay__go svg,
-.bay[data-size="xs"] .bay__go svg{width:13px;height:13px}
-.bay[data-size="xs"] .bay__ico{width:calc(var(--bu) * 12);height:calc(var(--bu) * 12)}
-
 /* ── the reticle ──────────────────────────────────────────────────── */
 .sig--bay.is-live .bay__ret{
   display:block;position:absolute;left:50%;top:50%;
   width:calc(var(--bu) * 11);height:calc(var(--bu) * 11);
   margin:calc(var(--bu) * -5.500) 0 0 calc(var(--bu) * -5.500);
   pointer-events:none;will-change:transform,opacity;
-  color:var(--glint-3,#F2F3F5);
+  color:rgb(var(--hcur));
+  filter:drop-shadow(0 0 4px rgb(var(--hcur)));
 }
 .bay__ret svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.2;overflow:visible}
-/* it is four times its size when it rings the core at the start, and a
-   hairline that scales with it becomes a bar */
 .bay__ret svg > *{vector-effect:non-scaling-stroke}
-.bay__ret__d{fill:currentColor;stroke:none}
+.bay__ret__d{fill:#fff;stroke:none}
 
 /* ── the HUD ──────────────────────────────────────────────────────── */
 .sig--bay.is-live .bay__hud{
@@ -329,27 +480,36 @@
 .bay__bar{
   display:inline-flex;align-items:center;gap:2px;
   padding:4px;border-radius:10px;
-  border:1px solid var(--hair);
-  background:rgba(14,15,18,0.72);
+  border:1px solid rgb(var(--hcur) / 0.28);
+  background:rgba(14,15,18,0.74);
   -webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);
+  box-shadow:0 0 28px -12px rgb(var(--hcur));
 }
 .bay__nav,.bay__pip{
   appearance:none;background:none;border:0;cursor:pointer;
   color:rgba(242,243,245,0.56);
   min-width:34px;height:34px;border-radius:7px;
   display:inline-flex;align-items:center;justify-content:center;
-  transition:color 200ms ease,background 200ms ease;
+  transition:color 200ms ease,background 260ms ease,box-shadow 260ms ease;
 }
 .bay__nav svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .bay__pip{font-size:10px;letter-spacing:0.14em;padding:0 2px}
 .bay__nav:hover,.bay__pip:hover{color:var(--vapor);background:rgba(242,243,245,0.06)}
 .bay__nav:focus-visible,.bay__pip:focus-visible{outline:1px solid var(--vapor);outline-offset:-1px}
 .bay__nav:disabled{opacity:0.28;cursor:default;background:none}
-.bay__pip[aria-current="true"]{color:var(--obsidian,#0E0F12);background:var(--vapor)}
+.bay__pip[aria-current="true"]{
+  color:#0E0F12;background:rgb(var(--hcur));
+  box-shadow:0 0 18px -3px rgb(var(--hcur));
+}
 .bay__name{
-  min-width:21ch;padding:0 10px;text-align:center;
+  display:inline-flex;align-items:center;gap:8px;
+  min-width:21ch;padding:0 10px;justify-content:center;
   font-size:10px;letter-spacing:0.18em;color:var(--vapor);
   white-space:nowrap;transition:opacity 200ms;
+}
+.bay__name::before{
+  content:'';width:6px;height:6px;border-radius:50%;flex:0 0 auto;
+  background:rgb(var(--hcur));box-shadow:0 0 8px rgb(var(--hcur));
 }
 .bay__name.is-swap{opacity:0}
 .bay__hint{font-size:9px;letter-spacing:0.18em;color:rgba(242,243,245,0.4);white-space:nowrap}
@@ -366,7 +526,6 @@
   .bay__bar{flex:1 1 auto;justify-content:space-between;max-width:440px;margin:0 auto}
 }
 @media (max-width:420px){
-  .bay{--rigchrome:262px}
   .bay__name{display:none}
 }
 @media (max-height:620px) and (min-width:901px){
@@ -375,3 +534,96 @@
 @media (max-width:900px) and (max-height:620px){
   .bay{--rigchrome:236px}
 }
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   OPENING A SERVICE — THE CUT
+
+   The mark's own law, applied to the slab: it is SHEARED open. The slab
+   steps forward to face the reader (in the scene, bay.js), then a copy
+   of it is cut along its seam — the top half kicks left and the bottom
+   right, exactly the latch the wordmark makes — a line of its channel's
+   light runs across the whole window at the cut, the halves are thrown
+   off either side, and the seam opens into the next page while field.js
+   morphs the bed to the destination's formation. The one gesture on the
+   site that belongs to the logo, spent on the moment a reader commits.
+
+   Lives on <body>, outside `.shell`, so field.js's leaving fade does not
+   take it down with the page. Timings are from the moment it is built.
+   ══════════════════════════════════════════════════════════════════════ */
+.bay-open{position:fixed;inset:0;z-index:70;pointer-events:none;overflow:hidden}
+.bay-open__band{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(180deg, rgb(var(--hc) / 0.22), rgba(14,15,18,0) 18%, rgba(14,15,18,0) 82%, rgb(var(--hc) / 0.22)),
+    rgba(14,15,18,0.86);
+  clip-path:inset(var(--sy) 0 calc(100% - var(--sy)) 0);
+  animation:
+    bay-band 380ms cubic-bezier(.7,0,.2,1) 200ms forwards,
+    bay-out 200ms linear 540ms forwards;
+}
+@keyframes bay-band{to{clip-path:inset(0 0 0 0)}}
+@keyframes bay-out{to{opacity:0}}
+
+.bay-open__half{
+  position:absolute;left:var(--x);top:var(--y);width:var(--w);height:var(--h);
+  will-change:transform,opacity;
+}
+.bay-open__half--top{
+  clip-path:inset(-4% -4% 50% -4%);
+  animation:
+    bay-latch-l 150ms cubic-bezier(.2,.9,.2,1) 40ms forwards,
+    bay-fly-l 440ms cubic-bezier(.6,0,.9,.35) 210ms forwards;
+}
+.bay-open__half--bot{
+  clip-path:inset(50% -4% -4% -4%);
+  animation:
+    bay-latch-r 150ms cubic-bezier(.2,.9,.2,1) 40ms forwards,
+    bay-fly-r 440ms cubic-bezier(.6,0,.9,.35) 210ms forwards;
+}
+@keyframes bay-latch-l{to{transform:translateX(calc(var(--w) * -0.07))}}
+@keyframes bay-latch-r{to{transform:translateX(calc(var(--w) * 0.07))}}
+@keyframes bay-fly-l{
+  from{transform:translateX(calc(var(--w) * -0.07))}
+  to  {transform:translateX(calc(-100vw - var(--w))) skewX(10deg);opacity:0.3}
+}
+@keyframes bay-fly-r{
+  from{transform:translateX(calc(var(--w) * 0.07))}
+  to  {transform:translateX(calc(100vw + var(--w))) skewX(10deg);opacity:0.3}
+}
+.bay-open .bay__p{position:absolute;inset:0;display:flex;--on:1;--vis:1}
+.bay-open .bay__card{flex:1 1 auto}
+.bay-open .bay__echo,.bay-open .bay__spec,.bay-open .bay__scan{display:none}
+
+/* the cut: one line of the channel's light across the whole window,
+   which then splits and travels to the top and bottom edges */
+.bay-open__edge{
+  position:absolute;left:0;right:0;top:var(--sy);height:2px;margin-top:-1px;
+  background:linear-gradient(90deg, transparent, rgb(var(--hc)) 18%, #fff 50%, rgb(var(--hc)) 82%, transparent);
+  box-shadow:0 0 16px 2px rgb(var(--hc) / 0.85), 0 0 60px 6px rgb(var(--hc) / 0.35);
+  transform:scaleX(0);
+}
+.bay-open__edge--up{
+  animation:
+    bay-cut 200ms cubic-bezier(.2,.8,.2,1) forwards,
+    bay-edge-up 380ms cubic-bezier(.7,0,.2,1) 200ms forwards,
+    bay-out 180ms linear 560ms forwards;
+}
+.bay-open__edge--dn{
+  animation:
+    bay-cut 200ms cubic-bezier(.2,.8,.2,1) forwards,
+    bay-edge-dn 380ms cubic-bezier(.7,0,.2,1) 200ms forwards,
+    bay-out 180ms linear 560ms forwards;
+}
+@keyframes bay-cut{to{transform:scaleX(1)}}
+@keyframes bay-edge-up{from{transform:translateY(0) scaleX(1)}to{transform:translateY(calc(-1 * var(--sy))) scaleX(1)}}
+@keyframes bay-edge-dn{from{transform:translateY(0) scaleX(1)}to{transform:translateY(calc(100vh - var(--sy))) scaleX(1)}}
+/* the instant of the cut */
+.bay-open__flash{
+  position:absolute;left:var(--x);width:var(--w);top:var(--sy);height:calc(var(--bu) * 30);
+  margin-top:calc(var(--bu) * -15);
+  background:radial-gradient(50% 50% at 50% 50%, rgba(255,255,255,0.55), rgb(var(--hc) / 0.30) 40%, transparent 70%);
+  opacity:0;
+  animation:bay-flash 320ms ease-out 120ms forwards;
+}
+@keyframes bay-flash{0%{opacity:0;transform:scaleY(0.2)}25%{opacity:1}100%{opacity:0;transform:scaleY(1.4)}}

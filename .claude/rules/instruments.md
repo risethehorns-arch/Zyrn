@@ -158,6 +158,37 @@ geometry. `docs/rigshot.py` photographs one at chosen progress values.
   square-on and its neighbours wrap round, nearer and turned in.
   `modules/bay.js` + `assets/css/bay.css`; `docs/baytest.py` drives it
   with real clicks, keys and a drag.
+    · **v2, same day — what is drawn is a SPRING (`fView`), and only its
+      target changes hands** (the scroll, the hand, a held destination).
+      v1 drew the scroll plus a drag offset that decayed on its own
+      clock; the scroll rests on a plateau at each stop, so a release
+      part-way swung BACK before going on. The owner saw it as "bugging".
+      A held destination is released only when the scroll has arrived,
+      which also makes a four-slab pip hop one sweep, not four stops.
+      `docs/baydrag.py` traces a slab per frame through real drags —
+      going on must never reverse; returning reverses exactly once.
+      Flick speed is in SLABS per second: a pixel threshold made the same
+      gesture a flick on desktop and a nudge on a phone.
+    · **Each slab is a channel**: `--hc` in the markup, one stop of the
+      field's vivid ramp in walk order (teal, cyan, blue, Pulse,
+      lavender), printed as light — rim, halo, icon accents, chart —
+      never as type. The room and the HUD take the channel of whatever is
+      in front (`--hcur`, blended through a handoff).
+    · **The rim light is the glint's construction** (a static conic
+      spinning inside a rim-shaped mask) on `.is-front` only. Its square
+      overhangs the slab by design; `docs/rigfit.py` now clamps a rect to
+      any ancestor that clips it, or it reports the slab twice its height.
+    · **The materialize line crosses the CARD** (`.bay__card >
+      .bay__scan`), driven by `--on`. v2's first cut was a tall gradient
+      band behind the glass; through an 84% card it read as a tear.
+    · **Opening is THE CUT** (bay.css): the slab steps forward (JS, 280ms),
+      then a CLONE on <body> is sheared open along its seam — the
+      wordmark's latch — its channel's light crosses the window and
+      splits to the edges, the halves are thrown off, and at +300ms a
+      synthetic click hands the page to field.js for the morph and
+      navigation. The clone lives outside `.shell` so the leaving fade
+      does not take it down. Freeze it for review by pausing the
+      overlay's `getAnimations({subtree:true})` and seeking currentTime.
     · **One float, `focus`, drives the whole handoff**: the curve turns,
       the camera breathes (`sin(pi*frac)`, field.js's own dolly law), the
       leaving slab powers down and the arriving one up (`--on`), the

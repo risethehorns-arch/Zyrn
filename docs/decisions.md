@@ -192,6 +192,14 @@ be tried again.
   the site already counts. The four-lines rows under it were kept — they
   are where SKIP SCROLL lands. Not done, and offered to the owner: the
   landing page's SYS.03 section still lists the lines as rows.
+  **v2, same day**, on the owner's note — the drag "looks like it's
+  bugging", "very vibrant and seamless", and "a very cool simple yet
+  unique" way to open a service. The drag was a real defect (a swing-back
+  on release) and is fixed by a spring. Vibrance is per-slab channels of
+  the field's own ramp, as light. Opening is THE CUT — the logo's shear
+  spent on the moment a reader commits; considered and not used: a zoom
+  through the glass (every portfolio does it) and a particle dissolve
+  (would compete with the field that is already doing that job).
 
 - **`thehub.html` is SYS.10 / CASE 02, added 2026-08-30.** It shipped as
   SYS.08, which `duk.html` already held; renumbered 2026-09-28 in the order

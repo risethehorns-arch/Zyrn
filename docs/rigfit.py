@@ -98,8 +98,33 @@ MEASURE = """(function(){
           contentVisibilityAuto: true })) continue;
     live.push(e);
   }
+  /* Rects first, in one tight loop — then, only for the few elements
+     whose rect overhangs their parent's, walk up for an ancestor that
+     CLIPS them and clamp to it. A rect ignores ancestor clipping, and a
+     rim light built as a spinning square inside a clipped rim (THE BAY)
+     measured as a box twice the height of the slab it lights. Style is
+     read after every rect, so nothing forces a second layout. */
+  var rects = [];
+  for (var j = 0; j < live.length; j++) rects.push(box(live[j]));
+  var vbox = box(view);
   for (var j = 0; j < live.length; j++){
-    var b = box(live[j]);
+    var b = rects[j], par = live[j].parentElement;
+    if (!par || par === view) continue;
+    var pb = par.getBoundingClientRect();
+    if (b.l >= pb.left - 2 && b.r <= pb.right + 2 && b.t >= pb.top - 2 && b.b <= pb.bottom + 2) continue;
+    for (var a = par; a && a !== view; a = a.parentElement){
+      var cs = getComputedStyle(a);
+      if (/(hidden|clip)/.test(cs.overflowX + cs.overflowY)){
+        var ab = a.getBoundingClientRect();
+        b = {l:Math.max(b.l, ab.left), t:Math.max(b.t, ab.top), r:Math.min(b.r, ab.right), b:Math.min(b.b, ab.bottom)};
+        b.w = b.r - b.l; b.h = b.b - b.t;
+        rects[j] = b;
+        break;
+      }
+    }
+  }
+  for (var j = 0; j < live.length; j++){
+    var b = rects[j];
     if (b.w < 1 || b.h < 1) continue;
     if (!u) u = {l:b.l, t:b.t, r:b.r, b:b.b};
     else { u.l = Math.min(u.l, b.l); u.t = Math.min(u.t, b.t);
