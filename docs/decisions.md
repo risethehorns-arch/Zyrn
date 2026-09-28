@@ -181,7 +181,11 @@ be tried again.
   wherever it finds them, so that row measures the page you are reading.
   Measured after: 90,000 points, 2.42ms median, p95 3.9, governor rung 0.
 
-- **`thehub.html` is SYS.08 / CASE 02, added 2026-08-30.** THEHUB
+- **`thehub.html` is SYS.10 / CASE 02, added 2026-08-30.** It shipped as
+  SYS.08, which `duk.html` already held; renumbered 2026-09-28 in the order
+  the pages were made (Duk 08, Axes 09, THEHUB 10, Business draft 11,
+  Privacy 12). Every page carries its number three times — readout, hero
+  index, footer bar — plus its row in `cmdk.js`. Check all four. THEHUB
   (qutaifan.com) is the owner's friend's live, ad-funded software
   directory; Zyrn's engagement was the DESIGN SYSTEM ONLY and the page
   says so in three places. Its signature is `modules/wipe.js` — the same

@@ -2,8 +2,8 @@
    The quietest module on the site, on purpose. Two moments, each fired
    once, when the thing they belong to actually arrives on screen:
 
-     · the founder's name shears — the same law the mark obeys, applied to
-       the person, because that is the argument the page is making
+     · the practice's line shears — the same law the mark obeys, applied to
+       how the work is done, because that is the argument the page is making
      · a Pulse line runs across the credential row — the entrance's slice
        reused at a fraction of the volume
 
@@ -26,14 +26,14 @@ function once(el, cb, margin = '0px 0px -18% 0px') {
 }
 
 export function initFoundation() {
-  /* The name obeys the mark's law. It must carry `shear--auto`: the
+  /* The line obeys the mark's law. It must carry `shear--auto`: the
      `.is-sheared` rules in styles.css are scoped to that class, so adding
      the class to a bare `.shear` silently does nothing. */
-  const name = document.getElementById('fndrName');
-  once(name, () => {
+  const mark = document.getElementById('fndrMark');
+  once(mark, () => {
     // a beat after it lands, so the shear reads as a decision rather than
     // as part of the reveal
-    setTimeout(() => name.classList.add('is-sheared'), 260);
+    setTimeout(() => mark.classList.add('is-sheared'), 260);
   });
 
   /* the credential row gets cut once */

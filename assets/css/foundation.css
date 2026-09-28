@@ -68,9 +68,14 @@
   text-transform:uppercase;
 }
 
-/* ── the founder ───────────────────────────────────────────────────── */
+/* ── who does the work ─────────────────────────────────────────────── */
 .fndr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(28px,5vw,72px)}
 .fndr__mark{display:flex;flex-direction:column;gap:16px}
+/* the h2 is a heading for the outline only; the shear sets its own size */
+.fndr__t{margin:0;font:inherit;line-height:1}
+/* a shear line may never wrap: the halves are clipped to the top and bottom
+   of ONE line, so a second line would print the phrase torn in two */
+.fndr__t .shear{white-space:nowrap}
 .fndr__role{color:var(--steel)}
 .fndr__b{margin:0 0 18px;font-size:15px;line-height:1.78;color:rgba(242,243,245,0.74)}
 .fndr__b:last-child{margin-bottom:0}
@@ -95,6 +100,13 @@
   opacity:0;pointer-events:none;
 }
 .creds.is-cut .creds__slice{animation:cred-slice 1100ms cubic-bezier(.2,.85,.2,1) both}
+/* The slice overhangs the row by 6% and enters from 112% to the right —
+   both count as scrollable overflow even at opacity 0, so between 768 and
+   1180, where the row runs to the gutter, the page scrolled sideways by
+   10–31px. Clip the page, not the slice: the overhang still shows inside
+   the gutter, nothing reaches past the viewport. `clip`, not `hidden` —
+   hidden would make <main> a scroll container. */
+main{overflow-x:clip}
 @keyframes cred-slice{
   0%  {opacity:0;transform:translate3d(112%,0,0)}
   14% {opacity:1}

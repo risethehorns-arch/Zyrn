@@ -36,14 +36,21 @@ assets/js/field.js      SYS.07 — THE BED, on every page. A 90k-point GPGPU par
 assets/css/field.css    the page layer for the field: mounts the canvas, enforces
                         Departure 4 site-wide, adds the stats strip and flat fallback.
 foundation.html         SYS.00 — what the firm is, the mission, who it is for, and
-                        the founder. Its motion is deliberately quieter than the
-                        service instruments: the mark's own language (a shear on
-                        the founder's name, one Pulse slice across the credential
-                        row) and nothing that pins the scroll.
-                        The founder is Yazan Tarawneh, set in the shear
-                        component — both .shear__half spans must carry identical
-                        text or the clip-and-offset breaks. Carries JSON-LD
-                        Organization + founder.
+                        who does the work. Its motion is deliberately quieter than
+                        the service instruments: the mark's own language (a shear
+                        on the practice's line, one Pulse slice across the
+                        credential row) and nothing that pins the scroll.
+                        NO PERSONAL NAMES on the site (owner, 2026-09-28): §04 was
+                        the founder's name and title; it is now "BUILT FROM
+                        INSIDE", set in the shear component — both .shear__half
+                        spans must carry identical text or the clip-and-offset
+                        breaks, and it is nowrap because a wrapped shear tears.
+                        This is the page's standing exception to doctrine rule 4
+                        (the shear is the logo's): foundation.css's header allows
+                        the mark's language "applied sparingly to type", and it
+                        is the only sheared type on the site. Do not spread it.
+                        Carries JSON-LD Organization (slogan + knowsAbout, no
+                        founder).
 services.html           SYS.03 — the index for the four lines, and the nav slot
                         `Brand` used to hold. It has to belong to both
                         neighbours: the landing page's scene rhythm above it,

@@ -35,7 +35,7 @@
 
   var ITEMS = [
     { k: 'SYS.01', l: 'Home',                 h: UP + 'index.html',                        t: 'Landing',  q: 'home landing hero start' },
-    { k: 'SYS.00', l: 'Foundation',           h: UP + 'foundation.html',                   t: 'The firm', q: 'about founder mission story yazan tarawneh who' },
+    { k: 'SYS.00', l: 'Foundation',           h: UP + 'foundation.html',                   t: 'The firm', q: 'about mission story who team practice inside how we work' },
     { k: 'SYS.03', l: 'Service lines',        h: UP + 'services.html',                     t: 'Index',    q: 'services offering what we do lines four' },
     { k: '01',     l: 'Website design',       h: UP + 'services/website-design.html',      t: 'Line',     q: 'web site surface build performance' },
     { k: '02',     l: 'Brand kit',            h: UP + 'services/brand-kit.html',           t: 'Line',     q: 'identity palette type logo motion voice' },
@@ -44,7 +44,7 @@
     { k: '05',     l: 'Customizable CRM',     h: UP + 'services/crm.html',                  t: 'System',   q: 'crm customer database desk pipeline records custom software build vs buy salesforce hubspot seats licence sales' },
     { k: 'SYS.06', l: 'The brand kit',        h: UP + 'brand.html',                        t: 'Method',   q: 'brand kit tokens colours type spec documentation how we present deliverable handover' },
     { k: 'SYS.07', l: 'Lumina — a case',      h: UP + 'lumina.html',                       t: 'Work',     q: 'lumina case study proof work client real estate amman example portfolio rebase' },
-    { k: 'SYS.08', l: 'THEHUB — a case',      h: UP + 'thehub.html',                       t: 'Work',     q: 'thehub qutaifan case study proof work client directory open source software redesign before after design system unify' },
+    { k: 'SYS.10', l: 'THEHUB — a case',      h: UP + 'thehub.html',                       t: 'Work',     q: 'thehub qutaifan case study proof work client directory open source software redesign before after design system unify' },
     { k: 'SYS.09', l: 'Axes — the module',      h: UP + 'axes.html',                         t: 'Product',  q: 'axes module ai claude opus assistant in service built this site decomposition how we build' },
     { k: 'SYS.08', l: 'Duk — the agent',       h: UP + 'duk.html',                          t: 'Product',  q: 'duk ai agent open source artificial intelligence assistant brainstorm build in production' },
     { k: 'SYS.02', l: 'Capability',           h: UP + 'index.html#sys-02',                 t: 'Scene',    q: 'capability what zyrn does' },

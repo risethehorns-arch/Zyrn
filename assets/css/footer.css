@@ -90,6 +90,10 @@
 
 /* brand.html is a document, and its footer sits inside the doc column */
 .doc .sitefoot{margin-top:clamp(48px,8vh,90px)}
+/* ...so it takes the column's width, not the viewport's. `100vw - 32px`
+   inside a padded 1040px column ran 9px off the right edge at 1024 and
+   hung 180px past the column at 1440. */
+.doc .sitefoot__in{width:100%}
 
 /* ── Lumina ─────────────────────────────────────────────────────────
    A link out to lumina-jo.com, carrying Lumina's own wordmark under

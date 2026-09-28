@@ -37,11 +37,16 @@
     "areaServed": "JO",
     "availableLanguage": ["en", "ar"]
   },
-  "founder": {
-    "@type": "Person",
-    "name": "Yazan Tarawneh",
-    "jobTitle": "Founder & Chief Executive"
-  }
+  "slogan": "Organizations, engineered.",
+  "knowsAbout": [
+    "Organizational design",
+    "Business intelligence",
+    "Change management",
+    "AI adoption",
+    "Website design",
+    "Brand identity",
+    "CRM systems"
+  ]
 }
 </script>
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -75,12 +80,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css?v=26bb47c2">
+<link rel="stylesheet" href="assets/css/styles.css?v=ee07eda6">
 <link rel="stylesheet" href="assets/css/service.css?v=50db01e5">
 <link rel="stylesheet" href="assets/css/field.css?v=0539fb2e">
-<link rel="stylesheet" href="assets/css/footer.css?v=9cd9eb26">
-<link rel="stylesheet" href="assets/css/cmdk.css?v=2b54249d">
-<link rel="stylesheet" href="assets/css/foundation.css?v=d8abc2e0">
+<link rel="stylesheet" href="assets/css/footer.css?v=0b737635">
+<link rel="stylesheet" href="assets/css/cmdk.css?v=d79028af">
+<link rel="stylesheet" href="assets/css/foundation.css?v=fd4d2776">
 
 </head>
 <body>
@@ -203,37 +208,43 @@
       </div>
     </section>
 
-    <!-- ── 04 · the founder ────────────────────────────────────────────
-         The name is set in the shear component — the same law the wordmark
-         obeys. Both .shear__half spans must carry identical text; that is
-         how the clip-and-offset works. -->
+    <!-- ── 04 · who does the work ───────────────────────────────────────
+         No names on this page, by the owner's direction (2026-09-28): the
+         section is the practice, not a person. The line that shears is the
+         practice's position, set in the shear component — the same law the
+         wordmark obeys. Both .shear__half spans must carry identical text;
+         that is how the clip-and-offset works. The shear is decoration (it
+         prints the words twice), so it is hidden from assistive tech and the
+         heading is read from the .sr-only copy beside it. -->
     <section class="fnd">
       <div class="fnd__head" data-keepout>
-        <span class="mono fnd__num">04 &mdash; THE FOUNDER</span>
+        <span class="mono fnd__num">04 &mdash; WHO DOES THE WORK</span>
       </div>
 
       <div class="fndr" data-keepout>
         <div class="fndr__mark" data-reveal>
-          <span class="glitch">
-            <span class="shear shear--auto" id="fndrName" style="--shear-size:clamp(22px,2.9vw,38px)">
-              <span class="shear__half shear__half--top">YAZAN TARAWNEH</span>
-              <span class="shear__half shear__half--bot">YAZAN TARAWNEH</span>
-              <span class="shear__seam"></span>
+          <h2 class="fndr__t">
+            <span class="glitch" aria-hidden="true">
+              <span class="shear shear--auto" id="fndrMark" style="--shear-size:clamp(22px,2.9vw,38px)">
+                <span class="shear__half shear__half--top">BUILT FROM INSIDE</span>
+                <span class="shear__half shear__half--bot">BUILT FROM INSIDE</span>
+                <span class="shear__seam"></span>
+              </span>
             </span>
-          </span>
-          <span class="mono fndr__role">FOUNDER &amp; CHIEF EXECUTIVE</span>
+            <span class="sr-only">Built from inside.</span>
+          </h2>
+          <span class="mono fndr__role">ENGINEERS &middot; STRATEGISTS &middot; DESIGNERS</span>
         </div>
 
         <div data-reveal data-rdelay="140">
           <p class="fndr__b">
-            He leads a team of engineers, strategists, and designers, and works
-            inside the firms he serves rather than alongside them &mdash;
-            accountable to their outcomes rather than to a scope of work. It is
-            the reason the work tends to arrive as something the firm had not
-            thought to ask for.
+            One team of engineers, strategists, and designers, working inside
+            the firms it serves rather than alongside them &mdash; accountable to
+            their outcomes rather than to a scope of work. It is the reason the
+            work tends to arrive as something the firm had not thought to ask for.
           </p>
           <p class="fndr__b">
-            Measurement and change, held by the same person: the first tells a
+            Measurement and change, held by the same team: the first tells a
             business where its ceiling actually is, the second is what moves it.
             Most firms buy those two things separately and then wonder why they
             never meet.
@@ -243,15 +254,15 @@
             <span class="creds__slice" aria-hidden="true"></span>
             <div class="cred">
               <span class="mono cred__k">01</span>
-              <span class="cred__v">MSc &mdash; Business intelligence</span>
+              <span class="cred__v">Measure &mdash; MSc, business intelligence</span>
             </div>
             <div class="cred">
               <span class="mono cred__k">02</span>
-              <span class="cred__v">Harvard Business School &mdash; LCOR, leading change &amp; organizational renewal</span>
+              <span class="cred__v">Change &mdash; Harvard Business School, LCOR: leading change &amp; organizational renewal</span>
             </div>
             <div class="cred">
               <span class="mono cred__k">03</span>
-              <span class="cred__v">Intrapreneur &mdash; builds from inside the business</span>
+              <span class="cred__v">Inside &mdash; built from within the business, never beside it</span>
             </div>
           </div>
         </div>
@@ -345,11 +356,11 @@
   </main>
 </div>
 
-<script src="assets/js/main.js?v=db0ab441"></script>
+<script src="assets/js/main.js?v=fc5a0a60"></script>
 <script src="assets/js/ui.js?v=68d24e49"></script>
 <script src="assets/js/nav.js?v=193af980"></script>
-<script src="assets/js/cmdk.js?v=1c463638"></script>
-<script src="assets/js/footer.js?v=bac1aa7c"></script>
+<script src="assets/js/cmdk.js?v=dfb9d1db"></script>
+<script src="assets/js/footer.js?v=e2660284"></script>
 
 <script type="module">
 import { initField } from './assets/js/field.js';
