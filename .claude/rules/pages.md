@@ -55,8 +55,13 @@ services.html           SYS.03 — the index for the four lines, and the nav slo
                         `Brand` used to hold. It has to belong to both
                         neighbours: the landing page's scene rhythm above it,
                         the service pages' hero/tabs/footer below it. Carries
-                        its own signature instrument (THE CORE), the four
-                        lines as full rows, and the combination matrix.
+                        its own signature instrument (THE BAY since
+                        2026-09-28 — five glass slabs in a room; before it
+                        THE ORBIT, before that THE CORE), the four lines as
+                        full rows, and the combination matrix. The slabs and
+                        the rows say the same five things on purpose: the
+                        rows are what a reader lands on after SKIP SCROLL,
+                        and what reduced motion gets under a plain grid.
                         Field program S3 → S1 → S1 → S3: one system, opened
                         into four, recombined. It lives at the ROOT, not at
                         services/index.html, because `routeFor()` keys on the

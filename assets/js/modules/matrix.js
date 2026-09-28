@@ -16,7 +16,7 @@
    exists to avoid — see the doctrine's rule 2, and docs/strategy.md §5.
    ══════════════════════════════════════════════════════════════════════ */
 
-const DIMENSIONS = [
+export const DIMENSIONS = [
   ['SURFACE',     'what the market sees before it speaks to anyone'],
   ['IDENTITY',    'what the firm means, written down'],
   ['AUTHORITY',   'who decides what, and what that costs'],
@@ -25,8 +25,10 @@ const DIMENSIONS = [
 ];
 
 /* per line: coverage of each dimension, 0..1. Authored, not computed —
-   these are claims the firm is willing to make, in the order above. */
-const LINES = [
+   these are claims the firm is willing to make, in the order above.
+   Exported because THE BAY plots the same five numbers on each slab
+   (modules/bay.js): one table, so the two cannot disagree. */
+export const LINES = [
   { id: 'web',   idx: '01', name: 'Website design',
     href: 'services/website-design.html',
     c: [1.00, 0.45, 0.00, 0.15, 0.55] },

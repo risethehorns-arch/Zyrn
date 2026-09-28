@@ -181,6 +181,18 @@ be tried again.
   wherever it finds them, so that row measures the page you are reading.
   Measured after: 90,000 points, 2.42ms median, p95 3.9, governor rung 0.
 
+- **THE BAY replaced THE ORBIT on `services.html`, 2026-09-28.**
+  Owner-requested, against four photographs of a spatial deck of
+  holographic panels: "the design aspect only … more immersive, high tech
+  … the motion between the services must be very immersive and smooth".
+  Two things in it leave the hard rules and both are part of that
+  request: a lit rim on the ONE slab in front (never two at strength),
+  and a room drawn as light in a canvas, in the field's own ramp. The
+  reference's dashboards were invented telemetry; ours carry only what
+  the site already counts. The four-lines rows under it were kept — they
+  are where SKIP SCROLL lands. Not done, and offered to the owner: the
+  landing page's SYS.03 section still lists the lines as rows.
+
 - **`thehub.html` is SYS.10 / CASE 02, added 2026-08-30.** It shipped as
   SYS.08, which `duk.html` already held; renumbered 2026-09-28 in the order
   the pages were made (Duk 08, Axes 09, THEHUB 10, Business draft 11,

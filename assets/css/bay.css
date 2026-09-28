@@ -1,0 +1,377 @@
+/* ══════════════════════════════════════════════════════════════════════
+   SIGNATURE · THE BAY   (services.html — modules/bay.js)
+
+   Five services standing in one room as slabs of glass. The reader is
+   inside the curve: the slab in front faces them, its neighbours wrap
+   round on either side, and the floor turns underneath as they walk.
+
+   OWNER-REQUESTED, 2026-09-28, against a reference of a spatial deck of
+   holographic panels. Two things in here leave the hard rules and both
+   are part of that request, held as tightly as the glint is:
+     · a lit rim on ONE slab at a time — the one in front. Never two at
+       full strength.
+     · the room (floor, core, streaks) is drawn in a canvas as LIGHT, in
+       the field's own ramp. It is the bed continued, not DOM ink.
+
+   ── HOW A SLAB IS BUILT ─────────────────────────────────────────────
+   Five layers at five depths, so a slab that turns shows its thickness
+   and the type on it parts from its own reflection:
+
+       .bay__back    -7u   the rear face of the glass
+       .bay__echo    -9u   the title, reflected (inside .bay__t)
+       .bay__glass    0    the front face
+       .bay__card    +3u   the inset the content is printed on
+       .bay__c       +5u   four corner brackets
+
+   That only works while NOTHING between the scene and a layer flattens
+   the 3D context — so no opacity, filter, overflow or backdrop-filter on
+   .bay__p or .bay__card. Fades are applied to the LEAVES (`--vis`,
+   `--on`), never to the slab.
+
+   ── ONE UNIT ────────────────────────────────────────────────────────
+   `--bu` is one hundredth of the slab's height, in px, written by the
+   module from the measured rig. Every size in a slab is a multiple of
+   it, which is the `--righ` rule taken one level down: the slab is
+   width-limited on a phone, so the rig's height alone would size the
+   type for a slab that is not there.
+
+   Without `.is-live` (no JavaScript, or reduced motion) none of the 3D
+   applies: the five are a plain grid in normal flow and nothing pins.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.bay{
+  --rigchrome:236px;
+  --bu:5px; --pw:340px; --ph:480px;
+  grid-template-columns:minmax(0,1fr);
+  gap:0;
+}
+
+/* ── the slab ─────────────────────────────────────────────────────── */
+.bay__p{
+  --on:1; --vis:1;
+  position:relative;display:block;
+  color:var(--vapor);text-decoration:none;
+  -webkit-tap-highlight-color:transparent;
+}
+.bay__p:focus-visible{outline:none}
+.bay__p:focus-visible .bay__glass{border-color:var(--vapor)}
+
+.bay__back,.bay__glass,.bay__rim,.bay__c{position:absolute;pointer-events:none}
+.bay__back{
+  inset:-2.2%;
+  border:1px solid rgba(242,243,245,0.09);
+  border-radius:calc(var(--bu) * 2.4);
+  background:rgba(242,243,245,0.016);
+  opacity:var(--vis);
+}
+.bay__glass{
+  inset:0;
+  border:1px solid rgba(242,243,245,calc(0.15 + 0.17 * var(--on)));
+  border-radius:calc(var(--bu) * 2);
+  background:rgba(22,24,33,0.36);
+  opacity:var(--vis);
+}
+.bay__rim{
+  inset:0;border-radius:calc(var(--bu) * 2);
+  box-shadow:
+    0 0 calc(var(--bu) * 10) calc(var(--bu) * -3) var(--glint-1,#8f7cf9),
+    inset 0 0 calc(var(--bu) * 5) calc(var(--bu) * -3) var(--glint-2,#c9c0fc);
+  opacity:calc(var(--on) * var(--vis) * 0.85);
+}
+
+.bay__card{
+  position:relative;
+  margin:calc(var(--bu) * 4.2) calc(var(--bu) * 3.4);
+  padding:calc(var(--bu) * 3.2) calc(var(--bu) * 3.4) calc(var(--bu) * 3);
+  border:1px solid var(--hair);
+  border-radius:calc(var(--bu) * 1.2);
+  background:rgba(10,11,15,calc(0.80 * var(--vis)));
+  display:flex;flex-direction:column;
+}
+.bay__card > *{opacity:calc(var(--vis) * (0.34 + 0.66 * var(--on)))}
+
+.bay__top{
+  display:flex;justify-content:space-between;align-items:baseline;gap:8px;
+  padding-bottom:calc(var(--bu) * 1.5);border-bottom:1px solid var(--hair);
+  font-size:clamp(8px,calc(var(--bu) * 1.9),10.5px);letter-spacing:0.16em;
+  color:rgba(242,243,245,0.72);white-space:nowrap;
+}
+.bay__st{display:inline-flex;align-items:center;gap:6px;color:rgba(242,243,245,0.62)}
+.bay__st::before{
+  content:'';width:5px;height:5px;border-radius:50%;
+  background:var(--glint-3,#F2F3F5);
+}
+.bay__chip{
+  align-self:flex-end;
+  margin-top:calc(var(--bu) * 1.6);
+  padding:3px 7px;border:1px solid var(--hair-strong);border-radius:2px;
+  font-size:clamp(7.500px,calc(var(--bu) * 1.65),9.500px);letter-spacing:0.16em;
+  color:rgba(242,243,245,0.6);white-space:nowrap;
+}
+
+.bay__ico{
+  width:calc(var(--bu) * 15);height:calc(var(--bu) * 15);
+  margin:calc(var(--bu) * 0.5) 0 calc(var(--bu) * 2);
+  fill:none;stroke:var(--vapor);stroke-width:1.5;
+  stroke-linecap:round;stroke-linejoin:round;
+  overflow:visible;
+}
+.bay__ico > *{stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--on))}
+
+.bay__t{
+  position:relative;display:block;
+  font-size:clamp(15px,calc(var(--bu) * 6.1),38px);font-weight:500;
+  line-height:1.04;letter-spacing:-0.025em;color:var(--vapor);
+  text-wrap:balance;
+}
+.bay__echo{
+  position:absolute;left:0;top:0;right:0;
+  color:var(--glint-2,#c9c0fc);
+  opacity:0.30;pointer-events:none;
+}
+.bay__l{
+  display:block;
+  margin-top:calc(var(--bu) * 1.8);
+  font-size:clamp(10.500px,calc(var(--bu) * 2.5),14px);line-height:1.52;
+  color:rgba(242,243,245,0.74);max-width:38ch;
+}
+
+/* the figure: a line's coverage by dimension, or the CRM's records */
+.bay__fig{display:block;margin-top:auto;padding-top:calc(var(--bu) * 2.4)}
+.bay__k{
+  display:block;font-size:clamp(7.500px,calc(var(--bu) * 1.7),9.500px);
+  letter-spacing:0.16em;color:rgba(242,243,245,0.5);
+  margin-bottom:calc(var(--bu) * 1.2);
+}
+/* Uncovered left to right as the slab comes on. A clip, not a dash
+   draw-in: the chart is stretched to the card's width, so its stroke is
+   non-scaling — and a non-scaling stroke measures its dashes in SCREEN
+   units, which silently ignores pathLength and stops the line partway. */
+.bay__cov{
+  display:block;width:100%;height:calc(var(--bu) * 9.500);overflow:visible;
+  clip-path:inset(-14% calc((1 - var(--on)) * 100%) -14% -2%);
+}
+.bay__p--sys .bay__cov{clip-path:none}
+.bay__cov:empty{display:none}
+.bay__cov .ar{fill:rgba(242,243,245,0.075);stroke:none}
+.bay__cov .ln{
+  fill:none;stroke:var(--glint-3,#F2F3F5);stroke-width:1.4;
+  vector-effect:non-scaling-stroke;stroke-linejoin:round;
+}
+.bay__cov .tk{stroke:rgba(242,243,245,0.2);stroke-width:1;vector-effect:non-scaling-stroke}
+.bay__cov .bs{stroke:rgba(242,243,245,0.28);stroke-width:1;vector-effect:non-scaling-stroke}
+.bay__cov .dt{fill:var(--vapor);opacity:clamp(0.12,calc(var(--on) * 56 - var(--i)),0.9)}
+.bay__ax{
+  position:relative;display:block;height:1.4em;margin-top:4px;
+  font-size:clamp(7px,calc(var(--bu) * 1.5),8.500px);letter-spacing:0.12em;
+  color:rgba(242,243,245,0.46);
+}
+.bay__ax:empty{display:none}
+.bay__ax span{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}
+.bay__ax span.is-peak{color:var(--vapor)}
+
+.bay__stats{
+  display:flex;gap:calc(var(--bu) * 4);
+  margin-top:calc(var(--bu) * 1.6);padding-top:calc(var(--bu) * 1.6);
+  border-top:1px solid var(--hair);
+}
+.bay__s{display:flex;flex-direction:column;gap:3px;min-width:0}
+.bay__s b{
+  font-weight:500;font-size:clamp(13px,calc(var(--bu) * 3.7),22px);
+  letter-spacing:0.04em;color:var(--vapor);font-variant-numeric:tabular-nums;
+}
+.bay__s i{
+  font-style:normal;font-size:clamp(7px,calc(var(--bu) * 1.55),9px);
+  letter-spacing:0.16em;color:rgba(242,243,245,0.5);white-space:nowrap;
+}
+.bay__go{
+  position:absolute;right:calc(var(--bu) * 3.4);bottom:calc(var(--bu) * 3);
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:clamp(7.500px,calc(var(--bu) * 1.7),9.500px);letter-spacing:0.18em;
+  color:rgba(242,243,245,0.7);
+}
+.bay__go svg{width:1.5em;height:1.5em;fill:none;stroke:currentColor;stroke-width:1.6}
+.bay__card > .bay__go{opacity:calc(var(--vis) * var(--on) * var(--on))}
+
+/* the brackets: they sit inside the corners of a slab that is off, and
+   travel out to them as it comes on */
+.bay__c{
+  width:calc(var(--bu) * 5);height:calc(var(--bu) * 5);
+  border:0 solid var(--glint-3,#F2F3F5);
+  opacity:calc(var(--vis) * (0.3 + 0.7 * var(--on)));
+  --k:calc(var(--bu) * (2.2 - 3.4 * var(--on)));
+}
+.bay__c--tl{left:0;top:0;border-width:1.5px 0 0 1.5px;border-top-left-radius:calc(var(--bu) * 1.6)}
+.bay__c--tr{right:0;top:0;border-width:1.5px 1.5px 0 0;border-top-right-radius:calc(var(--bu) * 1.6)}
+.bay__c--bl{left:0;bottom:0;border-width:0 0 1.5px 1.5px;border-bottom-left-radius:calc(var(--bu) * 1.6)}
+.bay__c--br{right:0;bottom:0;border-width:0 1.5px 1.5px 0;border-bottom-right-radius:calc(var(--bu) * 1.6)}
+
+/* the reticle, the room and the HUD exist only in the live instrument */
+.bay__room,.bay__ret,.bay__hud{display:none}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   FLAT — no JavaScript, or reduced motion. A grid in normal flow.
+   ══════════════════════════════════════════════════════════════════════ */
+.sig--bay:not(.is-live) .sig__track{height:auto}
+.sig--bay:not(.is-live) .sig__stage{
+  position:static;min-height:0;
+  padding-top:clamp(40px,6vh,72px);padding-bottom:clamp(24px,4vh,48px);
+}
+.sig--bay:not(.is-live) .sig__head{display:none}
+.sig--bay:not(.is-live) .rig__view{height:auto;perspective:none}
+.sig--bay:not(.is-live) .bay__scene{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:clamp(12px,1.6vw,20px);
+}
+.sig--bay:not(.is-live) .bay__p{display:flex;min-height:calc(var(--bu) * 92)}
+.sig--bay:not(.is-live) .bay__card{flex:1 1 auto}
+/* the lit rim is for the ONE slab in front; a grid has no front */
+.sig--bay:not(.is-live) .bay__rim,
+.sig--bay:not(.is-live) .bay__echo{display:none}
+.sig--bay:not(.is-live) + .svc-sec{padding-top:clamp(24px,4vh,48px)}
+.sig--bay:not(.is-live) .skip{display:none}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   LIVE — the room
+   ══════════════════════════════════════════════════════════════════════ */
+.sig--bay.is-live .sig__stage{padding-left:0;padding-right:0;overflow:clip}
+.sig--bay.is-live .sig__head,
+.sig--bay.is-live .bay__hud{margin-inline:clamp(16px,2.6vw,34px);position:relative;z-index:2}
+.sig--bay.is-live .rig{position:relative;z-index:1}
+
+.sig--bay.is-live .bay__room{
+  display:block;position:absolute;left:0;top:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;
+}
+
+.sig--bay.is-live .rig__view{
+  /* horizontally the room runs off both edges of the window and is cut
+     there; vertically nothing may be cut, so it is measured instead
+     (docs/rigfit.py clamps per axis) */
+  overflow-x:clip;overflow-y:visible;
+  touch-action:pan-y;
+  cursor:grab;
+  -webkit-user-select:none;user-select:none;
+}
+.sig--bay.is-live .rig__view.is-drag{cursor:grabbing}
+
+.sig--bay.is-live .bay__scene{
+  position:absolute;inset:0;
+  transform-style:preserve-3d;
+  /* the module writes --pull and --tilt; --px/--py/--lean are the room
+     (_track.js), and they are the LAST terms so they lean a composition
+     that is already correct. Mirrored term for term in bay.js, which has
+     to project the floor through the same camera. */
+  transform:
+    translateZ(calc(var(--pull,0) * -1px))
+    rotateX(calc(var(--tilt,0) * 1deg + var(--py,0) * 1.4deg))
+    rotateY(calc(var(--px,0) * -2.2deg + var(--lean,0) * 1.6deg));
+}
+
+.sig--bay.is-live .bay__p{
+  position:absolute;left:50%;top:50%;
+  width:var(--pw);height:var(--ph);
+  margin:calc(var(--ph) / -2) 0 0 calc(var(--pw) / -2);
+  transform-style:preserve-3d;
+  will-change:transform;
+  --on:0;--vis:0;
+  visibility:hidden;
+}
+.sig--bay.is-live .bay__back{transform:translateZ(calc(var(--bu) * -7))}
+.sig--bay.is-live .bay__card{
+  position:absolute;inset:calc(var(--bu) * 4.2) calc(var(--bu) * 3.4);margin:0;
+  transform:translateZ(calc(var(--bu) * 3));
+  transform-style:preserve-3d;
+}
+.sig--bay.is-live .bay__t{transform-style:preserve-3d}
+.sig--bay.is-live .bay__echo{transform:translateZ(calc(var(--bu) * -9))}
+.sig--bay.is-live .bay__c--tl{transform:translate3d(var(--k),var(--k),calc(var(--bu) * 5))}
+.sig--bay.is-live .bay__c--tr{transform:translate3d(calc(var(--k) * -1),var(--k),calc(var(--bu) * 5))}
+.sig--bay.is-live .bay__c--bl{transform:translate3d(var(--k),calc(var(--k) * -1),calc(var(--bu) * 5))}
+.sig--bay.is-live .bay__c--br{transform:translate3d(calc(var(--k) * -1),calc(var(--k) * -1),calc(var(--bu) * 5))}
+
+/* a slab that is too small to carry everything drops what it cannot set
+   legibly, in this order — the figure first, then the lede */
+.bay[data-size="s"] .bay__fig,
+.bay[data-size="xs"] .bay__fig,
+.bay[data-size="xs"] .bay__chip,
+.bay[data-size="xs"] .bay__l{display:none}
+.bay[data-size="s"] .bay__stats,
+.bay[data-size="xs"] .bay__stats{margin-top:auto}
+/* …and the word OPEN, which the arrow already says */
+.bay[data-size="s"] .bay__go > span,
+.bay[data-size="xs"] .bay__go > span{display:none}
+.bay[data-size="s"] .bay__go svg,
+.bay[data-size="xs"] .bay__go svg{width:13px;height:13px}
+.bay[data-size="xs"] .bay__ico{width:calc(var(--bu) * 12);height:calc(var(--bu) * 12)}
+
+/* ── the reticle ──────────────────────────────────────────────────── */
+.sig--bay.is-live .bay__ret{
+  display:block;position:absolute;left:50%;top:50%;
+  width:calc(var(--bu) * 11);height:calc(var(--bu) * 11);
+  margin:calc(var(--bu) * -5.500) 0 0 calc(var(--bu) * -5.500);
+  pointer-events:none;will-change:transform,opacity;
+  color:var(--glint-3,#F2F3F5);
+}
+.bay__ret svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.2;overflow:visible}
+/* it is four times its size when it rings the core at the start, and a
+   hairline that scales with it becomes a bar */
+.bay__ret svg > *{vector-effect:non-scaling-stroke}
+.bay__ret__d{fill:currentColor;stroke:none}
+
+/* ── the HUD ──────────────────────────────────────────────────────── */
+.sig--bay.is-live .bay__hud{
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  min-height:44px;
+}
+.bay__bar{
+  display:inline-flex;align-items:center;gap:2px;
+  padding:4px;border-radius:10px;
+  border:1px solid var(--hair);
+  background:rgba(14,15,18,0.72);
+  -webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);
+}
+.bay__nav,.bay__pip{
+  appearance:none;background:none;border:0;cursor:pointer;
+  color:rgba(242,243,245,0.56);
+  min-width:34px;height:34px;border-radius:7px;
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:color 200ms ease,background 200ms ease;
+}
+.bay__nav svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.bay__pip{font-size:10px;letter-spacing:0.14em;padding:0 2px}
+.bay__nav:hover,.bay__pip:hover{color:var(--vapor);background:rgba(242,243,245,0.06)}
+.bay__nav:focus-visible,.bay__pip:focus-visible{outline:1px solid var(--vapor);outline-offset:-1px}
+.bay__nav:disabled{opacity:0.28;cursor:default;background:none}
+.bay__pip[aria-current="true"]{color:var(--obsidian,#0E0F12);background:var(--vapor)}
+.bay__name{
+  min-width:21ch;padding:0 10px;text-align:center;
+  font-size:10px;letter-spacing:0.18em;color:var(--vapor);
+  white-space:nowrap;transition:opacity 200ms;
+}
+.bay__name.is-swap{opacity:0}
+.bay__hint{font-size:9px;letter-spacing:0.18em;color:rgba(242,243,245,0.4);white-space:nowrap}
+
+@media (pointer:coarse){
+  .bay__nav,.bay__pip{min-width:40px;height:44px}
+  .bay__hint{display:none}
+}
+@media (max-width:900px){
+  .bay{--rigchrome:262px}
+  .bay__hint{display:none}
+  .bay__name{min-width:0;flex:1 1 auto;padding:0 6px;overflow:hidden;text-overflow:ellipsis}
+  .sig--bay.is-live .bay__hud{justify-content:stretch}
+  .bay__bar{flex:1 1 auto;justify-content:space-between;max-width:440px;margin:0 auto}
+}
+@media (max-width:420px){
+  .bay{--rigchrome:262px}
+  .bay__name{display:none}
+}
+@media (max-height:620px) and (min-width:901px){
+  .bay{--rigchrome:206px}
+}
+@media (max-width:900px) and (max-height:620px){
+  .bay{--rigchrome:236px}
+}

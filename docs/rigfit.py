@@ -111,10 +111,23 @@ MEASURE = """(function(){
   /* An instrument whose stage CLIPS cannot paint outside it, and the row
      of panels running off both edges of THE FOLD is deliberate. Clamp the
      union to the stage where the stage is doing the clipping. */
-  var clip = getComputedStyle(view).overflow;   // one call, not one per element
+  var vcs = getComputedStyle(view);             // one call, not one per element
+  var clip = vcs.overflow;
   if (clip === 'hidden' || clip === 'clip'){
     u = {l:Math.max(u.l, vb.l), t:Math.max(u.t, vb.t),
          r:Math.min(u.r, vb.r), b:Math.min(u.b, vb.b)};
+  } else {
+    /* PER AXIS. THE BAY cuts its room at the left and right edges of the
+       window and must not be cut vertically, so its stage is
+       `overflow-x:clip; overflow-y:visible` — and the shorthand then reads
+       "clip visible", which matched neither test above and reported the
+       deliberate run-off as the instrument leaving the window. */
+    if (vcs.overflowX === 'hidden' || vcs.overflowX === 'clip'){
+      u.l = Math.max(u.l, vb.l); u.r = Math.min(u.r, vb.r);
+    }
+    if (vcs.overflowY === 'hidden' || vcs.overflowY === 'clip'){
+      u.t = Math.max(u.t, vb.t); u.b = Math.min(u.b, vb.b);
+    }
   }
 
   function q(sel){ var e = document.querySelector(sel); return e ? box(e) : null; }
@@ -124,7 +137,8 @@ MEASURE = """(function(){
     var y = Math.min(a.b, b.b) - Math.max(a.t, b.t);
     return (x > 0 && y > 0) ? Math.round(Math.min(x, y)) : 0;
   }
-  var head = q('.sig__head'), note = q('.sig__note'), key = q('.rig__key');
+  /* THE BAY has a HUD where the others have a note; same role, same test */
+  var head = q('.sig__head'), note = q('.sig__note') || q('.bay__hud'), key = q('.rig__key');
   /* Below 900px the key rail sits UNDER the stage, so an overlap with it
      is not a defect there — it is the layout. */
   var stacked = key && head && key.l < (head.l + 4);

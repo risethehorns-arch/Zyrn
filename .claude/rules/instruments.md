@@ -150,7 +150,56 @@ geometry. `docs/rigshot.py` photographs one at chosen progress values.
   concept (scattered data becoming a system) survived into the lattice;
   the medium did not. Its resize/depth/spread rules were correct and
   moved to the lattice. Git history has the module.
-- **orbit** (`services.html`) — five things riding a tilted ring around one
+- **bay** (`services.html`) — OWNER-REQUESTED 2026-09-28 against a
+  reference of a spatial deck of holographic panels; replaced the orbit.
+  Five services as slabs of glass on the INSIDE of a cylinder whose axis
+  is between the reader and the slab in front, so the one being read is
+  square-on and its neighbours wrap round, nearer and turned in.
+  `modules/bay.js` + `assets/css/bay.css`; `docs/baytest.py` drives it
+  with real clicks, keys and a drag.
+    · **One float, `focus`, drives the whole handoff**: the curve turns,
+      the camera breathes (`sin(pi*frac)`, field.js's own dolly law), the
+      leaving slab powers down and the arriving one up (`--on`), the
+      reticle closes, the floor turns and its lights trail by the
+      floor's own angular velocity. It RESTS ON A WHOLE NUMBER while a
+      slab is read — a slab held one degree off square has its type
+      resampled through the rotation and goes soft.
+    · **A slab is five layers at five depths and NOTHING between the
+      scene and a layer may flatten 3D** — no opacity, filter, overflow
+      or backdrop-filter on `.bay__p` / `.bay__card`. Fades go on the
+      LEAVES. The title's reflection (`.bay__echo`, 9u behind) is why a
+      turning slab shows a doubled title: it is parallax, not a shadow.
+    · **`--bu` is one hundredth of the SLAB's height**, written by the
+      module. The slab is width-limited on a phone, so sizing type from
+      `--righ` sized it for a slab that was not there.
+    · **The room is a 2D canvas projected through the CSS camera.**
+      `project()` mirrors the scene's transform term for term, including
+      the perspective-origin at 46%. Change one, change the other.
+    · **The fan has its own radius.** Closing the angle between
+      neighbours (36 → 21 degrees) at the walking radius stood each slab
+      on top of the next; the radius opens by what the angle takes away,
+      and the camera's pull-back is solved from the window width.
+    · **Nothing on a slab is invented, and nothing counts up.** Coverage
+      is matrix.js's own table (exported for this); the counts are the
+      service pages' key rails; the drawing is that page's instrument.
+      A count-up was built and removed: it printed five false numbers
+      on the way to the true one.
+    · **A non-scaling stroke ignores `pathLength`** — its dashes are
+      measured in screen units — so a dash draw-in on the stretched
+      coverage chart stopped partway. It is uncovered by a clip instead.
+    · **A scroll started on `pointerup` after a TOUCH is cancelled one
+      event later**: Lenis stops any running scroll on `touchend`. The
+      swipe waits 70ms. Mouse drags are unaffected.
+    · **A hidden slab is `scale(0.001)`, not just invisible** — field.js
+      still reads its box for a keep-out rect and would dim a rectangle
+      of the bed where nothing is standing.
+    · Without `.is-live` (reduced motion, no JS) nothing pins: the five
+      are a grid in flow and the track is `height:auto`.
+    · `docs/rigfit.py` now clamps PER AXIS, because this stage is
+      `overflow-x:clip; overflow-y:visible` and the shorthand reads
+      "clip visible".
+- **orbit** — DELETED 2026-09-28, replaced by the bay at the owner's
+  direction. Five things riding a tilted ring around one
   core, and a scroll that takes you round it once. Replaced `core.js`, a
   flat four-arm diagram, on 2026-09-01: two dimensions could carry the
   four lines and had nowhere to put the fifth, which is not a line but the
