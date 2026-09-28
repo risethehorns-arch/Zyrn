@@ -4,6 +4,7 @@ paths:
   - "assets/js/*.js"
   - "assets/css/svc-modules.css"
   - "assets/css/case.css"
+  - "assets/css/bay.css"
 ---
 
 # ZYRN — the signature instruments
