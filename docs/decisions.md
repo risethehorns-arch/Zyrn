@@ -387,3 +387,35 @@ we hold. The bot page's claim is that the hand-over is designed first.
 Neither page prices, promises weeks or invents an outcome; the agent
 page's only numbers are counted out of this repository, and the
 instruments are captioned as authored demonstrations.
+
+## The site leads with AI — 2026-10-03
+
+Owner: "show and pop out our focus on AI adoption and automation along
+with bot and agent training, building and deployment", then bring every
+page's copy into line. What changed, and the rules it set:
+
+- **One spine.** Zyrn puts AI to work inside firms: line 04 adopts and
+  automates; 06 and 07 train, build and deploy the agents and bots that
+  carry it; 01, 02, 03 and 05 are "the core it runs on". The four core
+  pages each gained ONE sentence saying what they are to the AI (an
+  agent can only be handed authority the firm has placed; the bot answers
+  in the brand's written voice; the bot reads the CRM as source; the site
+  was built by our own agent) — not a rewrite.
+- **Line 04 is "AI adoption & automation"** (was "& transformation").
+  The URL stays `ai-transformation.html`; short labels stay "AI adoption".
+- **Landing page:** the hero index and lede name the focus; SYS.02 is
+  "AI, PUT TO WORK" and its three rows are TRAIN / BUILD / DEPLOY (were
+  the diagnostic / rebuild / calibration phases); SYS.03 opens on THE
+  FOCUS — three tiles (04, 06, 07), each with a small drawing of its own
+  page's instrument — over the core's four rows; the production band
+  says two of the four are agents of ours; SYS.04 says what the index
+  measures. The SYS.00 entrance and the "Organizations, engineered."
+  lockup are untouched. Field program re-measured (0.20 / 0.38 / 0.73 /
+  0.83).
+- **services.html H1 is "AI, at work. On a core that holds."** — the
+  "Four lines. One system." headline went; the matrix, which still covers
+  the four advisory lines, did not. Its ItemList JSON-LD now lists all
+  seven.
+- **Axes is called an agent module**, not an assistant module, so the
+  landing card, the agent-training page and Axes itself say one thing.
+

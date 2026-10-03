@@ -872,6 +872,72 @@ h1,h2,h3,h4,blockquote,.mono,summary,figcaption,th{text-wrap:balance}
 }
 
 
+/* ── SYS.03 · the focus — 2026-10-03 ────────────────────────────────
+   The three services the firm leads with, above the core's rows. A tile
+   is a panel by the hard rule (obsidian 0.6, 2px blur, one hairline),
+   carries the .line idiom on hover (tint + a hairline drawing across the
+   foot), and a small drawing of its own page's instrument whose strokes
+   draw in when the tile reveals. One lit point per drawing, in the
+   glint's light — the one light a control may wear. */
+.index__item--dim{color:rgba(242,243,245,0.55)}
+.focus{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(12px,1.4vw,20px);
+  margin-top:48px;
+}
+.focus__t{
+  position:relative;display:flex;flex-direction:column;
+  padding:clamp(20px,2vw,28px);
+  border:1px solid rgba(242,243,245,0.14);border-radius:10px;
+  background:rgba(14,15,18,0.6);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  text-shadow:0 1px 12px rgba(14,15,18,0.6);
+  overflow:hidden;
+  transition:border-color 450ms var(--ease-reveal),background 450ms var(--ease-reveal),
+             transform var(--t-reveal) var(--ease-reveal),opacity var(--t-reveal) var(--ease-reveal),
+             clip-path var(--t-reveal) var(--ease-reveal);
+}
+.focus__t::after{
+  content:'';position:absolute;left:0;bottom:0;height:1px;width:0;
+  background:var(--pulse);opacity:0.7;
+  transition:width 600ms var(--ease-reveal);
+}
+.focus__t:hover{border-color:rgba(242,243,245,0.3);background:rgba(20,21,27,0.72)}
+.focus__t:hover::after,.focus__t:focus-visible::after{width:100%}
+.focus__top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.focus__idx{font-size:clamp(30px,3.2vw,44px);font-weight:400;line-height:1;color:rgba(242,243,245,0.9)}
+.focus__kind{font-size:11px;letter-spacing:0.16em;color:rgba(242,243,245,0.55)}
+.focus__fig{display:block;width:100%;height:auto;aspect-ratio:220/84;margin:clamp(16px,1.8vw,24px) 0;overflow:visible}
+.focus__fig .s{
+  fill:none;stroke:rgba(242,243,245,0.62);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:1;stroke-dashoffset:1;
+  transition:stroke-dashoffset 1200ms var(--ease-reveal);
+}
+.focus__fig .s2{stroke:rgba(242,243,245,0.28)}
+.focus__fig .s3{stroke:var(--glint-1,#a594fb);stroke-width:1.4}
+.focus__t.is-in .focus__fig .s{stroke-dashoffset:0}
+.focus__fig .lit{fill:#fff;filter:drop-shadow(0 0 4px var(--glint-1,#a594fb)) drop-shadow(0 0 9px var(--glint-2,#c9c0fc))}
+.focus__fig .lit--rest{display:none}
+.focus__fig .lit--pulse,.focus__fig .lit--core{transform-box:fill-box;transform-origin:center;animation:focus-breathe 2.8s ease-in-out infinite}
+@keyframes focus-breathe{50%{transform:scale(0.7);opacity:0.7}}
+.focus__name{margin:0;font-size:clamp(20px,1.9vw,26px);font-weight:400;line-height:1.15;letter-spacing:-0.01em;color:var(--vapor)}
+.focus__t:hover .focus__name{color:#fff}
+.focus__lede{flex:1 1 auto;margin:10px 0 0;font-size:15px;line-height:1.6;color:rgba(242,243,245,0.72)}
+.focus__verbs{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:20px;font-size:11px;letter-spacing:0.16em;color:rgba(242,243,245,0.72)}
+.focus__verbs i{font-style:normal;color:rgba(242,243,245,0.3)}
+.lines__label{display:block;margin-top:clamp(44px,5vw,72px);font-size:11px;letter-spacing:0.16em;color:rgba(242,243,245,0.62);text-shadow:0 1px 12px rgba(14,15,18,0.6)}
+.lines--core{margin-top:16px}
+@media (max-width:899px){
+  .focus{grid-template-columns:minmax(0,1fr)}
+  .focus__fig{max-width:360px}
+}
+@media (prefers-reduced-motion:reduce){
+  .focus__fig .s{stroke-dashoffset:0;transition:none}
+  .focus__fig .lit--move{display:none}
+  .focus__fig .lit--rest{display:inline}
+  .focus__fig .lit--pulse,.focus__fig .lit--core{animation:none}
+}
+
 /* ── SYS.04 · readiness index ───────────────────────────────────────
    Five steps on one hairline. The tick sits ON the rule, so the row
    reads as a measuring scale rather than a set of cards. */

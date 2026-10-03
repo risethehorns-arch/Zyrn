@@ -3,6 +3,13 @@
 Brand site for Zyrn — an org-engineering firm (human capital, business structuring,
 AI transformation, web & strategy). Amman, JO. Positioning: *Organizations, engineered.*
 
+**Since 2026-10-03 the firm LEADS WITH AI** (owner): AI adoption & automation
+(line 04) and the agent / bot programmes (06, 07) are the focus; website,
+brand, structure and the CRM are "the core it runs on". The spine every
+page now tells: *Zyrn puts AI to work inside firms — the operating model
+rebuilt to carry it, the work automated, and agents and bots your own
+people train, build and deploy.* Keep new copy on that spine.
+
 The full authored brief lives in `docs/build-spec.md`. **Read it before any visual
 change.** This file is the short operative version.
 
