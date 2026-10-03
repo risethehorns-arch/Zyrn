@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ZYRN &mdash; Customizable CRM</title>
-<meta name="description" content="A desk system built to the firm rather than rented from a vendor. Your objects, your vocabulary, your hosting — handed over as source, with no seat count and nothing to renew.">
-<link rel="canonical" href="https://zyrn.org/services/crm.html">
+<title>ZYRN &mdash; Bot building</title>
+<meta name="description" content="One bot on every channel the firm answers on. It reads what people ask, looks it up in the firm’s own systems, answers in the firm’s voice, and hands over to a person the moment it should — with the whole thread attached.">
+<link rel="canonical" href="https://zyrn.org/services/bot-building.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ZYRN">
 <meta property="og:locale" content="en">
-<meta property="og:title" content="ZYRN &mdash; Customizable CRM">
-<meta property="og:description" content="A desk system built to the firm rather than rented from a vendor. Your objects, your vocabulary, your hosting — handed over as source, with no seat count and nothing to renew.">
-<meta property="og:url" content="https://zyrn.org/services/crm.html">
+<meta property="og:title" content="ZYRN &mdash; Bot building">
+<meta property="og:description" content="One bot on every channel the firm answers on. It reads what people ask, looks it up in the firm’s own systems, answers in the firm’s voice, and hands over to a person the moment it should — with the whole thread attached.">
+<meta property="og:url" content="https://zyrn.org/services/bot-building.html">
 <meta property="og:image" content="https://zyrn.org/assets/media/og.jpg?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -56,6 +56,7 @@
 <link rel="stylesheet" href="../assets/css/footer.css?v=87d64ba6">
 <link rel="stylesheet" href="../assets/css/cmdk.css?v=2b54249d">
 <link rel="stylesheet" href="../assets/css/svc-modules.css?v=caaff7fc">
+<link rel="stylesheet" href="../assets/css/switch.css?v=8d578498">
 
 </head>
 <body>
@@ -71,7 +72,7 @@
 </div>
 
 <div class="readout" aria-hidden="true">
-  <span class="readout__label">ZYRN / SYS.05 &middot; <span id="readoutState">FIELD</span> &mdash; <span id="readoutPct">000</span>%</span>
+  <span class="readout__label">ZYRN / SYS.07 &middot; <span id="readoutState">FIELD</span> &mdash; <span id="readoutPct">000</span>%</span>
   <span class="readout__track"><span class="readout__fill" id="readoutFill"></span></span>
 </div>
 
@@ -107,14 +108,14 @@
 
     <header class="svc-hero">
       <a class="mono svc-hero__up" href="../services.html"><span aria-hidden="true">&larr;</span> SYS.03 &mdash; SERVICE LINES</a>
-      <span class="mono svc-hero__idx" aria-hidden="true">05</span>
-      <h1 class="svc-hero__title" data-keepout data-reveal data-kinetic>Customizable<br>CRM.</h1>
-      <p class="svc-hero__lede" data-keepout>Every firm is told the same thing: take the system the vendor built for somebody else and change how you work to suit it. Zyrn builds the other way round &mdash; your objects, your vocabulary, your rules &mdash; and hands over the source, the data and the hosting in your name.</p>
-      <div class="mono svc-hero__meta" data-keepout>SCHEMA &nbsp;/&nbsp; PIPELINE &nbsp;/&nbsp; LEDGER &nbsp;/&nbsp; HANDOVER</div>
+      <span class="mono svc-hero__idx" aria-hidden="true">07</span>
+      <h1 class="svc-hero__title" data-keepout data-reveal data-kinetic>Bot<br>building.</h1>
+      <p class="svc-hero__lede" data-keepout>One bot on every channel the firm answers on. It reads what people ask, looks it up in the firm&rsquo;s own systems, answers in the firm&rsquo;s voice &mdash; and hands over to a person the moment it should, with the whole thread attached.</p>
+      <div class="mono svc-hero__meta" data-keepout>CHANNELS &nbsp;/&nbsp; INTENT &nbsp;/&nbsp; LOOKUP &nbsp;/&nbsp; ANSWER &nbsp;/&nbsp; HANDOVER</div>
     </header>
 
     <div class="svc-sec" style="padding-top:0">
-    <nav class="tabs" data-active="4" aria-label="Service lines">
+    <nav class="tabs" data-active="6" aria-label="Service lines">
       <a class="tab" href="website-design.html">
         <span class="mono tab__idx">01</span>
         <span class="tab__name">Website design</span>
@@ -131,7 +132,7 @@
         <span class="mono tab__idx">04</span>
         <span class="tab__name">AI adoption</span>
       </a>
-      <a class="tab is-active" href="crm.html" aria-current="page">
+      <a class="tab" href="crm.html">
         <span class="mono tab__idx">05</span>
         <span class="tab__name">Customizable CRM</span>
       </a>
@@ -139,7 +140,7 @@
         <span class="mono tab__idx">06</span>
         <span class="tab__name">AI agent training</span>
       </a>
-      <a class="tab" href="bot-building.html">
+      <a class="tab is-active" href="bot-building.html" aria-current="page">
         <span class="mono tab__idx">07</span>
         <span class="tab__name">Bot building</span>
       </a>
@@ -147,49 +148,56 @@
     </div>
 
 
-    <!-- ── SIGNATURE · THE LATTICE ──────────────────────────────
-         The third CRM signature, and the concept the owner kept from the
-         second: scattered data becoming a system. The medium changed —
-         the records are LIGHT now, and every organising act is drawn as
-         labelled luminous structure through them: named, linked into the
-         schema, run down the pipeline, laid on the ledger's spine, and
-         handed over as one core made of all forty-eight.
+    <!-- ── SIGNATURE · THE SWITCHBOARD ───────────────────────────────
+         Six messages arrive on three channels and pile up unread. Then
+         one bot: every channel into one door, every message read for
+         what it wants, looked up in the firm's own systems, answered in
+         the lane it came from — and the one the bot should not answer is
+         handed to a person with the thread attached.
 
-         The reader's pointer is part of the instrument: near any spark,
-         at any beat, it flares and says its reference. Every dwell is
-         wheel-driven — the count, the ring's turn, the lane flow, the
-         ledger sweep — so scroll always answers with motion.
-
-         Built by modules/lattice.js; the spark count on the rail is
-         COUNTED off the DOM; the type and field counts were counted out
-         of the running system's schema. -->
-    <section class="sig sig--lat" id="sigLat" aria-label="Scattered records drawn into one system of light">
+         AUTHORED, not recorded — the messages and the lookups are a
+         demonstration of a bot we would build, and the stage says so.
+         Every count on the key rail is counted off the demonstration by
+         switch.js. See modules/switch.js and assets/css/switch.css. -->
+    <section class="sig sig--swb" id="sigSwitch" aria-label="Six messages, three channels, one bot">
       <div class="sig__track">
         <div class="sig__stage">
           <div class="sig__head">
-            <span class="mono sig__step" id="latStep">00 &mdash; AS FOUND</span>
-            <span class="mono sig__pct"><span id="latPct">000</span>%</span>
+            <span class="mono sig__step" id="swbStep">00 &mdash; THE INBOX</span>
+            <span class="mono sig__pct"><span id="swbPct">000</span>%</span>
           </div>
 
-          <div class="rig lat" id="lat" data-act="0">
+          <div class="rig swb" id="swb" data-act="0">
             <div class="rig__view" aria-hidden="true">
-              <svg class="lat__net" id="latNet" aria-hidden="true"></svg>
-              <div class="lat__stage" id="latStage"></div>
-              <div class="lat__lbs" id="latLbs"></div>
-              <i class="lat__cur" id="latCur"></i>
+              <div class="swb__scene" id="swbScene">
+                <svg class="swb__net" id="swbNet"></svg>
+                <div class="swb__lanes" id="swbLanes"></div>
+                <div class="swb__hub" id="swbHub" data-keepout>
+                  <i class="swb__core"></i>
+                  <span class="mono swb__hl">THE BOT</span>
+                  <span class="mono swb__node swb__node--read">READ</span>
+                  <span class="mono swb__node swb__node--look">LOOK UP</span>
+                  <span class="mono swb__node swb__node--ans">ANSWER</span>
+                  <span class="mono swb__node swb__node--hand">HAND OVER</span>
+                </div>
+                <div class="swb__sys" id="swbSys"></div>
+                <div class="swb__msgs" id="swbMsgs"></div>
+                <div class="swb__pks" id="swbPks"></div>
+              </div>
+              <span class="mono swb__auth">AUTHORED DEMONSTRATION &mdash; A BOT WE WOULD BUILD, NOT A RECORDING</span>
             </div>
 
-            <ol class="rig__key" id="latKey">
-              <li><span class="mono k__n">00</span><span class="k__t">As found</span><span class="mono k__v"><span data-c="records">&mdash;</span> RECORDS &middot; UNLINKED</span></li>
-              <li><span class="mono k__n">01</span><span class="k__t">Named</span><span class="mono k__v">YOUR REFS &middot; NOTHING RE-ENTERED</span></li>
-              <li><span class="mono k__n">02</span><span class="k__t">The schema</span><span class="mono k__v">20 TYPES &middot; 130 FIELDS</span></li>
-              <li><span class="mono k__n">03</span><span class="k__t">The pipeline</span><span class="mono k__v">03 STAGES &middot; 07-DAY FLAG</span></li>
-              <li><span class="mono k__n">04</span><span class="k__t">The ledger</span><span class="mono k__v">EVERY CHANGE, ATTRIBUTED</span></li>
-              <li><span class="mono k__n">05</span><span class="k__t">Handed over</span><span class="mono k__v">SOURCE &middot; DATA &middot; HOSTING</span></li>
+            <ol class="rig__key" id="swbKey">
+              <li><span class="mono k__n">00</span><span class="k__t">The inbox</span><span class="mono k__v"><span data-c="msgs">&mdash;</span> MESSAGES &middot; <span data-c="chan">&mdash;</span> CHANNELS</span></li>
+              <li><span class="mono k__n">01</span><span class="k__t">One door</span><span class="mono k__v">EVERY CHANNEL &middot; ONE BOT</span></li>
+              <li><span class="mono k__n">02</span><span class="k__t">Read</span><span class="mono k__v"><span data-c="intents">&mdash;</span> INTENTS &middot; NONE GUESSED</span></li>
+              <li><span class="mono k__n">03</span><span class="k__t">Looked up</span><span class="mono k__v"><span data-c="looks">&mdash;</span> LOOKUPS &middot; YOUR SYSTEMS</span></li>
+              <li><span class="mono k__n">04</span><span class="k__t">Answered</span><span class="mono k__v"><span data-c="answered">&mdash;</span> IN THE LANE THEY CAME</span></li>
+              <li><span class="mono k__n">05</span><span class="k__t">Handed over</span><span class="mono k__v"><span data-c="handed">&mdash;</span> TO A PERSON &middot; THREAD ATTACHED</span></li>
             </ol>
           </div>
 
-          <p class="sig__note" id="latNote">Forty-eight records adrift, which is how they actually live before there is a system: some in a spreadsheet, some in a notebook, some in whoever answered the phone. Everything after this is the same forty-eight points of light &mdash; none will be added, none lost.</p>
+          <p class="sig__note" id="swbNote">Six messages on three channels, which is how they actually arrive: at once, in different voices, and unread. Everything after this is the same six messages &mdash; none dropped, none answered twice.</p>
         </div>
       </div>
     </section>
@@ -198,63 +206,63 @@
     <section class="svc-sec">
       <div class="svc-sec__head" data-keepout>
         <h2 class="svc-sec__title">What it covers</h2>
-        <p class="svc-sec__note" data-keepout>Six modules. The schema is agreed before a screen is drawn.</p>
+        <p class="svc-sec__note" data-keepout>Six modules. The hand-over is designed before the first answer.</p>
       </div>
       <div class="mods" data-keepout>
-        <article class="mod" data-reveal data-rdelay="120" data-viz="ring" data-more="The objects your firm already talks in, with the field names it already uses. Twenty declared types carrying a hundred and thirty typed fields in the system running today — every one argued for before it was added, none renamed to suit the software.">
-          <span class="mono mod__idx">05a</span>
-          <h3 class="mod__title">Schema</h3>
-          <p class="mod__body">The objects the firm already talks in, with the field names it already uses. Nothing is renamed to suit the software.</p>
+        <article class="mod" data-reveal data-rdelay="120" data-viz="lanes" data-more="Each channel has its own rules — what a message can carry, how fast a reply is expected, who is allowed to see what — and the bot speaks each one natively. The firm writes its answer once.">
+          <span class="mono mod__idx">07a</span>
+          <h3 class="mod__title">Channels</h3>
+          <p class="mod__body">WhatsApp, Telegram, the chat on your site &mdash; one bot behind all of them, so an answer is the same answer wherever it was asked.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="190" data-viz="flow" data-more="Stages that match how the desk actually works, and a stall rule counted in working days — a file untouched for seven of them is flagged, because a Thursday-to-Sunday gap is not a stalled deal.">
-          <span class="mono mod__idx">05b</span>
-          <h3 class="mod__title">Pipeline</h3>
-          <p class="mod__body">Stages that match how the desk really works, and a stall rule counted in working days rather than calendar ones.</p>
+        <article class="mod" data-reveal data-rdelay="190" data-viz="intent" data-more="A message is read for what it asks, not matched to a keyword. “Still nothing?” after an order number is a delivery question; the bot knows that because it reads the thread, not the last line. When it cannot tell, it asks one question — or hands over.">
+          <span class="mono mod__idx">07b</span>
+          <h3 class="mod__title">Intent</h3>
+          <p class="mod__body">Reading what a message wants &mdash; a booking, a price, an order, a person &mdash; before deciding what to do with it.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="260" data-viz="ledger" data-more="Every change, attributed and timestamped, kept where the data is. The question a desk actually asks is not whether the price changed but who changed it — and that answer cannot be reconstructed later if it was not kept from the start.">
-          <span class="mono mod__idx">05c</span>
-          <h3 class="mod__title">Ledger</h3>
-          <p class="mod__body">Every change attributed and timestamped, because the question that gets asked is who changed it, not whether it changed.</p>
+        <article class="mod" data-reveal data-rdelay="260" data-viz="hub" data-more="An answer that is not looked up is a guess, and a guess with a confident tone is the worst thing a firm can send. Every fact in a reply comes from a system the firm already trusts, and the reply says which one.">
+          <span class="mono mod__idx">07c</span>
+          <h3 class="mod__title">Lookup</h3>
+          <p class="mod__body">The bot reaches into the firm&rsquo;s own systems &mdash; the calendar, the desk, the orders &mdash; and answers with what is actually there.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="330" data-viz="split" data-more="Who may see, who may edit, who may delete — enforced at the data, not by hiding a button. In the running system, deletion is manager-only and a reset password must be changed at next sign-in.">
-          <span class="mono mod__idx">05d</span>
-          <h3 class="mod__title">Roles</h3>
-          <p class="mod__body">Who may see, who may edit, and who may delete &mdash; enforced at the data rather than by hiding a button.</p>
+        <article class="mod" data-reveal data-rdelay="330" data-viz="reply" data-more="The voice is a document the firm owns: the phrases it uses, the ones it refuses, how it greets, how it closes. The bot is held to it the way a new hire would be, and the document is yours to edit.">
+          <span class="mono mod__idx">07d</span>
+          <h3 class="mod__title">The voice</h3>
+          <p class="mod__body">Answers written to the firm&rsquo;s own voice: what it says, what it never says, how it signs off. Written down, like a brand kit.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="400" data-viz="sync" data-more="One-way, from whatever is already the source of truth. A reference that drops out of the feed is archived with its photos, showings and deals intact — never deleted — and nothing the desk writes ever flows back to the public site.">
-          <span class="mono mod__idx">05e</span>
-          <h3 class="mod__title">Feed</h3>
-          <p class="mod__body">A one-way sync from whatever is already the source of truth, with archiving instead of deletion when a record leaves it.</p>
+        <article class="mod" data-reveal data-rdelay="400" data-viz="handoff" data-more="The hand-over is designed first, because it is the thing that goes wrong in every bot you have met. The bot stops, says so, and the person receives the whole thread — not a ticket number and a blank page.">
+          <span class="mono mod__idx">07e</span>
+          <h3 class="mod__title">Hand-over</h3>
+          <p class="mod__body">The moment the bot should stop: a complaint, a negotiation, a person asking for a person. It hands the thread to someone, whole.</p>
         </article>
-        <article class="mod" data-reveal data-rdelay="470" data-viz="sheet" data-more="The repository, the database and the hosting move into the firm's accounts, and changes ship from inside the firm after that. No seat count, nothing to renew — the exit is that there is nothing to exit from.">
-          <span class="mono mod__idx">05f</span>
-          <h3 class="mod__title">Handover</h3>
-          <p class="mod__body">The source, the data and the hosting, in the firm&rsquo;s name. There is no seat count and nothing to renew.</p>
+        <article class="mod" data-reveal data-rdelay="470" data-viz="ledger" data-more="The log of what people ask is a map of the business nobody drew on purpose. It stays in your storage, under your name, and the bot never learns anything from it that you did not decide it should.">
+          <span class="mono mod__idx">07f</span>
+          <h3 class="mod__title">The record</h3>
+          <p class="mod__body">Every conversation kept, attributed and searchable, in the firm&rsquo;s own storage. What was asked is as valuable as what was answered.</p>
         </article>
       </div>
     </section>
 
     <section class="svc-sec">
       <div class="svc-sec__head" data-keepout>
-        <h2 class="svc-sec__title">One is already running</h2>
-        <p class="svc-sec__note" data-keepout>Lumina Desk, built for a brokerage in Amman. Counted out of the repository, not estimated.</p>
+        <h2 class="svc-sec__title">What a bot of ours is held to</h2>
+        <p class="svc-sec__note" data-keepout>Four rules, written before the first message. A bot that breaks one is a bot that is switched off.</p>
       </div>
       <ul class="signals" data-keepout>
         <li class="signal" data-reveal data-rdelay="120">
-          <span class="mono signal__k">BUILD</span>
-          <span class="signal__v">81 source files, 8,996 lines. 16 screens, 09 action modules, 07 endpoints.</span>
+          <span class="mono signal__k">NO GUESSING</span>
+          <span class="signal__v">Every fact in a reply is looked up in a system the firm trusts, and the reply says which one. A bot that cannot find it says so.</span>
         </li>
         <li class="signal" data-reveal data-rdelay="190">
-          <span class="mono signal__k">SCHEMA</span>
-          <span class="signal__v">20 declared types carrying 130 typed fields. Every one of them argued for before it was added.</span>
+          <span class="mono signal__k">NO TRAP</span>
+          <span class="signal__v">A person who asks for a person gets one, with the whole thread attached. Never a loop, never a ticket number and silence.</span>
         </li>
         <li class="signal" data-reveal data-rdelay="260">
-          <span class="mono signal__k">DEPENDENCIES</span>
-          <span class="signal__v">08 at runtime. A dependency is a decision somebody else gets to change later.</span>
+          <span class="mono signal__k">YOUR VOICE</span>
+          <span class="signal__v">Written down, owned by the firm, applied the way it would be to a new hire. The bot does not have a personality; the firm does.</span>
         </li>
         <li class="signal" data-reveal data-rdelay="330">
-          <span class="mono signal__k">SEATS</span>
-          <span class="signal__v">Not counted, because they are not charged for. The bill does not move when the desk grows.</span>
+          <span class="mono signal__k">YOUR DATA</span>
+          <span class="signal__v">Conversations stay in the firm&rsquo;s storage, under the firm&rsquo;s name. The bot does not train on your customers.</span>
         </li>
       </ul>
     </section>
@@ -267,18 +275,18 @@
       <div class="phases" data-keepout>
         <div class="phase" data-reveal data-rdelay="120">
           <span class="mono phase__k">P.01</span>
-          <h3 class="phase__title">Model</h3>
-          <p class="phase__body">Two to three weeks. The objects, the vocabulary and the rules, written down and agreed before a screen exists.</p>
+          <h3 class="phase__title">Map</h3>
+          <p class="phase__body">Two weeks. What people actually ask, read out of the inbox you already have. The intents, the systems each one needs, and the moments to hand over &mdash; written down before a reply is drafted.</p>
         </div>
         <div class="phase" data-reveal data-rdelay="210">
           <span class="mono phase__k">P.02</span>
           <h3 class="phase__title">Build</h3>
-          <p class="phase__body">One quarter. The desk runs against real records from the first week, because a system tested on invented data is tested on nothing.</p>
+          <p class="phase__body">One quarter. The bot on one channel first, answering real messages with a person reading every reply, then the other channels, then the gates loosened as it earns them.</p>
         </div>
         <div class="phase" data-reveal data-rdelay="300">
           <span class="mono phase__k">P.03</span>
           <h3 class="phase__title">Hand over</h3>
-          <p class="phase__body">The repository, the database and the hosting move into the firm&rsquo;s accounts. Changes ship from inside the firm after that.</p>
+          <p class="phase__body">The voice document, the conversation log and the hosting move into the firm&rsquo;s accounts. The bot is yours to change; the record is yours to read.</p>
         </div>
       </div>
     </section>
@@ -290,47 +298,44 @@
       </div>
       <ul class="signals" data-keepout>
         <li class="signal" data-reveal data-rdelay="120">
-          <span class="mono signal__k">SOURCE OF TRUTH</span>
-          <span class="signal__v">One system, rather than a system and the spreadsheet everybody actually uses.</span>
+          <span class="mono signal__k">TIME TO FIRST ANSWER</span>
+          <span class="signal__v">From whenever someone is free to the moment the message lands. The same answer at 02:00 as at 10:00.</span>
         </li>
         <li class="signal" data-reveal data-rdelay="190">
-          <span class="mono signal__k">COST</span>
-          <span class="signal__v">Flat. It stops tracking headcount, which is the line item that made the old one hurt.</span>
+          <span class="mono signal__k">ANSWERS THAT WERE GUESSES</span>
+          <span class="signal__v">To none. Everything the bot says it looked up, and it says where.</span>
         </li>
         <li class="signal" data-reveal data-rdelay="260">
-          <span class="mono signal__k">CHANGE</span>
-          <span class="signal__v">A new field is a commit, not a support ticket and a quarter of waiting.</span>
+          <span class="mono signal__k">THREADS THAT DIE</span>
+          <span class="signal__v">To none. A conversation the bot cannot finish arrives with a person, whole.</span>
         </li>
         <li class="signal" data-reveal data-rdelay="330">
-          <span class="mono signal__k">EXIT</span>
-          <span class="signal__v">There is nothing to migrate off. The source and the data were always the firm&rsquo;s.</span>
+          <span class="mono signal__k">WHAT THE FIRM KNOWS</span>
+          <span class="signal__v">More. The log of what people ask is kept, in your storage, and read back to you every month.</span>
         </li>
       </ul>
     </section>
 
 
     <!-- ── THE SHAPE — three decisions, and the service recomposes ────
-         Owner-requested 2026-09-01: a real interaction on every service
-         page — choose or drag, and the engagement reshapes to fit. The
-         diagram, the manifest and the request subject all derive from
-         one state object, so they cannot disagree. modules/shape.js. -->
+         modules/shape.js, configuration "bot". -->
     <section class="svc-sec" id="shapeSec">
       <div class="svc-sec__head" data-keepout>
-        <h2 class="svc-sec__title">Shape the desk</h2>
-        <p class="svc-sec__note" data-keepout>What you trade, where truth lives today, who works in it. The schema recomposes in your own vocabulary — then send exactly that.</p>
+        <h2 class="svc-sec__title">Shape the bot</h2>
+        <p class="svc-sec__note" data-keepout>Where it answers, what it may do alone, and who it hands to. The route recomposes around your answers &mdash; then send exactly that.</p>
       </div>
-      <div class="shape" data-shape="desk" data-keepout></div>
+      <div class="shape" data-shape="bot" data-keepout></div>
     </section>
 
     <section class="svc-end">
-      <h2 class="svc-end__title" data-keepout data-reveal data-kinetic>Built to the firm.<br>Not rented to it.</h2>
-      <p class="body veil" style="margin-top:24px">The engagement closes when the repository is in your account and the team is shipping from it.</p>
+      <h2 class="svc-end__title" data-keepout data-reveal data-kinetic>It answers.<br>It knows when to stop.</h2>
+      <p class="body veil" style="margin-top:24px">The engagement closes when the bot has handed over its first difficult thread and the person who received it had everything they needed.</p>
       <div class="cta-row" style="margin-top:32px">
         <a class="btn btn--pulse" href="../index.html#sys-05">
           Request access
           <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
         </a>
-        <a class="btn btn--hairline" href="../lumina.html">See the Lumina case</a>
+        <a class="btn btn--hairline" href="crm.html">See the system it looks things up in</a>
       </div>
     </section>
 
@@ -359,7 +364,7 @@
               <a href="../services/ai-transformation.html"><span class="mono">04</span> AI adoption</a>
               <a href="../services/crm.html"><span class="mono">05</span> Customizable CRM</a>
               <a href="../services/agent-training.html"><span class="mono">06</span> AI agent training</a>
-              <a href="../services/bot-building.html"><span class="mono">07</span> Bot building</a>
+              <a href="../services/bot-building.html" aria-current="page"><span class="mono">07</span> Bot building</a>
             </div>
             <div class="fcol">
               <span class="mono fcol__h">The firm</span>
@@ -397,7 +402,7 @@
             <img src="../assets/media/lumina-logo.png" alt="Lumina" width="222" height="60" loading="lazy" decoding="async">
           </a>
           <span class="sitefoot__spacer"></span>
-          <span>SYS.05 &mdash; CUSTOMIZABLE CRM</span>
+          <span>SYS.07 &mdash; BOT BUILDING</span>
           <span>V.2.0 / EN &mdash; AR</span>
         </div>
 
@@ -415,29 +420,27 @@
 
 <script type="module">
 import { initField } from '../assets/js/field.js';
-import { initLattice } from '../assets/js/modules/lattice.js';
+import { initSwitch } from '../assets/js/modules/switch.js';
 import { initSkip } from '../assets/js/modules/skip.js';
 import { initMods } from '../assets/js/modules/mods.js';
 import { initShape } from '../assets/js/modules/shape.js';
 
 const roState = document.getElementById('readoutState');
 initField({
-  /* The lattice pins from 0.11 to 0.63 of the page (measured 1440x900),
-     and its sparks are LIGHT — they cannot compete with S1's blazing
-     core. So the bed converges into the torus DURING the first two beats
-     (scatter gathering, same sentence the instrument is saying) and the
-     schema onward plays inside the torus's dark centre. */
+  /* The switchboard pins from about 0.11 to 0.63 of the page and is made
+     of light, so the bed gathers into the dark-centred core BEFORE the
+     messages arrive, and holds it until the hand-over. */
   program: [
-    { at: 0.00, form: 'S1' },   // the record set, as parts
-    { at: 0.10, form: 'S1' },
-    { at: 0.26, form: 'S3' },   // one object — before the schema stands
+    { at: 0.00, form: 'S1' },
+    { at: 0.09, form: 'S1' },
+    { at: 0.24, form: 'S3' },
     { at: 1.00, form: 'S3' },
   ],
   channel: { tilt: { S1: 34, S3: 16 }, spin: { S1: 120, S3: 168 } },
   onState: (p, n) => { if (roState) roState.textContent = n; },
 });
 
-initLattice();
+initSwitch();
 initSkip();
 initMods();
 initShape();

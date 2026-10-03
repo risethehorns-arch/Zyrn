@@ -459,9 +459,10 @@ and a fifth service page was added. The parts that constrain future work:
   nobody has made. So the tab strip, the footer, the palette, the sitemap
   and both index pages carry five; the core, the matrix and every "four
   lines" sentence are untouched and still true. See `docs/decisions.md`.
-- **The tab strip is five wide above 1023px and its marker is `100% / 5`
-  stepped by whole multiples of itself** — those two numbers move
-  together. Below 1023px the strip WRAPS, where a marker positioned by
+- **The tab strip is seven wide above 1023px (five until 2026-10-03)
+  and its marker is `100% / 7` stepped by whole multiples of itself** —
+  those two numbers move together, and `styles.css` carries a
+  `[data-active="N"]` step for each cell. Below 1023px the strip WRAPS, where a marker positioned by
   translateX cannot be right for any cell, so it becomes an edge on the
   active cell instead. That needed `position:relative` on `.tab` scoped to
   that media query ONLY; adding it globally parks every desktop marker at
@@ -929,3 +930,31 @@ unreadable smudge.
   the card is ever recomposed. WhatsApp also caches the whole preview per
   page URL — sharing `zyrn.org/?v=2` once forces a fresh scrape.
 
+## Two programmes, seven channels — 2026-10-03
+
+`services/agent-training.html` (06, THE RELAY) and
+`services/bot-building.html` (07, THE SWITCHBOARD). Why they are
+programmes and not lines: `docs/decisions.md`. The instruments and what
+they taught: `.claude/rules/instruments.md`. The pages: `.claude/rules/
+pages.md`. Four things from the build that apply beyond it:
+
+- **`docs/rigfit.py` now clamps a rect to EVERY clipping ancestor, not
+  only when the rect overhangs its own parent.** A bubble scrolled above
+  a chat window sits neatly inside its parent and is invisible, and the
+  cursor inside it was read as 25px of ink across the head. The old
+  shortcut was a false pass waiting for the first scrolled column.
+- **On the inside of a cylinder the slab two places round is NEARER the
+  reader**, and it projects taller than the stage. THE BAY's five stops
+  had landed rigfit's samples on the stops; seven put them mid-handoff
+  and found it. Sampling positions are not a property of the probe — if
+  a geometry changes the pacing, re-run with fine `STEPS=`.
+- **A test that types a geometry's numbers fails the moment the geometry
+  is derived.** `baytest.py` typed 0.326 and 0.5 for stops two and three;
+  it reads the slab count off the DOM now and derives them the way
+  `bay.js` does.
+- **A counted claim on a page is a liability the next commit inherits.**
+  The agent page states this repository's commit count and how many
+  carry the agent's co-signature; the page is right at the commit that
+  touched it and stale one commit later. Re-count on every touch, and
+  never widen a count into "every one of them" without counting — the
+  first draft said every commit was co-signed, and 26 of 35 were.

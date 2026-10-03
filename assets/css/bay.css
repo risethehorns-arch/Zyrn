@@ -233,6 +233,16 @@
 .bay__ico .i-bar{transform-box:fill-box;transform-origin:50% 100%;animation:bay-bar 1.9s ease-in-out infinite}
 .bay__ico .i-spin{transform-box:view-box;transform-origin:32px 32px;animation:bay-spin 16s linear infinite}
 .bay__ico .i-hop{animation:bay-hop 3.6s cubic-bezier(.6,0,.3,1) infinite}
+.bay__ico .i-hop2{animation:bay-hop2 2.8s ease-in-out infinite}
+.bay__ico .i-hop3{animation:bay-hop3 4.2s cubic-bezier(.5,0,.5,1) infinite}
+@keyframes bay-hop2{0%,100%{transform:translate(-6px,2px)}50%{transform:translate(6px,-2px)}}
+@keyframes bay-hop3{
+  0%,6%   {transform:translate(6px,16px)}
+  28%,34% {transform:translate(32px,32px)}
+  58%,64% {transform:translate(58px,20px)}
+  80%,86% {transform:translate(32px,32px)}
+  100%    {transform:translate(6px,16px)}
+}
 @keyframes bay-up{50%{transform:translateY(-2.6px)}}
 @keyframes bay-dn{50%{transform:translateY(2.6px)}}
 @keyframes bay-blink{0%,100%{opacity:0.35}50%{opacity:1}}

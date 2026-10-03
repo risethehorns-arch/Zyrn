@@ -5,6 +5,8 @@ paths:
   - "assets/css/svc-modules.css"
   - "assets/css/case.css"
   - "assets/css/bay.css"
+  - "assets/css/relay.css"
+  - "assets/css/switch.css"
 ---
 
 # ZYRN — the signature instruments
@@ -153,7 +155,7 @@ geometry. `docs/rigshot.py` photographs one at chosen progress values.
   moved to the lattice. Git history has the module.
 - **bay** (`services.html`) — OWNER-REQUESTED 2026-09-28 against a
   reference of a spatial deck of holographic panels; replaced the orbit.
-  Five services as slabs of glass on the INSIDE of a cylinder whose axis
+  Seven services (five until 2026-10-03) as slabs of glass on the INSIDE of a cylinder whose axis
   is between the reader and the slab in front, so the one being read is
   square-on and its neighbours wrap round, nearer and turned in.
   `modules/bay.js` + `assets/css/bay.css`; `docs/baytest.py` drives it
@@ -230,6 +232,20 @@ geometry. `docs/rigshot.py` photographs one at chosen progress values.
     · `docs/rigfit.py` now clamps PER AXIS, because this stage is
       `overflow-x:clip; overflow-y:visible` and the shorthand reads
       "clip visible".
+    · **Seven slabs, 2026-10-03.** `N` is the only number that changed
+      by hand: `phi = (N-1)/2 * A_FAN` and `STEP` derive from it, A_FAN
+      closed 21 → 15 degrees so seven fit one view, and the fan's reach
+      is `(N-1)/2 + 0.75`. Two things the sixth and seventh slab taught:
+      a slab 1.55 places round the cylinder is NEARER the reader than the
+      one in front and projected taller than the stage, into the head —
+      five stops had landed rigfit's eight samples on the stops, seven
+      put them mid-handoff where that slab is visible. A slab now comes
+      into view at 1.5 places out (faded over 0.5, so the neighbours at
+      rest are whole), and in the fan the outer slabs arrive on `fan²`,
+      once the camera has stepped back. `docs/baytest.py` derives its
+      stops from the slab count in the DOM; it no longer types 0.326.
+      Per-slab figures (`data-fig`): `loop` for the agent, `lanes` for
+      the bot, beside the coverage chart the four lines draw.
 - **orbit** — DELETED 2026-09-28, replaced by the bay at the owner's
   direction. Five things riding a tilted ring around one
   core, and a scroll that takes you round it once. Replaced `core.js`, a
@@ -246,6 +262,58 @@ geometry. `docs/rigshot.py` photographs one at chosen progress values.
 
 `services.html` keeps **matrix**, which still covers the four advisory
 lines only — see `docs/decisions.md`.
+
+### The two programmes — 2026-10-03
+
+Both built on the shell above, both driven by one station-plus-fraction
+number `T` (0..N beats) with every reveal a `rev(T, t0, dur)` off it, and
+both authored as arrays the key rail is COUNTED from. Both ran rigfit at
+nine windows, exercise, skiptest and shapetest clean before they were
+committed.
+
+- **relay** (`services/agent-training.html`, programme 06) — THE RELAY. A
+  machine on the left, the reader's hand (a phone) on the right, a private
+  link between them. Six beats: the agent installed on the reader's OWN
+  machine and set to ask; the private link coming up — a name only their
+  devices can reach; a brief typed on the phone and travelling the link as
+  packets; the agent working the files (console lines write in, the tree
+  marks M/R/A); THE GATE — the agent asks before publishing and ALLOW is
+  pressed on the phone; the result handed back as a live preview.
+  `modules/relay.js` + `assets/css/relay.css`; `--hc: 183 170 255`, the
+  slab's own stop. The key rail's files / checks / gates are counted off
+  TREE, CONSOLE and CHAT.
+    · **The chat column follows its newest bubble** — `scrollTop` written
+      in `draw()`, eased on each bubble's own entry. A 286px stage
+      (2530×500) clipped the hand-back off the bottom of the phone; now
+      the live part of the thread is what shows. Inert where nothing
+      overflows.
+    · **The link caption holds off when the gap is narrower than it**
+      (`.is-off`): at 1440 the machine-to-phone gap is 92px, the caption
+      ~110. The phone's own PRIVATE LINK pill names it, so nothing is lost.
+    · **The phone settles DOWN into place.** Arriving from below hung 4%
+      of it past the stage at p0 and rigfit flagged the note by 3px.
+    · The link is one cubic measured per resize (`measure()`); packets
+      ride it both ways on `bez()`.
+- **switch** (`services/bot-building.html`, programme 07) — THE
+  SWITCHBOARD. Three lanes on the left (WhatsApp, Telegram, web chat), the
+  bot at the centre, the firm's systems on the right (calendar, desk,
+  orders) and a person at the bottom right. Six beats: the inbox (six
+  messages arrive in their lanes); one door (every lane routes to the
+  bot); read (each message tagged with an intent, none guessed); looked up
+  (lookups travel to the systems and return what is actually there);
+  answered (the reply lands in the lane the question came from); handed
+  over (the sixth asked for a person and gets one, thread attached).
+  `modules/switch.js` + `assets/css/switch.css`; `--hc: 214 206 255`.
+  CHANNELS / MESSAGES / SYSTEMS are the arrays; msgs, chan, intents,
+  looks, answered, handed are counted off them.
+    · **Message slots are anchored by their TOP-LEFT corner, above and
+      below each lane's rail, with the lane's label ON the rail.** The
+      first cut put labels beside the rail and the bubbles sat on them.
+    · **Messages arrive from INSIDE the stage** (`lane.x − 0.03`), not
+      from off-stage left: a bubble parked at −0.30 still has a rect, and
+      rigfit read 358px of overflow at p0.08.
+    · The hand-over is Vapor, not the channel — the one outbound line
+      with a glow, because it is the one that leaves the bot.
 
 ### The three that were replaced
 

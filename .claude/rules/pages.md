@@ -272,3 +272,39 @@ never touches. If the product changes, these have to be re-counted; if you
 cannot re-count one, it comes off the page rather than going stale.
 
 The instrument is **THE PRISM** (`modules/prism.js`).
+
+## `services/agent-training.html` — programme 06 (added 2026-10-03)
+
+AI agent training: how to run an agent on your own machine, brief it
+from your phone over a private link, and hold the gate on what it ships.
+Numbered 06 and called a PROGRAMME — not line 05; see `docs/decisions.md`.
+Generated from `services/crm.html`'s head and tail so the nav, footer and
+script scaffolding stay identical across all seven.
+
+Sections: hero (06 · "AI agent training."), the seven-wide tab strip,
+THE RELAY (`#sigRelay`, `modules/relay.js`), "What it covers" (six
+disclosure modules — console, relay, brief, gate, ledger, deploy), "How
+this site was made" (signals COUNTED out of this repository: one machine,
+the scripts in `docs/`, the commit count and how many carry the agent's
+co-signature — re-count all of them whenever this page is touched; the
+note under the heading carries the date they were counted), "How it
+runs" (three phases), "What changes", THE SHAPE (`data-shape="agent"`:
+who / the leash / where it runs), and the close — "Your machine. Your
+hand on it." The field program is S2 → S2 → S3; the page is `S2` in
+`field.js`'s ROUTES.
+
+## `services/bot-building.html` — programme 07 (added 2026-10-03)
+
+Bot building: one bot on every channel a firm answers on, reading, looking
+up in the firm's own systems, replying in the lane the question came from
+— and handing over to a person when it should, with the thread attached.
+Programme 07, same reasoning as 06.
+
+Sections: hero (07 · "Bot building."), tabs, THE SWITCHBOARD
+(`#sigSwitch`, `modules/switch.js`), "What it covers" (lanes, intent, hub,
+reply, handoff, ledger), "What a bot of ours is held to", three phases,
+"What changes", THE SHAPE (`data-shape="bot"`: where / alone / the hand),
+and the close — "It answers. It knows when to stop." Field program
+S1 → S1 → S3 → S3; `S1` in ROUTES. Every message, intent and lookup on
+the instrument is an authored demonstration and the stage says so in its
+caption — a bot we would build, not a recording.

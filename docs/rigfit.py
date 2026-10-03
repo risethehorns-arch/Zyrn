@@ -107,21 +107,26 @@ MEASURE = """(function(){
   var rects = [];
   for (var j = 0; j < live.length; j++) rects.push(box(live[j]));
   var vbox = box(view);
+  /* Every clipping ancestor, not the first — and not only when the rect
+     overhangs its own parent. THE RELAY scrolls a chat column: a bubble
+     above the window sits neatly inside its parent and is still invisible,
+     and the cursor inside it (which overhangs nothing) was read as 25px
+     of ink across the head. Clip boxes are read once per ancestor. */
+  var clipBox = new Map();
   for (var j = 0; j < live.length; j++){
-    var b = rects[j], par = live[j].parentElement;
-    if (!par || par === view) continue;
-    var pb = par.getBoundingClientRect();
-    if (b.l >= pb.left - 2 && b.r <= pb.right + 2 && b.t >= pb.top - 2 && b.b <= pb.bottom + 2) continue;
-    for (var a = par; a && a !== view; a = a.parentElement){
-      var cs = getComputedStyle(a);
-      if (/(hidden|clip)/.test(cs.overflowX + cs.overflowY)){
-        var ab = a.getBoundingClientRect();
-        b = {l:Math.max(b.l, ab.left), t:Math.max(b.t, ab.top), r:Math.min(b.r, ab.right), b:Math.min(b.b, ab.bottom)};
-        b.w = b.r - b.l; b.h = b.b - b.t;
-        rects[j] = b;
-        break;
+    var b = rects[j];
+    for (var a = live[j].parentElement; a && a !== view; a = a.parentElement){
+      var ab = clipBox.get(a);
+      if (ab === undefined){
+        var cs = getComputedStyle(a);
+        ab = /(hidden|clip)/.test(cs.overflowX + cs.overflowY) ? a.getBoundingClientRect() : null;
+        clipBox.set(a, ab);
       }
+      if (!ab) continue;
+      b = {l:Math.max(b.l, ab.left), t:Math.max(b.t, ab.top), r:Math.min(b.r, ab.right), b:Math.min(b.b, ab.bottom)};
+      b.w = b.r - b.l; b.h = b.b - b.t;
     }
+    rects[j] = b;
   }
   for (var j = 0; j < live.length; j++){
     var b = rects[j];

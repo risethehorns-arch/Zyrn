@@ -42,6 +42,8 @@
     { k: '03',     l: 'Business structuring', h: UP + 'services/business-structuring.html',t: 'Line',     q: 'org decision rights authority incentives operating model' },
     { k: '04',     l: 'AI adoption',          h: UP + 'services/ai-transformation.html',   t: 'Line',     q: 'ai artificial intelligence transformation workflow governance' },
     { k: '05',     l: 'Customizable CRM',     h: UP + 'services/crm.html',                  t: 'System',   q: 'crm customer database desk pipeline records custom software build vs buy salesforce hubspot seats licence sales' },
+    { k: '06',     l: 'AI agent training',    h: UP + 'services/agent-training.html',       t: 'Programme', q: 'ai agent training agents claude code install deploy remote control phone machine automation learn course' },
+    { k: '07',     l: 'Bot building',         h: UP + 'services/bot-building.html',         t: 'Programme', q: 'bot building chatbot whatsapp telegram web chat answer book hand over automation assistant' },
     { k: 'SYS.06', l: 'The brand kit',        h: UP + 'brand.html',                        t: 'Method',   q: 'brand kit tokens colours type spec documentation how we present deliverable handover' },
     { k: 'SYS.07', l: 'Lumina — a case',      h: UP + 'lumina.html',                       t: 'Work',     q: 'lumina case study proof work client real estate amman example portfolio rebase' },
     { k: 'SYS.10', l: 'THEHUB — a case',      h: UP + 'thehub.html',                       t: 'Work',     q: 'thehub qutaifan case study proof work client directory open source software redesign before after design system unify' },

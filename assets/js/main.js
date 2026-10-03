@@ -287,7 +287,9 @@
       'website-design.html':       'services.html',
       'brand-kit.html':            'services.html',
       'business-structuring.html': 'services.html',
-      'ai-transformation.html':    'services.html'
+      'ai-transformation.html':    'services.html',
+      'agent-training.html':       'services.html',
+      'bot-building.html':         'services.html'
     };
 
     var pageHit = null;

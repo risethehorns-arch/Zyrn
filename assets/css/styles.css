@@ -924,13 +924,14 @@ h1,h2,h3,h4,blockquote,.mono,summary,figcaption,th{text-wrap:balance}
 /* ── service tabs ───────────────────────────────────────────────────
    The service pages as a persistent switcher. Glass housing, one active
    channel — reads as instrument channel-select, not website navigation.
-   Five channels since 2026-09-01: the four lines and the system they
-   ship. The active marker is `100% / 5` wide and steps by whole
-   multiples of itself, so the two numbers below have to move together. */
+   Seven channels since 2026-10-03: the four lines, the system they
+   ship, and the two agent programmes. The active marker is `100% / 7`
+   wide and steps by whole multiples of itself, so the two numbers below
+   have to move together. */
 
 .tabs{
   position:relative;
-  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
   gap:1px;margin-top:40px;
   border-radius:10px;
   border:1px solid var(--glass-edge);
@@ -942,14 +943,14 @@ h1,h2,h3,h4,blockquote,.mono,summary,figcaption,th{text-wrap:balance}
 }
 .tab{
   display:flex;flex-direction:column;gap:8px;
-  padding:18px 20px 20px;
+  padding:18px 14px 20px;
   border-right:1px solid rgba(242,243,245,0.07);
   transition:background 400ms var(--ease-reveal),color 300ms;
 }
 .tab:last-child{border-right:none}
 .tab:hover{background:rgba(242,243,245,0.035)}
 .tab__idx{color:rgba(242,243,245,0.55)}
-.tab__name{font-size:15px;color:rgba(242,243,245,0.8);transition:color 300ms}
+.tab__name{font-size:14px;line-height:1.25;color:rgba(242,243,245,0.8);transition:color 300ms;text-wrap:balance}
 .tab:hover .tab__name{color:var(--vapor)}
 
 .tab.is-active{background:rgba(242,243,245,0.055)}
@@ -958,7 +959,7 @@ h1,h2,h3,h4,blockquote,.mono,summary,figcaption,th{text-wrap:balance}
 /* the active channel is marked by the section's single Pulse */
 .tab.is-active::before{
   content:'';position:absolute;top:0;height:2px;background:var(--pulse);
-  width:20%;
+  width:calc(100% / 7);
   transition:transform 500ms var(--ease-reveal);
 }
 .tabs[data-active="0"] .tab.is-active::before{left:0;transform:translateX(0)}
@@ -966,6 +967,15 @@ h1,h2,h3,h4,blockquote,.mono,summary,figcaption,th{text-wrap:balance}
 .tabs[data-active="2"] .tab.is-active::before{left:0;transform:translateX(200%)}
 .tabs[data-active="3"] .tab.is-active::before{left:0;transform:translateX(300%)}
 .tabs[data-active="4"] .tab.is-active::before{left:0;transform:translateX(400%)}
+.tabs[data-active="5"] .tab.is-active::before{left:0;transform:translateX(500%)}
+.tabs[data-active="6"] .tab.is-active::before{left:0;transform:translateX(600%)}
+/* seven names in 1280px is 154px a cell after padding; "Business
+   structuring" needs 148 at 14px and wrapped alone at 13.5+. One line
+   down to 1280, two balanced lines below that. */
+@media (max-width:1439px) and (min-width:1024px){
+  .tab{padding:18px 10px 20px}
+  .tab__name{font-size:13px}
+}
 
 
 /* ── page transition veil ───────────────────────────────────────────

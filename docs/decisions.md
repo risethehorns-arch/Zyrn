@@ -341,3 +341,35 @@ picture rather than in the picture:
 argument, the instrument is not making the argument.** That is worth
 checking before building the next one.
 
+## Agent training and bot building are programmes 06 and 07 — 2026-10-03
+
+The owner: two more services "that we will be focusing on going forward
+more" — AI agent training (run the agents from your own machine, control
+them remotely) and bot building. They lead the offer now, and they are
+still not lines 05 and 06, for the reason settled above: "four lines" is
+geometry on this site. They are also a different kind of thing again —
+a PROGRAMME: a person is trained and left able to run the loop alone; a
+bot is built, handed over and then it answers on its own. The CRM is an
+artefact, the lines are engagements, these two are programmes, and the
+site is better for the three words.
+
+What moved: seven tabs (`.tabs` is `repeat(7)`, the marker `100% / 7`,
+and between 1024 and 1439px `.tab__name` drops to 13px so "Business
+structuring" holds one line — `docs/tabsprobe.py` measures it), seven
+footer rows and so seven in the phone menu (its `max-height` ceiling is
+620px now), seven slabs in THE BAY (see `instruments.md`), two
+`.lcard--pr` programme cards on `services.html` under "Two programmes,
+hands on", two `.line--agent` rows in `index.html` SYS.03 (lede: "Four
+lines, the system they ship, and two programmes"), two sitemap entries,
+two ⌘K rows, two ROUTES, two OWNER entries. The core, the matrix and
+every "four lines" sentence are untouched. The home-page field anchors
+were re-measured with the two new rows and moved by ≤0.003, so the
+program was not re-anchored.
+
+What each one claims, and what it does not: the agent page's claim is
+that the agent runs on the READER'S machine and is briefed and gated from
+their own phone over a private link — not on ours, not from a dashboard
+we hold. The bot page's claim is that the hand-over is designed first.
+Neither page prices, promises weeks or invents an outcome; the agent
+page's only numbers are counted out of this repository, and the
+instruments are captioned as authored demonstrations.

@@ -59,10 +59,10 @@
 import { onNear, swapText, pad3, REDUCED, COARSE } from './_track.js';
 import { LINES as COVER, DIMENSIONS } from './lines.js';
 
-const N = 5;
+const N = 7;                   // four lines, the system, two programmes
 const DEG = Math.PI / 180;
 const A_RUN = 36 * DEG;          // between neighbours, while walking
-const A_FAN = 21 * DEG;          // and when all five are in one view
+const A_FAN = 15 * DEG;          // and when all seven are in one view
 const PERSP = 3.0;               // camera distance, in rig heights
 
 /* the score, in track progress */
@@ -80,7 +80,7 @@ const W_HOLD = 11;               // travelling to a destination (per slab, scale
 const STEP_MS = 280;             // the slab steps forward before it is cut
 const CUT_NAV = 300;             // the cut runs this long before field.js takes over
 
-const NAMES = ['WEBSITE DESIGN', 'BRAND KIT', 'BUSINESS STRUCTURING', 'AI ADOPTION', 'CUSTOMIZABLE CRM'];
+const NAMES = ['WEBSITE DESIGN', 'BRAND KIT', 'BUSINESS STRUCTURING', 'AI ADOPTION', 'CUSTOMIZABLE CRM', 'AI AGENT TRAINING', 'BOT BUILDING'];
 const AXIS  = ['SUR', 'IDE', 'AUT', 'WOR', 'MEA'];
 
 const clamp01 = (t) => (t < 0 ? 0 : t > 1 ? 1 : t);
@@ -154,8 +154,48 @@ function plotFigures(panels) {
     while (svg.firstChild) svg.removeChild(svg.firstChild);
     svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
 
-    const line = COVER[i];
+    const kind = el.getAttribute('data-fig') || (COVER[i] ? 'cover' : 'records');
+    const line = kind === 'cover' ? COVER[i] : null;
     const padX = 5, top = 5, bot = h - 2;
+    if (kind === 'loop') {
+      /* the agent loop: brief → work → gate → return, and round again */
+      const cx = w / 2, cy = h / 2, rx = Math.min(w * 0.42, h * 1.6), ry = h * 0.36;
+      const pts = [0, 1, 2, 3].map((k) => { const a = (-90 + k * 90) * Math.PI / 180; return [cx + rx * Math.cos(a), cy + ry * Math.sin(a)]; });
+      const d = 'M' + pts.map((q) => q[0].toFixed(1) + ' ' + q[1].toFixed(1)).join('L') + 'Z';
+      svg.appendChild(mk('path', { class: 'bs', d }));
+      svg.appendChild(mk('path', { class: 'ln', d }));
+      svg.appendChild(mk('path', { class: 'cm', d, pathLength: 1 }));
+      pts.forEach((q, k) => svg.appendChild(mk('circle', { class: k === 2 ? 'pk' : 'dt', cx: q[0].toFixed(1), cy: q[1].toFixed(1), r: k === 2 ? 3 : 2.2, style: '--i:0' })));
+      svg.appendChild(mk('circle', { class: 'pr', cx: pts[2][0].toFixed(1), cy: pts[2][1].toFixed(1), r: 3 }));
+      if (ax && !ax.childNodes.length) ['BRIEF', 'WORK', 'GATE', 'BACK'].forEach((t, k) => {
+        const s = document.createElement('span'); s.textContent = t; if (k === 2) s.className = 'is-peak';
+        s.style.left = ((k === 0 || k === 2 ? cx : k === 1 ? pts[1][0] : pts[3][0]) / w * 100).toFixed(1) + '%'; ax.appendChild(s);
+      });
+      if (key) key.textContent = 'THE LOOP — YOUR HAND ON THE GATE';
+      return;
+    }
+    if (kind === 'lanes') {
+      /* three channels into one bot, out to the firm's systems, and one
+         hand-over to a person */
+      const x0 = padX, x1 = w * 0.44, x2 = w * 0.62, x3 = w - padX, cy = h / 2;
+      const ys = [top + 2, cy, bot - 2];
+      let d = '';
+      ys.forEach((y) => { d += 'M' + x0 + ' ' + y.toFixed(1) + 'C' + (x0 + (x1 - x0) * 0.6).toFixed(1) + ' ' + y.toFixed(1) + ' ' + (x1 - 8).toFixed(1) + ' ' + cy.toFixed(1) + ' ' + x1.toFixed(1) + ' ' + cy.toFixed(1); });
+      svg.appendChild(mk('path', { class: 'bs', d }));
+      svg.appendChild(mk('path', { class: 'ln', d }));
+      svg.appendChild(mk('path', { class: 'cm', d: 'M' + x0 + ' ' + ys[1].toFixed(1) + 'L' + x1.toFixed(1) + ' ' + cy.toFixed(1) + 'L' + x2.toFixed(1) + ' ' + cy.toFixed(1) + 'L' + x3 + ' ' + ys[0].toFixed(1), pathLength: 1 }));
+      svg.appendChild(mk('path', { class: 'ln', d: 'M' + x2.toFixed(1) + ' ' + cy.toFixed(1) + 'C' + (x2 + 14).toFixed(1) + ' ' + cy.toFixed(1) + ' ' + (x3 - 10).toFixed(1) + ' ' + ys[0].toFixed(1) + ' ' + x3 + ' ' + ys[0].toFixed(1) + 'M' + x2.toFixed(1) + ' ' + cy.toFixed(1) + 'C' + (x2 + 14).toFixed(1) + ' ' + cy.toFixed(1) + ' ' + (x3 - 10).toFixed(1) + ' ' + ys[2].toFixed(1) + ' ' + x3 + ' ' + ys[2].toFixed(1) }));
+      svg.appendChild(mk('circle', { class: 'pr', cx: ((x1 + x2) / 2).toFixed(1), cy: cy.toFixed(1), r: 3 }));
+      svg.appendChild(mk('circle', { class: 'pk', cx: ((x1 + x2) / 2).toFixed(1), cy: cy.toFixed(1), r: 3.4 }));
+      ys.forEach((y) => svg.appendChild(mk('circle', { class: 'dt', cx: x0, cy: y.toFixed(1), r: 2, style: '--i:0' })));
+      [ys[0], ys[2]].forEach((y) => svg.appendChild(mk('circle', { class: 'dt', cx: x3, cy: y.toFixed(1), r: 2, style: '--i:0' })));
+      if (ax && !ax.childNodes.length) [['CHANNELS', x0 + 14], ['THE BOT', (x1 + x2) / 2], ['YOUR SYSTEMS', x3 - 24]].forEach((t, k) => {
+        const s = document.createElement('span'); s.textContent = t[0]; if (k === 1) s.className = 'is-peak';
+        s.style.left = (t[1] / w * 100).toFixed(1) + '%'; ax.appendChild(s);
+      });
+      if (key) key.textContent = 'THE ROUTE — IN, LOOKED UP, OUT';
+      return;
+    }
     if (line) {
       const xs = line.c.map((_, j) => padX + j * (w - 2 * padX) / 4);
       const ys = line.c.map((c) => bot - c * (bot - top));
@@ -258,10 +298,10 @@ export function initBay() {
        would stand each slab on top of the next */
     const Rf = (pw / 2 * (1 + Math.cos(A_FAN)) + Math.max(0.03 * H, gap * 0.5)) / Math.sin(A_FAN);
     /* and the camera steps back exactly as far as the window needs */
-    const phi = 2 * A_FAN;
+    const phi = (N - 1) / 2 * A_FAN;
     const xo = Rf * Math.sin(phi) + pw / 2 * Math.cos(phi);
     const zo = Rf * (1 - Math.cos(phi)) + pw / 2 * Math.sin(phi);
-    const want = (W / 2 - Math.max(10, 0.02 * W)) / xo;
+    const want = (W / 2 - Math.max(12, 0.045 * W)) / xo;
     const fanPull = Math.max(0.55 * H, P / Math.min(0.92, want) - P + zo);
 
     Object.assign(G, { H, W, pw, ph, R, Rf, P, gap, fanPull, yf: ph / 2 + 0.045 * H });
@@ -336,19 +376,19 @@ export function initBay() {
     if (i === shownBeat) return;
     shownBeat = i;
     swapText(stepEl, i < 0 ? '00 — STANDBY'
-      : i >= N ? '06 — ONE ROOM, FIVE CHANNELS'
+      : i >= N ? '08 — ONE ROOM, SEVEN CHANNELS'
       : pad2(i + 1) + ' — ' + NAMES[i]);
   }
   function mark(k) {
     if (k === shownIdx) return;
     shownIdx = k;
-    swapText(nameEl, k < 0 ? (pNow > 0.5 ? 'ALL FIVE' : 'STANDBY') : NAMES[k]);
+    swapText(nameEl, k < 0 ? 'STANDBY' : k >= N ? 'ALL SEVEN' : NAMES[k]);
     pips.forEach((b, j) => {
       if (j === k) b.setAttribute('aria-current', 'true');
       else b.removeAttribute('aria-current');
     });
     if (prevEl) prevEl.disabled = k === 0;
-    if (nextEl) nextEl.disabled = k === N - 1;
+    if (nextEl) nextEl.disabled = k === N - 1 || k >= N;
   }
 
   /* ── one frame ──────────────────────────────────────────────────── */
@@ -420,11 +460,17 @@ export function initBay() {
     const frontI = opening ? opening.i : fan > 0.5 ? -1 : near;
 
     /* the slabs */
-    const reach = lerp(1.78, 2.7, fan);
+    /* A slab comes into view at 1.5 places out, not 1.78: on the inside of
+       the cylinder the slab two places round is NEARER the reader, and at
+       1.55 it projected taller than the stage and reached into the head
+       (seven stops put rigfit's samples mid-handoff, where five had landed
+       them on the stops). Faded over 0.5 so the neighbours at rest, one
+       place out, are still whole. */
+    const reach = lerp(1.5, (N - 1) / 2 + 0.75, fan * fan);   // the outer slabs arrive once the camera has stepped back
     for (let i = 0; i < N; i++) {
       const el = panels[i], m = memo[i];
       const d = i - f, ad = Math.abs(d);
-      let vis = clamp01((reach - ad) / 0.72);
+      let vis = clamp01((reach - ad) / lerp(0.5, 0.72, fan));
       const born = i === 0 ? ramp(open, 0.08, 0.66) : ramp(open, 0.34, 1);
       let on = smoother(clamp01(1 - ad * 1.08)) * ramp(born, 0.55, 1);
       on = Math.max(on, fan * 0.9);
@@ -488,7 +534,7 @@ export function initBay() {
     if (hold) readIdx = hold.to;
     else if (Math.abs(f - readIdx) > 0.62) readIdx = near;
     if (open < 0.5) { beat(-1); mark(-1); }
-    else if (fan > 0.5) { beat(N); mark(-1); }
+    else if (fan > 0.5) { beat(N); mark(N); }
     else { beat(readIdx); mark(readIdx); }
 
     /* a slab has landed: one pulse across the floor */

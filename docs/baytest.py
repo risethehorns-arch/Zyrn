@@ -101,21 +101,28 @@ async def main():
             await asyncio.sleep(1.0)
             s = await state()
             expect(s["live"], "the instrument is live", "")
+            # the room's stops are derived from how many slabs it holds, the
+            # way bay.js derives them — never typed, so a slab added to the
+            # markup moves every expectation below with it
+            N = int(await ev("document.querySelectorAll('.bay__p').length"))
+            last = await ev("(document.querySelector('.bay__p[data-i=\"%d\"]').getAttribute('href')||'').split('/').pop()" % (N - 1))
+            EDGE, RUN_A, RUN_B = 0.06, 0.105, 0.895
+            stop = lambda k: RUN_A + (RUN_B - RUN_A) * (EDGE + (1 - 2 * EDGE) / (N - 1) * k)
 
             # into the room: the HUD's own control, a real click
             await ev("window.__zyrnScrollTo((function(){var t=document.querySelector('#sigBay .sig__track'),y=0,n=t;while(n){y+=n.offsetTop;n=n.offsetParent}return y + 0.02*(t.offsetHeight-innerHeight)})(), 300)")
             await settle(1.2)
             await click('.bay__pip[data-go="0"]', "pip 01"); await settle()
             s = await state()
-            expect(s["pip"] == 0 and abs(s["p"] - 0.1524) < 0.012, "pip 01 brings slab 01 to the front", "p=%s %s" % (s["p"], s["step"]))
+            expect(s["pip"] == 0 and abs(s["p"] - stop(0)) < 0.012, "pip 01 brings slab 01 to the front", "p=%s %s" % (s["p"], s["step"]))
 
             await click('#bayNext', "next"); await settle()
             s = await state()
-            expect(s["pip"] == 1 and abs(s["p"] - 0.326) < 0.012, "next goes to slab 02", "p=%s %s" % (s["p"], s["step"]))
+            expect(s["pip"] == 1 and abs(s["p"] - stop(1)) < 0.012, "next goes to slab 02", "p=%s %s" % (s["p"], s["step"]))
 
             await key("ArrowRight", "ArrowRight", 39); await settle()
             s = await state()
-            expect(s["pip"] == 2 and abs(s["p"] - 0.5) < 0.012, "arrow right goes to slab 03", "p=%s %s" % (s["p"], s["step"]))
+            expect(s["pip"] == 2 and abs(s["p"] - stop(2)) < 0.012, "arrow right goes to slab 03", "p=%s %s" % (s["p"], s["step"]))
             await key("ArrowLeft", "ArrowLeft", 37); await settle()
             s = await state()
             expect(s["pip"] == 1, "arrow left goes back to slab 02", "p=%s" % s["p"])
@@ -144,24 +151,24 @@ async def main():
             s = await state()
             expect(s["href"] == "services.html" and s["pip"] == 3, "a drag to the left takes slab 04", "%s pip=%s" % (s["href"], s["pip"]))
 
-            # the closing view: all five, any of them reachable
+            # the closing view: every slab, any of them reachable
             await ev("window.__zyrnScrollTo((function(){var t=document.querySelector('#sigBay .sig__track'),y=0,n=t;while(n){y+=n.offsetTop;n=n.offsetParent}return y + 0.995*(t.offsetHeight-innerHeight)})(), 300)")
             await settle(1.6)
             s = await state()
-            expect(len(s["vis"]) == 5, "the closing view shows all five", str(s["vis"]))
+            expect(len(s["vis"]) == N, "the closing view shows all %d" % N, str(s["vis"]))
             hits = json.loads(await ev("""JSON.stringify([].slice.call(document.querySelectorAll('.bay__p')).map(function(e){
               var r=e.getBoundingClientRect(),h=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);return !!(h&&e.contains(h))}))"""))
             expect(all(hits), "every slab in the closing view takes the pointer at its centre", str(hits))
             expect(s["over"] <= 0, "no sideways scroll", str(s["over"]))
 
             # and the slab in front OPENS
-            await click('.bay__pip[data-go="4"]', "pip 05"); await settle()
-            await click('.bay__p[data-i="4"] .bay__t', "slab 05")
+            await click('.bay__pip[data-go="%d"]' % (N - 1), "pip %02d" % N); await settle()
+            await click('.bay__p[data-i="%d"] .bay__t' % (N - 1), "slab %02d" % N)
             for _ in range(40):
                 await asyncio.sleep(0.2)
                 h = await ev("location.pathname.split('/').pop()")
-                if h == "crm.html": break
-            expect(h == "crm.html", "the slab in front opens its page", str(h))
+                if h == last: break
+            expect(h == last, "the slab in front opens its page", str(h))
     finally:
         proc.kill()
     for l in dict.fromkeys(logs): print("  LOG", l)

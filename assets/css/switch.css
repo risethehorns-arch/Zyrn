@@ -1,0 +1,184 @@
+/* ══════════════════════════════════════════════════════════════════════
+   SIGNATURE · THE SWITCHBOARD   (services/bot-building.html — modules/switch.js)
+
+   Three lanes on the left, one bot in the middle, the firm's systems on
+   the right. Messages are type that moves; everything else is light.
+   Every size is a ratio of the rig or of the stage's own width. `--hc`
+   is the programme's channel, the stop its slab wears in THE BAY.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.swb{
+  --hc:214 206 255;
+  --lanes:0;--door:0;--sys:0;--hand:0;
+  --u:calc(var(--righ) / 100);
+  --mono:clamp(7.500px,calc(var(--righ) * 0.016),10.5px);
+}
+.swb .rig__view{perspective:calc(var(--righ) * 3)}
+.swb__scene{
+  position:absolute;inset:0;
+  transform-style:preserve-3d;
+  transform:rotateX(calc(var(--py,0) * -1.4deg)) rotateY(calc(var(--px,0) * 1.8deg + var(--lean,0) * 1.2deg));
+}
+
+/* ── the net ──────────────────────────────────────────────────────── */
+.swb__net{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.swb__net path{fill:none;stroke-linecap:round;stroke-dasharray:1}
+.swb__net .swb__in{stroke:rgb(var(--hc) / 0.55);stroke-width:1.2;stroke-dashoffset:calc(1 - var(--door))}
+.swb__net .swb__out{stroke:rgb(var(--hc) / 0.4);stroke-width:1;stroke-dashoffset:calc(1 - var(--sys))}
+.swb__net .swb__out--person{stroke:var(--vapor);stroke-dashoffset:calc(1 - var(--hand));stroke-width:1.3;filter:drop-shadow(0 0 4px rgb(var(--hc)))}
+
+/* ── the lanes ────────────────────────────────────────────────────── */
+.swb__lanes{position:absolute;inset:0;pointer-events:none}
+.swb__lane{
+  position:absolute;left:2%;width:24%;height:0;
+  opacity:var(--lanes);
+}
+.swb__lane--wa{top:20%}
+.swb__lane--tg{top:50%}
+.swb__lane--web{top:80%}
+/* the label sits ON the rail line, at its left end; the two messages of a
+   lane sit above and below the line */
+.swb__ll{
+  position:absolute;left:0;top:0;transform:translateY(-50%);
+  padding-right:8px;background:rgba(14,15,18,0.9);
+  font-size:var(--mono);letter-spacing:0.18em;color:rgba(242,243,245,0.5);
+  display:inline-flex;align-items:center;gap:6px;z-index:1;
+}
+.swb__ll::before{content:'';width:5px;height:5px;border-radius:50%;background:rgb(var(--hc));box-shadow:0 0 6px rgb(var(--hc))}
+.swb__rail{
+  position:absolute;left:0;right:0;top:0;height:1px;
+  background:rgba(242,243,245,0.14);transform:scaleX(var(--lanes));transform-origin:left;
+}
+
+/* ── the messages ─────────────────────────────────────────────────── */
+.swb__msgs{position:absolute;inset:0;pointer-events:none}
+.swb__m{
+  position:absolute;left:0;top:0;
+  width:calc(var(--u) * 30);max-width:22%;
+  padding:calc(var(--u) * 1.1) calc(var(--u) * 1.5);
+  border-radius:10px 10px 10px 3px;
+  border:1px solid rgba(242,243,245,0.16);background:rgba(14,15,18,0.88);
+  font-size:clamp(8.500px,calc(var(--righ) * 0.019),12px);line-height:1.35;color:var(--vapor);
+  will-change:transform;opacity:0;
+  box-shadow:0 0 0 0 rgb(var(--hc) / 0);
+  transition:border-color 300ms,box-shadow 300ms,background 300ms;
+}
+.swb__m--wa{border-left:2px solid #5FE3B0}
+.swb__m--tg{border-left:2px solid #33C9DE}
+.swb__m--web{border-left:2px solid #5E8CEC}
+.swb__m.is-queued{background:rgba(18,19,26,0.92);border-color:rgb(var(--hc) / 0.4);max-width:19%}
+/* once answered the question steps back and the reply leads, so two of
+   them fit in one lane */
+.swb__m.is-answered .swb__mt,.swb__m.is-handed .swb__mt{font-size:0.82em;color:rgba(242,243,245,0.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.swb__m.is-answered .swb__rep{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:14px}
+.swb__mt{display:block}
+.swb__tag{
+  position:absolute;right:calc(var(--u) * -1);top:calc(var(--u) * -1.2);
+  padding:2px 6px;border-radius:999px;font-style:normal;
+  font-size:calc(var(--mono) * 0.8);letter-spacing:0.16em;
+  background:rgb(var(--hc));color:#0E0F12;box-shadow:0 0 10px rgb(var(--hc) / 0.7);
+  transform:scale(0);transition:transform 320ms cubic-bezier(.2,.9,.2,1);
+}
+.swb__m.is-tagged .swb__tag{transform:scale(1)}
+.swb__m--hand .swb__tag{background:var(--vapor)}
+.swb__rep{
+  display:none;margin-top:5px;padding-top:5px;border-top:1px solid rgba(242,243,245,0.12);
+  color:rgba(242,243,245,0.74);
+}
+.swb__m.is-answered .swb__rep,.swb__m.is-handed .swb__rep{display:block}
+.swb__m.is-answered{border-color:rgb(var(--hc) / 0.6);box-shadow:0 0 18px -6px rgb(var(--hc))}
+.swb__m.is-handed{border-color:var(--vapor);box-shadow:0 0 22px -6px var(--vapor);background:rgba(20,21,30,0.96)}
+.swb__tick{
+  position:absolute;right:calc(var(--u) * 1.2);bottom:calc(var(--u) * 1);width:8px;height:5px;
+  border:0 solid rgb(var(--hc));border-width:0 0 1.5px 1.5px;transform:rotate(-45deg) scale(0);
+  transition:transform 260ms 120ms;
+}
+.swb__m.is-answered .swb__tick{transform:rotate(-45deg) scale(1)}
+
+/* ── the bot ──────────────────────────────────────────────────────── */
+.swb__hub{
+  position:absolute;left:50%;top:50%;
+  width:calc(var(--u) * 15);height:calc(var(--u) * 15);
+  margin:calc(var(--u) * -7.5) 0 0 calc(var(--u) * -7.5);
+  border-radius:50%;
+  border:1px solid rgb(var(--hc) / 0.5);
+  background:radial-gradient(closest-side, rgb(var(--hc) / 0.22), rgb(var(--hc) / 0.04) 70%, transparent);
+  box-shadow:0 0 calc(var(--u) * 6) rgb(var(--hc) / calc(0.5 * var(--door)));
+  opacity:calc(0.2 + 0.8 * var(--door));
+  transform:scale(calc(0.7 + 0.3 * var(--door)));
+}
+.swb__core{
+  position:absolute;left:50%;top:50%;width:calc(var(--u) * 3);height:calc(var(--u) * 3);
+  margin:calc(var(--u) * -1.5) 0 0 calc(var(--u) * -1.5);border-radius:50%;
+  background:#fff;box-shadow:0 0 10px #fff,0 0 24px rgb(var(--hc));
+  animation:swb-breathe 2.8s ease-in-out infinite;
+}
+@keyframes swb-breathe{50%{transform:scale(0.78);opacity:0.75}}
+.swb__hl{
+  position:absolute;left:50%;top:100%;transform:translate(-50%,calc(var(--u) * 1.2));
+  font-size:var(--mono);letter-spacing:0.2em;color:rgba(242,243,245,0.72);white-space:nowrap;
+}
+.swb__node{
+  position:absolute;white-space:nowrap;
+  font-size:calc(var(--mono) * 0.85);letter-spacing:0.16em;color:rgba(242,243,245,0.42);
+  padding:2px 6px;border:1px solid rgba(242,243,245,0.12);border-radius:3px;background:rgba(14,15,18,0.8);
+  transition:color 300ms,border-color 300ms,box-shadow 300ms,background 300ms;
+}
+.swb__node--read{left:50%;top:0;transform:translate(-50%,calc(-100% - var(--u) * 1.6))}
+.swb__node--look{left:100%;top:35%;transform:translate(calc(var(--u) * 1.4),-50%)}
+.swb__node--ans{left:0;top:65%;transform:translate(calc(-100% - var(--u) * 1.4),-50%)}
+.swb__node--hand{left:100%;top:72%;transform:translate(calc(var(--u) * 1.4),-50%)}
+.swb__node.is-on{color:#0E0F12;background:rgb(var(--hc));border-color:rgb(var(--hc));box-shadow:0 0 14px rgb(var(--hc) / 0.8)}
+.swb__node--hand.is-on{background:var(--vapor);border-color:var(--vapor);box-shadow:0 0 14px rgba(242,243,245,0.6)}
+
+/* ── the firm's systems ───────────────────────────────────────────── */
+.swb__sys{position:absolute;inset:0;pointer-events:none}
+.swb__s{
+  position:absolute;left:80%;width:19%;
+  padding:calc(var(--u) * 1.1) calc(var(--u) * 1.3);
+  border:1px solid rgba(242,243,245,0.14);border-radius:6px;background:rgba(12,13,18,0.86);
+  transform:translateY(-50%);
+  opacity:var(--sys);
+  transition:border-color 300ms,box-shadow 300ms;
+}
+.swb__s--cal{top:16%}
+.swb__s--desk{top:40%}
+.swb__s--orders{top:62%}
+.swb__s--person{top:86%;opacity:var(--hand);border-color:rgba(242,243,245,0.3)}
+.swb__sn{display:block;font-size:var(--mono);letter-spacing:0.18em;color:rgba(242,243,245,0.72)}
+.swb__sv{
+  display:block;margin-top:3px;font-size:calc(var(--mono) * 0.85);letter-spacing:0.1em;
+  color:rgb(var(--hc));opacity:0;transform:translateY(3px);transition:opacity 300ms,transform 300ms;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.swb__s.is-found .swb__sv{opacity:1;transform:none}
+.swb__s.is-lit{border-color:rgb(var(--hc));box-shadow:0 0 18px -4px rgb(var(--hc))}
+.swb__s--person.is-lit,.swb__s--person.is-found{border-color:var(--vapor);box-shadow:0 0 22px -4px rgba(242,243,245,0.7)}
+.swb__s--person .swb__sv{color:var(--vapor)}
+
+/* ── the lookups travelling ───────────────────────────────────────── */
+.swb__pks{position:absolute;inset:0;pointer-events:none}
+.swb__pk{
+  position:absolute;left:0;top:0;width:calc(var(--u) * 1.8);height:calc(var(--u) * 1.8);
+  margin:calc(var(--u) * -0.9) 0 0 calc(var(--u) * -0.9);border-radius:50%;
+  background:#fff;box-shadow:0 0 6px #fff,0 0 16px rgb(var(--hc));
+  transform:scale(0);will-change:transform;
+}
+
+.swb__auth{
+  position:absolute;left:0;right:0;bottom:0.4%;text-align:right;
+  font-size:calc(var(--mono) * 0.85);letter-spacing:0.16em;color:rgba(242,243,245,0.36);
+  pointer-events:none;
+}
+.sig--swb .rig__key li.is-on{box-shadow:inset 2px 0 0 rgb(214 206 255)}
+
+@media (max-width:900px){
+  .swb__m{width:calc(var(--u) * 34);max-width:26%;font-size:clamp(8px,calc(var(--righ) * 0.018),11px)}
+  .swb__m.is-queued{max-width:22%}
+  .swb__s{width:20%;left:79%}
+  .swb__hub{width:calc(var(--u) * 12);height:calc(var(--u) * 12);margin:calc(var(--u) * -6) 0 0 calc(var(--u) * -6)}
+  .swb__node--look,.swb__node--hand{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .swb__core{animation:none}
+}

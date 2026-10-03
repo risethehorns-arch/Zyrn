@@ -110,6 +110,62 @@ const VIZ = {
     main: 'M92 42 H120 M112 34 L124 42 L112 50',
     lit: [124, 42],
   }),
+
+  /* ── the two agent programmes (2026-10-03) ─────────────────────── */
+  /* a console: a prompt, lines typed under it, the cursor */
+  console: () => ({
+    extra: 'M18 12 H202 V72 H18 Z M18 24 H202',
+    main: 'M30 38 H40 M46 38 H110 M46 50 H86 M46 62 H132 M138 62 V68',
+    lit: [138, 65],
+  }),
+  /* the relay: a machine, a hand, and the private link between them */
+  relay: () => ({
+    extra: 'M22 20 H110 V62 H22 Z M30 68 H102 M156 16 H190 V70 H156 Z M168 62 H178',
+    main: 'M110 40 C128 40 136 32 156 32',
+    lit: [156, 32],
+  }),
+  /* a brief: one line that carries three things */
+  brief: () => ({
+    extra: 'M26 18 H194 V66 H26 Z',
+    main: 'M40 34 H78 M86 34 H124 M132 34 H176 M40 50 H110',
+    lit: [176, 34],
+  }),
+  /* deploy: from the machine, through a check, out — and a way back */
+  deploy: () => ({
+    extra: 'M20 30 H64 V58 H20 Z M100 36 L116 44 L100 52 M156 30 H200 V58 H156 Z',
+    main: 'M64 44 H96 M120 44 H156 M156 64 C120 76 84 76 64 64',
+    lit: [108, 44],
+  }),
+  /* three lanes into one door */
+  lanes: () => ({
+    extra: 'M18 22 H60 M18 42 H60 M18 62 H60',
+    main: 'M60 22 C96 22 100 42 128 42 M60 42 H128 M60 62 C96 62 100 42 128 42 M128 42 H194',
+    lit: [128, 42],
+  }),
+  /* intent: a message read, a label put on it */
+  intent: () => ({
+    extra: 'M18 26 H118 V58 H18 Z',
+    main: 'M30 38 H84 M30 48 H64 M118 42 H150 M150 30 H198 V54 H150 Z',
+    lit: [150, 42],
+  }),
+  /* the hub: in, looked up, out */
+  hub: () => ({
+    extra: 'M18 42 H74 M146 20 H202 M146 42 H202 M146 64 H202',
+    main: 'M110 42 m-16 0 a16 16 0 1 0 32 0 a16 16 0 1 0 -32 0 M126 42 C136 42 136 20 146 20 M126 42 H146 M126 42 C136 42 136 64 146 64',
+    lit: [110, 42],
+  }),
+  /* the voice: the firm's phrases, and the ones it refuses */
+  reply: () => ({
+    extra: 'M18 18 H202 M18 66 H202',
+    main: 'M30 34 H120 M30 48 H90 M140 34 H190 M140 48 L190 48 M146 42 L184 54',
+    lit: [120, 34],
+  }),
+  /* hand-over: the thread goes to a person, whole */
+  handoff: () => ({
+    extra: 'M18 22 H100 V62 H18 Z M30 32 H88 M30 42 H70 M30 52 H80',
+    main: 'M100 42 H150 M142 34 L154 42 L142 50 M168 30 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0 M160 62 C160 46 192 46 192 62',
+    lit: [154, 42],
+  }),
 };
 
 function range(n) { const a = []; for (let i = 0; i < n; i++) a.push(i); return a; }

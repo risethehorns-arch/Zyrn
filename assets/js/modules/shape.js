@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════════════════════════════════════
-   THE SHAPE   (all five service pages — "Shape it to your firm")
+   THE SHAPE   (all seven service pages — "Shape it to your firm")
 
    Owner-requested, 2026-09-01: "each of those 5 services … the user can
    choose or drag … and the service will shape itself to fit the user's
@@ -19,7 +19,7 @@
    which is the firm's own offer to describe.
 
    ── MECHANICS ───────────────────────────────────────────────────────
-   One module, five authored configurations, injected into a
+   One module, seven authored configurations, injected into a
    `.shape[data-shape]` placeholder. Chips are real radiogroups (roving
    tabindex, arrow keys); the drag is a real slider (pointer capture,
    live snap while dragging, arrows/Home/End). Every recomposition is
@@ -429,6 +429,134 @@ const CFG = {
         ['OBJECTS', ['LISTINGS · VIEWINGS · DEALS', 'MATTERS · TASKS · INVOICES', 'ORDERS · STOCK · SHIPMENTS'][s.trade]],
         ['THE FEED', ['ONE-WAY FROM THE SHEET', 'MIGRATED ONCE, RECONCILED', 'CAPTURED DURING BUILD'][s.source]],
         ['ACCESS', ['ONE DESK · FULL VIEW', 'SEATS · SHARED VIEW', 'ROLES · ENFORCED AT THE DATA'][s.team]],
+      ];
+    },
+  },
+
+  /* ── AI AGENT TRAINING (2026-10-03) ──────────────────────────────── */
+  agent: {
+    service: 'AGENT TRAINING',
+    q: [
+      { k: 'who', label: 'WHO IS TRAINED', type: 'chips', def: 0, opts: [
+        { v: 'ONE OPERATOR', t: 'One operator', h: 'The person who will run it, at their own desk.' },
+        { v: 'A TEAM', t: 'A team', h: 'One machine each, one shared way of briefing.' },
+        { v: 'THE WHOLE FIRM', t: 'The whole firm', h: 'Operators first; everyone else learns to brief them.' },
+      ]},
+      { k: 'leash', label: 'HOW FAR IT MAY ACT ALONE', type: 'slider', def: 1, opts: [
+        { v: 'ASKS FOR EVERYTHING', t: 'Asks for everything' },
+        { v: 'ASKS BEFORE CHANGES', t: 'Asks before changes' },
+        { v: 'ASKS BEFORE SHIPPING', t: 'Asks before shipping' },
+      ]},
+      { k: 'runs', label: 'WHERE IT RUNS', type: 'chips', def: 0, opts: [
+        { v: 'YOUR MACHINE', t: 'Your machine', h: 'Installed where you sit. Nothing leaves it.' },
+        { v: 'A MACHINE WE SET UP', t: 'A machine we set up', h: 'A desk machine in your office, in your name.' },
+        { v: 'A SERVER YOU OWN', t: 'A server you own', h: 'Always on; reached only over your private link.' },
+      ]},
+    ],
+    fig(s) {
+      const o = [];
+      /* the machine, the hand, the link — always the subject */
+      const mx = 70, my = 120, mw = 200, mh = 140;
+      o.push(G(bx(mx, my, mw, mh) + ln(mx + 30, my + mh + 16, mx + mw - 30, my + mh + 16)));
+      o.push(T(mx + mw / 2, my + mh + 36, ['YOUR MACHINE', 'A MACHINE WE SET UP', 'A SERVER YOU OWN'][s.runs], 'sh__tc'));
+      if (s.runs === 2) { o.push(P(rows3(mx + 20, my + 24, mw - 40, 22, 5), 'sh__thin')); }
+      else { o.push(P(bx(mx + 16, my + 16, mw - 32, mh - 32), 'sh__thin')); o.push(P(rows3(mx + 30, my + 40, 70, 18, 4), 'sh__thin')); }
+      /* the hand */
+      const px2 = 430, py2 = 128, pw = 72, ph = 132;
+      o.push(P(bx(px2, py2, pw, ph), 'sh__strong'));
+      o.push(P(ln(px2 + 26, py2 + ph - 12, px2 + 46, py2 + ph - 12), 'sh__thin'));
+      o.push(T(px2 + pw / 2, py2 + ph + 24, 'YOUR HAND · ANYWHERE', 'sh__tc'));
+      /* the private link */
+      o.push(P('M' + (mx + mw) + ' ' + (my + 60) + ' C' + (mx + mw + 60) + ' ' + (my + 60) + ' ' + (px2 - 60) + ' ' + (py2 + 40) + ' ' + px2 + ' ' + (py2 + 40), 'sh__strong'));
+      o.push(T(350, my + 36, 'PRIVATE LINK', 'sh__tc'));
+      let lit = [px2, py2 + 40];
+      /* who is trained: operators at the machine */
+      const ops = [1, 3, 6][s.who];
+      for (let i = 0; i < ops; i++) o.push(D(mx + 24 + (i % 3) * 22, my - 22 - Math.floor(i / 3) * 20, 'w' + i));
+      o.push(T(mx + 24 + Math.min(ops, 3) * 11 - 11, my - 48 - (ops > 3 ? 20 : 0), ['01 OPERATOR', '03 OPERATORS', '06 OPERATORS · ALL BRIEF'][s.who], 'sh__tc'));
+      if (s.last === 'who') lit = [mx + 24, my - 22];
+      /* the leash: where the gates sit */
+      const gy = my + mh + 70;
+      const gates = [['READ', 'EDIT', 'SHIP'], ['READ', 'EDIT', 'SHIP'], ['READ', 'EDIT', 'SHIP']][0];
+      gates.forEach((g, i) => {
+        const gx = 120 + i * 150;
+        const asks = s.leash === 0 ? true : s.leash === 1 ? i >= 1 : i >= 2;
+        o.push(P(bx(gx - 34, gy - 12, 68, 24), asks ? 'sh__strong' : 'sh__dash'));
+        o.push(T(gx, gy + 4, g + (asks ? ' · ASKS' : ' · ALONE'), 'sh__tc'));
+      });
+      o.push(T(60, gy + 4, 'GATES', 'sh__tl'));
+      if (s.last === 'leash') lit = [120 + (s.leash === 0 ? 0 : s.leash === 1 ? 1 : 2) * 150, gy - 12];
+      if (s.last === 'runs') lit = [mx + mw / 2, my + mh];
+      return { o, lit };
+    },
+    man(s) {
+      return [
+        ['OPERATORS', ['01 · THEIR OWN DESK', '03 · ONE MACHINE EACH', 'OPERATORS + EVERYONE BRIEFS'][s.who]],
+        ['THE GATE', ['EVERY ACTION', 'EVERY CHANGE', 'SHIPPING ONLY'][s.leash]],
+        ['RUNS ON', ['YOUR MACHINE · LOCAL', 'A DESK MACHINE · YOURS', 'YOUR SERVER · PRIVATE LINK'][s.runs]],
+      ];
+    },
+  },
+
+  /* ── BOT BUILDING (2026-10-03) ───────────────────────────────────── */
+  bot: {
+    service: 'BOT',
+    q: [
+      { k: 'where', label: 'WHERE IT ANSWERS', type: 'chips', def: 2, opts: [
+        { v: 'WHATSAPP', t: 'WhatsApp', h: 'Where most of your messages already are.' },
+        { v: 'THE SITE', t: 'The site', h: 'A chat on your own pages, in your voice.' },
+        { v: 'EVERY CHANNEL', t: 'Every channel', h: 'One bot, one memory, every lane.' },
+      ]},
+      { k: 'alone', label: 'WHAT IT MAY DO ALONE', type: 'slider', def: 1, opts: [
+        { v: 'ANSWER', t: 'Answer' },
+        { v: 'LOOK UP AND BOOK', t: 'Look up & book' },
+        { v: 'TAKE PAYMENT', t: 'Take payment' },
+      ]},
+      { k: 'hand', label: 'WHO IT HANDS TO', type: 'chips', def: 0, opts: [
+        { v: 'ONE PERSON', t: 'One person', h: 'A named phone that rings when the bot stops.' },
+        { v: 'A ROTA', t: 'A rota', h: 'Whoever is on, with the thread attached.' },
+        { v: 'THE DESK', t: 'The desk', h: 'Into the CRM, as a record with the thread on it.' },
+      ]},
+    ],
+    fig(s) {
+      const o = [];
+      const hx = 280, hy = 200;
+      /* the lanes in */
+      const lanes = s.where === 0 ? ['WHATSAPP'] : s.where === 1 ? ['THE SITE'] : ['WHATSAPP', 'TELEGRAM', 'THE SITE'];
+      const ys = lanes.length === 1 ? [hy] : [hy - 70, hy, hy + 70];
+      lanes.forEach((l, i) => {
+        o.push(P(ln(60, ys[i], 150, ys[i]) + 'M150 ' + ys[i] + ' C200 ' + ys[i] + ' 200 ' + hy + ' ' + (hx - 34) + ' ' + hy));
+        o.push(T(60, ys[i] - 10, l, 'sh__tl'));
+      });
+      let lit = [hx - 34, hy];
+      /* the bot */
+      o.push(P('M' + hx + ' ' + hy + ' m-34 0 a34 34 0 1 0 68 0 a34 34 0 1 0 -68 0', 'sh__strong'));
+      o.push(T(hx, hy + 4, 'THE BOT', 'sh__tc'));
+      /* what it may do alone: the systems it reaches */
+      const sys = [['ANSWERS'], ['CALENDAR', 'THE DESK'], ['CALENDAR', 'THE DESK', 'PAYMENT']][s.alone];
+      const sy = sys.length === 1 ? [hy - 60] : sys.length === 2 ? [hy - 70, hy - 10] : [hy - 90, hy - 40, hy + 10];
+      sys.forEach((t, i) => {
+        o.push(P(bx(400, sy[i] - 12, 100, 24), i === 2 ? 'sh__strong' : ''));
+        o.push(T(450, sy[i] + 4, t, 'sh__tc'));
+        o.push(P('M' + (hx + 34) + ' ' + hy + ' C370 ' + hy + ' 370 ' + sy[i] + ' 400 ' + sy[i], 'sh__thin'));
+      });
+      if (s.last === 'alone') lit = [400, sy[sy.length - 1]];
+      /* who it hands to */
+      const hy2 = hy + 100;
+      if (s.hand === 0) { o.push(D(450, hy2, 'h0')); o.push(T(450, hy2 + 22, 'ONE PERSON · NAMED', 'sh__tc')); }
+      if (s.hand === 1) { for (let i = 0; i < 3; i++) o.push(D(432 + i * 18, hy2, 'h' + i)); o.push(T(450, hy2 + 22, 'A ROTA · WHOEVER IS ON', 'sh__tc')); }
+      if (s.hand === 2) { o.push(P(bx(410, hy2 - 16, 80, 32) + rows3(420, hy2 - 6, 60, 8, 3), 'sh__thin')); o.push(T(450, hy2 + 34, 'THE DESK · AS A RECORD', 'sh__tc')); }
+      o.push(P('M' + (hx + 34) + ' ' + hy + ' C370 ' + hy + ' 370 ' + hy2 + ' ' + (s.hand === 2 ? 410 : 420) + ' ' + hy2, 'sh__strong'));
+      o.push(T(368, hy2 - 10, 'HAND OVER · THREAD ATTACHED', 'sh__tc'));
+      if (s.last === 'hand') lit = [s.hand === 2 ? 410 : 420, hy2];
+      if (s.last === 'where') lit = [150, ys[0]];
+      return { o, lit };
+    },
+    man(s) {
+      return [
+        ['CHANNELS', ['WHATSAPP · 01 LANE', 'THE SITE · 01 LANE', 'WHATSAPP · TELEGRAM · SITE'][s.where]],
+        ['ALONE', ['ANSWERS ONLY', 'LOOKS UP · BOOKS', 'LOOKS UP · BOOKS · TAKES PAYMENT'][s.alone]],
+        ['HANDS TO', ['ONE NAMED PERSON', 'A ROTA · THREAD ATTACHED', 'THE DESK · AS A RECORD'][s.hand]],
       ];
     },
   },
