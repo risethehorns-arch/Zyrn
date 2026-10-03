@@ -58,6 +58,7 @@
 <link rel="stylesheet" href="assets/css/footer.css?v=87d64ba6">
 <link rel="stylesheet" href="assets/css/cmdk.css?v=2b54249d">
 <link rel="stylesheet" href="assets/css/intro.css?v=b48db03d">
+<link rel="stylesheet" href="assets/css/interlude.css?v=49113db1">
 
 </head>
 <body>
@@ -227,8 +228,32 @@
       </dl>
     </section>
 
-    <!-- scrub runway — do not remove -->
-    <div class="runway" aria-hidden="true"></div>
+    <!-- ── INTERLUDE · THE FOLD — scroll (2026-10-03) ─────────────────
+         The interludes replace the four runways and the scrub runway at the
+         owner's direction: the beats between scenes were empty bands of
+         field. assets/css/interlude.css + assets/js/interludes.js. -->
+    <aside class="ilude" data-ilude="fold" aria-labelledby="ilFoldT">
+        <header class="ilude__head">
+          <span class="mono ilude__k">04 · AUTOMATE</span>
+          <h2 class="ilude__t" id="ilFoldT">Seven steps by hand. <em>One of them still needs a person.</em></h2>
+          <span class="mono ilude__hint" aria-hidden="true">SCROLL</span>
+        </header>
+        <div class="fold" data-keepout>
+          <div class="fold__pipe" aria-hidden="true"><i class="fold__beam"></i><i class="fold__pk"></i></div>
+          <span class="mono fold__end fold__end--a" aria-hidden="true">OFFER IN</span>
+          <span class="mono fold__end fold__end--b" aria-hidden="true">LOGGED</span>
+          <ol class="fold__steps">
+            <li class="fold__s"><span class="mono fold__i">01</span><span class="fold__n">An offer arrives by email</span></li>
+            <li class="fold__s"><span class="mono fold__i">02</span><span class="fold__n">Copy the figures out</span></li>
+            <li class="fold__s"><span class="mono fold__i">03</span><span class="fold__n">Paste them into the sheet</span></li>
+            <li class="fold__s"><span class="mono fold__i">04</span><span class="fold__n">Check it against the listing</span></li>
+            <li class="fold__s fold__s--keep"><span class="mono fold__i">05</span><span class="fold__n">Approve or counter</span><span class="mono fold__who">A PERSON</span></li>
+            <li class="fold__s"><span class="mono fold__i">06</span><span class="fold__n">Write the reply</span></li>
+            <li class="fold__s"><span class="mono fold__i">07</span><span class="fold__n">Log it in the desk</span></li>
+          </ol>
+          <div class="fold__count"><span class="mono">STEPS BY HAND</span><b class="fold__num">07</b></div>
+        </div>
+    </aside>
 
     <!-- ── SYS.02 · capability ──────────────────────────────────────── -->
     <section class="section section--cap" id="sys-02" data-screen-label="Capability" data-sys-section="02">
@@ -291,7 +316,26 @@
       </div>
     </section>
 
-    <div class="runway runway--short" aria-hidden="true"></div>
+    <!-- ── INTERLUDE · THE RIVER — hover ─────────────────────────────── -->
+    <aside class="ilude" data-ilude="river" aria-labelledby="ilRiverT">
+        <header class="ilude__head">
+          <span class="mono ilude__k">07 · BOTS</span>
+          <h2 class="ilude__t" id="ilRiverT">Every channel, one bot. <em>It answers, and knows when to stop.</em></h2>
+          <span class="mono ilude__hint" aria-hidden="true">HOVER TO SLOW</span>
+        </header>
+        <div class="river" data-keepout>
+          <div class="river__lanes" aria-hidden="true">
+            <div class="river__lane river__lane--wa"><span class="mono river__ll">WHATSAPP</span></div>
+            <div class="river__lane river__lane--tg"><span class="mono river__ll">TELEGRAM</span></div>
+            <div class="river__lane river__lane--web"><span class="mono river__ll">WEB CHAT</span></div>
+          </div>
+          <div class="river__chips" aria-hidden="true"></div>
+          <div class="river__seam" aria-hidden="true"><i class="river__core"></i><span class="mono river__sl">THE BOT</span></div>
+          <span class="mono river__person" aria-hidden="true">A PERSON</span>
+          <p class="il-sr">Messages from WhatsApp, Telegram and web chat pass through one bot, which answers each in the channel it came from and hands anyone who asks for a person to a person, with the thread attached.</p>
+        </div>
+        <span class="mono ilude__cap">Authored demonstration &mdash; a bot we would build, not a recording</span>
+    </aside>
 
     <!-- ── SYS.03 · service lines ───────────────────────────────────── -->
     <section class="section" id="sys-03" data-screen-label="Service lines" data-sys-section="03">
@@ -391,7 +435,31 @@
       </div>
     </section>
 
-    <div class="runway runway--short" aria-hidden="true"></div>
+    <!-- ── INTERLUDE · THE GATE — press ──────────────────────────────── -->
+    <aside class="ilude" data-ilude="gate" aria-labelledby="ilGateT">
+        <header class="ilude__head">
+          <span class="mono ilude__k">06 · AGENTS</span>
+          <h2 class="ilude__t" id="ilGateT">It does the work. <em>You hold the gate.</em></h2>
+          <span class="mono ilude__hint" aria-hidden="true">ALLOW OR HOLD</span>
+        </header>
+        <div class="gate" data-keepout>
+          <div class="gate__con">
+            <div class="mono gate__bar"><span class="gate__dot" aria-hidden="true"></span>THE AGENT &middot; YOUR MACHINE<span class="gate__task">TASK 00</span></div>
+            <div class="gate__log" aria-live="polite"></div>
+          </div>
+          <div class="gate__ctl">
+            <span class="mono" style="color:rgba(242,243,245,0.55)">THE GATE &middot; YOUR PHONE</span>
+            <p class="gate__ask">&nbsp;</p>
+            <div class="gate__keys">
+              <button type="button" class="gate__key gate__key--ok" disabled>ALLOW</button>
+              <button type="button" class="gate__key gate__key--hold" disabled>HOLD</button>
+            </div>
+            <div class="mono gate__tally"><span>You approved <b class="gate__a">00</b></span><span>Held <b class="gate__h">00</b></span></div>
+            <span class="gate__ring" aria-hidden="true"></span>
+          </div>
+        </div>
+        <span class="mono ilude__cap">Authored tasks &mdash; the waiting is real: nothing moves until you press</span>
+    </aside>
 
     <!-- ── IN PRODUCTION ────────────────────────────────────────────────
          The band the nav's "In production" tab points at. FOUR cards as of
@@ -596,7 +664,40 @@
       </div>
     </section>
 
-    <div class="runway runway--short" aria-hidden="true"></div>
+    <!-- ── INTERLUDE · THE INDEX — drag ──────────────────────────────── -->
+    <aside class="ilude" data-ilude="rdx" aria-labelledby="ilRdxT">
+        <header class="ilude__head">
+          <span class="mono ilude__k">04 · READINESS</span>
+          <h2 class="ilude__t" id="ilRdxT">Drag the firm. <em>The index takes the lowest.</em></h2>
+          <span class="mono ilude__hint" aria-hidden="true">DRAG A COLUMN</span>
+        </header>
+        <div class="rdx" data-keepout>
+          <div class="rdx__plot">
+            <div class="rdx__grid" aria-hidden="true">
+              <i class="rdx__gl" style="bottom:0%"><span class="mono">00</span></i>
+              <i class="rdx__gl" style="bottom:25%"><span class="mono">01</span></i>
+              <i class="rdx__gl" style="bottom:50%"><span class="mono">02</span></i>
+              <i class="rdx__gl" style="bottom:75%"><span class="mono">03</span></i>
+              <i class="rdx__gl" style="bottom:100%"><span class="mono">04</span></i>
+            </div>
+            <div class="rdx__cols">
+              <div class="rdx__col" style="--c:var(--teal)"><div class="rdx__bar"><i class="rdx__fill"></i></div><button type="button" class="rdx__knob" role="slider" aria-label="Strategy" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"></button><span class="mono rdx__name"><span class="rdx__nl">STRATEGY</span><span class="rdx__ns" aria-hidden="true">STRAT</span></span></div>
+              <div class="rdx__col" style="--c:var(--cyan)"><div class="rdx__bar"><i class="rdx__fill"></i></div><button type="button" class="rdx__knob" role="slider" aria-label="Workforce" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"></button><span class="mono rdx__name"><span class="rdx__nl">WORKFORCE</span><span class="rdx__ns" aria-hidden="true">PEOPLE</span></span></div>
+              <div class="rdx__col" style="--c:var(--blue)"><div class="rdx__bar"><i class="rdx__fill"></i></div><button type="button" class="rdx__knob" role="slider" aria-label="Workflow" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"></button><span class="mono rdx__name"><span class="rdx__nl">WORKFLOW</span><span class="rdx__ns" aria-hidden="true">FLOW</span></span></div>
+              <div class="rdx__col" style="--c:var(--vio)"><div class="rdx__bar"><i class="rdx__fill"></i></div><button type="button" class="rdx__knob" role="slider" aria-label="Governance" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"></button><span class="mono rdx__name"><span class="rdx__nl">GOVERNANCE</span><span class="rdx__ns" aria-hidden="true">GOV</span></span></div>
+              <div class="rdx__col" style="--c:var(--lav)"><div class="rdx__bar"><i class="rdx__fill"></i></div><button type="button" class="rdx__knob" role="slider" aria-label="Data" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"></button><span class="mono rdx__name"><span class="rdx__nl">DATA</span><span class="rdx__ns" aria-hidden="true">DATA</span></span></div>
+            </div>
+            <div class="rdx__plane" aria-hidden="true"><span class="mono rdx__pl">THE INDEX</span></div>
+          </div>
+          <div class="rdx__read" aria-live="polite">
+            <span class="mono rdx__k">Readiness index</span>
+            <span class="rdx__v">00.0</span>
+            <span class="rdx__lv">Level 00 &mdash; Exploratory</span>
+            <span class="mono rdx__mean">The mean <b>00.0</b> &mdash; never the index</span>
+            <p class="rdx__why">A firm can only go as far as its weakest dimension allows.</p>
+          </div>
+        </div>
+    </aside>
 
     <!-- ── SYS.04 · readiness index ─────────────────────────────────── -->
     <section class="section" id="sys-04" data-screen-label="Readiness index" data-sys-section="04">
@@ -643,7 +744,28 @@
       </p>
     </section>
 
-    <div class="runway runway--short" aria-hidden="true"></div>
+    <!-- ── INTERLUDE · THE NIGHT SHIFT — scrub ───────────────────────── -->
+    <aside class="ilude" data-ilude="night" aria-labelledby="ilNightT">
+        <header class="ilude__head">
+          <span class="mono ilude__k">THE SYSTEM · 24H</span>
+          <h2 class="ilude__t" id="ilNightT">Your people sleep. The bot doesn&rsquo;t. <em>The agent waits for morning.</em></h2>
+          <span class="mono ilude__hint" aria-hidden="true">DRAG THE CLOCK</span>
+        </header>
+        <div class="night" data-keepout>
+          <div class="night__dial">
+            <div class="night__sweep" aria-hidden="true"></div>
+            <svg class="night__svg" viewBox="0 0 400 400" role="img" aria-label="A 24-hour clock set to the time in Amman"></svg>
+            <div class="night__c" aria-live="off"><span class="night__time">00:00</span><span class="mono night__st">&nbsp;</span></div>
+          </div>
+          <ul class="night__leg">
+            <li class="night__li"><i class="night__d night__d--bot"></i><span class="night__lt">The bot answers, all the way round</span><span class="mono night__lv night__b">&nbsp;</span></li>
+            <li class="night__li"><i class="night__d night__d--ag"></i><span class="night__lt">Agent work done at night waits at the gate</span><span class="mono night__lv night__q">&nbsp;</span></li>
+            <li class="night__li"><i class="night__d night__d--you"></i><span class="night__lt">A person approves it in the morning</span><span class="mono night__lv night__y">&nbsp;</span></li>
+            <li><button type="button" class="night__back">Back to now</button></li>
+          </ul>
+        </div>
+        <span class="mono ilude__cap">The clock is Amman&rsquo;s. The day on it is an authored demonstration.</span>
+    </aside>
 
     <!-- ── SYS.05 · access ──────────────────────────────────────────── -->
     <section class="section" id="sys-05" data-screen-label="Access" data-sys-section="05">
@@ -764,12 +886,13 @@
   </main>
 </div>
 
-<script src="assets/js/main.js?v=5074e7c7"></script>
+<script src="assets/js/main.js?v=3a770691"></script>
 <script src="assets/js/ui.js?v=68d24e49"></script>
 <script src="assets/js/nav.js?v=193af980"></script>
 <script src="assets/js/cmdk.js?v=3c6e3d57"></script>
 <script src="assets/js/footer.js?v=bac1aa7c"></script>
 <script src="assets/js/axent.js?v=95c663ca"></script>
+<script src="assets/js/interludes.js?v=af98430d"></script>
 
 <script type="module">
 /* SYS.01 → SYS.05 mapped onto the field's states. The page now OPENS on the
@@ -790,21 +913,22 @@ const sCount  = document.getElementById('sCount');
 const pad = n => { const s = String(n).padStart(6, '0'); return s.slice(0, -3) + ',' + s.slice(-3); };
 
 initField({
-  // Anchored to where the scenes actually sit. RE-MEASURED 2026-10-03, twice:
-  // when SYS.03 went from five rows to seven, and again the same day when it
-  // became the focus tiles (04 / 06 / 07) over the core's four rows — the
-  // tiles left desktop where it was and moved the phone by up to 0.024. Measured with docs/anchor.py —
+  // Anchored to where the scenes actually sit. RE-MEASURED 2026-10-03, three
+  // times: SYS.03 went from five rows to seven; it became the focus tiles
+  // over the core's four rows; and the five runways became the INTERLUDES
+  // (assets/js/interludes.js), which are content rather than spacing and
+  // moved every scene after the hero by up to 0.03. Measured with docs/anchor.py —
   // offsetTop/offsetHeight, never getBoundingClientRect (the rect includes
   // the reveal transforms) — section centres as scroll progress, desktop
   // 1440x900 / phone 390x844:
   //
-  //   SYS.01 0.062 / 0.045   SYS.02 0.223 / 0.178   SYS.03 0.414 / 0.381
-  //   PROD   0.652 / 0.637   SYS.04 0.845 / 0.817   SYS.05 0.991 / 0.925
+  //   SYS.01 0.049 / 0.036   SYS.02 0.197 / 0.172   SYS.03 0.389 / 0.364
+  //   PROD   0.618 / 0.612   SYS.04 0.817 / 0.799   SYS.05 0.993 / 0.940
   //
-  // The two widths agree within 0.066 at worst. The stops below are the
+  // The two widths agree within 0.053 at worst. The stops below are the
   // mean, biased so each morph COMPLETES just before its section reaches the
   // viewport centre rather than while it is still arriving. Previous values:
-  // seven rows 0.20 / 0.37 / 0.72 / 0.82; five rows (2026-08-30)
+  // focus tiles over runways 0.20 / 0.38 / 0.73 / 0.83; seven rows 0.20 / 0.37 / 0.72 / 0.82; five rows (2026-08-30)
   // 0.22 / 0.36 / 0.70 / 0.82; before that, for
   // the three-card band, 0.22 / 0.35 / 0.62 / 0.74.
   //
@@ -813,12 +937,12 @@ initField({
   // number of cards in the band.
   program: [
     { at: 0.00, form: 'S3' },   // SYS.01 hero — the operating core, at rest
-    { at: 0.20, form: 'S3' },   // SYS.02 "Built once. Runs itself." — it holds
-    { at: 0.38, form: 'S1' },   // SYS.03 — the core opens into four arms,
-    { at: 0.73, form: 'S1' },   //          and STAYS open across the "In
+    { at: 0.18, form: 'S3' },   // SYS.02 "Built once. Runs itself." — it holds
+    { at: 0.36, form: 'S1' },   // SYS.03 — the core opens into four arms,
+    { at: 0.70, form: 'S1' },   //          and STAYS open across the "In
                                 //          production" band, because that
                                 //          band is those same lines running
-    { at: 0.83, form: 'S3' },   // SYS.04 readiness — the ladder climbs back
+    { at: 0.81, form: 'S3' },   // SYS.04 readiness — the ladder climbs back
     { at: 1.00, form: 'S4' },   // SYS.05 access — released
   ],
   onState: (p, name) => { if (roState) roState.textContent = name; },

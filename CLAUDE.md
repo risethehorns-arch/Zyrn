@@ -193,7 +193,9 @@ Mono labels are always `11px / uppercase / tracking 0.16em / Steel`.
   SYS.02 changed. Re-measure at 1440x900 AND 390x844 and take the mean —
   do not nudge by eye. The comment above `program:` in `index.html` carries
   the current measurements.
-- Do not remove the `.runway` spacers — they are the beat between scenes, where
+- **On `index.html` the `.runway` spacers are now the INTERLUDES** (owner,
+  2026-10-03 — see the section at the end). Elsewhere: do not remove the
+  `.runway` spacers — they are the beat between scenes, where
   only the field is on screen. Do not inflate them either: at the spec's
   `80vh + 3x55vh` they were 1973px of a 6204px page, so a third of the site was
   blank scrolling and it read as a broken page. Now `30vh` / `18vh` (671px,
@@ -965,3 +967,37 @@ pages.md`. Four things from the build that apply beyond it:
   touched it and stale one commit later. Re-count on every touch, and
   never widen a count into "every one of them" without counting — the
   first draft said every commit was co-signed, and 26 of 35 were.
+
+## The interludes — the runways, filled (2026-10-03)
+
+Owner, against a screenshot of the empty band between SYS.04 and SYS.05:
+*"fill such empty spaces with cool unique creative animations … and in
+some places just a cool interactive object, just for fun (but still
+relevant)"*. This SUPERSEDES the runway rule on the landing page only.
+`assets/css/interlude.css` + `assets/js/interludes.js`, one `<aside
+data-ilude>` per gap. `docs/gaps.py`
+found every runway was 30–55% of a screen of nothing at every width.
+
+Five interludes, five DIFFERENT interactions, each tied to its neighbours:
+fold (scroll — 04 automation), river (hover — 07 bots), gate (press — 06
+agents), index (drag — 04 readiness, leading into SYS.04), night shift
+(scrub — the system on a 24h ring set to live Amman time).
+
+- **One loop, visibility-gated.** Nothing runs off screen; everything that
+  moves is a transform, an opacity or an SVG attribute.
+- **What is real is real.** The clock's NOW is Amman's; the gate's tally
+  counts the reader's own presses; the index is what the reader drags. The
+  messages, tasks and day are authored and each band's caption says so.
+- **The gate never auto-approves.** If nobody presses, the agent waits.
+  That is the argument; do not "fix" it with a timeout.
+- **Touch:** only the index knobs and the clock's hit circle take
+  `touch-action:none`, so a thumb that lands anywhere else still scrolls.
+- **`docs/iludetest.py` drives all five with real mouse, keyboard and
+  touch.** Run it after touching either file.
+- What is still empty at 2560x1260 is the space INSIDE five sections,
+  where the field draws its formation. Left deliberately.
+
+Found on the way and fixed site-wide: `setupWidows()` in `main.js` dropped
+the trailing space of a text node followed by an element, so every
+heading of the form `First half. <em>Second half.</em>` rendered
+"half.Second". It now keeps the trailing whitespace.

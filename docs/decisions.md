@@ -419,3 +419,14 @@ page's copy into line. What changed, and the rules it set:
 - **Axes is called an agent module**, not an assistant module, so the
   landing card, the agent-training page and Axes itself say one thing.
 
+## The runways became interludes — 2026-10-03
+
+The runways existed so the field could be seen morphing between scenes,
+and the earlier rule against inflating them was about BLANK scrolling.
+The owner asked for the gaps to carry relevant, playful objects instead.
+They are content now, not spacing, so the "a third of the site was blank"
+argument does not apply to them — but the rest of that rule does: each
+interlude is sized to its content, and the field program was re-measured
+(0.18 / 0.36 / 0.70 / 0.81), not nudged. The in-section space on tall
+screens stays empty on purpose: that is where the formation is drawn.
+

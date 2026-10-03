@@ -129,12 +129,13 @@
       }
       if (!n) continue;
       var v = n.nodeValue.replace(/\s+$/, '');
+      var trail = n.nodeValue.slice(v.length);   // a following element needs its space kept
       var cut = v.lastIndexOf(' ');
       if (cut < 1) continue;
       var pair = v.slice(cut + 1);
       var prev = v.slice(0, cut).split(' ').pop();
       if (!pair || pair.length > 13 || (pair.length + prev.length) > 22) continue;
-      n.nodeValue = v.slice(0, cut) + ' ' + pair;
+      n.nodeValue = v.slice(0, cut) + ' ' + pair + trail;
     }
   }
 
