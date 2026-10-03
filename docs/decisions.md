@@ -361,10 +361,24 @@ footer rows and so seven in the phone menu (its `max-height` ceiling is
 `.lcard--pr` programme cards on `services.html` under "Two programmes,
 hands on", two `.line--agent` rows in `index.html` SYS.03 (lede: "Four
 lines, the system they ship, and two programmes"), two sitemap entries,
-two ⌘K rows, two ROUTES, two OWNER entries. The core, the matrix and
-every "four lines" sentence are untouched. The home-page field anchors
-were re-measured with the two new rows and moved by ≤0.003, so the
-program was not re-anchored.
+two ⌘K rows, two ROUTES, two OWNER entries, and two rows in
+`index.html` SYS.03 carrying the same `.line` card as the five above
+them. The core, the matrix and every "four lines" sentence are
+untouched. Those two rows grew SYS.03, so the field program was
+RE-MEASURED with `docs/anchor.py` (not nudged): every centre below
+SYS.03 moved by up to 0.03 and the stops went 0.22 / 0.36 / 0.70 / 0.82
+→ 0.20 / 0.37 / 0.72 / 0.82. The measurement is in the comment above
+`program:`.
+
+Woven, not appended (owner, same day: "one piece, one continuous
+seamless website"): on `services.html` the programmes sit in the SAME
+card rail as the lines and the CRM — no sub-heading, no modifier — and
+the section is titled for all three kinds. Where a programme genuinely
+meets another page the connection is one sentence in that page's
+section note, underlined in the note's own ink: the bot reads the CRM
+as source (07 ↔ 05), the AI adoption line runs hands-on as the two
+programmes (04 → 06, 07), and this site was built the way 06 teaches
+(01 ↔ 06). Nothing else cross-links, because nothing else connects.
 
 What each one claims, and what it does not: the agent page's claim is
 that the agent runs on the READER'S machine and is briefed and gated from

@@ -455,11 +455,6 @@
 /* ══ 06 · 07 · THE AGENT PROGRAMMES ═══════════════════════════════════
    A third kind of card under the four lines and the system: the firm's
    own people, trained, with an agent left working inside it. */
-.svc-sec__head--sub{margin-top:clamp(40px,6vw,72px)}
-.svc-sec__title--sm{font-size:clamp(22px,2.6vw,32px)}
-.lcards--pr{margin-top:clamp(18px,2.6vw,30px)}
-.lcard--pr .lcard__idx{color:rgba(242,243,245,0.22)}
-.lcard--pr:hover .lcard__idx{color:rgba(242,243,245,0.5)}
 .line--agent .line__idx{color:rgba(242,243,245,0.5)}
 
 /* the relay: a machine, a hand, and the link between them that lights */

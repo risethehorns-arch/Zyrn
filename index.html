@@ -296,7 +296,7 @@
       <div class="row row--top">
         <div class="badge mono veil" data-reveal data-rdelay="120">SYS.03 — SERVICE LINES</div>
         <p class="lede lede--wide veil" data-reveal data-rdelay="220" data-keepout>
-          Four lines and the system they ship. Run separately the lines are advice. Run together they are an operating core.
+          Four lines, the system they ship, and two programmes that put the method in your hands. Run separately the lines are advice. Run together they are an operating core.
         </p>
       </div>
 
@@ -348,6 +348,31 @@
             <p class="line__lede">The system the four lines ship. Built to the firm rather than rented from a vendor, handed over as source, with no seat count and nothing to renew.</p>
           </div>
           <span class="mono line__meta">SCHEMA / PIPELINE / LEDGER / HANDOVER</span>
+        </a>
+
+        <!-- Nor are these lines: the four are engagements, 05 is the
+             artefact they ship, 06 and 07 are PROGRAMMES — the firm's own
+             people trained, with an agent left working inside it. Same
+             card as the rest because they are the same kind of destination;
+             the distinction is made on the pages they lead to.
+             Adding these two rows moved every section below SYS.03 — the
+             field program was re-measured, not nudged (see below). -->
+        <a class="line" href="services/agent-training.html" data-reveal data-rdelay="680">
+          <span class="mono line__idx">06</span>
+          <div class="line__body">
+            <h3 class="line__title">AI agent training</h3>
+            <p class="line__lede">An agent on your own machine, briefed from your phone, held at the gate by you. We train the people who will run it &mdash; on the method this site was built with.</p>
+          </div>
+          <span class="mono line__meta">INSTALL / BRIEF / GATE / DEPLOY</span>
+        </a>
+
+        <a class="line" href="services/bot-building.html" data-reveal data-rdelay="760">
+          <span class="mono line__idx">07</span>
+          <div class="line__body">
+            <h3 class="line__title">Bot building</h3>
+            <p class="line__lede">One bot on every channel the firm answers on. It reads, looks the answer up in your own systems, replies in your voice, and hands over to a person the moment it should.</p>
+          </div>
+          <span class="mono line__meta">CHANNELS / INTENT / LOOKUP / HANDOVER</span>
         </a>
 
       </div>
@@ -752,29 +777,30 @@ const sCount  = document.getElementById('sCount');
 const pad = n => { const s = String(n).padStart(6, '0'); return s.slice(0, -3) + ',' + s.slice(-3); };
 
 initField({
-  // Anchored to where the scenes actually sit. RE-MEASURED 2026-08-30, when
-  // the proof band went from three cards to four and became a 2x2 block —
-  // it grew by ~640px on desktop and ~1,200px on a phone, which moved every
-  // scene below it. Measured with offsetTop/offsetHeight (never
-  // getBoundingClientRect: the rect includes the reveal transforms), section
-  // centres as scroll progress, desktop 1440x900 / phone 390x844:
+  // Anchored to where the scenes actually sit. RE-MEASURED 2026-10-03, when
+  // SYS.03 went from five rows to seven (programmes 06 and 07) and every
+  // scene below it moved by up to 0.03. Measured with docs/anchor.py —
+  // offsetTop/offsetHeight, never getBoundingClientRect (the rect includes
+  // the reveal transforms) — section centres as scroll progress, desktop
+  // 1440x900 / phone 390x844:
   //
-  //   SYS.01 0.068 / 0.052   SYS.02 0.244 / 0.198   SYS.03 0.408 / 0.356
-  //   PROD   0.624 / 0.586   SYS.04 0.835 / 0.796   SYS.05 0.995 / 0.924
+  //   SYS.01 0.062 / 0.047   SYS.02 0.223 / 0.179   SYS.03 0.414 / 0.363
+  //   PROD   0.652 / 0.613   SYS.04 0.845 / 0.803   SYS.05 0.991 / 0.918
   //
-  // The two widths agree within 0.071 at worst. The stops below are the
+  // The two widths agree within 0.073 at worst. The stops below are the
   // mean, biased so each morph COMPLETES just before its section reaches the
-  // viewport centre rather than while it is still arriving. Previous values,
-  // for the three-card band, were 0.22 / 0.35 / 0.62 / 0.74.
+  // viewport centre rather than while it is still arriving. Previous values
+  // (five rows, 2026-08-30) were 0.22 / 0.36 / 0.70 / 0.82; before that, for
+  // the three-card band, 0.22 / 0.35 / 0.62 / 0.74.
   //
   // If you add or remove a section here, re-measure — do not nudge these by
   // eye. The runway spacers are part of the same measurement, and so is the
   // number of cards in the band.
   program: [
     { at: 0.00, form: 'S3' },   // SYS.01 hero — the operating core, at rest
-    { at: 0.22, form: 'S3' },   // SYS.02 "Built once. Runs itself." — it holds
-    { at: 0.36, form: 'S1' },   // SYS.03 — the core opens into four arms,
-    { at: 0.70, form: 'S1' },   //          and STAYS open across the "In
+    { at: 0.20, form: 'S3' },   // SYS.02 "Built once. Runs itself." — it holds
+    { at: 0.37, form: 'S1' },   // SYS.03 — the core opens into four arms,
+    { at: 0.72, form: 'S1' },   //          and STAYS open across the "In
                                 //          production" band, because that
                                 //          band is those same lines running
     { at: 0.82, form: 'S3' },   // SYS.04 readiness — the ladder climbs back
