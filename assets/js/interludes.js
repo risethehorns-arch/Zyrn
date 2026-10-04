@@ -505,8 +505,213 @@
     });
   }
 
+  /* ── THE HANDOVER — SYS.05's middle (2026-10-04) ────────────────────
+     Two ribbons over eight quarters. Zyrn's hands on the work taper to
+     nothing by the end of Q6; the firm's own grow to all of it; the
+     readiness number climbs underneath. The playhead runs the engagement
+     once when first seen and rests on the end state, which is the claim
+     ("Zyrn is no longer required"); drag or press to scrub. The curve is
+     authored — the shape of an engagement, not a client's record. */
+  const Q = [['Q1', 'Diagnose'], ['Q2', 'Install'], ['Q3', 'Run together'], ['Q4', 'Run together'],
+             ['Q5', 'Hand over'], ['Q6', 'Hand over'], ['Q7', 'Alone'], ['Q8', 'Alone']];
+  const LEAVE = 0.78;
+  const sZ = (t) => smooth(clamp01((t - 0.08) / (LEAVE - 0.08)));
+  const share = (t) => 1 - sZ(t);                                   // Zyrn's hands on it
+  const ready = (t) => 0.4 + 3.6 * smooth(clamp01(t / 0.9));
+  function hand(root) {
+    const stage = $(root, '.hand__stage'), head = $(root, '.hand__head');
+    const knob = $(root, '.hand__knob'), qEl = $(root, '.hand__q'), out = $(root, '.hand__lbl--out'), ring = $(root, '.hand__ring');
+    const clipR = $(root, '#handClip rect');
+    const vZ = $(root, '.hand__n--z .hand__v'), vF = $(root, '.hand__n--f .hand__v'), vR = $(root, '.hand__n--r .hand__v');
+    const lv = $(root, '.hand__n--r .hand__k'), qts = [...root.querySelectorAll('.hand__qt')];
+    const W = 1000, N = 64;
+    // ribbon geometry: centres cross, thicknesses swap
+    const cZ = (t) => 62 + 76 * sZ(t), cF = (t) => 138 - 76 * sZ(t);
+    const hZ = (t) => (t < LEAVE ? 40 * (1 - sZ(t)) : 0);
+    const hF = (t) => 7 + 40 * sZ(t);
+    function ribbon(centre, half, upto) {
+      const top = [], bot = [];
+      for (let i = 0; i <= N; i++) {
+        const t = Math.min(upto, i / N), x = t * W, c = centre(t), h = half(t);
+        top.push(x.toFixed(1) + ' ' + (c - h).toFixed(1)); bot.push(x.toFixed(1) + ' ' + (c + h).toFixed(1));
+        if (t >= upto) break;
+      }
+      return 'M' + top.join('L') + 'L' + bot.reverse().join('L') + 'Z';
+    }
+    const edge = (centre, half, sgn, upto) => {
+      let d = '';
+      for (let i = 0; i <= N; i++) { const t = Math.min(upto, i / N); d += (i ? 'L' : 'M') + (t * W).toFixed(1) + ' ' + (centre(t) + sgn * half(t)).toFixed(1); if (t >= upto) break; }
+      return d;
+    };
+    const dZ = ribbon(cZ, hZ, LEAVE), dF = ribbon(cF, hF, 1);
+    root.querySelectorAll('.hand__rib--z').forEach((e) => e.setAttribute('d', dZ));
+    root.querySelectorAll('.hand__rib--f').forEach((e) => e.setAttribute('d', dF));
+    $(root, '.hand__edge--z').setAttribute('d', edge(cZ, hZ, -1, LEAVE));
+    $(root, '.hand__edge--f').setAttribute('d', edge(cF, hF, 1, 1));
+    const px = (t) => t * stage.getBoundingClientRect().width;
+    let t = 0, played = false, drag = null, lastQ = -1;
+    const pct = (v) => pad2(Math.round(v * 100)) + '%';
+    function render() {
+      head.style.transform = 'translate3d(' + px(t).toFixed(1) + 'px,0,0)';
+      knob.style.left = 'clamp(22px,' + (t * 100).toFixed(2) + '%,calc(100% - 22px))';   // the 44px knob stays inside the stage at both ends
+      clipR.setAttribute('width', (t * W).toFixed(1));
+      const q = Math.min(7, Math.floor(t * 8));
+      if (q !== lastQ) { lastQ = q; qEl.textContent = Q[q][0] + ' \u00b7 ' + Q[q][1].toUpperCase(); qts.forEach((e, k) => e.classList.toggle('is-past', k <= q)); }
+      const z = share(t), r = ready(t);
+      vZ.textContent = pct(z); vF.textContent = pct(1 - z); vR.textContent = (r < 10 ? '0' : '') + r.toFixed(1);
+      lv.textContent = 'READINESS \u00b7 LEVEL ' + pad2(Math.min(4, Math.floor(r)));
+      const isOut = t >= LEAVE;
+      if (isOut !== root.classList.contains('is-out')) root.classList.toggle('is-out', isOut);
+      knob.setAttribute('aria-valuenow', Math.round(t * 100));
+      root.classList.toggle('is-late', t > 0.8);
+    }
+    function fromX(clientX) {
+      const r = stage.getBoundingClientRect();
+      t = clamp01((clientX - r.left) / r.width); render();
+    }
+    const start = (e) => { e.preventDefault(); played = true; drag = e.pointerId; try { e.currentTarget.setPointerCapture(e.pointerId); } catch (_) {} root.classList.add('is-drag'); fromX(e.clientX); };
+    const move = (e) => { if (drag === e.pointerId) fromX(e.clientX); };
+    const end = (e) => { if (drag === e.pointerId) { drag = null; root.classList.remove('is-drag'); } };
+    knob.addEventListener('pointerdown', start);
+    stage.addEventListener('pointerdown', (e) => { if (e.pointerType === 'mouse' && e.target !== knob) start(e); });
+    [knob, stage].forEach((el) => { el.addEventListener('pointermove', move); el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end); });
+    knob.addEventListener('keydown', (e) => {
+      const d = { ArrowRight: 0.02, ArrowUp: 0.02, ArrowLeft: -0.02, ArrowDown: -0.02, PageUp: 0.125, PageDown: -0.125 }[e.key];
+      if (d === undefined && e.key !== 'Home' && e.key !== 'End') return;
+      e.preventDefault(); played = true;
+      t = e.key === 'Home' ? 0 : e.key === 'End' ? 1 : clamp01(t + d); render();
+    });
+    // the out marker and the ring sit where Zyrn leaves
+    const place = () => { const x = px(LEAVE); out.style.left = x + 'px'; ring.style.left = x + 'px'; render(); };
+    place(); addEventListener('resize', place);
+    if (RM) { t = 1; played = true; render(); }
+    register(root, {
+      frame(dt) {
+        if (played || drag !== null) return;
+        t = Math.min(1, t + dt / 22);
+        if (t >= 1) played = true;
+        render();
+      },
+    });
+  }
+
+
+  /* ── THE CLIMB — SYS.04's ladder, lit by scroll ─────────────────────── */
+  function ladder(root) {
+    const steps = [...root.querySelectorAll('.step')];
+    const run = document.createElement('i'); run.className = 'ladder__run'; run.setAttribute('aria-hidden', 'true');
+    root.appendChild(run);
+    let last = -1;
+    function frame() {
+      const r = root.getBoundingClientRect(), vh = innerHeight;
+      const p = RM ? 1 : clamp01((vh * 0.88 - r.top) / (vh * 0.55));
+      if (Math.abs(p - last) < 0.002) return;
+      last = p;
+      root.style.setProperty('--p', p.toFixed(4));
+      root.style.setProperty('--on', p > 0.01 && p < 0.995 ? '1' : '0');
+      steps.forEach((s, k) => s.classList.toggle('is-lit', p >= k / (steps.length - 1) - 0.01));
+    }
+    frame();
+    register(root, { frame });
+  }
+
+
+  /* ── THE BOOT — the hero cluster (2026-10-04) ───────────────────────
+     Mono lines DECODE: every character shows glyph noise until the cursor
+     reaches it, left to right. The lede's words slam in (CSS). The
+     tagline's letters cascade (CSS). On scroll the mono lines re-encode
+     from the right and the two rows take depth. Starts the moment the
+     entrance hands the page over (body.is-intro removed), or at once if
+     there is no entrance. Never touches the shear mark. */
+  const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/\u2014\u00b7<>[]=+*#';
+  const glyph = () => GLYPHS[(Math.random() * GLYPHS.length) | 0];
+  function heroBoot() {
+    const hero = document.querySelector('[data-sys-section="01"]');
+    if (!hero) return;
+    hero.classList.add('hero--boot');
+    const scan = document.createElement('i'); scan.className = 'hero__scan'; scan.setAttribute('aria-hidden', 'true');
+    hero.appendChild(scan);
+    // the lines that decode: every text node inside them, by reference
+    const monoEls = [...hero.querySelectorAll('.index__item, .badge, .lockup__live')];
+    const lines = monoEls.map((el, i) => {
+      const nodes = [];
+      const walk = (n) => { for (const c of n.childNodes) { if (c.nodeType === 3 && c.nodeValue.trim()) nodes.push({ n: c, f: c.nodeValue }); else if (c.nodeType === 1 && c.id !== 'hCount') walk(c); } };
+      walk(el);
+      return { el, nodes, len: nodes.reduce((s, x) => s + x.f.length, 0), delay: i * 90 };
+    });
+    function write(line, resolved) {
+      let k = 0;
+      for (const x of line.nodes) {
+        let out = '';
+        for (let i = 0; i < x.f.length; i++, k++) {
+          const ch = x.f[i];
+          out += ch === ' ' || k < resolved ? ch : glyph();
+        }
+        if (x.n.nodeValue !== out) x.n.nodeValue = out;
+      }
+    }
+    function restore(line) { for (const x of line.nodes) if (x.n.nodeValue !== x.f) x.n.nodeValue = x.f; }
+    // the lede: words; the tagline: characters
+    const lede = hero.querySelector('.lede');
+    if (lede && !RM) {
+      const words = lede.textContent.trim().split(/(\s+)/);
+      lede.textContent = '';
+      let wi = 0;
+      words.forEach((w) => {
+        if (!w.trim()) { lede.appendChild(document.createTextNode(w)); return; }
+        const sp = document.createElement('span'); sp.className = 'bt-w'; sp.textContent = w;
+        sp.style.setProperty('--d', (260 + wi++ * 38) + 'ms'); lede.appendChild(sp);
+      });
+    }
+    const tag = hero.querySelector('.lockup__sub');
+    if (tag && !RM) {
+      const t = tag.textContent; tag.textContent = '';
+      [...t].forEach((c, i) => { const sp = document.createElement('span'); sp.className = 'bt-c'; sp.textContent = c; sp.style.setProperty('--d', (380 + i * 22) + 'ms'); tag.appendChild(sp); });
+    }
+    const rowTop = hero.querySelector('.row--top'), lockCol = hero.querySelector('.row--bottom > div');
+    let t0 = 0, booting = false, booted = RM, scramble = 0, roll = 0;
+    const DUR = 760;
+    function bootFrame(now) {
+      const e = now - t0;
+      let doneAll = true;
+      lines.forEach((l) => {
+        const p = clamp01((e - 180 - l.delay) / DUR);
+        if (p < 1) { doneAll = false; write(l, Math.floor(p * (l.len + 1))); } else restore(l);
+      });
+      if (!doneAll) requestAnimationFrame(bootFrame);
+      else { booting = false; booted = true; }
+    }
+    function startBoot() {
+      if (booting || booted) return;
+      booting = true; t0 = performance.now();
+      hero.style.setProperty('--hh', hero.offsetHeight + 'px');
+      hero.classList.add('is-boot');
+      lines.forEach((l) => write(l, 0));
+      requestAnimationFrame(bootFrame);
+    }
+    // on scroll: depth, and the mono lines re-encode from the right
+    function frame(dt) {
+      const vh = innerHeight, p = clamp01(scrollY / (vh * 0.9));
+      if (rowTop) { rowTop.style.transform = p ? 'translate3d(0,' + (-p * vh * 0.22).toFixed(1) + 'px,0)' : ''; rowTop.style.opacity = (1 - p * 0.85).toFixed(3); }
+      if (lockCol) { lockCol.style.transform = p ? 'translate3d(0,' + (-p * vh * 0.1).toFixed(1) + 'px,0)' : ''; lockCol.style.opacity = (1 - p * 0.7).toFixed(3); }
+      if (!booted) return;
+      const a = clamp01((p - 0.22) / 0.5);
+      if (a === 0) { if (scramble !== 0) { scramble = 0; lines.forEach(restore); } return; }
+      roll += dt;
+      if (roll < 0.08 && scramble > 0) return;      // re-roll the noise at ~12fps, not 60
+      roll = 0; scramble = a;
+      lines.forEach((l) => write(l, Math.floor((1 - a) * l.len)));
+    }
+    if (document.body.classList.contains('is-intro')) {
+      new MutationObserver((_, mo) => { if (!document.body.classList.contains('is-intro')) { mo.disconnect(); setTimeout(startBoot, 60); } })
+        .observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    } else setTimeout(startBoot, 120);
+    if (!RM) register(hero, { frame });
+  }
+
   function boot() {
-    const map = { fold, river, gate, rdx, night };
+    heroBoot();
+    const map = { fold, river, gate, rdx, night, hand, ladder };
     document.querySelectorAll('[data-ilude]').forEach((r) => { const f = map[r.getAttribute('data-ilude')]; if (f) f(r); });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);

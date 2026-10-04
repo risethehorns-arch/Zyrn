@@ -430,3 +430,23 @@ interlude is sized to its content, and the field program was re-measured
 (0.18 / 0.36 / 0.70 / 0.81), not nudged. The in-section space on tall
 screens stays empty on purpose: that is where the formation is drawn.
 
+## The hero boots, SYS.05 hands over, the ladder climbs — 2026-10-04
+
+Owner, against a screenshot of SYS.05's empty middle and the hero's
+three text clusters: fill the one, make the others arrive with
+"hypermotion". Three pieces in the interludes module; the rules:
+
+- **The hero's entrance is still SYS.00's.** THE BOOT animates the
+  index, the badge, the lede, the tagline and the live line, and nothing
+  else; it waits for the entrance to hand the page over. Owner-locked
+  elements stay locked.
+- **A decode must never corrupt what it decodes.** Final strings are held
+  by reference per text node and restored verbatim; the live count the
+  field writes is skipped; the widow binder's NBSP survives (the test
+  normalises it rather than the page).
+- **The handover's curve is authored**, like the night shift's day, and
+  the caption says so. The numbers it prints are of that curve, not of
+  any client. It rests on its END state because the end state is the
+  claim (SYS.04 level 04: "Zyrn is no longer required").
+- Field program re-measured again: 0.18 / 0.35 / 0.69 / 0.79.
+

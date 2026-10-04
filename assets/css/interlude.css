@@ -407,3 +407,103 @@
   .gate__l,.gate__l--brief{animation:none}
   .gate__ring.is-go{animation:none}
 }
+
+
+/* ══ THE BOOT — the hero cluster arrives, and leaves on scroll ════════
+   Owner-requested 2026-10-04: the index, the lede and the lockup's lines
+   "appear with a seamless high-tech feel, hypermotion". Mono lines DECODE
+   (glyph noise resolving left to right behind a bright cursor), the lede's
+   words slam in through a chroma split, the tagline's letters cascade, and
+   one scan sweeps the cluster. On scroll the mono lines re-encode into
+   noise and the two rows take depth. The shear mark is untouched: the
+   entrance owns it (SYS.00). interludes.js drives all of it. */
+.hero--boot{position:relative}
+.hero__scan{
+  position:absolute;left:0;right:0;top:0;height:2px;pointer-events:none;opacity:0;
+  background:linear-gradient(90deg,transparent,rgb(165 148 251 / 0.9) 30%,#fff 50%,rgb(51 201 222 / 0.9) 70%,transparent);
+  box-shadow:0 0 18px rgb(165 148 251 / 0.8),0 0 50px rgb(51 201 222 / 0.35);
+}
+.hero--boot.is-boot .hero__scan{animation:hero-scan 1100ms cubic-bezier(.3,0,.2,1) 120ms both}
+@keyframes hero-scan{0%{opacity:0;transform:translateY(0)}8%{opacity:1}92%{opacity:1}100%{opacity:0;transform:translateY(var(--hh,100vh))}}
+.bt-w{display:inline-block;will-change:transform,opacity}
+.is-boot .bt-w{animation:bt-word 640ms cubic-bezier(.2,.9,.2,1) both;animation-delay:var(--d,0ms)}
+@keyframes bt-word{
+  0%{opacity:0;transform:translate3d(18px,0,0) skewX(-14deg);filter:blur(8px)}
+  45%{opacity:1;filter:blur(0);text-shadow:-3px 0 rgb(51 201 222 / 0.8),3px 0 rgb(165 148 251 / 0.8)}
+  70%{text-shadow:-1px 0 rgb(51 201 222 / 0.4),1px 0 rgb(165 148 251 / 0.4)}
+  100%{opacity:1;transform:none;filter:none;text-shadow:none}
+}
+.bt-c{display:inline-block;white-space:pre}
+.is-boot .bt-c{animation:bt-char 520ms cubic-bezier(.2,.9,.2,1) both;animation-delay:var(--d,0ms)}
+@keyframes bt-char{0%{opacity:0;transform:translate3d(0,8px,0);filter:blur(6px)}100%{opacity:1;transform:none;filter:none}}
+.bt-cur{color:#fff;text-shadow:0 0 10px var(--glint-1,#a594fb),0 0 22px var(--glint-2,#c9c0fc)}
+.hero--boot .row--top,.hero--boot .row--bottom > div:first-child{will-change:transform}
+@media (prefers-reduced-motion:reduce){
+  .hero--boot.is-boot .hero__scan,.is-boot .bt-w,.is-boot .bt-c{animation:none}
+}
+
+
+/* ══ THE HANDOVER — SYS.05's middle ════════════════════════════════════
+   Two ribbons of light over eight quarters: Zyrn's hands on the work
+   taper to nothing while the firm's own grow to all of it. A playhead
+   runs the engagement once and rests at the end; drag it to scrub. The
+   curve is the shape of an engagement, not any client's record. */
+.hand{position:relative;margin:clamp(20px,3vh,40px) 0}
+.hand__top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px 32px;margin-bottom:22px}
+.hand__t{margin:0;font-size:clamp(18px,1.7vw,24px);font-weight:400;line-height:1.25;color:var(--vapor);text-shadow:0 1px 12px rgba(14,15,18,0.7)}
+.hand__t em{font-style:normal;color:rgba(242,243,245,0.5)}
+.hand__nums{display:flex;gap:clamp(18px,2.4vw,40px)}
+.hand__n{display:flex;flex-direction:column;gap:4px;min-width:5ch}
+.hand__k{font-size:10px;color:rgba(242,243,245,0.5);white-space:nowrap}
+.hand__v{font-size:clamp(22px,2.2vw,32px);line-height:1;color:#fff;font-variant-numeric:tabular-nums}
+.hand__n--z .hand__v{color:rgb(165 148 251);text-shadow:0 0 16px rgb(165 148 251 / 0.6)}
+.hand__n--f .hand__v{text-shadow:0 0 16px rgb(95 227 176 / 0.5)}
+.hand__stage{position:relative;height:clamp(150px,19vh,230px);cursor:ew-resize;touch-action:pan-y;user-select:none}
+.hand__svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.hand__rib{opacity:0.16;transition:opacity 300ms}
+.hand__rib--z{fill:url(#handZ)}
+.hand__rib--f{fill:url(#handF)}
+.hand__lit{clip-path:url(#handClip)}
+.hand__lit .hand__rib{opacity:1}
+.hand__edge{fill:none;stroke-width:1.2;stroke-linecap:round}
+.hand__edge--z{stroke:rgb(165 148 251 / 0.9)}
+.hand__edge--f{stroke:rgb(95 227 176 / 0.9)}
+.hand__head{position:absolute;top:0;bottom:0;left:0;width:0;pointer-events:none;will-change:transform}
+.hand__head i{position:absolute;left:-1px;top:-6px;bottom:-6px;width:2px;background:linear-gradient(180deg,transparent,#fff 25%,#fff 75%,transparent);box-shadow:0 0 12px #fff,0 0 30px var(--glint-1,#a594fb)}
+.hand__knob{
+  position:absolute;left:0;bottom:-30px;width:44px;height:44px;margin-left:-22px;padding:0;border:0;background:none;cursor:grab;touch-action:none;
+}
+.hand__knob::before{content:'';position:absolute;left:50%;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:#0E0F12;border:2px solid #fff;box-shadow:0 0 12px var(--glint-1,#a594fb);transition:transform 200ms}
+.hand__knob:hover::before,.hand.is-drag .hand__knob::before{transform:scale(1.3)}
+.hand__knob:focus-visible{outline:none}.hand__knob:focus-visible::before{box-shadow:0 0 0 3px rgba(242,243,245,0.35)}
+.hand.is-drag .hand__knob{cursor:grabbing}
+.hand__q{position:absolute;left:16px;bottom:-36px;white-space:nowrap;padding:2px 8px;border-radius:3px;background:rgba(14,15,18,0.9);color:#fff;font-size:10px}
+.hand.is-late .hand__q{left:auto;right:16px}
+.hand__lbl{position:absolute;font-size:10px;color:rgba(242,243,245,0.62);pointer-events:none;white-space:nowrap}
+.hand__lbl--z{left:0;top:-4px;color:rgb(165 148 251)}
+.hand__lbl--f{left:0;bottom:-4px;color:rgb(95 227 176)}
+.hand__lbl--out{top:50%;transform:translate(-50%,-50%);padding:3px 8px;border:1px solid rgba(242,243,245,0.3);border-radius:3px;background:rgba(14,15,18,0.92);color:var(--vapor);opacity:0;transition:opacity 400ms,box-shadow 400ms}
+.hand.is-out .hand__lbl--out{opacity:1;box-shadow:0 0 22px rgb(165 148 251 / 0.7)}
+.hand__ring{position:absolute;top:50%;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;border:1.5px solid #fff;opacity:0;pointer-events:none}
+.hand.is-out .hand__ring{animation:gate-ring 1.1s cubic-bezier(.2,.8,.2,1) both}
+.hand__rail{position:relative;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));margin-top:48px;border-top:1px solid rgba(242,243,245,0.14)}
+.hand__qt{padding-top:8px;font-size:10px;color:rgba(242,243,245,0.42);border-left:1px solid rgba(242,243,245,0.12);padding-left:8px;transition:color 300ms}
+.hand__qt.is-past{color:rgba(242,243,245,0.8)}
+.hand__qt b{display:block;font-weight:400;color:rgba(242,243,245,0.6);margin-top:2px}
+.hand__qt.is-past b{color:var(--vapor)}
+.hand__cap{display:block;margin-top:12px;text-align:right;font-size:10px;color:rgba(242,243,245,0.36)}
+@media (max-width:799px){
+  .hand__nums{width:100%;justify-content:space-between}
+  .hand__k{font-size:9px}
+  .hand__qt b{display:none}
+  .hand__stage{height:150px}
+}
+
+
+/* ══ THE CLIMB — SYS.04's ladder, lit by scroll ════════════════════════ */
+.ladder__rule{background:linear-gradient(90deg,#fff 0,rgb(165 148 251) calc(var(--p,0) * 100%),rgba(242,243,245,0.14) calc(var(--p,0) * 100%))}
+.ladder__run{position:absolute;left:calc(var(--p,0) * 100%);top:0;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#fff;box-shadow:0 0 10px #fff,0 0 26px var(--glint-1,#a594fb);opacity:var(--on,0);pointer-events:none}
+.step::before{transition:background 300ms,box-shadow 300ms,height 300ms}
+.step.is-lit::before{background:#fff;height:18px;box-shadow:0 0 10px var(--glint-1,#a594fb)}
+.step__idx{transition:color 300ms,text-shadow 300ms}
+.step.is-lit .step__idx{color:#fff;text-shadow:0 0 12px var(--glint-1,#a594fb)}

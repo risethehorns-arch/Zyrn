@@ -58,7 +58,7 @@
 <link rel="stylesheet" href="assets/css/footer.css?v=87d64ba6">
 <link rel="stylesheet" href="assets/css/cmdk.css?v=2b54249d">
 <link rel="stylesheet" href="assets/css/intro.css?v=b48db03d">
-<link rel="stylesheet" href="assets/css/interlude.css?v=49113db1">
+<link rel="stylesheet" href="assets/css/interlude.css?v=c28197ba">
 
 </head>
 <body>
@@ -708,7 +708,7 @@
         </p>
       </div>
 
-      <div class="ladder" data-reveal data-rdelay="300" data-keepout>
+      <div class="ladder" data-ilude="ladder" data-reveal data-rdelay="300" data-keepout>
         <div class="ladder__rule" aria-hidden="true"></div>
         <ol class="ladder__steps">
           <li class="step">
@@ -774,6 +774,48 @@
         <p class="lede lede--wide veil" data-reveal data-rdelay="220" data-keepout>
           Zyrn takes four engagements a quarter. The constraint is deliberate — the work requires staying.
         </p>
+      </div>
+
+      <!-- ── THE HANDOVER (2026-10-04) — the scene's middle was 44% of a
+           screen of nothing at 2048x1050; see interludes.js. -->
+      <div class="hand" data-ilude="hand" data-keepout>
+        <div class="hand__top">
+          <p class="hand__t">Two quarters minimum, eight at most. <em>By the end, the work is yours.</em></p>
+          <div class="hand__nums" aria-live="off">
+            <span class="hand__n hand__n--z"><span class="mono hand__k">ZYRN&rsquo;S HANDS ON IT</span><span class="hand__v">100%</span></span>
+            <span class="hand__n hand__n--f"><span class="mono hand__k">YOUR PEOPLE</span><span class="hand__v">00%</span></span>
+            <span class="hand__n hand__n--r"><span class="mono hand__k">READINESS &middot; LEVEL 00</span><span class="hand__v">00.4</span></span>
+          </div>
+        </div>
+        <div class="hand__stage">
+          <svg class="hand__svg" viewBox="0 0 1000 200" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="handZ" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#A594FB"/><stop offset="1" stop-color="#6E56F8"/></linearGradient>
+              <linearGradient id="handF" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#5FE3B0"/><stop offset="0.6" stop-color="#33C9DE"/><stop offset="1" stop-color="#F2F3F5"/></linearGradient>
+              <clipPath id="handClip" clipPathUnits="userSpaceOnUse"><rect x="0" y="-20" width="0" height="240"/></clipPath>
+            </defs>
+            <path class="hand__rib hand__rib--z"/><path class="hand__rib hand__rib--f"/>
+            <g class="hand__lit"><path class="hand__rib hand__rib--z"/><path class="hand__rib hand__rib--f"/>
+              <path class="hand__edge hand__edge--z"/><path class="hand__edge hand__edge--f"/></g>
+          </svg>
+          <span class="mono hand__lbl hand__lbl--z">ZYRN</span>
+          <span class="mono hand__lbl hand__lbl--f">YOUR FIRM</span>
+          <span class="mono hand__lbl hand__lbl--out">ZYRN LEAVES</span>
+          <span class="hand__ring" aria-hidden="true"></span>
+          <div class="hand__head" aria-hidden="true"><i></i><span class="mono hand__q">Q1 &middot; DIAGNOSE</span></div>
+          <button type="button" class="hand__knob" role="slider" aria-label="Where in the engagement" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></button>
+        </div>
+        <div class="hand__rail" aria-hidden="true">
+          <span class="mono hand__qt">Q1<b>Diagnose</b></span>
+          <span class="mono hand__qt">Q2<b>Install</b></span>
+          <span class="mono hand__qt">Q3<b>Run together</b></span>
+          <span class="mono hand__qt">Q4<b>Run together</b></span>
+          <span class="mono hand__qt">Q5<b>Hand over</b></span>
+          <span class="mono hand__qt">Q6<b>Hand over</b></span>
+          <span class="mono hand__qt">Q7<b>Alone</b></span>
+          <span class="mono hand__qt">Q8<b>Alone</b></span>
+        </div>
+        <span class="mono hand__cap">The shape of an engagement, not a client&rsquo;s record</span>
       </div>
 
       <div class="row row--bottom row--cap">
@@ -892,7 +934,7 @@
 <script src="assets/js/cmdk.js?v=3c6e3d57"></script>
 <script src="assets/js/footer.js?v=bac1aa7c"></script>
 <script src="assets/js/axent.js?v=95c663ca"></script>
-<script src="assets/js/interludes.js?v=af98430d"></script>
+<script src="assets/js/interludes.js?v=86d0e1ba"></script>
 
 <script type="module">
 /* SYS.01 → SYS.05 mapped onto the field's states. The page now OPENS on the
@@ -917,18 +959,19 @@ initField({
   // times: SYS.03 went from five rows to seven; it became the focus tiles
   // over the core's four rows; and the five runways became the INTERLUDES
   // (assets/js/interludes.js), which are content rather than spacing and
-  // moved every scene after the hero by up to 0.03. Measured with docs/anchor.py —
+  // moved every scene after the hero by up to 0.03. Then once more on
+  // 2026-10-04 when THE HANDOVER went into SYS.05's middle. Measured with docs/anchor.py —
   // offsetTop/offsetHeight, never getBoundingClientRect (the rect includes
   // the reveal transforms) — section centres as scroll progress, desktop
   // 1440x900 / phone 390x844:
   //
-  //   SYS.01 0.049 / 0.036   SYS.02 0.197 / 0.172   SYS.03 0.389 / 0.364
-  //   PROD   0.618 / 0.612   SYS.04 0.817 / 0.799   SYS.05 0.993 / 0.940
+  //   SYS.01 0.048 / 0.036   SYS.02 0.194 / 0.168   SYS.03 0.384 / 0.354
+  //   PROD   0.609 / 0.594   SYS.04 0.805 / 0.775   SYS.05 0.986 / 0.927
   //
-  // The two widths agree within 0.053 at worst. The stops below are the
+  // The two widths agree within 0.059 at worst. The stops below are the
   // mean, biased so each morph COMPLETES just before its section reaches the
   // viewport centre rather than while it is still arriving. Previous values:
-  // focus tiles over runways 0.20 / 0.38 / 0.73 / 0.83; seven rows 0.20 / 0.37 / 0.72 / 0.82; five rows (2026-08-30)
+  // interludes 0.18 / 0.36 / 0.70 / 0.81; focus tiles over runways 0.20 / 0.38 / 0.73 / 0.83; seven rows 0.20 / 0.37 / 0.72 / 0.82; five rows (2026-08-30)
   // 0.22 / 0.36 / 0.70 / 0.82; before that, for
   // the three-card band, 0.22 / 0.35 / 0.62 / 0.74.
   //
@@ -938,11 +981,11 @@ initField({
   program: [
     { at: 0.00, form: 'S3' },   // SYS.01 hero — the operating core, at rest
     { at: 0.18, form: 'S3' },   // SYS.02 "Built once. Runs itself." — it holds
-    { at: 0.36, form: 'S1' },   // SYS.03 — the core opens into four arms,
-    { at: 0.70, form: 'S1' },   //          and STAYS open across the "In
+    { at: 0.35, form: 'S1' },   // SYS.03 — the core opens into four arms,
+    { at: 0.69, form: 'S1' },   //          and STAYS open across the "In
                                 //          production" band, because that
                                 //          band is those same lines running
-    { at: 0.81, form: 'S3' },   // SYS.04 readiness — the ladder climbs back
+    { at: 0.79, form: 'S3' },   // SYS.04 readiness — the ladder climbs back
     { at: 1.00, form: 'S4' },   // SYS.05 access — released
   ],
   onState: (p, name) => { if (roState) roState.textContent = name; },

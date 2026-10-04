@@ -149,6 +149,46 @@ async def main(url):
             t2 = await ev("document.querySelector('.night__time').textContent")
             expect(t2 != st["t"], "and the day resumes once let go", "%s -> %s" % (st["t"], t2))
 
+            # 6 · the handover plays on its own, and a real drag scrubs it to the end
+            await to('[data-ilude=hand]', 0.45)
+            z0 = await ev("document.querySelector('.hand__n--z .hand__v').textContent")
+            await asyncio.sleep(2.5)
+            z1 = await ev("document.querySelector('.hand__n--z .hand__v').textContent")
+            expect(z0 == "100%" and z1 != z0, "the handover runs on its own once seen", "%s -> %s" % (z0, z1))
+            k = await centre('.hand__knob'); st = await centre('.hand__stage')
+            r = json.loads(await ev("JSON.stringify(document.querySelector('.hand__stage').getBoundingClientRect())"))
+            await mouse("mouseMoved", k["x"], k["y"], "none", 0); await mouse("mousePressed", k["x"], k["y"])
+            for j in range(1, 11):
+                await mouse("mouseMoved", k["x"] + (r["left"] + r["width"] * 0.9 - k["x"]) * j / 10, k["y"]); await asyncio.sleep(0.016)
+            await mouse("mouseReleased", r["left"] + r["width"] * 0.9, k["y"])
+            await asyncio.sleep(0.3)
+            st = json.loads(await ev("JSON.stringify({z:document.querySelector('.hand__n--z .hand__v').textContent,f:document.querySelector('.hand__n--f .hand__v').textContent,out:document.querySelector('.hand').classList.contains('is-out'),q:document.querySelector('.hand__q').textContent})"))
+            expect(st["z"] == "00%" and st["f"] == "100%" and st["out"], "dragged to Q8: Zyrn's hands 00%, the firm's 100%, ZYRN LEAVES lit", "%s / %s / %s" % (st["z"], st["f"], st["q"]))
+            await asyncio.sleep(1.0)
+            z2 = await ev("document.querySelector('.hand__n--z .hand__v').textContent")
+            expect(z2 == "00%", "and it stays where it was left", z2)
+
+            # 7 · the ladder lights as it is scrolled into view
+            await to('[data-ilude=ladder]', 0.9); await asyncio.sleep(0.6)
+            l0 = await ev("document.querySelectorAll('.step.is-lit').length")
+            await to('[data-ilude=ladder]', 0.3); await asyncio.sleep(0.6)
+            l1 = await ev("document.querySelectorAll('.step.is-lit').length")
+            expect(l0 < l1 and l1 == 5, "the ladder lights step by step as it rises", "%d -> %d" % (l0, l1))
+
+            # 8 · the hero boot: decoded clean, re-encodes on scroll, restores at the top
+            await ev("window.__zyrnScrollTo(0, 0)"); await asyncio.sleep(1.5)
+            H8 = "JSON.stringify([].slice.call(document.querySelectorAll('.index__item')).map(function(e){return e.textContent}))"
+            idx = [x.replace(" ", " ") for x in json.loads(await ev(H8))]   # the widow binder's NBSP
+            words = await ev("document.querySelectorAll('.lede .bt-w').length")
+            expect(idx[0] == "04 / AI ADOPTION & AUTOMATION" and idx[2] == "07 / BOT BUILDING" and words > 10, "the hero index decoded to its text; the lede is split into words", "%s, %d words" % (idx[0], words))
+            await ev("window.__zyrnScrollTo(innerHeight*0.55, 0)"); await asyncio.sleep(1.2)
+            idx2 = json.loads(await ev(H8))
+            tf = await ev("getComputedStyle(document.querySelector('[data-sys-section=\"01\"] .row--top')).transform")
+            expect(idx2[0] != idx[0] and tf != "none", "half a screen down the index re-encodes and the row takes depth", "%s" % idx2[0][:30])
+            await ev("window.__zyrnScrollTo(0, 0)"); await asyncio.sleep(1.4)
+            idx3 = [x.replace(" ", " ") for x in json.loads(await ev(H8))]
+            expect(idx3 == idx, "back at the top it is clean again", idx3[0])
+
             # phone · touch drag on a column does not scroll the page; a tap pauses the river
             await send("Emulation.setDeviceMetricsOverride", {"width": 390, "height": 844, "deviceScaleFactor": 2, "mobile": True})
             await send("Emulation.setTouchEmulationEnabled", {"enabled": True, "maxTouchPoints": 5})

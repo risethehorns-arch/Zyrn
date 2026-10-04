@@ -994,7 +994,30 @@ agents), index (drag — 04 readiness, leading into SYS.04), night shift
   `touch-action:none`, so a thumb that lands anywhere else still scrolls.
 - **`docs/iludetest.py` drives all five with real mouse, keyboard and
   touch.** Run it after touching either file.
-- What is still empty at 2560x1260 is the space INSIDE five sections,
+- **2026-10-04, the same file grew three more pieces** at the owner's
+  direction ("still empty areas", pointing at SYS.05; and "the context
+  around the ZYRN logo — make it appear with a high-tech feel,
+  hypermotion"):
+    · **THE HANDOVER** fills SYS.05's middle (44% of a screen of nothing
+      at 2048x1050): two ribbons over eight quarters, Zyrn's hands
+      tapering to nothing while the firm's grow, readiness climbing
+      underneath; plays once when seen, rests on the end state, drag or
+      arrow keys to scrub. An authored curve, captioned as such.
+    · **THE CLIMB** lights SYS.04's ladder step by step as it rises.
+    · **THE BOOT** is the hero's arrival: the mono lines (index, badge,
+      live line) DECODE from glyph noise behind a cursor, the lede's
+      words slam in through a chroma split, the tagline's letters
+      cascade, one scan sweeps the cluster. It starts the moment the
+      entrance hands over (`body.is-intro` removed) or at once without
+      one. On scroll the mono lines re-encode from the right and the two
+      rows take depth; back at the top they are clean. **It never
+      touches the shear mark** — SYS.00 owns that, and the decode skips
+      `#hCount`, which field.js writes.
+  `docs/shotat.py` photographs timed states after a REAL scroll — the
+  element-screenshot tools bring a section into view without scrolling,
+  so nothing visibility-gated ever runs in them, which is why the
+  handover first photographed stuck at Q1.
+- What is still empty at 2048x1050 is the hero's and SYS.02's middle,
   where the field draws its formation. Left deliberately.
 
 Found on the way and fixed site-wide: `setupWidows()` in `main.js` dropped
